@@ -29,7 +29,7 @@ public class NewPieceProjectWizardPage extends WizardNewProjectCreationPage {
      * DTDURLをセットする.
      * @param dtdURL DTDURL
      */
-    public void setDTDURL(String dtdURL){
+    public void setDTDURL(String dtdURL) {
         this.dtdURL = dtdURL;
     }
     
@@ -37,7 +37,7 @@ public class NewPieceProjectWizardPage extends WizardNewProjectCreationPage {
      * ルートエレメントをセットする.
      * @param rootElement ルートエレメント
      */
-    public void setRootElement(String rootElement){
+    public void setRootElement(String rootElement) {
         this.rootElement = rootElement;
     }
 
