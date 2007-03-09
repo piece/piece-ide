@@ -196,12 +196,16 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
             return;
         }
         
-        for (int j = 0; j < pluginFiles.length; j++) {
+        for (int i = 0; i < pluginFiles.length; i++) {
+            if (pluginFiles[i].equals(".svn")) {
+                continue;
+            }
+            
             File pluginChildFile =
-                         new File(pluginFile, pluginFiles[j]);
+                         new File(pluginFile, pluginFiles[i]);
 
             IFolder newProjectFolder =
-                         project.getFolder(path + "/" + pluginFiles[j]);
+                         project.getFolder(path + "/" + pluginFiles[i]);
             
             if (pluginChildFile.isDirectory()) {
                 //フォルダ作成
@@ -213,7 +217,7 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
             } else {
                 //ファイル作成
                 IFile projectFile =
-                               project.getFile(path + "/" + pluginFiles[j]);
+                               project.getFile(path + "/" + pluginFiles[i]);
                 projectFile.create(
                            new FileInputStream(pluginChildFile), true, null);
             }

@@ -1,0 +1,66 @@
+# $Id$
+name: flow
+desc: the definition of Piece_Flow flow configuration file.
+type: map
+mapping:
+  "firstState": { type: str, required: yes }
+  "viewState":
+    type: seq
+    required: yes
+    sequence:
+      - type: map
+        required: yes
+        mapping:
+          "name": { type: str, required: yes }
+          "view": { type: str, required: yes }
+          "transition":
+            type: seq
+            required: no
+            sequence:
+              - type: map
+                required: yes
+                mapping:
+                  "event": { type: str, required: yes }
+                  "nextState": { type: str, required: yes }
+                  "action": &service
+                    type: map
+                    mapping:
+                      "class": { type: str, required: no }
+                      "method": { type: str, required: yes }
+                  "guard": *service
+          "entry": *service
+          "exit": *service
+          "activity": *service
+  "actionState": &state
+    type: seq
+    required: no
+    sequence:
+      - type: map
+        required: yes
+        mapping:
+          "name": { type: str, required: yes }
+          "transition":
+            type: seq
+            required: yes
+            sequence:
+              - type: map
+                required: yes
+                mapping:
+                  "event": { type: str, required: yes }
+                  "nextState": { type: str, required: yes }
+                  "action": *service
+                  "guard": *service
+          "entry": *service
+          "exit": *service
+          "activity": *service
+  "lastState":
+    type: map
+    required: no
+    mapping:
+      "name": { type: str, required: yes }
+      "view": { type: str, required: yes }
+      "entry": *service
+      "exit": *service
+      "activity": *service
+  "initial": *service
+  "final": *service
