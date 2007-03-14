@@ -15,30 +15,11 @@ import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
  */
 public class NewPieceProjectWizardPage extends WizardNewProjectCreationPage {
     
-    private String dtdURL = null;
-    private String rootElement = null;
-    
     /**
      * コンストラクタ.
+     * @param pageName ウィザードページ名
      */
     public NewPieceProjectWizardPage(String pageName) {
         super(pageName);
     }
-        
-    /**
-     * DTDURLをセットする.
-     * @param dtdURL DTDURL
-     */
-    public void setDTDURL(String dtdURL) {
-        this.dtdURL = dtdURL;
-    }
-    
-    /**
-     * ルートエレメントをセットする.
-     * @param rootElement ルートエレメント
-     */
-    public void setRootElement(String rootElement) {
-        this.rootElement = rootElement;
-    }
-
 }

@@ -28,6 +28,7 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
+import com.piece_framework.piece_ide.plugin.Messages;
 import com.piece_framework.piece_ide.plugin.PieceIDEPlugin;
 
 /**
@@ -41,11 +42,16 @@ import com.piece_framework.piece_ide.plugin.PieceIDEPlugin;
  */
 public class NewPieceProjectWizard extends Wizard implements INewWizard {
     
-    private IStructuredSelection selection;
-    private NewPieceProjectWizardPage page1;
+    private NewPieceProjectWizardPage fPage1;
     
-    /** YAML スキーマフォルダ名. */
-    public static final String INIT_FILES = ".init_files"; //$NON-NLS-1$
+    /** 作業量. */
+    public static final int WORK_TASK = 2000;
+    
+    /** サブ作業量. */
+    public static final int SUB_WORK_TASK = 1000;
+
+    /** 初期設定ファイル格納ディレクトリ名. */
+    public static final String PROJECT_RESOURCES = "project_resources";
 
     /**
      * コンストラクタ.
@@ -63,20 +69,19 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
      * @param selection 選択した構成
      */
     public void init(IWorkbench workbench, IStructuredSelection selection) {
-        this.selection = selection;
     }   
     
     /**
      * ページ追加.
      */
     public void addPages() {
-        this.page1 = new NewPieceProjectWizardPage("page1"); //$NON-NLS-1$
-        this.page1.setTitle(Messages.getString(
+        this.fPage1 = new NewPieceProjectWizardPage("page1"); //$NON-NLS-1$
+        this.fPage1.setTitle(Messages.getString(
                                 "NewPieceProjectWizard.PageTitle"));
-        this.page1.setDescription(Messages.getString(
+        this.fPage1.setDescription(Messages.getString(
                                 "NewPieceProjectWizard.PageDescription"));
         
-        addPage(this.page1);
+        addPage(this.fPage1);
     }
     
     /**
@@ -84,7 +89,7 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
      * @return 処理結果
      */
     public boolean performFinish() {
-        final IProject newProjectHandle = this.page1.getProjectHandle();
+        final IProject newProjectHandle = this.fPage1.getProjectHandle();
         final IProjectDescription description =
                                createProjectDescription(newProjectHandle);
  
@@ -98,7 +103,8 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
             runProjectCreationOperation(op, newProjectHandle);
             
             URL pluginURL =
-              Platform.getBundle(PieceIDEPlugin.PLUGIN_ID).getEntry(INIT_FILES);
+              Platform.getBundle(
+                          PieceIDEPlugin.PLUGIN_ID).getEntry(PROJECT_RESOURCES);
             
             //プラグイン側からスキーマフォルダ内のファイル群を取得
             File pluginFolder =
@@ -128,10 +134,10 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
      * @return プロジェクトディスクリプション
      */
     private IProjectDescription createProjectDescription(
-            IProject newProjectHandle) {
+                                          IProject newProjectHandle) {
         IPath newPath = null;
-        if (!page1.useDefaults()) {
-            newPath = page1.getLocationPath();
+        if (!fPage1.useDefaults()) {
+            newPath = fPage1.getLocationPath();
         }
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IProjectDescription description = workspace
@@ -151,14 +157,15 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
                                 IProject projectHandle,
                                 IProgressMonitor monitor) throws CoreException {
         try {
-            monitor.beginTask("", 2000); //$NON-NLS-1$
+            monitor.beginTask("", WORK_TASK);
             projectHandle.create(description,
-                          new SubProgressMonitor(monitor, 1000));
+                           new SubProgressMonitor(monitor, SUB_WORK_TASK));
+            
             if (monitor.isCanceled()) {
                 throw new OperationCanceledException();
             }
             projectHandle.open(IResource.BACKGROUND_REFRESH,
-                    new SubProgressMonitor(monitor, 1000));
+                           new SubProgressMonitor(monitor, SUB_WORK_TASK));
         } finally {
             monitor.done();
         }
@@ -222,6 +229,5 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
                            new FileInputStream(pluginChildFile), true, null);
             }
         }
-
     }
 }

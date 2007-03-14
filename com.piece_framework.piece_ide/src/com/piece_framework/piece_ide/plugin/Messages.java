@@ -1,5 +1,5 @@
 // $Id$
-package com.piece_framework.piece_ide.wizard;
+package com.piece_framework.piece_ide.plugin;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  */
 public final class Messages {
     private static final String BUNDLE_NAME =
-                "com.piece_framework.piece_ide.wizard.messages"; //$NON-NLS-1$
+                "com.piece_framework.piece_ide.plugin.messages"; //$NON-NLS-1$
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
             .getBundle(BUNDLE_NAME);

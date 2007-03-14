@@ -1,0 +1,88 @@
+# $Id$
+name: config
+desc: the definition of Piece_Right configuration file.
+type: seq
+sequence:
+  - type: map
+    required: yes
+    mapping:
+      "name": { type: str, required: yes }
+      "required":
+        type: map
+        required: no
+        mapping:
+          "message": { type: str, required: no }
+          "enabled": { type: bool, required: no }
+      "filter":
+        type: seq
+        required: no
+        sequence:
+          - type: str
+      "validator":
+        type: seq
+        required: no
+        sequence:
+          - type: map
+            required: yes
+            mapping:
+              "name": { type: str, required: yes }
+              "rule":
+                type: map
+                required: no
+                mapping:
+                  =:
+                    type: any
+              "message": { type: str, required: no }
+      "watcher":
+        type: map
+        required: no
+        mapping:
+          "target":
+            type: seq
+            required: yes
+            sequence:
+            - type: map
+              required: yes
+              mapping:
+                "name": { type: str, required: yes }
+                "trigger":
+                  type: map
+                  required: no
+                  mapping:
+                    "comparisonOperator":
+                      type: str
+                      required: yes
+                      enum:
+                        - "=="
+                        - "!="
+                        - "<>"
+                        - "<"
+                        - ">"
+                        - "<="
+                        - ">="
+                    "comparisonTo": { type: text, required: yes }
+          "turnOn":
+            type: seq
+            required: no
+            sequence:
+            - type: str
+          "turnOff":
+            type: seq
+            required: no
+            sequence:
+            - type: str
+          "turnOnForceValidation": { type: bool, required: no }
+      "description": { type: str, required: no }
+      "pseudo":
+        type: map
+        required: no
+        mapping:
+          "format":
+            type: str
+            required: yes
+          "arg":
+            type: seq
+            required: no
+            sequence:
+            - type: str
+      "forceValidation": { type: bool, required: no }
