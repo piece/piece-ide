@@ -3,7 +3,7 @@
 <!-- $Id: plugin.xml 87 2007-02-04 14:51:16Z matsufuji $ -->
 <plugin>
 
-     <extension
+   <extension
          point="org.eclipse.ui.newWizards">
       <category
             name="Piece"
@@ -24,5 +24,57 @@
                class="org.eclipse.core.resources.IResource">
          </selection>
       </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.piece_framework.piece_ide.flow_designer.editor.FlowEditor"
+            default="true"
+            extensions="flow"
+            icon="icons/sample.gif"
+            id="com.piece_framework.piece_ide.flow_designer.editor"
+            name="Flow Editor"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editorActions">
+      <editorContribution
+            id="com.piece_framework.piece_ide.flow_designer.editorActions"
+            targetID="com.piece_framework.piece_ide.flow_designer.editor">
+         <menu
+               label="フローデザイナー"
+               id="flowDesignerMenu">
+            <separator
+                   name="flowDesignerGroup">
+            </separator>
+         </menu>
+         <action
+               label="ファイナルステート"
+               icon="icons/sample.gif"
+               class="com.piece_framework.piece_ide.flow_designer.editor_actions.FinalStateAction"
+               menubarPath="flowDesignerMenu/flowDesignerGroup"
+               id="com.piece_framework.piece_ide.flow_designer.editor_actions.FinalStateAction">
+         </action>
+         <action
+               label="アクションステート"
+               icon="icons/sample.gif"
+               class="com.piece_framework.piece_ide.flow_designer.editor_actions.ActionStateAction"
+               menubarPath="flowDesignerMenu/flowDesignerGroup"
+               id="com.piece_framework.piece_ide.flow_designer.editor_actions.ActionStateAction">
+         </action>
+         <action
+               label="ビューステート"
+               icon="icons/sample.gif"
+               class="com.piece_framework.piece_ide.flow_designer.editor_actions.ViewStateAction"
+               menubarPath="flowDesignerMenu/flowDesignerGroup"
+               id="com.piece_framework.piece_ide.flow_designer.editor_actions.ViewStateAction">
+         </action>
+         <action
+               label="イニシャルステート"
+               icon="icons/sample.gif"
+               class="com.piece_framework.piece_ide.flow_designer.editor_actions.InitialStateAction"
+               menubarPath="flowDesignerMenu/flowDesignerGroup"
+               id="com.piece_framework.piece_ide.flow_designer.editor_actions.InitialStateAction">
+         </action>
+       </editorContribution>
    </extension>
 </plugin>
