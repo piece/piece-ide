@@ -1,6 +1,7 @@
 // $Id$
 package com.piece_framework.piece_ide.plugin;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -65,4 +66,7 @@ public class PieceIDEPlugin extends AbstractUIPlugin {
         return fPlugin;
     }
     
+    public static ImageDescriptor getImageDescriptor(String path) {
+        return AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID, path);
+    }
 }

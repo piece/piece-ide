@@ -28,12 +28,13 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="com.piece_framework.piece_ide.flow_designer.editor.FlowEditor"
+            class="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor"
+            contributorClass="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerActionBarContributor"
             default="true"
             extensions="flow"
             icon="icons/sample.gif"
-            id="com.piece_framework.piece_ide.flow_designer.editor"
-            name="Flow Editor"/>
+            id="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor"
+            name="Flow Designer"/>
    </extension>
    <extension
          point="org.eclipse.ui.editorActions">
