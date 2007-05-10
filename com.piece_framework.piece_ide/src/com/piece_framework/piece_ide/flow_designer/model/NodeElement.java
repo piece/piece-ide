@@ -14,6 +14,8 @@ public abstract class NodeElement extends AbstractModel {
     private List<Transition> fIncomings = new ArrayList<Transition>();
     private List<Transition> fOutgoings = new ArrayList<Transition>();
     
+    private List<Event> fEvents = new ArrayList<Event>();
+    
     public int getX() {
         return fX;
     }
@@ -69,6 +71,14 @@ public abstract class NodeElement extends AbstractModel {
     public void removeOutgoing(Transition transition) {
         fOutgoings.remove(transition);
         firePropertyChange("outgoing", null, null);
+    }
+    
+    public void addEvent(Event event) {
+    	fEvents.add(event);
+    }
+    
+    public void removeEvent(Event event) {
+    	fEvents.remove(event);
     }
     
 }

@@ -5,9 +5,11 @@ import java.io.Serializable;
 
 public class Event implements Serializable {
 
-	private static final long serialVersionUID = 2259605742197882832L;
-	
-	private String fName;
+    private static final long serialVersionUID = 2259605742197882832L;
+    
+    private String fName;
+    private String fClassName;
+    private String fMethodName;
     
     public String getName() {
         return fName;
@@ -15,5 +17,21 @@ public class Event implements Serializable {
     
     public void setName(String name) {
         fName = name;
+    }
+    
+    public String getClassName() {
+        return fClassName;
+    }
+    
+    public void setClassName(String className) {
+        fClassName = className;
+    }
+    
+    public String getMethodName() {
+        return fMethodName;
+    }
+    
+    public void setMethodName(String methodName) {
+        fMethodName = methodName;
     }
 }
