@@ -96,16 +96,11 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
             fDiagram = new Diagram();
             
             InitialState initialState = new InitialState();
-            FinalState finalState = new FinalState();
             
             initialState.setX(50);
             initialState.setY(10);
             
-            finalState.setX(50);
-            finalState.setY(200);
-            
             fDiagram.addContents(initialState);
-            fDiagram.addContents(finalState);
         }
         
         GraphicalViewer viewer = getGraphicalViewer();
@@ -163,11 +158,17 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
                 PieceIDEPlugin.getImageDescriptor("icons/ViewState.gif"),
                 PieceIDEPlugin.getImageDescriptor("icons/ViewState.gif")));
         drawer.add(new CreationToolEntry(
-                "アクションテート", 
-                "アクションテートを作成",
+                "アクションステート", 
+                "アクションステートを作成",
                 new SimpleFactory(ActionState.class),
                 PieceIDEPlugin.getImageDescriptor("icons/ActionState.gif"),
                 PieceIDEPlugin.getImageDescriptor("icons/ActionState.gif")));
+        drawer.add(new CreationToolEntry(
+                "ファイナルステート", 
+                "ファイナルステートを作成",
+                new SimpleFactory(FinalState.class),
+                PieceIDEPlugin.getImageDescriptor("icons/FinalState.gif"),
+                PieceIDEPlugin.getImageDescriptor("icons/FinalState.gif")));
         root.add(drawer);
         
         drawer = new PaletteDrawer("コネクタ");
