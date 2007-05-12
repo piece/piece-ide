@@ -41,8 +41,11 @@ public class ViewState extends ActionState implements IPropertySource {
 
     public Object getPropertyValue(Object id) {
     	
-    	super.getPropertyValue(id);
+    	Object ret = super.getPropertyValue(id);
         
+        if (ret != null) {
+            return ret;
+        }
         if (id.equals("view")) {
             return fView != null ? fView : "";
         }        
