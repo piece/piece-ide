@@ -10,7 +10,6 @@ import com.piece_framework.piece_ide.flow_designer.model.FinalState;
 import com.piece_framework.piece_ide.flow_designer.model.InitialState;
 import com.piece_framework.piece_ide.flow_designer.model.Transition;
 import com.piece_framework.piece_ide.flow_designer.model.ViewState;
-import com.piece_framework.piece_ide.flow_designer.ui.editor.TransitionEditPart;
 
 public class FlowDesignerEditFactory implements EditPartFactory {
 
