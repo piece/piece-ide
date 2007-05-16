@@ -30,13 +30,12 @@ public class ViewState extends ActionState implements IPropertySource {
     }
 
     public IPropertyDescriptor[] getPropertyDescriptors() {
-    	
-    	//super.getPropertyDescriptors());
-
         return new IPropertyDescriptor[] {
                 new TextPropertyDescriptor("view", "ビュー"),
-                new TextPropertyDescriptor("name", "名前")};
-        
+                new TextPropertyDescriptor("name", "名前"),
+                new TextPropertyDescriptor("activity", "activity"),
+                new TextPropertyDescriptor("entry", "entry"),
+                new TextPropertyDescriptor("exit", "exit")};
     }
 
     public Object getPropertyValue(Object id) {
