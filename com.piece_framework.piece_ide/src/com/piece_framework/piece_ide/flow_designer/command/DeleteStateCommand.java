@@ -14,7 +14,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  * @since 0.1.0
  *
  */
-public class DeleteElementCommand extends Command {
+public class DeleteStateCommand extends Command {
 
     private IFlow fFlow;
     private State fState;
@@ -25,7 +25,7 @@ public class DeleteElementCommand extends Command {
      * @param flow フロー
      * @param state 削除対象ステート
      */
-    public DeleteElementCommand(IFlow flow, State state) {
+    public DeleteStateCommand(IFlow flow, State state) {
         fFlow = flow;
         fState = state;
     }

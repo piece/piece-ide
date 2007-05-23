@@ -6,7 +6,7 @@ import org.eclipse.gef.EditPolicy;
 
 import com.piece_framework.piece_ide.flow_designer.ui.figure.InitialStateFigure;
 
-public class InitialStateEditPart extends NodeElementEditPart {
+public class InitialStateEditPart extends StateEditPart {
 
     @Override
     protected IFigure createFigure() {
@@ -18,7 +18,7 @@ public class InitialStateEditPart extends NodeElementEditPart {
     @Override
     protected void createEditPolicies() {
         installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE,
-                          new ElementGraphicalNodeEditPolicy());
+                          new StateGraphicalNodeEditPolicy());
         
     }
 }

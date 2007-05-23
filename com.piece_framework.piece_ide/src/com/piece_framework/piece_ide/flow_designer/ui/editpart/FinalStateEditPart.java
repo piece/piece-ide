@@ -5,7 +5,7 @@ import org.eclipse.draw2d.IFigure;
 
 import com.piece_framework.piece_ide.flow_designer.ui.figure.FinalStateFigure;
 
-public class FinalStateEditPart extends NodeElementEditPart {
+public class FinalStateEditPart extends StateEditPart {
 
     @Override
     protected IFigure createFigure() {

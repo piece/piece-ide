@@ -8,7 +8,7 @@ import org.eclipse.draw2d.IFigure;
 import com.piece_framework.piece_ide.flow_designer.model.ActionState;
 import com.piece_framework.piece_ide.flow_designer.ui.figure.ActionStateFigure;
 
-public class ActionStateEditPart extends NodeElementEditPart {
+public class ActionStateEditPart extends StateEditPart {
 
     @Override
     protected IFigure createFigure() {

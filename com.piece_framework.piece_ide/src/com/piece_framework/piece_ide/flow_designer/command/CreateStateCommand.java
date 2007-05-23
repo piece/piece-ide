@@ -14,7 +14,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  * @since 0.1.0
  *
  */
-public class CreateElementCommand extends Command {
+public class CreateStateCommand extends Command {
 
     private Flow fFlow;
     private State fState;
@@ -30,7 +30,7 @@ public class CreateElementCommand extends Command {
      * @param x 作成するステートのX座標
      * @param y 作成するステートのY座標
      */
-    public CreateElementCommand(Flow flow, 
+    public CreateStateCommand(Flow flow, 
                                  State state, 
                                  int x, int y) {
         super();
