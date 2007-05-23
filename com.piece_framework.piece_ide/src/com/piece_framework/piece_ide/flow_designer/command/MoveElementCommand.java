@@ -3,7 +3,7 @@ package com.piece_framework.piece_ide.flow_designer.command;
 
 import org.eclipse.gef.commands.Command;
 
-import com.piece_framework.piece_ide.flow_designer.model.NodeElement;
+import com.piece_framework.piece_ide.flow_designer.model.State;
 
 public class MoveElementCommand extends Command {
     
@@ -13,9 +13,9 @@ public class MoveElementCommand extends Command {
     private int fY;
     private int fOldY;
     
-    private NodeElement fElement;
+    private State fElement;
     
-    public MoveElementCommand(int x, int y, NodeElement element) {
+    public MoveElementCommand(int x, int y, State element) {
         super();
         fX = x;
         fY = y;

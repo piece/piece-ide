@@ -15,7 +15,7 @@ import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.Request;
 
-import com.piece_framework.piece_ide.flow_designer.model.NodeElement;
+import com.piece_framework.piece_ide.flow_designer.model.State;
 
 public abstract class NodeElementEditPart extends AbstractModelEditPart 
                                              implements NodeEditPart {
@@ -42,7 +42,7 @@ public abstract class NodeElementEditPart extends AbstractModelEditPart
     }
 
     protected void refreshVisuals() {
-        NodeElement element = (NodeElement) getModel();
+        State element = (State) getModel();
         
         Point point = new Point(element.getX(), element.getY());
         
@@ -55,13 +55,13 @@ public abstract class NodeElementEditPart extends AbstractModelEditPart
     
     @Override
     protected List getModelSourceConnections() {
-        NodeElement element = (NodeElement) getModel();
+        State element = (State) getModel();
         return element.getOutgoings();
     }
 
     @Override
     protected List getModelTargetConnections() {
-        NodeElement element = (NodeElement) getModel();
+        State element = (State) getModel();
         return element.getIncomings();
     }
 

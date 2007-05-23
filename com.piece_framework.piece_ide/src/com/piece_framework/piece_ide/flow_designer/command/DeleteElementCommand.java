@@ -4,14 +4,14 @@ package com.piece_framework.piece_ide.flow_designer.command;
 import org.eclipse.gef.commands.Command;
 
 import com.piece_framework.piece_ide.flow_designer.model.Container;
-import com.piece_framework.piece_ide.flow_designer.model.NodeElement;
+import com.piece_framework.piece_ide.flow_designer.model.State;
 
 public class DeleteElementCommand extends Command {
 
     private Container fContainer;
-    private NodeElement fElement;
+    private State fElement;
     
-    public DeleteElementCommand(Container container, NodeElement element) {
+    public DeleteElementCommand(Container container, State element) {
         fContainer = container;
         fElement = element;
     }

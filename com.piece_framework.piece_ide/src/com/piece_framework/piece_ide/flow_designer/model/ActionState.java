@@ -14,7 +14,7 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
  * @since 0.1.0
  * 
  */
-public class ActionState extends NodeElement implements IPropertySource {
+public class ActionState extends State implements IPropertySource {
 
     private static final long serialVersionUID = -3753390580717540401L;
 

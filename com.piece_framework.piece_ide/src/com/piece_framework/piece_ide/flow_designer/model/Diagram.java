@@ -8,14 +8,14 @@ public class Diagram extends AbstractModel implements Container {
 
     private static final long serialVersionUID = 4080106758569031141L;
     
-    private List<NodeElement> fContents;
+    private List<State> fContents;
     
     public Diagram() {
         super();
-        fContents = new ArrayList<NodeElement>();
+        fContents = new ArrayList<State>();
     }
     
-    public void addContents(NodeElement element) {
+    public void addContents(State element) {
         fContents.add(element);
         element.setParent(this);
         firePropertyChange("contents", null, null);
@@ -25,7 +25,7 @@ public class Diagram extends AbstractModel implements Container {
         return fContents;
     }
 
-    public void removeContents(NodeElement element) {
+    public void removeContents(State element) {
         fContents.remove(element);
         element.setParent(null);
         firePropertyChange("contents", null, null);

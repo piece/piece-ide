@@ -11,7 +11,7 @@ import org.eclipse.gef.requests.CreateRequest;
 import com.piece_framework.piece_ide.flow_designer.command.CreateElementCommand;
 import com.piece_framework.piece_ide.flow_designer.command.MoveElementCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Diagram;
-import com.piece_framework.piece_ide.flow_designer.model.NodeElement;
+import com.piece_framework.piece_ide.flow_designer.model.State;
 
 public class DiagramLayoutEditPolicy extends XYLayoutEditPolicy {
 
@@ -20,7 +20,7 @@ public class DiagramLayoutEditPolicy extends XYLayoutEditPolicy {
             Object constraint) {
         
         Rectangle rectangle = (Rectangle) constraint;
-        NodeElement element = (NodeElement) child.getModel();
+        State element = (State) child.getModel();
         
         return new MoveElementCommand(rectangle.x, rectangle.y, element);
     }
@@ -29,7 +29,7 @@ public class DiagramLayoutEditPolicy extends XYLayoutEditPolicy {
     protected Command getCreateCommand(CreateRequest request) {
         
         Point point = request.getLocation();
-        NodeElement element = (NodeElement) request.getNewObject();
+        State element = (State) request.getNewObject();
         Diagram diagram = (Diagram) getHost().getModel();
         
         return new CreateElementCommand(diagram, element, point.x, point.y);

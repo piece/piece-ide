@@ -4,18 +4,18 @@ package com.piece_framework.piece_ide.flow_designer.command;
 import org.eclipse.gef.commands.Command;
 
 import com.piece_framework.piece_ide.flow_designer.model.Diagram;
-import com.piece_framework.piece_ide.flow_designer.model.NodeElement;
+import com.piece_framework.piece_ide.flow_designer.model.State;
 
 public class CreateElementCommand extends Command {
 
     private Diagram fParent;
-    private NodeElement fElement;
+    private State fElement;
     
     private int fX;
     private int fY;
     
     public CreateElementCommand(Diagram parent, 
-                                 NodeElement element, 
+                                 State element, 
                                  int x, int y) {
         super();
         fParent = parent;

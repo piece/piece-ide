@@ -7,7 +7,7 @@ public interface Container {
     
     List getContents();
     
-    void addContents(NodeElement element);
+    void addContents(State element);
     
-    void removeContents(NodeElement element);
+    void removeContents(State element);
 }

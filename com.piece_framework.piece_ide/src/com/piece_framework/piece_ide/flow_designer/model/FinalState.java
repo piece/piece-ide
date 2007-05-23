@@ -1,7 +1,7 @@
 // $Id$
 package com.piece_framework.piece_ide.flow_designer.model;
 
-public class FinalState extends NodeElement {
+public class FinalState extends State {
     
     private static final long serialVersionUID = -6407671924508003709L;
 
