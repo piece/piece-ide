@@ -25,16 +25,117 @@ public class State extends AbstractModel {
     /** ステート定数：ビュー・ステート. */
     public static final int VIEW_STATE = 4;
     
+    private int fStateType;
+    private String fName;
+    private String fView;
+    private List<Event> fEvents = new ArrayList<Event>();
+    
     private int fX;
     private int fY;
-    private List<Event> fEvents = new ArrayList<Event>();
     
     private Container fParent;
     
     private List<Transition> fIncomings = new ArrayList<Transition>();
     private List<Transition> fOutgoings = new ArrayList<Transition>();
     
+    /**
+     * ステートタイプを返す.
+     * 
+     * @return ステートタイプ
+     */
+    public int getStateType() {
+        return fStateType;
+    }
+
+    /**
+     * ステートタイプを設定する.
+     * 
+     * @param stateType ステートタイプ.
+     */
+    public void setStateType(int stateType) {
+        fStateType = stateType;
+    }
+
+    /**
+     * ステート名を返す.
+     * 
+     * @return ステート名
+     */
+    public String getName() {
+        return fName;
+    }
+
+    /**
+     * ステート名を設定する.
+     * 
+     * @param name ステート名
+     */
+    public void setName(String name) {
+        fName = name;
+    }
+
+    /**
+     * ビュー名を返す.
+     * ステートタイプが VIEW_STATE でなければ、NULL を返す。
+     * 
+     * @return ビュー名
+     */
+    public String getView() {
+        if (fStateType != VIEW_STATE) {
+            return null;
+        }
+        return fView;
+    }
+
+    /**
+     * ビュー名を設定する.
+     * ステートタイプが VIEW_STATE でなければなにもしない。
+     * 
+     * @param view ビュー名
+     */
+    public void setView(String view) {
+        if (fStateType == VIEW_STATE) {
+            fView = view;
+        }
+    }
+
+    /**
+     * イベントを追加する.
+     * 
+     * @param event イベント
+     */
+    public void addEvent(Event event) {
+        fEvents.add(event);
+    }
     
+    /**
+     * イベントを削除する.
+     * 
+     * @param event イベント
+     */
+    public void removeEvent(Event event) {
+        fEvents.remove(event);
+    }
+
+    /**
+     * 親コンテナを返す.
+     * 
+     * @return 親コンテナ
+     */
+    public Container getParent() {
+        return fParent;
+    }
+
+    /**
+     * 親コンテナを設定する.
+     * 
+     * @param parent 親コンテナ
+     */
+    public void setParent(Container parent) {
+        fParent = parent;
+        firePropertyChange("parent", null, null);
+    }
+
     /**
      * ステートのX座標を返す.
      * 
@@ -73,25 +174,6 @@ public class State extends AbstractModel {
         int old = fY;
         fY = y;
         firePropertyChagen("y", old, fY);
-    }
-    
-    /**
-     * 親コンテナを返す.
-     * 
-     * @return 親コンテナ
-     */
-    public Container getParent() {
-        return fParent;
-    }
-    
-    /**
-     * 親コンテナを設定する.
-     * 
-     * @param parent 親コンテナ
-     */
-    public void setParent(Container parent) {
-        fParent = parent;
-        firePropertyChange("parent", null, null);
     }
     
     /**
@@ -152,21 +234,4 @@ public class State extends AbstractModel {
         firePropertyChange("outgoing", null, null);
     }
     
-    /**
-     * イベントを追加する.
-     * 
-     * @param event イベント
-     */
-    public void addEvent(Event event) {
-        fEvents.add(event);
-    }
-    
-    /**
-     * イベントを削除する.
-     * 
-     * @param event イベント
-     */
-    public void removeEvent(Event event) {
-        fEvents.remove(event);
-    }
 }
