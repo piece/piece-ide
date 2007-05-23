@@ -33,7 +33,7 @@ public class State extends AbstractModel {
     private int fX;
     private int fY;
     
-    private Container fParent;
+    private IFlow fParent;
     
     private List<Transition> fIncomings = new ArrayList<Transition>();
     private List<Transition> fOutgoings = new ArrayList<Transition>();
@@ -122,7 +122,7 @@ public class State extends AbstractModel {
      * 
      * @return 親コンテナ
      */
-    public Container getParent() {
+    public IFlow getParent() {
         return fParent;
     }
 
@@ -131,7 +131,7 @@ public class State extends AbstractModel {
      * 
      * @param parent 親コンテナ
      */
-    public void setParent(Container parent) {
+    public void setParent(IFlow parent) {
         fParent = parent;
         firePropertyChange("parent", null, null);
     }

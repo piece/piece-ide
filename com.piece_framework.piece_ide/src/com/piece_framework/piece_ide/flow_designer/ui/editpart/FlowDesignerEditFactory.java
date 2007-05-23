@@ -5,7 +5,7 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
 import com.piece_framework.piece_ide.flow_designer.model.ActionState;
-import com.piece_framework.piece_ide.flow_designer.model.Diagram;
+import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.FinalState;
 import com.piece_framework.piece_ide.flow_designer.model.InitialState;
 import com.piece_framework.piece_ide.flow_designer.model.Transition;
@@ -31,8 +31,8 @@ public class FlowDesignerEditFactory implements EditPartFactory {
         } else if (model instanceof Transition) {
             editPart = new TransitionEditPart();
             
-        } else if (model instanceof Diagram) {
-            editPart = new DiagramEditPart();
+        } else if (model instanceof Flow) {
+            editPart = new FlowEditPart();
         }
         
         editPart.setModel(model);

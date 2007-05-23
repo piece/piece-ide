@@ -9,9 +9,9 @@ import org.eclipse.draw2d.FreeformLayout;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.gef.EditPolicy;
 
-import com.piece_framework.piece_ide.flow_designer.model.Diagram;
+import com.piece_framework.piece_ide.flow_designer.model.Flow;
 
-public class DiagramEditPart extends AbstractModelEditPart {
+public class FlowEditPart extends AbstractModelEditPart {
 
     @Override
     protected IFigure createFigure() {
@@ -23,17 +23,17 @@ public class DiagramEditPart extends AbstractModelEditPart {
     @Override
     protected void createEditPolicies() {
         installEditPolicy(EditPolicy.LAYOUT_ROLE, 
-                          new DiagramLayoutEditPolicy());
+                          new FlowLayoutEditPolicy());
     }
     
     @Override
     protected List getModelChildren() {
-        Diagram diagram = (Diagram) getModel();
-        return diagram.getContents();
+        Flow flow = (Flow) getModel();
+        return flow.getStates();
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("contents")) {
+        if (evt.getPropertyName().equals("state")) {
             refreshChildren();
         }
     }

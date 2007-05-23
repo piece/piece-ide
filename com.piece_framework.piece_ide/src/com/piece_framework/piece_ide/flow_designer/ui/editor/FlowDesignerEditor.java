@@ -27,12 +27,14 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 
 import com.piece_framework.piece_ide.flow_designer.model.ActionState;
-import com.piece_framework.piece_ide.flow_designer.model.Diagram;
 import com.piece_framework.piece_ide.flow_designer.model.FinalState;
+import com.piece_framework.piece_ide.flow_designer.model.Flow;
+import com.piece_framework.piece_ide.flow_designer.model.IFlow;
 import com.piece_framework.piece_ide.flow_designer.model.InitialState;
 import com.piece_framework.piece_ide.flow_designer.model.Transition;
 import com.piece_framework.piece_ide.flow_designer.model.ViewState;
-import com.piece_framework.piece_ide.flow_designer.ui.editpart.FlowDesignerEditFactory;
+import com.piece_framework.piece_ide.
+            flow_designer.ui.editpart.FlowDesignerEditFactory;
 import com.piece_framework.piece_ide.plugin.PieceIDEPlugin;
 
 //import piece_ide.flow_designer.ui.editpart.FlowDesignerEditFactory;
@@ -40,7 +42,7 @@ import com.piece_framework.piece_ide.plugin.PieceIDEPlugin;
 
 public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
     
-    private Diagram fDiagram;
+    private Flow fFlow;
     
     public FlowDesignerEditor() {
         DefaultEditDomain domain = new DefaultEditDomain(this);
@@ -69,7 +71,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
             IFile file = ((IFileEditorInput) getEditorInput()).getFile();
             setPartName(file.getName());
             ObjectInputStream in = new ObjectInputStream(file.getContents());
-            fDiagram = (Diagram) in.readObject();
+            fFlow = (Flow) in.readObject();
             in.close();
             
             needInit = false;
@@ -93,18 +95,18 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
         }
         
         if (needInit) {
-            fDiagram = new Diagram();
+            fFlow = new Flow();
             
             InitialState initialState = new InitialState();
             
             initialState.setX(50);
             initialState.setY(10);
             
-            fDiagram.addContents(initialState);
+            fFlow.addState(initialState);
         }
         
         GraphicalViewer viewer = getGraphicalViewer();
-        viewer.setContents(fDiagram);
+        viewer.setContents(fFlow);
     }
     
     @Override
@@ -113,7 +115,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
         
         try {
             ObjectOutputStream objectOut = new ObjectOutputStream(byteOut);
-            objectOut.writeObject(fDiagram);
+            objectOut.writeObject(fFlow);
             objectOut.close();
             
             IFile file = ((IFileEditorInput) getEditorInput()).getFile();

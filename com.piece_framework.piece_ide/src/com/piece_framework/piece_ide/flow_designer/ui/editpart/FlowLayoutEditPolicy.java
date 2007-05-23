@@ -10,10 +10,10 @@ import org.eclipse.gef.requests.CreateRequest;
 
 import com.piece_framework.piece_ide.flow_designer.command.CreateElementCommand;
 import com.piece_framework.piece_ide.flow_designer.command.MoveElementCommand;
-import com.piece_framework.piece_ide.flow_designer.model.Diagram;
+import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
-public class DiagramLayoutEditPolicy extends XYLayoutEditPolicy {
+public class FlowLayoutEditPolicy extends XYLayoutEditPolicy {
 
     @Override
     protected Command createChangeConstraintCommand(EditPart child,
@@ -30,7 +30,7 @@ public class DiagramLayoutEditPolicy extends XYLayoutEditPolicy {
         
         Point point = request.getLocation();
         State element = (State) request.getNewObject();
-        Diagram diagram = (Diagram) getHost().getModel();
+        Flow diagram = (Flow) getHost().getModel();
         
         return new CreateElementCommand(diagram, element, point.x, point.y);
     }
