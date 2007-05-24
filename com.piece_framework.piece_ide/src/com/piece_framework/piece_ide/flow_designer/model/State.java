@@ -4,6 +4,10 @@ package com.piece_framework.piece_ide.flow_designer.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.ui.views.properties.IPropertyDescriptor;
+import org.eclipse.ui.views.properties.IPropertySource;
+import org.eclipse.ui.views.properties.TextPropertyDescriptor;
+
 /**
  * ステートクラス.
  * 
@@ -12,7 +16,7 @@ import java.util.List;
  * @since 0.1.0
  *
  */
-public class State extends AbstractModel {
+public class State extends AbstractModel implements IPropertySource {
     
     private static final long serialVersionUID = -7778980617394743980L;
     
@@ -232,6 +236,112 @@ public class State extends AbstractModel {
     public void removeOutgoing(Transition transition) {
         fOutgoings.remove(transition);
         firePropertyChange("outgoing", null, null);
+    }
+
+    /**
+     * エディット可能なオブジェクトを返す.
+     * 
+     * @return 自身 
+     * @see org.eclipse.ui.views.properties.IPropertySource#getEditableValue()
+     */
+    public Object getEditableValue() {
+        return this;
+    }
+    
+    /**
+     * プロパティ・ディスクリプタ一覧を返す.
+     * 
+     * @return 編集可能なプロパティ・ディスクリプタ一覧
+     * @see org.eclipse.ui.views.properties.IPropertySource
+     *          #getPropertyDescriptors()
+     */
+    public IPropertyDescriptor[] getPropertyDescriptors() {
+        List<IPropertyDescriptor> list = new ArrayList<IPropertyDescriptor>();
+        
+        list.add(new TextPropertyDescriptor("name", "名前"));
+        if (fStateType == VIEW_STATE) {
+            list.add(new TextPropertyDescriptor("view", "ビュー"));
+        }
+        // TODO:Eventに対するプロパティ処理
+        // list.add(new TextPropertyDescriptor("evnet", "イベント"));
+        
+        return list.toArray(new IPropertyDescriptor[0]);
+    }
+
+    /**
+     * プロパティの値を返す.
+     * 
+     * @param id プロパティ名
+     * @return プロパティ
+     * @see org.eclipse.ui.views.properties.IPropertySource
+     *          #getPropertyValue(java.lang.Object)
+     */
+    public Object getPropertyValue(Object id) {
+        Object ret = null;
+        
+        if (id.equals("name")) {
+            if (fName != null) {
+                ret = fName;
+            } else {
+                ret = "";
+            }
+        }
+        
+        if (fStateType == VIEW_STATE && id.equals("view")) {
+            if (fView != null) {
+                ret = fView;
+            } else {
+                ret = "";
+            }
+        }
+        
+        // TODO:Eventに対するプロパティ処理
+        
+        return ret;
+    }
+
+    /**
+     * プロパティの存在チェック.
+     * 
+     * @param id プロパティ名
+     * @return チェック結果
+     * @see org.eclipse.ui.views.properties.IPropertySource
+     *          #isPropertySet(java.lang.Object)
+     */
+    public boolean isPropertySet(Object id) {
+        // TODO:Eventに対するプロパティ処理
+        return id.equals("name") 
+                || (fStateType == VIEW_STATE && id.equals("view"));
+    }
+
+    /**
+     * プロパティの値をリセットする.
+     * 
+     * @param id プロパティ名
+     * @see org.eclipse.ui.views.properties.IPropertySource
+     *          #resetPropertyValue(java.lang.Object)
+     */
+    public void resetPropertyValue(Object id) {
+    }
+
+    /**
+     * プロパティの値を設定する.
+     * 
+     * @param id プロパティ名
+     * @param value プロパティ値
+     * @see org.eclipse.ui.views.properties.IPropertySource
+     *          #setPropertyValue(java.lang.Object, java.lang.Object)
+     */
+    public void setPropertyValue(Object id, Object value) {
+        if (id.equals("name")) {
+            setName(String.valueOf(value));
+        }
+        
+        if (fStateType == VIEW_STATE && id.equals("view")) {
+            setView(String.valueOf(value));
+        }
+        
+        // TODO:Eventに対するプロパティ処理
     }
     
 }
