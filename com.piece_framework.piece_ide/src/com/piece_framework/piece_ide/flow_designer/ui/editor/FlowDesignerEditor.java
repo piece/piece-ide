@@ -26,29 +26,48 @@ import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 
-import com.piece_framework.piece_ide.flow_designer.model.ActionState;
-import com.piece_framework.piece_ide.flow_designer.model.FinalState;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
-import com.piece_framework.piece_ide.flow_designer.model.IFlow;
-import com.piece_framework.piece_ide.flow_designer.model.InitialState;
+import com.piece_framework.piece_ide.flow_designer.model.State;
+import com.piece_framework.piece_ide.flow_designer.model.StateFactory;
 import com.piece_framework.piece_ide.flow_designer.model.Transition;
-import com.piece_framework.piece_ide.flow_designer.model.ViewState;
-import com.piece_framework.piece_ide.
-            flow_designer.ui.editpart.FlowDesignerEditFactory;
+import com.piece_framework.piece_ide.flow_designer.
+            ui.editpart.FlowDesignerEditFactory;
 import com.piece_framework.piece_ide.plugin.PieceIDEPlugin;
 
 //import piece_ide.flow_designer.ui.editpart.FlowDesignerEditFactory;
 //import piece_ide.PieceIDEPlugin;
 
+/**
+ * フローデザイナー・エディター.
+ * 
+ * @author MATSUFUJI Hideharu
+ * @version 0.1.0
+ * @since 0.1.0
+ *
+ */
 public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
+    
+    private static final int INITAL_STATE_X = 50;
+    private static final int INITAL_STATE_Y = 50;
     
     private Flow fFlow;
     
+    /**
+     * コンストラクタ.
+     * 
+     */
     public FlowDesignerEditor() {
         DefaultEditDomain domain = new DefaultEditDomain(this);
         setEditDomain(domain);
     }
     
+    /**
+     * グラフィカル・ビューアを設定する.
+     * グラフィカル・ビューアを作成し、エディットパート・ファクトリと
+     * メニュー・プロバイダを設定する。
+     * 
+     * @see org.eclipse.gef.ui.parts.GraphicalEditor#configureGraphicalViewer()
+     */
     @Override
     protected void configureGraphicalViewer() {
         super.configureGraphicalViewer();
@@ -62,6 +81,14 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
         getSite().registerContextMenu(menuProvider, viewer);
     }
 
+    /**
+     * グラフィカル・ビューアを初期化する.
+     * ファイルからフローを読み込んで、表示する。ファイルにフローの情報が
+     * ない場合はイニシャルステートのみを表示する。
+     * 
+     * @see org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette
+     *          #initializeGraphicalViewer()
+     */
     @Override
     protected void initializeGraphicalViewer() {
         
@@ -97,10 +124,10 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
         if (needInit) {
             fFlow = new Flow();
             
-            InitialState initialState = new InitialState();
+            State initialState = new State(State.INITIAL_STATE);
             
-            initialState.setX(50);
-            initialState.setY(10);
+            initialState.setX(INITAL_STATE_X);
+            initialState.setY(INITAL_STATE_Y);
             
             fFlow.addState(initialState);
         }
@@ -109,6 +136,13 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
         viewer.setContents(fFlow);
     }
     
+    /**
+     * フローを保存する.
+     * 
+     * @param monitor プログレスモニター
+     * @see org.eclipse.ui.part.EditorPart
+     *          #doSave(org.eclipse.core.runtime.IProgressMonitor)
+     */
     @Override
     public void doSave(IProgressMonitor monitor) {
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
@@ -137,12 +171,28 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
         }
     }
     
+    /**
+     * コマンドスタックに変更があった場合のイベント.
+     * 編集中の場合、エディターのタイトルに"*"を表示する。
+     * 
+     * @param event イベント
+     * @see org.eclipse.gef.ui.parts.GraphicalEditor
+     *          #commandStackChanged(java.util.EventObject)
+     */
     @Override
     public void commandStackChanged(EventObject event) {
         firePropertyChange(IEditorPart.PROP_DIRTY);
         super.commandStackChanged(event);
     }
 
+    /**
+     * パレット・ルートを返す.
+     * パレットを生成して返す。
+     * 
+     * @return 作成したパレット・ルート
+     * @see org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette
+     *          #getPaletteRoot()
+     */
     @Override
     protected PaletteRoot getPaletteRoot() {
         PaletteRoot root = new PaletteRoot();
@@ -156,19 +206,19 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
         drawer.add(new CreationToolEntry(
                 "ビューステート", 
                 "ビューステートを作成",
-                new SimpleFactory(ViewState.class),
+                new StateFactory(State.VIEW_STATE),
                 PieceIDEPlugin.getImageDescriptor("icons/ViewState.gif"),
                 PieceIDEPlugin.getImageDescriptor("icons/ViewState.gif")));
         drawer.add(new CreationToolEntry(
                 "アクションステート", 
                 "アクションステートを作成",
-                new SimpleFactory(ActionState.class),
+                new StateFactory(State.ACTION_STATE),
                 PieceIDEPlugin.getImageDescriptor("icons/ActionState.gif"),
                 PieceIDEPlugin.getImageDescriptor("icons/ActionState.gif")));
         drawer.add(new CreationToolEntry(
                 "ファイナルステート", 
                 "ファイナルステートを作成",
-                new SimpleFactory(FinalState.class),
+                new StateFactory(State.FINAL_STATE),
                 PieceIDEPlugin.getImageDescriptor("icons/FinalState.gif"),
                 PieceIDEPlugin.getImageDescriptor("icons/FinalState.gif")));
         root.add(drawer);

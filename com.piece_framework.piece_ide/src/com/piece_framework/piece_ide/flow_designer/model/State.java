@@ -43,21 +43,21 @@ public class State extends AbstractModel implements IPropertySource {
     private List<Transition> fOutgoings = new ArrayList<Transition>();
     
     /**
+     * コンストラクタ.
+     * 
+     * @param stateType ステートタイプ
+     */
+    public State(int stateType) {
+        fStateType = stateType;
+    }
+    
+    /**
      * ステートタイプを返す.
      * 
      * @return ステートタイプ
      */
     public int getStateType() {
         return fStateType;
-    }
-
-    /**
-     * ステートタイプを設定する.
-     * 
-     * @param stateType ステートタイプ.
-     */
-    public void setStateType(int stateType) {
-        fStateType = stateType;
     }
 
     /**
@@ -75,7 +75,9 @@ public class State extends AbstractModel implements IPropertySource {
      * @param name ステート名
      */
     public void setName(String name) {
+        String old = fName;
         fName = name;
+        firePropertyChange("name", old, fName);
     }
 
     /**
@@ -99,7 +101,9 @@ public class State extends AbstractModel implements IPropertySource {
      */
     public void setView(String view) {
         if (fStateType == VIEW_STATE) {
+            String old = fView;
             fView = view;
+            firePropertyChange("view", old, fView);
         }
     }
 
@@ -258,7 +262,7 @@ public class State extends AbstractModel implements IPropertySource {
     public IPropertyDescriptor[] getPropertyDescriptors() {
         List<IPropertyDescriptor> list = new ArrayList<IPropertyDescriptor>();
         
-        list.add(new TextPropertyDescriptor("name", "名前"));
+        list.add(new TextPropertyDescriptor("name", "ステート名"));
         if (fStateType == VIEW_STATE) {
             list.add(new TextPropertyDescriptor("view", "ビュー"));
         }
