@@ -122,7 +122,17 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
         }
         
         if (needInit) {
-            fFlow = new Flow();
+            String flowName = null;
+            String actionClassName = null;
+            // ファイル名からフロー名・アクションクラス名を生成
+            if (getPartName() != null) {
+                String fileName = getPartName();
+                
+                flowName = fileName.substring(0, fileName.indexOf('.'));
+                actionClassName = flowName + "Action"; 
+            }
+            
+            fFlow = new Flow(flowName, actionClassName);
             
             State initialState = new State(State.INITIAL_STATE);
             

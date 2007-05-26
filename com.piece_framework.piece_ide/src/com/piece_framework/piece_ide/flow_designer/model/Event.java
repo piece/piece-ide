@@ -107,7 +107,7 @@ public class Event implements Serializable {
      * 
      * @param guardEventHandler ガード用イベントハンドラ
      */
-    public void setFGuardEventHandler(EventHandler guardEventHandler) {
+    public void setGuardEventHandler(EventHandler guardEventHandler) {
         fGuardEventHandler = guardEventHandler;
     }
 }

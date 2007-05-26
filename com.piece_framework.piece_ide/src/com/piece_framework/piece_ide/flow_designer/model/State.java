@@ -49,6 +49,56 @@ public class State extends AbstractModel implements IPropertySource {
      */
     public State(int stateType) {
         fStateType = stateType;
+        
+        if (fStateType == INITIAL_STATE) {
+            Event initializeEvent = new Event();
+            initializeEvent.setName("Initialize");
+            initializeEvent.setSpecialEvent(true);
+            EventHandler eventHandler = new EventHandler();
+            eventHandler.setMethodName("initialize");
+            initializeEvent.setEventHandler(eventHandler);
+            
+            fEvents.add(initializeEvent);
+            
+        } else if (fStateType == FINAL_STATE
+                    || fStateType == VIEW_STATE) {
+            Event entryEvent = new Event();
+            entryEvent.setName("Entry");
+            entryEvent.setSpecialEvent(true);
+            EventHandler eventHandler = new EventHandler();
+            eventHandler.setMethodName("entry");
+            entryEvent.setEventHandler(eventHandler);
+        
+            fEvents.add(entryEvent);
+            
+            Event exitEvent = new Event();
+            exitEvent.setName("Entry");
+            exitEvent.setSpecialEvent(true);
+            eventHandler = new EventHandler();
+            eventHandler.setMethodName("exit");
+            exitEvent.setEventHandler(eventHandler);
+        
+            fEvents.add(exitEvent);
+            
+            Event activityEvent = new Event();
+            activityEvent.setName("activity");
+            activityEvent.setSpecialEvent(true);
+            eventHandler = new EventHandler();
+            eventHandler.setMethodName("activity");
+            exitEvent.setEventHandler(eventHandler);
+        
+            fEvents.add(activityEvent);
+            
+        } else if (fStateType == ACTION_STATE) {
+            Event finalizeEvent = new Event();
+            finalizeEvent.setName("Finalize");
+            finalizeEvent.setSpecialEvent(true);
+            EventHandler eventHandler = new EventHandler();
+            eventHandler.setMethodName("finalize");
+            finalizeEvent.setEventHandler(eventHandler);
+        
+            fEvents.add(finalizeEvent);
+        }
     }
     
     /**
