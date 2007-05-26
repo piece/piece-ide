@@ -4,6 +4,10 @@ package com.piece_framework.piece_ide.flow_designer.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.ui.views.properties.IPropertyDescriptor;
+import org.eclipse.ui.views.properties.IPropertySource;
+import org.eclipse.ui.views.properties.TextPropertyDescriptor;
+
 /**
  * フロークラス.
  * フロークラスはステートを保持する。
@@ -13,7 +17,7 @@ import java.util.List;
  * @since 0.1.0
  *
  */
-public class Flow extends AbstractModel {
+public class Flow extends AbstractModel implements IPropertySource {
 
     private static final long serialVersionUID = 4080106758569031141L;
     
@@ -112,5 +116,103 @@ public class Flow extends AbstractModel {
         fStates.remove(state);
         state.setParent(null);
         firePropertyChange("state", null, null);
+    }
+
+    /**
+     * エディット可能なオブジェクトを返す.
+     * 
+     * @return 自身 
+     * @see org.eclipse.ui.views.properties.IPropertySource#getEditableValue()
+     */
+    public Object getEditableValue() {
+        return this;
+    }
+
+    /**
+     * プロパティ・ディスクリプタ一覧を返す.
+     * 
+     * @return 編集可能なプロパティ・ディスクリプタ一覧
+     * @see org.eclipse.ui.views.properties.IPropertySource
+     *          #getPropertyDescriptors()
+     */
+    public IPropertyDescriptor[] getPropertyDescriptors() {
+        List<IPropertyDescriptor> list = new ArrayList<IPropertyDescriptor>();
+        
+        list.add(new TextPropertyDescriptor("name", "フロー名"));
+        list.add(new TextPropertyDescriptor("actionClassName", 
+                                             "アクションクラス名"));
+        
+        return list.toArray(new IPropertyDescriptor[0]);
+    }
+
+    /**
+     * プロパティの値を返す.
+     * 
+     * @param id プロパティ名
+     * @return プロパティ
+     * @see org.eclipse.ui.views.properties.IPropertySource
+     *          #getPropertyValue(java.lang.Object)
+     */
+    public Object getPropertyValue(Object id) {
+        Object ret = null;
+        
+        if (id.equals("name")) {
+            if (fName != null) {
+                ret = fName;
+            } else {
+                ret = "";
+            }
+        }
+        
+        if (id.equals("actionClassName")) {
+            if (fActionClassName != null) {
+                ret = fActionClassName;
+            } else {
+                ret = "";
+            }
+        }
+        
+        return ret;
+    }
+
+    /**
+     * プロパティの存在チェック.
+     * 
+     * @param id プロパティ名
+     * @return チェック結果
+     * @see org.eclipse.ui.views.properties.IPropertySource
+     *          #isPropertySet(java.lang.Object)
+     */
+    public boolean isPropertySet(Object id) {
+        return id.equals("name") 
+                || id.equals("actionClassName");
+    }
+
+    /**
+     * プロパティの値をリセットする.
+     * 
+     * @param id プロパティ名
+     * @see org.eclipse.ui.views.properties.IPropertySource
+     *          #resetPropertyValue(java.lang.Object)
+     */
+    public void resetPropertyValue(Object id) {
+    }
+
+    /**
+     * プロパティの値を設定する.
+     * 
+     * @param id プロパティ名
+     * @param value プロパティ値
+     * @see org.eclipse.ui.views.properties.IPropertySource
+     *          #setPropertyValue(java.lang.Object, java.lang.Object)
+     */
+    public void setPropertyValue(Object id, Object value) {
+        if (id.equals("name")) {
+            setName(String.valueOf(value));
+        }
+        
+        if (id.equals("actionClassName")) {
+            setActionClassName(String.valueOf(value));
+        }
     }
 }
