@@ -2,9 +2,17 @@
 package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 
 import java.beans.PropertyChangeEvent;
+import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.gef.Request;
+import org.eclipse.gef.RequestConstants;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 
+import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.ui.figure.ActionStateFigure;
 
@@ -70,5 +78,38 @@ public class ActionStateEditPart extends StateEditPart {
         
         figure.setName(state.getName());
     }
+
+    /**
+     * リクエストを処理する.
+     * 
+     * @param request リクエスト情報
+     * @see org.eclipse.gef.editparts.AbstractEditPart
+     *          #performRequest(org.eclipse.gef.Request)
+     */
+    @Override
+    public void performRequest(Request request) {
+        if (request.getType().equals(RequestConstants.REQ_OPEN)) {
+            State state = (State) getModel();
+            List<Event> eventList = state.getEventList();
+            
+            StringBuffer events = new StringBuffer();
+            
+            Iterator ite = eventList.iterator();
+            while (ite.hasNext()) {
+                Event event = (Event) ite.next();
+                events.append(event.getName());
+                events.append("\n");
+            }
+            
+            MessageBox msg = new MessageBox(
+                    Display.getDefault().getActiveShell(), SWT.OK);
+            msg.setText("イベント一覧");
+            msg.setMessage(events.toString());
+            msg.open();
+        }
+        super.performRequest(request);
+    }
+    
+    
     
 }

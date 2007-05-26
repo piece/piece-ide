@@ -60,7 +60,7 @@ public class State extends AbstractModel implements IPropertySource {
             
             fEvents.add(initializeEvent);
             
-        } else if (fStateType == FINAL_STATE
+        } else if (fStateType == ACTION_STATE
                     || fStateType == VIEW_STATE) {
             Event entryEvent = new Event();
             entryEvent.setName("Entry");
@@ -72,7 +72,7 @@ public class State extends AbstractModel implements IPropertySource {
             fEvents.add(entryEvent);
             
             Event exitEvent = new Event();
-            exitEvent.setName("Entry");
+            exitEvent.setName("Exit");
             exitEvent.setSpecialEvent(true);
             eventHandler = new EventHandler();
             eventHandler.setMethodName("exit");
@@ -81,7 +81,7 @@ public class State extends AbstractModel implements IPropertySource {
             fEvents.add(exitEvent);
             
             Event activityEvent = new Event();
-            activityEvent.setName("activity");
+            activityEvent.setName("Activity");
             activityEvent.setSpecialEvent(true);
             eventHandler = new EventHandler();
             eventHandler.setMethodName("activity");
@@ -89,7 +89,7 @@ public class State extends AbstractModel implements IPropertySource {
         
             fEvents.add(activityEvent);
             
-        } else if (fStateType == ACTION_STATE) {
+        } else if (fStateType == FINAL_STATE) {
             Event finalizeEvent = new Event();
             finalizeEvent.setName("Finalize");
             finalizeEvent.setSpecialEvent(true);
@@ -157,6 +157,15 @@ public class State extends AbstractModel implements IPropertySource {
         }
     }
 
+    /**
+     * イベント一覧を返す.
+     * 
+     * @return イベント一覧
+     */
+    public List<Event> getEventList() {
+        return fEvents;
+    }
+    
     /**
      * イベントを追加する.
      * 
