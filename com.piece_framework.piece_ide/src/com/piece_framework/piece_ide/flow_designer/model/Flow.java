@@ -13,7 +13,7 @@ import java.util.List;
  * @since 0.1.0
  *
  */
-public class Flow extends AbstractModel implements IFlow {
+public class Flow extends AbstractModel {
 
     private static final long serialVersionUID = 4080106758569031141L;
     

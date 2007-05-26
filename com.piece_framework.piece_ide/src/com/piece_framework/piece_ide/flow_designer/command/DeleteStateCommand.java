@@ -3,7 +3,7 @@ package com.piece_framework.piece_ide.flow_designer.command;
 
 import org.eclipse.gef.commands.Command;
 
-import com.piece_framework.piece_ide.flow_designer.model.IFlow;
+import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
@@ -16,7 +16,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  */
 public class DeleteStateCommand extends Command {
 
-    private IFlow fFlow;
+    private Flow fFlow;
     private State fState;
     
     /**
@@ -25,7 +25,7 @@ public class DeleteStateCommand extends Command {
      * @param flow フロー
      * @param state 削除対象ステート
      */
-    public DeleteStateCommand(IFlow flow, State state) {
+    public DeleteStateCommand(Flow flow, State state) {
         fFlow = flow;
         fState = state;
     }

@@ -37,7 +37,7 @@ public class State extends AbstractModel implements IPropertySource {
     private int fX;
     private int fY;
     
-    private IFlow fParent;
+    private Flow fParent;
     
     private List<Transition> fIncomings = new ArrayList<Transition>();
     private List<Transition> fOutgoings = new ArrayList<Transition>();
@@ -130,7 +130,7 @@ public class State extends AbstractModel implements IPropertySource {
      * 
      * @return 親コンテナ
      */
-    public IFlow getParent() {
+    public Flow getParent() {
         return fParent;
     }
 
@@ -139,7 +139,7 @@ public class State extends AbstractModel implements IPropertySource {
      * 
      * @param parent 親コンテナ
      */
-    public void setParent(IFlow parent) {
+    public void setParent(Flow parent) {
         fParent = parent;
         firePropertyChange("parent", null, null);
     }
