@@ -18,6 +18,17 @@ public class EventHandler implements Serializable {
     private String fMethodName;
     
     /**
+     * コンストラクタ.
+     * 
+     * @param className クラス名
+     * @param methodName メソッド名
+     */
+    public EventHandler(String className, String methodName) {
+        setClassName(className);
+        setMethodName(methodName);
+    }
+    
+    /**
      * クラス名を返す.
      * 
      * @return クラス名

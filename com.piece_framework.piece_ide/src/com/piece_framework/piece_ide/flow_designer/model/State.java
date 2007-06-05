@@ -55,9 +55,7 @@ public class State extends AbstractModel implements IPropertySource {
             Event initializeEvent = new Event();
             initializeEvent.setName("Initialize");
             initializeEvent.setSpecialEvent(true);
-            EventHandler eventHandler = new EventHandler();
-            eventHandler.setMethodName("initialize");
-            initializeEvent.setEventHandler(eventHandler);
+            initializeEvent.setEventHandler(null, "initialize");
             
             fEvents.add(initializeEvent);
             
@@ -66,27 +64,21 @@ public class State extends AbstractModel implements IPropertySource {
             Event entryEvent = new Event();
             entryEvent.setName("Entry");
             entryEvent.setSpecialEvent(true);
-            EventHandler eventHandler = new EventHandler();
-            eventHandler.setMethodName("entry");
-            entryEvent.setEventHandler(eventHandler);
+            entryEvent.setEventHandler(null, "entry");
         
             fEvents.add(entryEvent);
             
             Event exitEvent = new Event();
             exitEvent.setName("Exit");
             exitEvent.setSpecialEvent(true);
-            eventHandler = new EventHandler();
-            eventHandler.setMethodName("exit");
-            exitEvent.setEventHandler(eventHandler);
+            exitEvent.setEventHandler(null, "exit");
         
             fEvents.add(exitEvent);
             
             Event activityEvent = new Event();
             activityEvent.setName("Activity");
             activityEvent.setSpecialEvent(true);
-            eventHandler = new EventHandler();
-            eventHandler.setMethodName("activity");
-            exitEvent.setEventHandler(eventHandler);
+            exitEvent.setEventHandler(null, "activity");
         
             fEvents.add(activityEvent);
             
@@ -94,9 +86,7 @@ public class State extends AbstractModel implements IPropertySource {
             Event finalizeEvent = new Event();
             finalizeEvent.setName("Finalize");
             finalizeEvent.setSpecialEvent(true);
-            EventHandler eventHandler = new EventHandler();
-            eventHandler.setMethodName("finalize");
-            finalizeEvent.setEventHandler(eventHandler);
+            finalizeEvent.setEventHandler(null, "finalize");
         
             fEvents.add(finalizeEvent);
         }
