@@ -1,16 +1,18 @@
 // $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
-import org.eclipse.draw2d.BorderLayout;
-import org.eclipse.draw2d.ImageFigure;
+import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.MarginBorder;
+import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.RoundedRectangle;
+import org.eclipse.draw2d.SimpleRaisedBorder;
+import org.eclipse.draw2d.XYLayout;
+import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
-
-import com.piece_framework.piece_ide.plugin.PieceIDEPlugin;
 
 /**
  * アクションステート・フィギュアー.
@@ -23,10 +25,14 @@ import com.piece_framework.piece_ide.plugin.PieceIDEPlugin;
 public class ActionStateFigure extends RoundedRectangle {
 
     private Label fNameLabel;
+    private Label fEventLabel;
+    
+    private EventListFigure fEventList;
     
     private static final RGB STATE_COLOR = new RGB(200, 120, 100); 
     
-    private static final int MARGIN = 20;
+    private static final int DEFAULT_WIDTH = 80;
+    private static final int DEFAULT_HEIGHT = 50;
     
     /**
      * コンストラクタ.
@@ -37,16 +43,36 @@ public class ActionStateFigure extends RoundedRectangle {
         Color bg = new Color(Display.getCurrent(), STATE_COLOR);
         setBackgroundColor(bg);
         
-        setLayoutManager(new BorderLayout());
-        fNameLabel = new Label();
-        setBorder(new MarginBorder(MARGIN));
-        add(fNameLabel, BorderLayout.CENTER);
+        setLayoutManager(new XYLayout());
+        setPreferredSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         
-        ImageFigure image = new ImageFigure();
-        image.setImage(
-                PieceIDEPlugin.getImageDescriptor(
-                        "icons/ActionState.gif").createImage());
-        add(image, BorderLayout.TOP);
+        fNameLabel = new Label();
+        fNameLabel.setTextAlignment(Label.CENTER);
+        add(fNameLabel);
+        
+        fEventLabel = new Label();
+        fEventLabel.setBorder(new SimpleRaisedBorder());
+        fEventLabel.setTextAlignment(Label.CENTER);
+        fEventLabel.setText("E");
+        add(fEventLabel);
+        
+        fEventList = new EventListFigure();
+        add(fEventList);
+        
+        // 位置・サイズを設定
+        Dimension stateSize = getSize();
+        Dimension nameLabelSize = fNameLabel.getSize();
+        
+        Rectangle constraint = new Rectangle(
+                0, (int) ((stateSize.height - nameLabelSize.height) / 2), 
+                DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        setConstraint(fNameLabel, constraint);
+        
+        setConstraint(fEventLabel, 
+                new Rectangle(DEFAULT_WIDTH - 13, 3, -1, -1));
+        
+        setConstraint(fEventList,
+                new Rectangle(30, 3, -1, -1));
     }
     
     /**
@@ -58,5 +84,17 @@ public class ActionStateFigure extends RoundedRectangle {
         if (name != null) {
             fNameLabel.setText(name);
         }
+    }
+    
+    public boolean isEventLabelClicked(int x, int y) {
+        Point location = fEventLabel.getLocation();
+        Dimension size = fEventLabel.getSize();
+        
+        if (location.x <= x && location.x + size.width >= x 
+            && location.y <= y && location.y + size.height >= y) {
+            return true;
+        }
+        
+        return false;
     }
 }

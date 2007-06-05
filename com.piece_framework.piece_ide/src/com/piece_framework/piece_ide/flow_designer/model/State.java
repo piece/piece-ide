@@ -31,6 +31,7 @@ public class State extends AbstractModel implements IPropertySource {
     
     private int fStateType;
     private String fName;
+    private String fSummary;
     private String fView;
     private List<Event> fEvents = new ArrayList<Event>();
     
@@ -130,6 +131,26 @@ public class State extends AbstractModel implements IPropertySource {
         firePropertyChange("name", old, fName);
     }
 
+    /**
+     * 概要を取得する.
+     * 
+     * @return 概要
+     */
+    public String getSummary() {
+        return fSummary;
+    }
+
+    /**
+     * 概要を設定する.
+     * 
+     * @param summary 概要
+     */
+    public void setSummary(String summary) {
+        String old = fSummary;
+        fSummary = summary;
+        firePropertyChange("summary", old, fSummary);
+    }
+    
     /**
      * ビュー名を返す.
      * ステートタイプが VIEW_STATE でなければ、NULL を返す。
@@ -325,6 +346,7 @@ public class State extends AbstractModel implements IPropertySource {
         if (fStateType == VIEW_STATE) {
             list.add(new TextPropertyDescriptor("view", "ビュー"));
         }
+        list.add(new TextPropertyDescriptor("summary", "概要"));
         // TODO:Eventに対するプロパティ処理
         // list.add(new TextPropertyDescriptor("evnet", "イベント"));
         
@@ -358,6 +380,13 @@ public class State extends AbstractModel implements IPropertySource {
             }
         }
         
+        if (id.equals("summary")) {
+            if (fSummary != null) {
+                ret = fSummary;
+            } else {
+                ret = "";
+            }
+        }
         // TODO:Eventに対するプロパティ処理
         
         return ret;
@@ -374,7 +403,8 @@ public class State extends AbstractModel implements IPropertySource {
     public boolean isPropertySet(Object id) {
         // TODO:Eventに対するプロパティ処理
         return id.equals("name") 
-                || (fStateType == VIEW_STATE && id.equals("view"));
+                || (fStateType == VIEW_STATE && id.equals("view"))
+                || id.equals("summary");
     }
 
     /**
@@ -404,6 +434,9 @@ public class State extends AbstractModel implements IPropertySource {
             setView(String.valueOf(value));
         }
         
+        if (id.equals("summary")) {
+            setSummary(String.valueOf(value));
+        }
         // TODO:Eventに対するプロパティ処理
     }
     

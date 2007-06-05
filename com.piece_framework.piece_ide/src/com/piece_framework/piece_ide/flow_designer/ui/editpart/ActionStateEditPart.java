@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.MouseEvent;
+import org.eclipse.draw2d.MouseListener;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
 import org.eclipse.swt.SWT;
@@ -15,6 +17,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.ui.figure.ActionStateFigure;
+import com.piece_framework.piece_ide.flow_designer.ui.figure.EventListFigure;
 
 /**
  * アクションステート・エディットパート.
@@ -24,7 +27,7 @@ import com.piece_framework.piece_ide.flow_designer.ui.figure.ActionStateFigure;
  * @since 0.1.0
  *
  */
-public class ActionStateEditPart extends StateEditPart {
+public class ActionStateEditPart extends StateEditPart implements MouseListener {
 
     /**
      * フィギュアーを作成する.
@@ -38,6 +41,8 @@ public class ActionStateEditPart extends StateEditPart {
         State state = (State) getModel();
         
         figure.setName(state.getName());
+        
+        figure.addMouseListener(this);
         
         return figure;
     }
@@ -78,7 +83,7 @@ public class ActionStateEditPart extends StateEditPart {
         
         figure.setName(state.getName());
     }
-
+    
     /**
      * リクエストを処理する.
      * 
@@ -108,6 +113,27 @@ public class ActionStateEditPart extends StateEditPart {
             msg.open();
         }
         super.performRequest(request);
+    }
+
+    public void mouseDoubleClicked(MouseEvent mouseEvent) {
+        // TODO 自動生成されたメソッド・スタブ
+        System.out.println("DoubleClick:" + mouseEvent.getSource());
+    }
+
+    public void mousePressed(MouseEvent mouseEvent) {
+        ActionStateFigure figure = (ActionStateFigure) mouseEvent.getSource();
+        
+        if (figure.isEventLabelClicked(mouseEvent.x, mouseEvent.y)) {
+            EventListFigure eventListFigure = new EventListFigure();
+            figure.setToolTip(eventListFigure);
+            
+            System.out.println("Press:" + mouseEvent.getSource());
+        }
+    }
+
+    public void mouseReleased(MouseEvent mouseEvent) {
+        // TODO 自動生成されたメソッド・スタブ
+        System.out.println("Release:" + mouseEvent.getSource());
     }
     
     
