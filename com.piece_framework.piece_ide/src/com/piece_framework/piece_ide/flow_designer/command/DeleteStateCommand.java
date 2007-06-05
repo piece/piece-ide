@@ -1,10 +1,14 @@
 // $Id$
 package com.piece_framework.piece_ide.flow_designer.command;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.gef.commands.Command;
 
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
+import com.piece_framework.piece_ide.flow_designer.model.Transition;
 
 /**
  * ステート削除コマンド.
@@ -30,6 +34,11 @@ public class DeleteStateCommand extends Command {
         fState = state;
     }
 
+    // 削除対象のモデルをソースとするコネクションのリスト
+    private List sourceConnections = new ArrayList();
+    // 削除対象のモデルをターゲットとするコネクションのリスト
+    private List targetConnections = new ArrayList();
+
     /**
      * ステート削除コマンドを実行する.
      * 
@@ -37,6 +46,19 @@ public class DeleteStateCommand extends Command {
      */
     @Override
     public void execute() {
+        // 削除対象のステートをソースとするコネクションの削除
+        List sourceCons = fState.getIncomings();
+        for (int i = 0; i < sourceCons.size(); i++) {
+            Transition source = (Transition) sourceCons.get(i);
+            source.getSource().removeOutgoing(source);
+        }
+
+        // 削除対象のステートをターゲットとするコネクションの削除
+        List targetCons = fState.getOutgoings();
+        for (int i = 0; i < targetCons.size(); i++) {
+            Transition target = (Transition) targetCons.get(i);
+            target.getTarget().removeIncoming(target);
+        }
         fFlow.removeState(fState);
     }
 
