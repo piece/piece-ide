@@ -34,11 +34,6 @@ public class DeleteStateCommand extends Command {
         fState = state;
     }
 
-    // 削除対象のモデルをソースとするコネクションのリスト
-    private List sourceConnections = new ArrayList();
-    // 削除対象のモデルをターゲットとするコネクションのリスト
-    private List targetConnections = new ArrayList();
-
     /**
      * ステート削除コマンドを実行する.
      * 
