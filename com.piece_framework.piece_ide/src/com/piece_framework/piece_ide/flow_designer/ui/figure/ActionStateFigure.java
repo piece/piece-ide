@@ -2,6 +2,7 @@
 package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
 import org.eclipse.draw2d.Figure;
+import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.RoundedRectangle;
@@ -25,14 +26,17 @@ import org.eclipse.swt.widgets.Display;
 public class ActionStateFigure extends RoundedRectangle {
 
     private Label fNameLabel;
-    private Label fEventLabel;
     
-    private EventListFigure fEventList;
+    private EventListFigure fSpecialEventList;
+    private boolean fVisibleEventList;
     
-    private static final RGB STATE_COLOR = new RGB(200, 120, 100); 
+    private static final RGB STATE_COLOR = new RGB(200, 120, 100);
     
-    private static final int DEFAULT_WIDTH = 80;
-    private static final int DEFAULT_HEIGHT = 50;
+    private static final RGB EVENT_SPECIAL_TITLE_COLOR = new RGB(150, 150, 100);
+    private static final RGB EVENT_SPECIAL_LIST_COLOR = new RGB(100, 100, 100);
+    
+    
+    private static final int MARGIN_HEIGHT = 5;
     
     /**
      * コンストラクタ.
@@ -44,37 +48,49 @@ public class ActionStateFigure extends RoundedRectangle {
         setBackgroundColor(bg);
         
         setLayoutManager(new XYLayout());
-        setPreferredSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         
         fNameLabel = new Label();
         fNameLabel.setTextAlignment(Label.CENTER);
         add(fNameLabel);
         
-        fEventLabel = new Label();
-        fEventLabel.setBorder(new SimpleRaisedBorder());
-        fEventLabel.setTextAlignment(Label.CENTER);
-        fEventLabel.setText("E");
-        add(fEventLabel);
+        fSpecialEventList = 
+            new EventListFigure(
+                    "スペシャルイベント",
+                    new Color(Display.getCurrent(), EVENT_SPECIAL_TITLE_COLOR),
+                    new Color(Display.getCurrent(), EVENT_SPECIAL_LIST_COLOR));
+        fSpecialEventList.addEvent("イベントはありません。");
+        fVisibleEventList = false;
+    }
+    
+    /**
+     * 子フィギュアのサイズを調整する.
+     * 
+     * @param graphics グラフィックス
+     * @see org.eclipse.draw2d.Figure#paint(org.eclipse.draw2d.Graphics)
+     */
+    @Override
+    public void paint(Graphics graphics) {
+        super.paint(graphics);
         
-        fEventList = new EventListFigure();
-        add(fEventList);
-        
-        // 位置・サイズを設定
         Dimension stateSize = getSize();
         Dimension nameLabelSize = fNameLabel.getSize();
         
         Rectangle constraint = new Rectangle(
-                0, (int) ((stateSize.height - nameLabelSize.height) / 2), 
-                DEFAULT_WIDTH, DEFAULT_HEIGHT);
+            (int) ((stateSize.width - nameLabelSize.width) / 2), MARGIN_HEIGHT, 
+            -1, -1);
         setConstraint(fNameLabel, constraint);
         
-        setConstraint(fEventLabel, 
-                new Rectangle(DEFAULT_WIDTH - 13, 3, -1, -1));
-        
-        setConstraint(fEventList,
-                new Rectangle(30, 3, -1, -1));
+        if (isVisibleEventList()) {
+            Dimension eventListSize = fSpecialEventList.getSize();
+            
+            constraint = new Rectangle(
+                (int) ((stateSize.width - eventListSize.width) / 2), 
+                MARGIN_HEIGHT + nameLabelSize.height + MARGIN_HEIGHT, 
+                -1, -1);
+            setConstraint(fSpecialEventList, constraint);
+        }
     }
-    
+
     /**
      * ステート名を設定する.
      * 
@@ -82,19 +98,21 @@ public class ActionStateFigure extends RoundedRectangle {
      */
     public void setName(String name) {
         if (name != null) {
-            fNameLabel.setText(name);
+            fNameLabel.setText("  "  + name + "  ");
         }
     }
     
-    public boolean isEventLabelClicked(int x, int y) {
-        Point location = fEventLabel.getLocation();
-        Dimension size = fEventLabel.getSize();
-        
-        if (location.x <= x && location.x + size.width >= x 
-            && location.y <= y && location.y + size.height >= y) {
-            return true;
+    public boolean isVisibleEventList() {
+        return fVisibleEventList;
+    }
+    
+    public void setVisibleEventList(boolean visible) {
+        if (visible) {
+            add(fSpecialEventList);
+        } else {
+            remove(fSpecialEventList);
         }
-        
-        return false;
+        fVisibleEventList = visible;
+        repaint();
     }
 }

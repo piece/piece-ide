@@ -61,6 +61,11 @@ public class State extends AbstractModel implements IPropertySource {
             
         } else if (fStateType == ACTION_STATE
                     || fStateType == VIEW_STATE) {
+            
+            if (fStateType == ACTION_STATE) {
+                setName("ActionState1");
+            }
+            
             Event entryEvent = new Event();
             entryEvent.setName("Entry");
             entryEvent.setSpecialEvent(true);

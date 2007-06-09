@@ -42,7 +42,7 @@ public class ActionStateEditPart extends StateEditPart implements MouseListener 
         
         figure.setName(state.getName());
         
-        figure.addMouseListener(this);
+        //figure.addMouseListener(this);
         
         return figure;
     }
@@ -94,7 +94,13 @@ public class ActionStateEditPart extends StateEditPart implements MouseListener 
     @Override
     public void performRequest(Request request) {
         if (request.getType().equals(RequestConstants.REQ_OPEN)) {
-            State state = (State) getModel();
+            
+            ActionStateFigure figure = (ActionStateFigure) getFigure();
+            figure.setVisibleEventList(!figure.isVisibleEventList());
+            
+            System.out.println("REQ_OPEN:" + request);
+            
+            /*State state = (State) getModel();
             List<Event> eventList = state.getEventList();
             
             StringBuffer events = new StringBuffer();
@@ -110,32 +116,28 @@ public class ActionStateEditPart extends StateEditPart implements MouseListener 
                     Display.getDefault().getActiveShell(), SWT.OK);
             msg.setText("イベント一覧");
             msg.setMessage(events.toString());
-            msg.open();
+            msg.open();*/
+            
+            return;
         }
         super.performRequest(request);
     }
 
-    public void mouseDoubleClicked(MouseEvent mouseEvent) {
-        // TODO 自動生成されたメソッド・スタブ
-        System.out.println("DoubleClick:" + mouseEvent.getSource());
+    public void mouseDoubleClicked(MouseEvent me) {
+        ActionStateFigure figure = (ActionStateFigure) getFigure();
+        figure.setVisibleEventList(!figure.isVisibleEventList());
+        System.out.println("DoubleClicked:" + me);
     }
 
-    public void mousePressed(MouseEvent mouseEvent) {
-        ActionStateFigure figure = (ActionStateFigure) mouseEvent.getSource();
-        
-        if (figure.isEventLabelClicked(mouseEvent.x, mouseEvent.y)) {
-            EventListFigure eventListFigure = new EventListFigure();
-            figure.setToolTip(eventListFigure);
-            
-            System.out.println("Press:" + mouseEvent.getSource());
-        }
+    public void mousePressed(MouseEvent me) {
+        // TODO 自動生成されたメソッド・スタブ
+        System.out.println("Pressed:" + me);
     }
 
-    public void mouseReleased(MouseEvent mouseEvent) {
+    public void mouseReleased(MouseEvent me) {
         // TODO 自動生成されたメソッド・スタブ
-        System.out.println("Release:" + mouseEvent.getSource());
+        System.out.println("Released:" + me);
     }
-    
     
     
 }
