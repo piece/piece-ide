@@ -1,15 +1,14 @@
 // $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
-import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.LineBorder;
+import org.eclipse.draw2d.MarginBorder;
+import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.RoundedRectangle;
-import org.eclipse.draw2d.SimpleRaisedBorder;
+import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
@@ -27,16 +26,25 @@ public class ActionStateFigure extends RoundedRectangle {
 
     private Label fNameLabel;
     
+    private RectangleFigure fEventList;
     private EventListFigure fSpecialEventList;
+    private EventListFigure fTransitionEventList;
+    private EventListFigure fInternalEventList;
     private boolean fVisibleEventList;
     
     private static final RGB STATE_COLOR = new RGB(200, 120, 100);
     
-    private static final RGB EVENT_SPECIAL_TITLE_COLOR = new RGB(150, 150, 100);
-    private static final RGB EVENT_SPECIAL_LIST_COLOR = new RGB(100, 100, 100);
+    private static final RGB EVENT_SPECIAL_TITLE_COLOR = new RGB(0, 0, 255);
+    private static final RGB EVENT_SPECIAL_LIST_COLOR = new RGB(156, 207, 255);
     
+    private static final RGB EVENT_TRANSITION_TITLE_COLOR = new RGB(0, 255, 0);
+    private static final RGB EVENT_TRANSITION_LIST_COLOR = 
+                                                    new RGB(206, 255, 206);
     
-    private static final int MARGIN_HEIGHT = 5;
+    private static final RGB EVENT_INTERNAL_TITLE_COLOR = new RGB(255, 0, 0);
+    private static final RGB EVENT_INTERNAL_LIST_COLOR = new RGB(255, 154, 206);
+    
+    private static final int MARGIN = 5;
     
     /**
      * コンストラクタ.
@@ -48,17 +56,40 @@ public class ActionStateFigure extends RoundedRectangle {
         setBackgroundColor(bg);
         
         setLayoutManager(new XYLayout());
+        setBorder(new MarginBorder(MARGIN));
         
         fNameLabel = new Label();
         fNameLabel.setTextAlignment(Label.CENTER);
         add(fNameLabel);
         
+        fEventList = new RectangleFigure();
+        fEventList.setBorder(null);
+        fEventList.setLayoutManager(new ToolbarLayout());
+        
         fSpecialEventList = 
             new EventListFigure(
-                    "スペシャルイベント",
-                    new Color(Display.getCurrent(), EVENT_SPECIAL_TITLE_COLOR),
-                    new Color(Display.getCurrent(), EVENT_SPECIAL_LIST_COLOR));
+                "スペシャルイベント",
+                new Color(Display.getCurrent(), EVENT_SPECIAL_TITLE_COLOR),
+                new Color(Display.getCurrent(), EVENT_SPECIAL_LIST_COLOR));
         fSpecialEventList.addEvent("イベントはありません。");
+        fEventList.add(fSpecialEventList);
+        
+        fTransitionEventList = 
+            new EventListFigure(
+                "遷移イベント",
+                new Color(Display.getCurrent(), EVENT_TRANSITION_TITLE_COLOR),
+                new Color(Display.getCurrent(), EVENT_TRANSITION_LIST_COLOR));
+        fTransitionEventList.addEvent("イベントはありません。");
+        fEventList.add(fTransitionEventList);
+        
+        fInternalEventList = 
+            new EventListFigure(
+                "内部イベント",
+                new Color(Display.getCurrent(), EVENT_INTERNAL_TITLE_COLOR),
+                new Color(Display.getCurrent(), EVENT_INTERNAL_LIST_COLOR));
+        fInternalEventList.addEvent("イベントはありません。");
+        fEventList.add(fInternalEventList);
+        
         fVisibleEventList = false;
     }
     
@@ -76,18 +107,18 @@ public class ActionStateFigure extends RoundedRectangle {
         Dimension nameLabelSize = fNameLabel.getSize();
         
         Rectangle constraint = new Rectangle(
-            (int) ((stateSize.width - nameLabelSize.width) / 2), MARGIN_HEIGHT, 
+            (int) ((stateSize.width - nameLabelSize.width) / 2) - MARGIN, -1, 
             -1, -1);
         setConstraint(fNameLabel, constraint);
         
         if (isVisibleEventList()) {
-            Dimension eventListSize = fSpecialEventList.getSize();
+            Dimension eventListSize = fEventList.getSize();
             
             constraint = new Rectangle(
-                (int) ((stateSize.width - eventListSize.width) / 2), 
-                MARGIN_HEIGHT + nameLabelSize.height + MARGIN_HEIGHT, 
+                (int) ((stateSize.width - eventListSize.width) / 2) - MARGIN, 
+                nameLabelSize.height + MARGIN, 
                 -1, -1);
-            setConstraint(fSpecialEventList, constraint);
+            setConstraint(fEventList, constraint);
         }
     }
 
@@ -98,19 +129,29 @@ public class ActionStateFigure extends RoundedRectangle {
      */
     public void setName(String name) {
         if (name != null) {
-            fNameLabel.setText("  "  + name + "  ");
+            fNameLabel.setText(name);
         }
     }
     
+    /**
+     * イベントリストが表示されているかを返す.
+     * 
+     * @return イベントリストが表示されているか
+     */
     public boolean isVisibleEventList() {
         return fVisibleEventList;
     }
     
+    /**
+     * イベントリストの表示・非表示を切り替える.
+     * 
+     * @param visible イベントリストを表示するか
+     */
     public void setVisibleEventList(boolean visible) {
         if (visible) {
-            add(fSpecialEventList);
+            add(fEventList);
         } else {
-            remove(fSpecialEventList);
+            remove(fEventList);
         }
         fVisibleEventList = visible;
         repaint();
