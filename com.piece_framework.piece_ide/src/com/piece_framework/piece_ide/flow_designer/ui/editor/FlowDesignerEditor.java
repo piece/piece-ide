@@ -25,13 +25,15 @@ import org.eclipse.gef.requests.SimpleFactory;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
+import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
+import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.model.StateFactory;
 import com.piece_framework.piece_ide.flow_designer.model.Transition;
-import com.piece_framework.piece_ide.flow_designer.
-            ui.editpart.FlowDesignerEditFactory;
+import com.piece_framework.piece_ide.flow_designer.ui.editpart.FlowDesignerEditFactory;
 import com.piece_framework.piece_ide.plugin.PieceIDEPlugin;
 
 //import piece_ide.flow_designer.ui.editpart.FlowDesignerEditFactory;
@@ -45,7 +47,8 @@ import com.piece_framework.piece_ide.plugin.PieceIDEPlugin;
  * @since 0.1.0
  *
  */
-public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
+public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette 
+                                implements ITabbedPropertySheetPageContributor {
     
     private static final int INITAL_STATE_X = 50;
     private static final int INITAL_STATE_Y = 50;
@@ -244,4 +247,18 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette {
         
         return root;
     }
+
+    @Override
+    public Object getAdapter(Class type) {
+        if (type == IPropertySheetPage.class) {
+            return new TabbedPropertySheetPage(this);
+        }
+        return super.getAdapter(type);
+    }
+
+    public String getContributorId() {
+        System.out.println(getSite().getId());
+        return getSite().getId();
+    }
+
 }

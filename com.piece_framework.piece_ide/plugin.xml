@@ -78,4 +78,33 @@
          </action>
        </editorContribution>
    </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor"
+            labelProvider="com.piece_framework.piece_ide.flow_designer.ui.property.FlowElementLabelProvider"
+            typeMapper="com.piece_framework.piece_ide.flow_designer.ui.property.FlowElementTypeMapper">
+         <propertyCategory category="StateCategory"/>
+      </propertyContributor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs contributorId="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor">
+         <propertyTab
+               category="StateCategory"
+               id="StateTab"
+               label="StateType"/>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertySections">
+      <propertySections contributorId="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor">
+         <propertySection
+               class="com.piece_framework.piece_ide.flow_designer.ui.property.StateSection"
+               id="StateSection"
+               tab="StateTab">
+            <input type="com.piece_framework.piece_ide.flow_designer.model.State"/>
+         </propertySection>
+      </propertySections>
+   </extension>
 </plugin>
