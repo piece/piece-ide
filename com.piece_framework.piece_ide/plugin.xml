@@ -93,7 +93,7 @@
          <propertyTab
                category="StateCategory"
                id="StateTab"
-               label="StateType"/>
+               label="ステート"/>
       </propertyTabs>
    </extension>
    <extension

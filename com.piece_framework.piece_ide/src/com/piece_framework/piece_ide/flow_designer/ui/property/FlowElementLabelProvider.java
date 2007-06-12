@@ -8,6 +8,11 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.views.properties.tabbed.ITypeMapper;
 
+import com.piece_framework.piece_ide.flow_designer.ui.editpart.ActionStateEditPart;
+import com.piece_framework.piece_ide.flow_designer.ui.editpart.FinalStateEditPart;
+import com.piece_framework.piece_ide.flow_designer.ui.editpart.InitialStateEditPart;
+import com.piece_framework.piece_ide.flow_designer.ui.editpart.ViewStateEditPart;
+
 public class FlowElementLabelProvider extends LabelProvider {
 
     private ITypeMapper fMapper;
@@ -27,6 +32,15 @@ public class FlowElementLabelProvider extends LabelProvider {
         if (object == null || ((IStructuredSelection) elements).size() > 1) {
             return ((IStructuredSelection) elements).size() + " items selected";//$NON-NLS-1$
         } else {
+            if (object instanceof ActionStateEditPart) {
+                return "アクションステート";
+            } else if (object instanceof ViewStateEditPart) {
+                return "ビューステート";
+            } else if (object instanceof InitialStateEditPart) {
+                return "イニシャルステート";
+            } else if (object instanceof FinalStateEditPart) {
+                return "ファイナルステート";
+            }
             String name = fMapper.mapType(object).getName();
             return name.substring(name.lastIndexOf('.') + 1);
         }
