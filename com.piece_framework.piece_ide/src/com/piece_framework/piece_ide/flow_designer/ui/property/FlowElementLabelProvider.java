@@ -10,6 +10,7 @@ import org.eclipse.ui.views.properties.tabbed.ITypeMapper;
 
 import com.piece_framework.piece_ide.flow_designer.ui.editpart.ActionStateEditPart;
 import com.piece_framework.piece_ide.flow_designer.ui.editpart.FinalStateEditPart;
+import com.piece_framework.piece_ide.flow_designer.ui.editpart.FlowEditPart;
 import com.piece_framework.piece_ide.flow_designer.ui.editpart.InitialStateEditPart;
 import com.piece_framework.piece_ide.flow_designer.ui.editpart.ViewStateEditPart;
 
@@ -25,7 +26,7 @@ public class FlowElementLabelProvider extends LabelProvider {
     @Override
     public String getText(Object elements) {
         if (elements == null || elements.equals(StructuredSelection.EMPTY)) {
-            return "No items selected";//$NON-NLS-1$
+            return "フロー";
         }
         final boolean multiple[] = {false};
         final Object object = getObject(elements, multiple);
@@ -40,6 +41,8 @@ public class FlowElementLabelProvider extends LabelProvider {
                 return "イニシャルステート";
             } else if (object instanceof FinalStateEditPart) {
                 return "ファイナルステート";
+            } else if (object instanceof FlowEditPart) {
+                return "フロー";
             }
             String name = fMapper.mapType(object).getName();
             return name.substring(name.lastIndexOf('.') + 1);

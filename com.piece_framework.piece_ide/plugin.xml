@@ -85,6 +85,7 @@
             labelProvider="com.piece_framework.piece_ide.flow_designer.ui.property.FlowElementLabelProvider"
             typeMapper="com.piece_framework.piece_ide.flow_designer.ui.property.FlowElementTypeMapper">
          <propertyCategory category="StateCategory"/>
+         <propertyCategory category="FlowCategory"/>
       </propertyContributor>
    </extension>
    <extension
@@ -94,6 +95,10 @@
                category="StateCategory"
                id="StateTab"
                label="ステート"/>
+         <propertyTab
+               category="FlowCategory"
+               id="FlowTab"
+               label="フロー"/>
       </propertyTabs>
    </extension>
    <extension
@@ -104,6 +109,12 @@
                id="StateSection"
                tab="StateTab">
             <input type="com.piece_framework.piece_ide.flow_designer.model.State"/>
+         </propertySection>
+         <propertySection
+               class="com.piece_framework.piece_ide.flow_designer.ui.property.FlowSection"
+               id="FlowSection"
+               tab="FlowTab">
+            <input type="com.piece_framework.piece_ide.flow_designer.model.Flow"/>
          </propertySection>
       </propertySections>
    </extension>
