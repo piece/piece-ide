@@ -5,31 +5,43 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
+/**
+ * プロパティシートのテキストボックスのイベントを処理する.
+ * 
+ * @author MATSUFUJI Hideharu
+ * @version 0.1.0
+ * @since 0.1.0
+ * 
+ */
 public abstract class TextListener implements Listener {
-
-    private boolean fUserChange;
     
+    /**
+     * キー・ダウン、フォーカスアウトのイベントを処理する.
+     * 
+     * @param event イベントオブジェクト
+     * @see org.eclipse.swt.widgets.Listener
+     *          #handleEvent(org.eclipse.swt.widgets.Event)
+     */
     public void handleEvent(Event event) {
         switch (event.type) {
         case SWT.KeyDown:
             if (event.character == SWT.CR) {
-                changeText((Control)event.widget);
+                changeText((Control) event.widget);
             }
             break;
         case SWT.FocusOut:
-            changeText((Control)event.widget);
+            changeText((Control) event.widget);
+            break;
+        default:
             break;
         }
     }
-
-    public void setUserChange(boolean userChange) {
-        fUserChange = userChange;
-    }
     
-    public boolean isUserChange() {
-        return fUserChange;
-    }
-    
+    /**
+     * テキストボックスで Enter キーが押されたときか、
+     * フォーカスアウトしたときに発生するイベント.
+     * 
+     * @param control イベントが発生したコントロール
+     */
     public abstract void changeText(Control control);
-    
 }
