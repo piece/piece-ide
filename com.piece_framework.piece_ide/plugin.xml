@@ -94,11 +94,11 @@
          <propertyTab
                category="StateCategory"
                id="StateTab"
-               label="ステート"/>
+               label="一般"/>
          <propertyTab
                category="FlowCategory"
                id="FlowTab"
-               label="フロー"/>
+               label="一般"/>
       </propertyTabs>
    </extension>
    <extension

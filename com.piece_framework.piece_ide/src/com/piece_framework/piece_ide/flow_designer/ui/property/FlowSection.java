@@ -12,13 +12,22 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
-import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 
+/**
+ * フロー・プロパティシートのセクション.
+ * 
+ * @author MATSUFUJI Hideharu
+ * @version 0.1.0
+ * @since 0.1.0
+ * 
+ */
 public class FlowSection extends AbstractPropertySection {
-
+    
+    private static final int TEXT_WIDTH_PERCENT = 70;
+    
     private Text fFlowName;
     private CLabel fFlowNameLabel;
     private Text fActionClassName;
@@ -27,7 +36,6 @@ public class FlowSection extends AbstractPropertySection {
     private Flow fFlow;
     
     private TextListener fListener = new TextListener() {
-
         @Override
         public void changeText(Control control) {
             if (control == fFlowName) {
@@ -36,12 +44,22 @@ public class FlowSection extends AbstractPropertySection {
                 fFlow.setActionClassName(((Text) control).getText());
             }
         }
-        
     };
-    
 
+    /**
+     * コントロールを作成する.
+     * 
+     * @param parent 親コンテナ
+     * @param tabbedPropertySheetPage プロパティシートページ
+     * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
+     *        #createControls(
+     *          org.eclipse.swt.widgets.Composite, 
+     *          org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage)
+     */
     @Override
-    public void createControls(Composite parent, TabbedPropertySheetPage tabbedPropertySheetPage) {
+    public void createControls(
+                    Composite parent, 
+                    TabbedPropertySheetPage tabbedPropertySheetPage) {
         super.createControls(parent, tabbedPropertySheetPage);
         
         Composite composite = 
@@ -49,45 +67,56 @@ public class FlowSection extends AbstractPropertySection {
         
         FormData data;
         
+        fFlowNameLabel = 
+            getWidgetFactory().createCLabel(composite, "フロー名：");
+        data = new FormData();
+        data.left = new FormAttachment(0, 0);
+        data.right = new FormAttachment(0, STANDARD_LABEL_WIDTH);
+        data.top = new FormAttachment(0, 0);
+        fFlowNameLabel.setLayoutData(data);
+        
         fFlowName = getWidgetFactory().createText(composite, "");
         data = new FormData();
-        data.left = new FormAttachment(0, STANDARD_LABEL_WIDTH + 20);
-        data.right = new FormAttachment(70, 0);
+        data.left = new FormAttachment(fFlowNameLabel, 0);
+        data.right = new FormAttachment(TEXT_WIDTH_PERCENT, 0);
         data.top = new FormAttachment(0, 0);
         fFlowName.setLayoutData(data);
         
-        fFlowNameLabel = getWidgetFactory().createCLabel(composite, "フロー名：");
+        fActionClassNameLabel = 
+            getWidgetFactory().createCLabel(composite, "アクションクラス：");
         data = new FormData();
         data.left = new FormAttachment(0, 0);
-        data.right =
-            new FormAttachment(fFlowName, -ITabbedPropertyConstants.HSPACE);
-        data.top = new FormAttachment(fFlowName, 0, SWT.CENTER);
-        fFlowNameLabel.setLayoutData(data);
+        data.right = new FormAttachment(0, STANDARD_LABEL_WIDTH);
+        data.top = new FormAttachment(fFlowNameLabel, 0);
+        fActionClassNameLabel.setLayoutData(data);
+        
+        fActionClassName = getWidgetFactory().createText(composite, "");
+        data = new FormData();
+        data.left = new FormAttachment(fActionClassNameLabel, 0);
+        data.right = new FormAttachment(TEXT_WIDTH_PERCENT, 0);
+        data.top = new FormAttachment(fFlowName, 0);
+        fActionClassName.setLayoutData(data);
         
         fFlowName.addListener(SWT.FocusOut, fListener);
         fFlowName.addListener(SWT.Modify, fListener);
         fFlowName.addListener(SWT.KeyDown, fListener);
-        
-        fActionClassName = getWidgetFactory().createText(composite, "");
-        data = new FormData();
-        data.left = new FormAttachment(0, STANDARD_LABEL_WIDTH + 20);
-        data.right = new FormAttachment(70, 0);
-        data.top = new FormAttachment(0, 25);
-        fActionClassName.setLayoutData(data);
-        
-        fActionClassNameLabel = getWidgetFactory().createCLabel(composite, "アクションクラス：");
-        data = new FormData();
-        data.left = new FormAttachment(0, 0);
-        data.right =
-            new FormAttachment(fActionClassName, -ITabbedPropertyConstants.HSPACE);
-        data.top = new FormAttachment(fActionClassName, 0, SWT.CENTER);
-        fActionClassNameLabel.setLayoutData(data);
-        
+    
         fActionClassName.addListener(SWT.FocusOut, fListener);
         fActionClassName.addListener(SWT.Modify, fListener);
         fActionClassName.addListener(SWT.KeyDown, fListener);
     }
 
+    /**
+     * インプットオブジェクトのセッターメソッド.
+     * インプットオブジェクトからフローを取得する。
+     * 
+     * @param part ワークベンチパート
+     * @param selection セレクトオブジェクト
+     * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
+     *          #setInput(
+     *              org.eclipse.ui.IWorkbenchPart, 
+     *              org.eclipse.jface.viewers.ISelection)
+     */
     @Override
     public void setInput(IWorkbenchPart part, ISelection selection) {
         super.setInput(part, selection);
@@ -99,13 +128,19 @@ public class FlowSection extends AbstractPropertySection {
         }
     }
 
+    /**
+     * 画面をリフレッシュする.
+     * フローから必要な情報を取得し、コントロールにセットする。
+     * 
+     * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
+     *          #refresh()
+     */
     @Override
     public void refresh() {
         if (fFlow != null) {
             if (fFlow.getName() != null) {
                 fFlowName.setText(fFlow.getName());
             }
-        
             if (fFlow.getActionClassName() != null) {
                 fActionClassName.setText(fFlow.getActionClassName());
             }
