@@ -28,7 +28,6 @@ public class PieceIDEPlugin extends AbstractUIPlugin {
     public PieceIDEPlugin() {
         fPlugin = this;
     }
-
     
     /**
      * プラグインを開始する.
@@ -66,6 +65,12 @@ public class PieceIDEPlugin extends AbstractUIPlugin {
         return fPlugin;
     }
     
+    /**
+     * イメージディスクリプターを取得する.
+     * 
+     * @param path イメージのパス
+     * @return イメージディスクリプター
+     */
     public static ImageDescriptor getImageDescriptor(String path) {
         return AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID, path);
     }
