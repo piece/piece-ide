@@ -12,7 +12,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
-import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import com.piece_framework.piece_ide.flow_designer.model.State;
@@ -27,6 +26,8 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  */
 public class StateGeneralSection extends AbstractPropertySection {
 
+    private static final int TEXT_WIDTH_PERCENT = 70;
+    
     private Text fStateName;
     private CLabel fStateNameLabel;
     private Text fViewName;
@@ -44,11 +45,22 @@ public class StateGeneralSection extends AbstractPropertySection {
                 fState.setView(((Text) control).getText());
             }
         }
-        
     };
     
+    /**
+     * コントロールを作成する.
+     * 
+     * @param parent 親コンテナ
+     * @param tabbedPropertySheetPage プロパティシートページ
+     * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
+     *        #createControls(
+     *          org.eclipse.swt.widgets.Composite, 
+     *          org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage)
+     */
     @Override
-    public void createControls(Composite parent, TabbedPropertySheetPage tabbedPropertySheetPage) {
+    public void createControls(
+                    Composite parent, 
+                    TabbedPropertySheetPage tabbedPropertySheetPage) {
         super.createControls(parent, tabbedPropertySheetPage);
         
         Composite composite = 
@@ -56,45 +68,60 @@ public class StateGeneralSection extends AbstractPropertySection {
         
         FormData data;
         
+        fStateNameLabel = 
+            getWidgetFactory().createCLabel(composite, "ステート名：");
+        data = new FormData();
+        data.left = new FormAttachment(0, 0);
+        data.right = new FormAttachment(0, STANDARD_LABEL_WIDTH);
+        data.top = new FormAttachment(0, 0);
+        fStateNameLabel.setLayoutData(data);
+        
         fStateName = getWidgetFactory().createText(composite, "");
         data = new FormData();
-        data.left = new FormAttachment(0, STANDARD_LABEL_WIDTH);
-        data.right = new FormAttachment(50, 0);
+        data.left = new FormAttachment(fStateNameLabel, 0);
+        data.right = new FormAttachment(TEXT_WIDTH_PERCENT, 0);
         data.top = new FormAttachment(0, 0);
         fStateName.setLayoutData(data);
         
-        fStateNameLabel = getWidgetFactory().createCLabel(composite, "ステート名：");
+        fViewNameLabel = 
+            getWidgetFactory().createCLabel(composite, "ビュー名：");
         data = new FormData();
         data.left = new FormAttachment(0, 0);
-        data.right =
-            new FormAttachment(fStateName, -ITabbedPropertyConstants.HSPACE);
-        data.top = new FormAttachment(fStateName, 0, SWT.CENTER);
-        fStateNameLabel.setLayoutData(data);
+        data.right = new FormAttachment(0, STANDARD_LABEL_WIDTH);
+        data.top = new FormAttachment(fStateNameLabel, 0);
+        fViewNameLabel.setLayoutData(data);
+        
+        fViewName = getWidgetFactory().createText(composite, "");
+        data = new FormData();
+        data.left = new FormAttachment(fViewNameLabel, 0);
+        data.right = new FormAttachment(TEXT_WIDTH_PERCENT, 0);
+        data.top = new FormAttachment(fStateName, 0);
+        fViewName.setLayoutData(data);
         
         fStateName.addListener(SWT.FocusOut, fListener);
         fStateName.addListener(SWT.Modify, fListener);
         fStateName.addListener(SWT.KeyDown, fListener);
-        
-        fViewName = getWidgetFactory().createText(composite, "");
-        data = new FormData();
-        data.left = new FormAttachment(0, STANDARD_LABEL_WIDTH);
-        data.right = new FormAttachment(50, 0);
-        data.top = new FormAttachment(0, 25);
-        fViewName.setLayoutData(data);
-        
-        fViewNameLabel = getWidgetFactory().createCLabel(composite, "ビュー名：");
-        data = new FormData();
-        data.left = new FormAttachment(0, 0);
-        data.right =
-            new FormAttachment(fViewName, -ITabbedPropertyConstants.HSPACE);
-        data.top = new FormAttachment(fViewName, 0, SWT.CENTER);
-        fViewNameLabel.setLayoutData(data);
         
         fViewName.addListener(SWT.FocusOut, fListener);
         fViewName.addListener(SWT.Modify, fListener);
         fViewName.addListener(SWT.KeyDown, fListener);
     }
 
+    /**
+     * インプットオブジェクトのセッターメソッド.
+     * インプットオブジェクトからステートを取得する。
+     * 各アクションによって表示するコントロールを決定する。<br>
+     * ・イニシャルステート・ファイナルステート：なにも表示しない<br>
+     * ・アクションステート：ステート名を表示<br>
+     * ・ビューステート：ステート名・ビュー名を表示<br>
+     * s
+     * @param part ワークベンチパート
+     * @param selection セレクトオブジェクト
+     * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
+     *          #setInput(
+     *              org.eclipse.ui.IWorkbenchPart, 
+     *              org.eclipse.jface.viewers.ISelection)
+     */
     @Override
     public void setInput(IWorkbenchPart part, ISelection selection) {
         super.setInput(part, selection);
@@ -121,6 +148,13 @@ public class StateGeneralSection extends AbstractPropertySection {
         }
     }
 
+    /**
+     * 画面をリフレッシュする.
+     * ステートから必要な情報を取得し、コントロールにセットする。
+     * 
+     * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
+     *          #refresh()
+     */
     @Override
     public void refresh() {
         if (fState != null) {
@@ -137,7 +171,5 @@ public class StateGeneralSection extends AbstractPropertySection {
                 }
             }
         }
-    }
-
-    
+    }    
 }
