@@ -157,6 +157,9 @@ public class StateGeneralSection extends AbstractPropertySection {
      */
     @Override
     public void refresh() {
+        fStateName.setText("");
+        fViewName.setText("");
+        
         if (fState != null) {
             if (fState.getStateType() == State.ACTION_STATE
                 || fState.getStateType() == State.VIEW_STATE) {

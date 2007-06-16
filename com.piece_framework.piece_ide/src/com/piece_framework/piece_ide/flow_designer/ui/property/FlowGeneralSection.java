@@ -137,6 +137,9 @@ public class FlowGeneralSection extends AbstractPropertySection {
      */
     @Override
     public void refresh() {
+        fFlowName.setText("");
+        fActionClassName.setText("");
+        
         if (fFlow != null) {
             if (fFlow.getName() != null) {
                 fFlowName.setText(fFlow.getName());
