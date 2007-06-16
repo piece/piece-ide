@@ -93,11 +93,11 @@
       <propertyTabs contributorId="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor">
          <propertyTab
                category="StateCategory"
-               id="StateTab"
+               id="StateGeneralTab"
                label="一般"/>
          <propertyTab
                category="FlowCategory"
-               id="FlowTab"
+               id="FlowGeneralTab"
                label="一般"/>
       </propertyTabs>
    </extension>
@@ -105,15 +105,15 @@
          point="org.eclipse.ui.views.properties.tabbed.propertySections">
       <propertySections contributorId="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor">
          <propertySection
-               class="com.piece_framework.piece_ide.flow_designer.ui.property.StateSection"
-               id="StateSection"
-               tab="StateTab">
+               class="com.piece_framework.piece_ide.flow_designer.ui.property.StateGeneralSection"
+               id="StateGeneralSection"
+               tab="StateGeneralTab">
             <input type="com.piece_framework.piece_ide.flow_designer.model.State"/>
          </propertySection>
          <propertySection
-               class="com.piece_framework.piece_ide.flow_designer.ui.property.FlowSection"
-               id="FlowSection"
-               tab="FlowTab">
+               class="com.piece_framework.piece_ide.flow_designer.ui.property.FlowGeneralSection"
+               id="FlowGeneralSection"
+               tab="FlowGeneralTab">
             <input type="com.piece_framework.piece_ide.flow_designer.model.Flow"/>
          </propertySection>
       </propertySections>

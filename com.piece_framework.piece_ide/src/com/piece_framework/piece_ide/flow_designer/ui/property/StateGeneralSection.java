@@ -17,7 +17,15 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
-public class StateSection extends AbstractPropertySection {
+/**
+ * ステート・プロパティシートの一般セクション.
+ * 
+ * @author MATSUFUJI Hideharu
+ * @version 0.1.0
+ * @since 0.1.0
+ * 
+ */
+public class StateGeneralSection extends AbstractPropertySection {
 
     private Text fStateName;
     private CLabel fStateNameLabel;

@@ -17,14 +17,14 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 
 /**
- * フロー・プロパティシートのセクション.
+ * フロー・プロパティシートの一般セクション.
  * 
  * @author MATSUFUJI Hideharu
  * @version 0.1.0
  * @since 0.1.0
  * 
  */
-public class FlowSection extends AbstractPropertySection {
+public class FlowGeneralSection extends AbstractPropertySection {
     
     private static final int TEXT_WIDTH_PERCENT = 70;
     
