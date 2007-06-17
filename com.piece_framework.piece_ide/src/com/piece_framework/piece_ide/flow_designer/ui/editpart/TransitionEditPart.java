@@ -4,8 +4,11 @@ package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.draw2d.ConnectionLayer;
+import org.eclipse.draw2d.FanRouter;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.LayerConstants;
 import org.eclipse.gef.editparts.AbstractConnectionEditPart;
 import org.eclipse.gef.editpolicies.ConnectionEndpointEditPolicy;
 
@@ -23,6 +26,9 @@ import com.piece_framework.piece_ide.flow_designer.ui.figure.TransitionFigure;
 public class TransitionEditPart extends AbstractConnectionEditPart implements
         PropertyChangeListener {
 
+    /* 遷移衝突時の避ける幅. */
+    private static final int AVOID_WIDTH = 20;
+    
     /**
      * フィギュアーを作成する.
      * 
@@ -32,7 +38,14 @@ public class TransitionEditPart extends AbstractConnectionEditPart implements
     @Override
     protected IFigure createFigure() {
         TransitionFigure figure = new TransitionFigure();
+                
+        ConnectionLayer connLayer
+                  = (ConnectionLayer) getLayer(LayerConstants.CONNECTION_LAYER);
+        FanRouter fanRouter = new FanRouter();
+        fanRouter.setSeparation(AVOID_WIDTH);
 
+        connLayer.setConnectionRouter(fanRouter);
+        
         return figure;
     }
 

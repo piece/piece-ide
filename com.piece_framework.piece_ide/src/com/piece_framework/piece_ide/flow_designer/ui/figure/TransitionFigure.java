@@ -3,7 +3,6 @@ package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
 import java.util.ArrayList;
 
-import org.eclipse.draw2d.BendpointConnectionRouter;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionEndpointLocator;
 import org.eclipse.draw2d.Label;
@@ -36,7 +35,6 @@ public class TransitionFigure extends PolylineConnection {
     */
     public TransitionFigure() {
         setTargetDecoration();
-        setConnectionRouter(new BendpointConnectionRouter());
         setRoutingConstraint(new ArrayList());
         addNameLabel();
     }
@@ -47,7 +45,7 @@ public class TransitionFigure extends PolylineConnection {
     private void setTargetDecoration() {
         PolygonDecoration arrow = new PolygonDecoration();
         arrow.setTemplate(PolygonDecoration.TRIANGLE_TIP);
-        arrow.setBackgroundColor(ColorConstants.white);
+        arrow.setBackgroundColor(ColorConstants.black);
         arrow.setOpaque(true);
         arrow.setScale(SCALE_X, SCALE_Y);
         setTargetDecoration(arrow);
