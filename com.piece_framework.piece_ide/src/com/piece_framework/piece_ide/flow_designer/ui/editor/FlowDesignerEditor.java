@@ -186,7 +186,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
     
     /**
      * コマンドスタックに変更があった場合のイベント.
-     * 編集中の場合、エディターのタイトルに"*"を表示する。
+     * 編集中にする(エディターのタイトルに"*"を表示する)。
      * 
      * @param event イベント
      * @see org.eclipse.gef.ui.parts.GraphicalEditor
