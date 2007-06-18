@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.part.WorkbenchPart;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
@@ -30,6 +31,8 @@ public class StateGeneralSection extends AbstractPropertySection {
     
     private Text fStateName;
     private CLabel fStateNameLabel;
+    private Text fSummary;
+    private CLabel fSummaryLabel;
     private Text fViewName;
     private CLabel fViewNameLabel;
     
@@ -41,6 +44,8 @@ public class StateGeneralSection extends AbstractPropertySection {
         public void changeText(Control control) {
             if (control == fStateName) {
                 fState.setName(((Text) control).getText());
+            } else if (control == fSummary) {
+                fState.setSummary(((Text) control).getText());
             } else if (control == fViewName) {
                 fState.setView(((Text) control).getText());
             }
@@ -67,7 +72,7 @@ public class StateGeneralSection extends AbstractPropertySection {
             getWidgetFactory().createFlatFormComposite(parent);
         
         FormData data;
-        
+       
         fStateNameLabel = 
             getWidgetFactory().createCLabel(composite, "ステート名：");
         data = new FormData();
@@ -83,24 +88,43 @@ public class StateGeneralSection extends AbstractPropertySection {
         data.top = new FormAttachment(0, 0);
         fStateName.setLayoutData(data);
         
+        fSummaryLabel = 
+            getWidgetFactory().createCLabel(composite, "概要：");
+        data = new FormData();
+        data.left = new FormAttachment(0, 0);
+        data.right = new FormAttachment(0, STANDARD_LABEL_WIDTH);
+        data.top = new FormAttachment(fStateNameLabel, 0);
+        fSummaryLabel.setLayoutData(data);
+        
+        fSummary = getWidgetFactory().createText(composite, "");
+        data = new FormData();
+        data.left = new FormAttachment(fSummaryLabel, 0);
+        data.right = new FormAttachment(TEXT_WIDTH_PERCENT, 0);
+        data.top = new FormAttachment(fStateName, 0);
+        fSummary.setLayoutData(data);
+        
         fViewNameLabel = 
             getWidgetFactory().createCLabel(composite, "ビュー名：");
         data = new FormData();
         data.left = new FormAttachment(0, 0);
         data.right = new FormAttachment(0, STANDARD_LABEL_WIDTH);
-        data.top = new FormAttachment(fStateNameLabel, 0);
+        data.top = new FormAttachment(fSummaryLabel, 0);
         fViewNameLabel.setLayoutData(data);
         
         fViewName = getWidgetFactory().createText(composite, "");
         data = new FormData();
         data.left = new FormAttachment(fViewNameLabel, 0);
         data.right = new FormAttachment(TEXT_WIDTH_PERCENT, 0);
-        data.top = new FormAttachment(fStateName, 0);
+        data.top = new FormAttachment(fSummary, 0);
         fViewName.setLayoutData(data);
         
         fStateName.addListener(SWT.FocusOut, fListener);
         fStateName.addListener(SWT.Modify, fListener);
         fStateName.addListener(SWT.KeyDown, fListener);
+        
+        fSummary.addListener(SWT.FocusOut, fListener);
+        fSummary.addListener(SWT.Modify, fListener);
+        fSummary.addListener(SWT.KeyDown, fListener);
         
         fViewName.addListener(SWT.FocusOut, fListener);
         fViewName.addListener(SWT.Modify, fListener);
@@ -132,6 +156,8 @@ public class StateGeneralSection extends AbstractPropertySection {
                 
                 fStateName.setVisible(false);
                 fStateNameLabel.setVisible(false);
+                fSummary.setVisible(false);
+                fSummaryLabel.setVisible(false);
                 fViewName.setVisible(false);
                 fViewNameLabel.setVisible(false);
                 
@@ -139,6 +165,8 @@ public class StateGeneralSection extends AbstractPropertySection {
                     || fState.getStateType() == State.VIEW_STATE) {
                     fStateName.setVisible(true);
                     fStateNameLabel.setVisible(true);
+                    fSummary.setVisible(true);
+                    fSummaryLabel.setVisible(true);
                 }
                 if (fState.getStateType() == State.VIEW_STATE) {
                     fViewName.setVisible(true);
@@ -158,6 +186,7 @@ public class StateGeneralSection extends AbstractPropertySection {
     @Override
     public void refresh() {
         fStateName.setText("");
+        fSummary.setText("");
         fViewName.setText("");
         
         if (fState != null) {
@@ -165,6 +194,9 @@ public class StateGeneralSection extends AbstractPropertySection {
                 || fState.getStateType() == State.VIEW_STATE) {
                 if (fState.getName() != null) {
                     fStateName.setText(fState.getName());
+                }
+                if (fState.getSummary() != null) {
+                    fSummary.setText(fState.getSummary());
                 }
             }
             
