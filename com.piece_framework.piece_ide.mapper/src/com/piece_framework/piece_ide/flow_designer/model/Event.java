@@ -94,6 +94,16 @@ public class Event implements Serializable {
     }
 
     /**
+     * イベントハンドラを設定する.
+     * 
+     * @param className クラス名
+     * @param methodName メソッド名
+     */
+    public void setEventHandler(String className, String methodName) {
+        setEventHandler(new EventHandler(className, methodName));
+    }
+    
+    /**
      * ガード用イベントハンドラを返す.
      * 
      * @return ガード用イベントハンドラ
