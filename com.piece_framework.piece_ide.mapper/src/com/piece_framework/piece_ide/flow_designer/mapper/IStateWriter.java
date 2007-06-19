@@ -1,7 +1,7 @@
 package com.piece_framework.piece_ide.flow_designer.mapper;
 
 import com.piece_framework.piece_ide.flow_designer.model.State;
-import com.piece_framework.piece_ide.mapper.jyaml.*;
+import com.piece_framework.piece_ide.flow_designer.jyaml.*;
 
 public interface IStateWriter {
         

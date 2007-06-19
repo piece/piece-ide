@@ -3,9 +3,9 @@ package com.piece_framework.piece_ide.flow_designer.mapper;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
-import com.piece_framework.piece_ide.mapper.jyaml.YamlFlow;
-import com.piece_framework.piece_ide.mapper.jyaml.YamlService;
-import com.piece_framework.piece_ide.mapper.jyaml.YamlState;
+import com.piece_framework.piece_ide.flow_designer.jyaml.YamlFlow;
+import com.piece_framework.piece_ide.flow_designer.jyaml.YamlService;
+import com.piece_framework.piece_ide.flow_designer.jyaml.YamlState;
 
 public class InitialStateWriter implements IStateWriter {
 

@@ -14,7 +14,7 @@ import org.ho.yaml.Yaml;
 
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
-import com.piece_framework.piece_ide.mapper.jyaml.YamlFlow;
+import com.piece_framework.piece_ide.flow_designer.jyaml.YamlFlow;
 
 public class FlowWriter {
     

@@ -1,8 +1,8 @@
 package com.piece_framework.piece_ide.flow_designer.mapper;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
-import com.piece_framework.piece_ide.mapper.jyaml.YamlService;
-import com.piece_framework.piece_ide.mapper.jyaml.YamlTransition;
+import com.piece_framework.piece_ide.flow_designer.jyaml.YamlService;
+import com.piece_framework.piece_ide.flow_designer.jyaml.YamlTransition;
 
 public class EventWriter {
         
