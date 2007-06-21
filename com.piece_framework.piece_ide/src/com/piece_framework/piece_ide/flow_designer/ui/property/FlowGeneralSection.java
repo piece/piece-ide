@@ -1,6 +1,8 @@
 package com.piece_framework.piece_ide.flow_designer.ui.property;
 
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.commands.CommandStack;
+import org.eclipse.gef.ui.parts.GraphicalEditor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -14,6 +16,8 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
+import com.piece_framework.piece_ide.flow_designer
+            .command.SetFlowAttributeCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 
 /**
@@ -35,13 +39,38 @@ public class FlowGeneralSection extends AbstractPropertySection {
     
     private Flow fFlow;
     
+    private IWorkbenchPart fPart;
+    
     private TextListener fListener = new TextListener() {
         @Override
         public void changeText(Control control) {
+            String attributeName = null;
+            String attributeValue = ((Text) control).getText();
+            String attributeOldValue = null;
+                        
             if (control == fFlowName) {
-                fFlow.setName(((Text) control).getText());
+                attributeName = "name";
+                attributeOldValue = fFlow.getName();
             } else if (control == fActionClassName) {
-                fFlow.setActionClassName(((Text) control).getText());
+                attributeName = "actionClassName";
+                attributeOldValue = fFlow.getActionClassName();
+            }
+            
+            if ((attributeValue.equals("") && attributeOldValue == null)
+                    || attributeValue.equals(attributeOldValue)) {
+                    return;
+            }
+            
+            if (fPart instanceof GraphicalEditor) {
+                GraphicalEditor editor = (GraphicalEditor) fPart;
+                CommandStack commandStack = 
+                    (CommandStack) editor.getAdapter(CommandStack.class);
+                
+                SetFlowAttributeCommand command = 
+                    new SetFlowAttributeCommand(
+                            attributeName, attributeValue, fFlow);
+                
+                commandStack.execute(command);
             }
         }
     };
@@ -126,6 +155,8 @@ public class FlowGeneralSection extends AbstractPropertySection {
                 fFlow = (Flow) ((EditPart) input).getModel();
             }
         }
+        
+        fPart = part;
     }
 
     /**
