@@ -1,6 +1,8 @@
 package com.piece_framework.piece_ide.flow_designer.ui.property;
 
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.commands.CommandStack;
+import org.eclipse.gef.ui.parts.GraphicalEditor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -11,10 +13,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.part.WorkbenchPart;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
+import com.piece_framework.piece_ide.flow_designer
+            .command.SetStateAttributeCommand;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
@@ -38,16 +41,42 @@ public class StateGeneralSection extends AbstractPropertySection {
     
     private State fState;
     
+    private IWorkbenchPart fPart;
+    
     private TextListener fListener = new TextListener() {
 
         @Override
         public void changeText(Control control) {
+            String attributeName = null;
+            String attributeValue = ((Text) control).getText();
+            String attributeOldValue = null;
+            
             if (control == fStateName) {
-                fState.setName(((Text) control).getText());
+                attributeName = "name";
+                attributeOldValue = fState.getName();
             } else if (control == fSummary) {
-                fState.setSummary(((Text) control).getText());
+                attributeName = "summary";
+                attributeOldValue = fState.getSummary();
             } else if (control == fViewName) {
-                fState.setView(((Text) control).getText());
+                attributeName = "view";
+                attributeOldValue = fState.getView();
+            }
+            
+            if ((attributeValue.equals("") && attributeOldValue == null)
+                || attributeValue.equals(attributeOldValue)) {
+                return;
+            }
+            
+            if (fPart instanceof GraphicalEditor) {
+                GraphicalEditor editor = (GraphicalEditor) fPart;
+                CommandStack commandStack = 
+                    (CommandStack) editor.getAdapter(CommandStack.class);
+                
+                SetStateAttributeCommand command = 
+                    new SetStateAttributeCommand(
+                            attributeName, attributeValue, fState);
+                
+                commandStack.execute(command);
             }
         }
     };
@@ -174,6 +203,8 @@ public class StateGeneralSection extends AbstractPropertySection {
                 }
             }
         }
+        
+        fPart = part;
     }
 
     /**
