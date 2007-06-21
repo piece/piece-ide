@@ -84,26 +84,36 @@
             contributorId="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor"
             labelProvider="com.piece_framework.piece_ide.flow_designer.ui.property.FlowElementLabelProvider"
             typeMapper="com.piece_framework.piece_ide.flow_designer.ui.property.FlowElementTypeMapper">
-         <propertyCategory category="StateCategory"/>
          <propertyCategory category="FlowCategory"/>
+         <propertyCategory category="StateCategory"/>
       </propertyContributor>
    </extension>
    <extension
          point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
       <propertyTabs contributorId="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor">
          <propertyTab
+               category="FlowCategory"
+               id="FlowGeneralTab"
+               label="一般"/>
+         <propertyTab
                category="StateCategory"
                id="StateGeneralTab"
                label="一般"/>
          <propertyTab
-               category="FlowCategory"
-               id="FlowGeneralTab"
-               label="一般"/>
+               category="StateCategory"
+               id="StateEventTab"
+               label="イベント"/>
       </propertyTabs>
    </extension>
    <extension
          point="org.eclipse.ui.views.properties.tabbed.propertySections">
       <propertySections contributorId="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor">
+         <propertySection
+               class="com.piece_framework.piece_ide.flow_designer.ui.property.FlowGeneralSection"
+               id="FlowGeneralSection"
+               tab="FlowGeneralTab">
+            <input type="com.piece_framework.piece_ide.flow_designer.model.Flow"/>
+         </propertySection>
          <propertySection
                class="com.piece_framework.piece_ide.flow_designer.ui.property.StateGeneralSection"
                id="StateGeneralSection"
@@ -111,10 +121,10 @@
             <input type="com.piece_framework.piece_ide.flow_designer.model.State"/>
          </propertySection>
          <propertySection
-               class="com.piece_framework.piece_ide.flow_designer.ui.property.FlowGeneralSection"
-               id="FlowGeneralSection"
-               tab="FlowGeneralTab">
-            <input type="com.piece_framework.piece_ide.flow_designer.model.Flow"/>
+               class="com.piece_framework.piece_ide.flow_designer.ui.property.StateEventSection"
+               id="StateEventSection"
+               tab="StateEventTab">
+            <input type="com.piece_framework.piece_ide.flow_designer.model.State"/>
          </propertySection>
       </propertySections>
    </extension>
