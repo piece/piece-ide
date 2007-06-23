@@ -35,10 +35,6 @@ public class StateEventSection extends AbstractPropertySection {
     
     private Control fTab;
     
-    public StateEventSection() {
-        // TODO 自動生成されたコンストラクター・スタブ
-    }
-
     @Override
     public void createControls(
                     Composite parent, 
@@ -46,24 +42,21 @@ public class StateEventSection extends AbstractPropertySection {
         super.createControls(parent, tabbedPropertySheetPage);
         
         fTab = tabbedPropertySheetPage.getControl();
-        fTab.setBackground(new Color(Display.getCurrent(), new RGB(0, 0, 100)));
-        
-        parent.setBackground(new Color(Display.getCurrent(), new RGB(0, 120, 100)));
         
         Composite composite = 
             getWidgetFactory().createFlatFormComposite(parent);
-        composite.setBackground(new Color(Display.getCurrent(), new RGB(200, 120, 100)));
         
         FormData data;
         
         fStateNameLabel = 
             getWidgetFactory().createCLabel(composite, "ステート名：");
+        /*
         data = new FormData();
         data.left = new FormAttachment(0, 0);
         data.right = new FormAttachment(50, 0);
         data.top = new FormAttachment(0, 0);
         fStateNameLabel.setLayoutData(data); 
-        
+        */
         fEventTable = 
             getWidgetFactory().createTable(composite, SWT.HORIZONTAL | SWT.VERTICAL | SWT.VIRTUAL | SWT.FULL_SELECTION | SWT.BORDER);
         data = new FormData();
@@ -100,14 +93,7 @@ public class StateEventSection extends AbstractPropertySection {
 
             public void controlResized(ControlEvent e) {
                 Composite source = (Composite) e.getSource();
-                Point point = source.getSize();
-                
-                FormData data = new FormData();
-                data.left = new FormAttachment(0, 0);
-                data.right = new FormAttachment(100, 0);
-                data.top = new FormAttachment(fStateNameLabel, 0);
-                data.bottom = new FormAttachment(0, point.y - 40);
-                fEventTable.setLayoutData(data);
+                resizeEventTable(source.getSize());
             }
         });
     }
@@ -214,16 +200,16 @@ public class StateEventSection extends AbstractPropertySection {
             item.setText(2, "event handler2");
             item.setText(3, "guard2");
             
-            Point point = fTab.getSize();
-            
-            FormData data = new FormData();
-            data.left = new FormAttachment(0, 0);
-            data.right = new FormAttachment(100, 0);
-            data.top = new FormAttachment(fStateNameLabel, 0);
-            data.bottom = new FormAttachment(0, point.y - 40);
-            fEventTable.setLayoutData(data);
+            resizeEventTable(fTab.getSize());
         }
-        
     }
     
+    private void resizeEventTable(Point tabSize) {
+        FormData data = new FormData();
+        data.left = new FormAttachment(0, 0);
+        data.right = new FormAttachment(100, 0);
+        data.top = new FormAttachment(fStateNameLabel, 0);
+        data.bottom = new FormAttachment(0, tabSize.y - 40);
+        fEventTable.setLayoutData(data);
+    }
 }
