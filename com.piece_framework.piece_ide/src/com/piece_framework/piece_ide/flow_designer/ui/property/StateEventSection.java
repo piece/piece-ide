@@ -5,11 +5,15 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -29,6 +33,8 @@ public class StateEventSection extends AbstractPropertySection {
     
     private IWorkbenchPart fPart;
     
+    private Control fTab;
+    
     public StateEventSection() {
         // TODO 自動生成されたコンストラクター・スタブ
     }
@@ -38,6 +44,9 @@ public class StateEventSection extends AbstractPropertySection {
                     Composite parent, 
                     TabbedPropertySheetPage tabbedPropertySheetPage) {
         super.createControls(parent, tabbedPropertySheetPage);
+        
+        fTab = tabbedPropertySheetPage.getControl();
+        fTab.setBackground(new Color(Display.getCurrent(), new RGB(0, 0, 100)));
         
         parent.setBackground(new Color(Display.getCurrent(), new RGB(0, 120, 100)));
         
@@ -53,11 +62,10 @@ public class StateEventSection extends AbstractPropertySection {
         data.left = new FormAttachment(0, 0);
         data.right = new FormAttachment(50, 0);
         data.top = new FormAttachment(0, 0);
-        //data.bottom = new FormAttachment(100, 0);
         fStateNameLabel.setLayoutData(data); 
         
         fEventTable = 
-            getWidgetFactory().createTable(composite, SWT.VIRTUAL | SWT.FULL_SELECTION | SWT.BORDER);
+            getWidgetFactory().createTable(composite, SWT.HORIZONTAL | SWT.VERTICAL | SWT.VIRTUAL | SWT.FULL_SELECTION | SWT.BORDER);
         data = new FormData();
         data.left = new FormAttachment(0, 0);
         data.right = new FormAttachment(100, 0);
@@ -83,10 +91,25 @@ public class StateEventSection extends AbstractPropertySection {
         TableColumn columnGuard = new TableColumn(fEventTable, SWT.NONE);
         columnGuard.setText("ガード");
         columnGuard.setWidth(50);
-        
-        
-        
-        
+
+
+        fTab.addControlListener(new ControlListener() {
+
+            public void controlMoved(ControlEvent e) {
+            }
+
+            public void controlResized(ControlEvent e) {
+                Composite source = (Composite) e.getSource();
+                Point point = source.getSize();
+                
+                FormData data = new FormData();
+                data.left = new FormAttachment(0, 0);
+                data.right = new FormAttachment(100, 0);
+                data.top = new FormAttachment(fStateNameLabel, 0);
+                data.bottom = new FormAttachment(0, point.y - 40);
+                fEventTable.setLayoutData(data);
+            }
+        });
     }
 
     @Override
@@ -110,7 +133,7 @@ public class StateEventSection extends AbstractPropertySection {
                 fStateNameLabel.setText(
                         fStateNameLabel.getText() + fState.getName());
             }
-
+                
             fEventTable.removeAll();
             
             TableItem item = new TableItem(fEventTable, SWT.NONE);
@@ -190,10 +213,17 @@ public class StateEventSection extends AbstractPropertySection {
             item.setText(1, "next state2");
             item.setText(2, "event handler2");
             item.setText(3, "guard2");
+            
+            Point point = fTab.getSize();
+            
+            FormData data = new FormData();
+            data.left = new FormAttachment(0, 0);
+            data.right = new FormAttachment(100, 0);
+            data.top = new FormAttachment(fStateNameLabel, 0);
+            data.bottom = new FormAttachment(0, point.y - 40);
+            fEventTable.setLayoutData(data);
         }
         
     }
-    
-    
     
 }
