@@ -88,7 +88,7 @@ public class Flow extends AbstractModel implements IPropertySource {
      * @return ステートリスト
      * @see com.piece_framework.piece_ide.flow_designer.model.IFlow#getStates()
      */
-    public List getStates() {
+    public List<State> getStates() {
         return fStates;
     }
 
