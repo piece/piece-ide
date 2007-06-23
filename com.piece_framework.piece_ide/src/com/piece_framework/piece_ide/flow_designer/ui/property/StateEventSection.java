@@ -7,14 +7,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -26,12 +23,20 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 
 public class StateEventSection extends AbstractPropertySection {
 
+    private static final int LABEL_WIDTH_PERCENT = 50;
+    private static final int TABLE_WIDTH_PERCENT = 100;
+    
+    private static final int TABLE_HEIGHT_MARGIN = 40;
+    
+    private static final int EVENT_COLUMN_WIDTH = 100;
+    private static final int NEXT_STATE_COLUMN_WIDTH = 100;
+    private static final int EVENT_HANDLER_COLUMN_WIDTH = 150;
+    private static final int GUARD_COLUMN_WIDTH = 150;
+    
     private CLabel fStateNameLabel;
     private Table fEventTable;
     
     private State fState;
-    
-    private IWorkbenchPart fPart;
     
     private Control fTab;
     
@@ -50,41 +55,35 @@ public class StateEventSection extends AbstractPropertySection {
         
         fStateNameLabel = 
             getWidgetFactory().createCLabel(composite, "ステート名：");
-        /*
         data = new FormData();
         data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(50, 0);
+        data.right = new FormAttachment(LABEL_WIDTH_PERCENT, 0);
         data.top = new FormAttachment(0, 0);
         fStateNameLabel.setLayoutData(data); 
-        */
-        fEventTable = 
-            getWidgetFactory().createTable(composite, SWT.HORIZONTAL | SWT.VERTICAL | SWT.VIRTUAL | SWT.FULL_SELECTION | SWT.BORDER);
-        data = new FormData();
-        data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(100, 0);
-        data.top = new FormAttachment(fStateNameLabel, 0);
-        fEventTable.setLayoutData(data);
+
+        fEventTable = getWidgetFactory().createTable(composite, 
+                            SWT.HORIZONTAL | SWT.VERTICAL | SWT.VIRTUAL
+                            | SWT.FULL_SELECTION | SWT.BORDER);
         
         fEventTable.setHeaderVisible(true);
         fEventTable.setLinesVisible(true);
         
         TableColumn columnEventName = new TableColumn(fEventTable, SWT.NONE);
         columnEventName.setText("イベント名");
-        columnEventName.setWidth(50);
+        columnEventName.setWidth(EVENT_COLUMN_WIDTH);
         
         TableColumn columnNextStateName = 
                         new TableColumn(fEventTable, SWT.NULL);
         columnNextStateName.setText("遷移先ステート名");
-        columnNextStateName.setWidth(50);
+        columnNextStateName.setWidth(NEXT_STATE_COLUMN_WIDTH);
         
         TableColumn columnEventHandler = new TableColumn(fEventTable, SWT.NONE);
         columnEventHandler.setText("イベントハンドラ");
-        columnEventHandler.setWidth(50);
+        columnEventHandler.setWidth(EVENT_HANDLER_COLUMN_WIDTH);
         
         TableColumn columnGuard = new TableColumn(fEventTable, SWT.NONE);
         columnGuard.setText("ガード");
-        columnGuard.setWidth(50);
-
+        columnGuard.setWidth(GUARD_COLUMN_WIDTH);
 
         fTab.addControlListener(new ControlListener() {
 
@@ -107,8 +106,6 @@ public class StateEventSection extends AbstractPropertySection {
                 fState = (State) ((EditPart) input).getModel();
             }
         }
-        
-        fPart = part;
     }
 
     @Override
@@ -207,9 +204,9 @@ public class StateEventSection extends AbstractPropertySection {
     private void resizeEventTable(Point tabSize) {
         FormData data = new FormData();
         data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(100, 0);
+        data.right = new FormAttachment(TABLE_WIDTH_PERCENT, 0);
         data.top = new FormAttachment(fStateNameLabel, 0);
-        data.bottom = new FormAttachment(0, tabSize.y - 40);
+        data.bottom = new FormAttachment(0, tabSize.y - TABLE_HEIGHT_MARGIN);
         fEventTable.setLayoutData(data);
     }
 }
