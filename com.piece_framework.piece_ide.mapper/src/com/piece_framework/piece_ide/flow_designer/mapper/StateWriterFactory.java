@@ -3,11 +3,22 @@ package com.piece_framework.piece_ide.flow_designer.mapper;
 
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
+/**
+ * ステートライタファクトリクラス.
+ * @author nonoyama
+ *
+ */
 public class StateWriterFactory {
     
+
+    /**
+     * ステートライタクラスを取得する.
+     * @param  state ステート
+     * @return IStateWriter　ステートライタ
+     */
     public IStateWriter getWriter(State state) {
         
-        if (state==null) {
+        if (state == null) {
             return null;
         }
         

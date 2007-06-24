@@ -16,20 +16,37 @@ import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.jyaml.YamlFlow;
 
+/**
+ * フローライタクラス.
+ * @author nonoyama
+ *
+ */
 public class FlowWriter {
     
     private Flow fFlow;
 
+    /**
+     * フローを返す.
+     * @return フロー
+     */
     public Flow getFlow() {
         return fFlow;
     }
 
+    
+    /**
+     *  フローを設定する.
+     * @param flow フロー
+     */
     public void setFlow(Flow flow) {
         this.fFlow = flow;
     }
 
 
-
+    /**
+     * flowファイルの作成.
+     * @param flow フロー
+     */
     public static void write(Flow flow) {
         FileOutputStream fileOut;
         
@@ -43,7 +60,6 @@ public class FlowWriter {
             fileOut.close();
             
         } catch (IOException ioe) {
-            // TODO: オブジェクト読み込み時の例外処理
             ioe.printStackTrace();
             
         }
@@ -51,15 +67,11 @@ public class FlowWriter {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    public void readFlowFile(String filename){
+    /**
+     * flowファイルの読み込み.
+     * @param filename ファイル名
+     */
+    public void readFlowFile(String filename) {
         //flowファイルの読み込み
         try {
             
@@ -81,8 +93,12 @@ public class FlowWriter {
     }
 
 
+    
+    /**
+     * flowファイルの書き込み.
+     * @param outfile 出力先ファイル名
+     */
     public void writeFlowFile(String outfile) {
-        //flowファイルの書き込み
         try {
             FileOutputStream outFile = new FileOutputStream(outfile);
             ObjectOutputStream outObject = new ObjectOutputStream(outFile);
@@ -96,21 +112,21 @@ public class FlowWriter {
             e.printStackTrace();
             System.out.println(e.getMessage());
             return;
-        } finally {
-        	
         }
     }
     
 
+    /**
+     * Yamlファイルへの出力.
+     * @param outdir 出力ディレクトリ
+     */
     public void writeYamlFile(String outdir) {
         
         if (fFlow == null) {
-            //フローファイルがオープンされていません。
             return;
         }
         
         if (fFlow.getName() == null) {
-            //フロー名が定義されていません。 
             return;
         }
         
@@ -119,22 +135,23 @@ public class FlowWriter {
         }
         
        
-        //JYamlへ渡すオブジェクトを作成
         YamlFlow fYamlFlow = createYamlFlow();
         
         
-        //JYAMLによる出力
         try {
             String outfile = outdir + fFlow.getName() + ".yaml";
             Yaml.dump(fYamlFlow, new File(outfile), true);
         } catch (FileNotFoundException e) {
-            // TODO 自動生成された catch ブロック
             e.printStackTrace();
         }
     
     }
     
     
+    /**
+     * Flowの作成.
+     * @return YamlFlow
+     */
     public YamlFlow createYamlFlow() {
         
         YamlFlow fYamlFlow = new YamlFlow();

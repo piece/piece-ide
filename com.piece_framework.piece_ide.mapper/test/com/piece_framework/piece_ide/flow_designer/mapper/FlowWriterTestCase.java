@@ -23,7 +23,7 @@ public class FlowWriterTestCase extends TestCase {
 
     public void testWrite() {
         
-    	String workDir = "C:\\";
+        String workDir = "C:\\";
         String fileName = "test.flow";
         
         String infile   = workDir + fileName;
@@ -49,8 +49,8 @@ public class FlowWriterTestCase extends TestCase {
         fwtr.writeYamlFile(workDir);
         
         
-        
-      //ファイル名からフロー名・アクションクラス名を生成
+
+        //ファイル名からフロー名・アクションクラス名を生成
         String flowName = null;        
         flowName = fileName.substring(0, fileName.indexOf('.'));
         fwtr.getFlow().setName(flowName);
@@ -72,7 +72,7 @@ public class FlowWriterTestCase extends TestCase {
         }
         
         Flow flow = fwtr.getFlow();
-        String flowName = flow.getName();
+        //String flowName = flow.getName();
         
         //フローファイルの作成    
         //Event event ;
@@ -107,14 +107,19 @@ public class FlowWriterTestCase extends TestCase {
                switch (state.getStateType()) {
                 case State.INITIAL_STATE:
                     //state.setName("DisplayForm");
-                    for(Event event : state.getEventList()){
+                    for (Event event : state.getEventList()) {
                         
-                        if("Initialize".equals(event.getName())){
-                            if(event.getEventHandler()==null){
-                                event.setEventHandler(new EventHandler("Piece_FlowTestCaseAction","initialize"));
-                            }else{
-                                event.getEventHandler().setClassName("Piece_FlowTestCaseAction");
-                                event.getEventHandler().setMethodName("initialize");
+                        if ("Initialize".equals(event.getName())) {
+                            if (event.getEventHandler() == null) {
+                                event.setEventHandler(
+                                new EventHandler(
+                                    "Piece_FlowTestCaseAction", "initialize")
+                                    );
+                            } else {
+                                event.getEventHandler()
+                                .setClassName("Piece_FlowTestCaseAction");
+                                event.getEventHandler()
+                                .setMethodName("initialize");
                             }
                         }
                     }
@@ -123,96 +128,164 @@ public class FlowWriterTestCase extends TestCase {
                     //state.setName("Finish");
                     //state.setView("Finish");
                     
-                    for(Event event : state.getEventList()){
-                        if("Finalize".equals(event.getName())){
-                            if(event.getEventHandler()==null){
-                                event.setEventHandler(new EventHandler("Piece_FlowTestCaseAction","finalize"));
-                            }else{
-                                event.getEventHandler().setClassName("Piece_FlowTestCaseAction");
-                                event.getEventHandler().setMethodName("finalize");
+                    for (Event event : state.getEventList()) {
+                        if ("Finalize".equals(event.getName())) {
+                            if (event.getEventHandler() == null) {
+                                event.setEventHandler(
+                                    new EventHandler(
+                                        "Piece_FlowTestCaseAction", "finalize")
+                                         );
+                            } else {
+                                event.getEventHandler()
+                                .setClassName("Piece_FlowTestCaseAction");
+                                event.getEventHandler()
+                                .setMethodName("finalize");
                             }
                         }
                     }
                     
                     Event event;
-                    event = createEvent(flow ,"Entry",true ,null
-                                                ,new EventHandler("Piece_FlowTestCaseAction","setupForm") 
-                                                ,null);        
+                    event = createEvent(flow 
+                                , "Entry"
+                                , true 
+                                , null
+                                , new EventHandler("Piece_FlowTestCaseAction"
+                                        , "setupForm")
+                                , null);
                     state.getEventList().add(event);
                     
 
-                    event = createEvent(flow ,"Exit",true ,null
-                                                ,new EventHandler("Piece_FlowTestCaseAction","teardownForm") 
-                                                ,null);        
+                    event = createEvent(flow
+                            , "Exit"
+                            , true 
+                            , null
+                            , new EventHandler("Piece_FlowTestCaseAction"
+                                               , "teardownForm")
+                            , null);        
                     state.getEventList().add(event);
 
-                    event = createEvent(flow ,"Activity",true ,null
-                                                ,new EventHandler("Piece_FlowTestCaseAction","countDisplay") 
-                                                ,null);        
+                    event = createEvent(flow 
+                            , "Activity"
+                            , true
+                            , null
+                            , new EventHandler("Piece_FlowTestCaseAction"
+                                               , "countDisplay") 
+                            , null);        
                     state.getEventList().add(event);
                     
                     
                     
                     break;
                 case State.ACTION_STATE:
-                    if("processSubmitDisplayForm".equals(state.getName())){
+                    if ("processSubmitDisplayForm".equals(state.getName())) {
                         
-                        event = createEvent(flow ,"raiseError",false ,"DisplayForm",null ,null);    
+                        event = createEvent(flow 
+                                , "raiseError"
+                                , false 
+                                , "DisplayForm"
+                                , null 
+                                , null);    
                         state.getEventList().add(event);
                         
-                        event = createEvent(flow ,"succeed",false ,"ConfirmForm",null    ,null);    
+                        event = createEvent(flow 
+                                , "succeed"
+                                , false
+                                , "ConfirmForm"
+                                , null
+                                , null);
                         state.getEventList().add(event);                        
                         
-                    } else if("processSubmitConfirmForm".equals(state.getName())) {
+                    } else if ("processSubmitConfirmForm"
+                                   .equals(state.getName())) {
                         
-                        event = createEvent(flow ,"raiseError",false ,"DisplayForm",null ,null);    
+                        event = createEvent(flow 
+                                , "raiseError"
+                                , false 
+                                , "DisplayForm"
+                                , null
+                                , null);    
                         state.getEventList().add(event);
                         
-                        event = createEvent(flow ,"succeed",false ,"Register"
-                                                ,new EventHandler("Piece_FlowTestCaseAction","register") 
-                                                ,null);        
+                        event = createEvent(flow 
+                                , "succeed"
+                                , false
+                                , "Register"
+                                , new EventHandler("Piece_FlowTestCaseAction"
+                                        , "register") 
+                                , null);        
                         state.getEventList().add(event);                        
                         
-                    } else if("Register".equals(state.getName())) {
+                    } else if ("Register".equals(state.getName())) {
                         
-                        event = createEvent(flow ,"raiseError",false ,"DisplayForm", null, null);    
+                        event = createEvent(flow 
+                                , "raiseError"
+                                , false
+                                , "DisplayForm"
+                                , null
+                                , null);    
                         state.getEventList().add(event);
                         
-                        event = createEvent(flow, "succeed", false, "Finish", null, null);
+                        event = createEvent(flow
+                                , "succeed"
+                                , false
+                                , "Finish"
+                                , null
+                                , null);
                         state.getEventList().add(event);
                         
                     }
                     break;
                 case State.VIEW_STATE:
-                    if("DisplayForm".equals(state.getName())){
+                    if ("DisplayForm".equals(state.getName())) {
                         state.setView("Form");
                         
-                        event = createEvent(flow ,"Entry",true ,null
-                                                    ,new EventHandler("Piece_FlowTestCaseAction","setupForm") 
-                                                    ,null);        
+                        event = createEvent(flow
+                                , "Entry"
+                                , true
+                                , null
+                                , new EventHandler("Piece_FlowTestCaseAction"
+                                        , "setupForm")
+                                , null);        
                         state.getEventList().add(event);                        
                     
-                        event = createEvent(flow ,"Exit",true ,null
-                                                    ,new EventHandler("Piece_FlowTestCaseAction","teardownForm") 
-                                                    ,null);        
+                        event = createEvent(flow 
+                                , "Exit"
+                                , true
+                                , null
+                                , new EventHandler("Piece_FlowTestCaseAction"
+                                        , "teardownForm") 
+                                , null);        
                         state.getEventList().add(event);
                     
-                        event = createEvent(flow ,"Activity",true ,null
-                                                    ,new EventHandler("Piece_FlowTestCaseAction","countDisplay") 
-                                                    ,null);        
+                        event = createEvent(flow 
+                                , "Activity"
+                                , true
+                                , null
+                                , new EventHandler("Piece_FlowTestCaseAction"
+                                      , "countDisplay")
+                                , null);
                         state.getEventList().add(event);
                         
 
-                        event = createEvent(flow ,"submit",false ,"processSubmitDisplayForm"
-                                                ,new EventHandler("Piece_FlowTestCaseAction","validateInput") 
-                                                ,new EventHandler("Piece_FlowTestCaseAction","isPermitted"));        
+                        event = createEvent(flow
+                                , "submit"
+                                , false 
+                                , "processSubmitDisplayForm"
+                                , new EventHandler("Piece_FlowTestCaseAction"
+                                      , "validateInput") 
+                                , new EventHandler("Piece_FlowTestCaseAction"
+                                      , "isPermitted"));        
                         state.getEventList().add(event);
                                             
-                    }else if("ConfirmForm".equals(state.getName())){
+                    } else if ("ConfirmForm".equals(state.getName())) {
                         state.setView("Confirmation");
-                        event = createEvent(flow ,"submit",false ,"processSubmitConfirmForm"
-                                ,new EventHandler("Piece_FlowTestCaseAction","validateConfirmation") 
-                                ,null);        
+                        event = createEvent(flow 
+                                , "submit"
+                                , false 
+                                , "processSubmitConfirmForm"
+                                , new EventHandler("Piece_FlowTestCaseAction"
+                                       , "validateConfirmation") 
+                                , null);
                         state.getEventList().add(event);                
                     }    
                     break;
@@ -223,7 +296,8 @@ public class FlowWriterTestCase extends TestCase {
        
     }
     
-    private static Event createEvent(Flow flow ,String name,boolean sp,String nestState,EventHandler eH,EventHandler gH){
+    private static Event createEvent(Flow flow, String name,
+            boolean sp, String nestState, EventHandler eH, EventHandler gH) {
         Event event = new Event();
         event.setName(name);
         event.setSpecialEvent(sp);

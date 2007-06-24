@@ -7,10 +7,21 @@ import com.piece_framework.piece_ide.flow_designer.jyaml.YamlState;
 import com.piece_framework.piece_ide.flow_designer.jyaml.YamlTransition;
 import com.piece_framework.piece_ide.flow_designer.jyaml.YamlFlow;
 
+/**
+ * ビューステートライタクラス.
+ * @author nonoyama
+ *
+ */
 public class ViewStateWriter implements IStateWriter {
 
         
-    
+    /**
+     * Yaml出力用のステートクラスを作成する.
+     * 
+     * @param  yFlow Yamlフロークラス
+     * @param  state ステート
+     * @return YamlState Yamlステートクラス 
+     */
     public YamlState createYamlState(YamlFlow yFlow, State state) {
         
         if (state == null) {
@@ -21,26 +32,20 @@ public class ViewStateWriter implements IStateWriter {
         
         
         YamlState ys = new YamlState();
-        
-        //Nameの設定
         ys.setName(state.getName());
-        
-        //Viewの設定
         ys.setView(state.getView());
         
-        //Eventの設定
         for (Event event : state.getEventList()) {
 
             
             if (event.isSpecialEvent()) {
                 
-                //スペシャルイベントの設定  
                 YamlService sp = evWriter.createEventHandler(event);  
                 ys.setSpecialEvent(event.getName(), sp);              
                 
             } else {
                 
-                //遷移イベントの設定
+                //Transition
                 YamlTransition yTran = evWriter.createTransitionEvent(event);
                 ys.getTransition().add(yTran); 
                 

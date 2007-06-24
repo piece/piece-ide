@@ -12,7 +12,7 @@ import com.piece_framework.piece_ide.flow_designer.jyaml.YamlTransition;
 /**
  * アクションステートライタクラス.
  * 
- * @author Nonoyama yoshikazu
+ * @author nonoyama 
  * @version 
  * @since 
  *
@@ -26,37 +26,29 @@ public class ActionStateWriter implements IStateWriter {
      *
      * @param  yFlow Yamlフロークラス
      * @param  state モデルステートクラス
-     * @return Yamlステートクラス   
+     * @return YamlState Yamlステートクラス   
      */
     public YamlState createYamlState(YamlFlow yFlow, State state) {
         
         if (state == null) {
             return null;
         }
+        
         EventWriter evWriter = new EventWriter();
-
-        YamlState ys = new YamlState();
-        
-        //Nameの設定
-        ys.setName(state.getName());
-        
-        //Viewの設定
+        YamlState ys = new YamlState();        
+        ys.setName(state.getName());        
         ys.setView(null);
-        
-        
-        
-        //Eventの設定
+                
         for (Event event : state.getEventList()) {
             
             if (event.isSpecialEvent()) {
                 
-                //スペシャルイベントの設定
                 YamlService sp = evWriter.createEventHandler(event);  
                 ys.setSpecialEvent(event.getName(), sp);
                 
             } else {
                 
-                //Transitionの設定
+                //Transition
                 YamlTransition yTran = evWriter.createTransitionEvent(event);
                 ys.getTransition().add(yTran); 
                 

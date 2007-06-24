@@ -4,9 +4,24 @@ import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.jyaml.YamlService;
 import com.piece_framework.piece_ide.flow_designer.jyaml.YamlTransition;
 
+
+/**
+ * イベントライタークラス.
+ * 
+ * @author nonoyama
+ * @version 
+ * @since 
+ *
+ */
 public class EventWriter {
         
     
+    /**
+     * イベントハンドラを返す.
+     * 
+     * @param  event イベント
+     * @return YamlService
+    */
     public YamlService createEventHandler(Event event) {
         
         YamlService ysrv = new YamlService();
@@ -19,6 +34,12 @@ public class EventWriter {
     }
     
     
+    /**
+     * ガード用のイベントハンドラを返す.
+     * 
+     * @param event イベント
+     * @return YamlService
+    */ 
     public YamlService createGuardEventHandler(Event event) {
         
         YamlService ysrv = new YamlService();
@@ -31,7 +52,12 @@ public class EventWriter {
     }
     
     
-    
+    /**
+     * トランジションを返す.
+     * 
+     * @param event イベント
+     * @return YamlTransition
+    */
     public YamlTransition createTransitionEvent(Event event) {
 
         YamlTransition yTran = new YamlTransition();

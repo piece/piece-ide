@@ -7,10 +7,24 @@ import com.piece_framework.piece_ide.flow_designer.jyaml.YamlService;
 import com.piece_framework.piece_ide.flow_designer.jyaml.YamlState;
 import com.piece_framework.piece_ide.flow_designer.jyaml.YamlFlow;
 
+/**
+ * ファイナルステートライタークラス.
+ * 
+ * @author nonoyama
+ * @version 
+ * @since 
+ *
+ */
 public class FinalStateWriter implements IStateWriter {
 
     
-    
+    /**
+     * Yaml出力用のステートクラスを作成する.
+     * 
+     * @param  yFlow Yamlフロークラス
+     * @param  state ステート情報
+     * @return YamlState Yamlステートクラス 
+     */
     public YamlState createYamlState(YamlFlow yFlow, State state) {
         
         if (state == null) {
