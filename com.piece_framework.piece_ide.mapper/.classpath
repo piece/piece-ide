@@ -6,6 +6,6 @@
 	<classpathentry kind="lib" path="lib/jyaml-lib-1.0-beta-3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3.8.1"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="lib" path="C:/eclipse_piece/plugins/org.eclipse.ui.views_3.2.1.M20060906-0800.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.piece_framework.piece_ide"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
