@@ -44,7 +44,45 @@ public class StateFactory implements CreationFactory {
             return null;
         }
         
-        return new State(fStateType);
+        // TODO: 一時的なイベント生成
+        State state = new State(fStateType);
+        
+        // 遷移イベント
+        Event event = new Event();
+        event.setName("TransitionEvent1");
+        State nextState = new State(fStateType);
+        nextState.setName("next_state1");
+        event.setNextState(nextState);
+        event.setEventHandler("class1", "method1");
+        event.setGuardEventHandler("guard_class1", "guard_method1");
+        state.addEvent(event);
+        
+        event = new Event();
+        event.setName("TransitionEvent2");
+        nextState = new State(fStateType);
+        nextState.setName("next_state2");
+        event.setNextState(nextState);
+        event.setEventHandler("class2", "method2");
+        event.setGuardEventHandler("guard_class2", "guard_method2");
+        state.addEvent(event);
+        
+        // 内部イベント
+        event = new Event();
+        event.setName("InnerEvent1");
+        event.setNextState(state);
+        event.setEventHandler("class1", "method1");
+        event.setGuardEventHandler("guard_class1", "guard_method1");
+        state.addEvent(event);
+        
+        event = new Event();
+        event.setName("InnerEvent2");
+        event.setNextState(state);
+        event.setEventHandler("class2", "method2");
+        event.setGuardEventHandler("guard_class2", "guard_method2");
+        state.addEvent(event);
+        
+        return state;
+        //return new State(fStateType);
     }
 
     /**
