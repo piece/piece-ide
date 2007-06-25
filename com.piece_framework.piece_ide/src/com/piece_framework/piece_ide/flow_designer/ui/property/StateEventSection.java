@@ -19,6 +19,8 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
+import com.piece_framework.piece_ide.flow_designer.model.Event;
+import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 public class StateEventSection extends AbstractPropertySection {
@@ -32,6 +34,11 @@ public class StateEventSection extends AbstractPropertySection {
     private static final int NEXT_STATE_COLUMN_WIDTH = 100;
     private static final int EVENT_HANDLER_COLUMN_WIDTH = 150;
     private static final int GUARD_COLUMN_WIDTH = 150;
+    
+    private static final int EVENT_COLUMN = 0;
+    private static final int NEXT_STATE_COLUMN = 1;
+    private static final int EVENT_HANDLER_COLUMN = 2;
+    private static final int GUARD_COLUMN = 3;
     
     private CLabel fStateNameLabel;
     private Table fEventTable;
@@ -119,83 +126,39 @@ public class StateEventSection extends AbstractPropertySection {
                 
             fEventTable.removeAll();
             
-            TableItem item = new TableItem(fEventTable, SWT.NONE);
-            item.setText(0, "test event");
-            item.setText(1, "next state");
-            item.setText(2, "event handler");
-            item.setText(3, "guard");
-            
-            item = new TableItem(fEventTable, SWT.NONE);
-            item.setText(0, "test event2");
-            item.setText(1, "next state2");
-            item.setText(2, "event handler2");
-            item.setText(3, "guard2");
-            
-            item = new TableItem(fEventTable, SWT.NONE);
-            item.setText(0, "test event3");
-            item.setText(1, "next state2");
-            item.setText(2, "event handler2");
-            item.setText(3, "guard2");
-            
-            item = new TableItem(fEventTable, SWT.NONE);
-            item.setText(0, "test event4");
-            item.setText(1, "next state2");
-            item.setText(2, "event handler2");
-            item.setText(3, "guard2");
-            
-            item = new TableItem(fEventTable, SWT.NONE);
-            item.setText(0, "test event5");
-            item.setText(1, "next state2");
-            item.setText(2, "event handler2");
-            item.setText(3, "guard2");
-            
-            item = new TableItem(fEventTable, SWT.NONE);
-            item.setText(0, "test event6");
-            item.setText(1, "next state2");
-            item.setText(2, "event handler2");
-            item.setText(3, "guard2");
-            
-            item = new TableItem(fEventTable, SWT.NONE);
-            item.setText(0, "test event7");
-            item.setText(1, "next state2");
-            item.setText(2, "event handler2");
-            item.setText(3, "guard2");
-            
-            item = new TableItem(fEventTable, SWT.NONE);
-            item.setText(0, "test event8");
-            item.setText(1, "next state2");
-            item.setText(2, "event handler2");
-            item.setText(3, "guard2");
-            
-            item = new TableItem(fEventTable, SWT.NONE);
-            item.setText(0, "test event9");
-            item.setText(1, "next state2");
-            item.setText(2, "event handler2");
-            item.setText(3, "guard2");
-            
-            item = new TableItem(fEventTable, SWT.NONE);
-            item.setText(0, "test event10");
-            item.setText(1, "next state2");
-            item.setText(2, "event handler2");
-            item.setText(3, "guard2");
-            
-            item = new TableItem(fEventTable, SWT.NONE);
-            item.setText(0, "test event11");
-            item.setText(1, "next state2");
-            item.setText(2, "event handler2");
-            item.setText(3, "guard2");
-            
-            item = new TableItem(fEventTable, SWT.NONE);
-            item.setText(0, "test event12");
-            item.setText(1, "next state2");
-            item.setText(2, "event handler2");
-            item.setText(3, "guard2");
-            
-            item = new TableItem(fEventTable, SWT.NONE);
-            item.setText(0, "test event13");
-            item.setText(1, "next state2");
-            item.setText(2, "event handler2");
-            item.setText(3, "guard2");
+            for (Event event : fState.getEventList()) {
+                TableItem item = new TableItem(fEventTable, SWT.NONE);
+                
+                if (event.getName() != null) {
+                    item.setText(EVENT_COLUMN, event.getName());
+                }
+                State nextState = event.getNextState();
+                if (nextState != null && nextState.getName() != null) {
+                    item.setText(NEXT_STATE_COLUMN, nextState.getName());
+                }
+                EventHandler eventHandler = event.getEventHandler();
+                if (eventHandler != null) {
+                    String className = eventHandler.getClassName();
+                    String methodName = eventHandler.getMethodName();
+                    if (className != null && methodName != null) {
+                        item.setText(EVENT_HANDLER_COLUMN, 
+                                        className + ":" + methodName);
+                    } else if (methodName != null) {
+                        item.setText(EVENT_HANDLER_COLUMN, ":" + methodName);
+                    }
+                }
+                eventHandler = event.getGuardEventHandler();
+                if (eventHandler != null) {
+                    String className = eventHandler.getClassName();
+                    String methodName = eventHandler.getMethodName();
+                    if (className != null && methodName != null) {
+                        item.setText(GUARD_COLUMN, 
+                                        className + ":" + methodName);
+                    } else if (methodName != null) {
+                        item.setText(GUARD_COLUMN, ":" + methodName);
+                    }
+                }
+            }
             
             resizeEventTable(fTab.getSize());
         }
