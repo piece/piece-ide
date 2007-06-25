@@ -83,7 +83,7 @@ public class State extends AbstractModel implements IPropertySource {
             Event activityEvent = new Event();
             activityEvent.setName("Activity");
             activityEvent.setSpecialEvent(true);
-            exitEvent.setEventHandler(null, "activity");
+            activityEvent.setEventHandler(null, "activity");
         
             fEvents.add(activityEvent);
             
