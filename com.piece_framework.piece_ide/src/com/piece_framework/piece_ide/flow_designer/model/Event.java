@@ -111,7 +111,7 @@ public class Event implements Serializable {
     public EventHandler getGuardEventHandler() {
         return fGuardEventHandler;
     }
-
+    
     /**
      * ガード用イベントハンドラを設定する.
      * 
@@ -119,5 +119,15 @@ public class Event implements Serializable {
      */
     public void setGuardEventHandler(EventHandler guardEventHandler) {
         fGuardEventHandler = guardEventHandler;
+    }
+    
+    /**
+     * ガード用イベントハンドラを設定する.
+     * 
+     * @param className クラス名
+     * @param methodName メソッド名
+     */
+    public void setGuardEventHandler(String className, String methodName) {
+        setGuardEventHandler(new EventHandler(className, methodName));
     }
 }
