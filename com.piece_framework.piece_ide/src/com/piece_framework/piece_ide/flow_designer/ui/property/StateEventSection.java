@@ -6,6 +6,7 @@ import java.util.List;
 import org.eclipse.gef.EditPart;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.ControlEvent;
@@ -78,10 +79,15 @@ public class StateEventSection extends AbstractPropertySection {
         data.top = new FormAttachment(0, 0);
         fStateNameLabel.setLayoutData(data); 
 
+        TableViewer viewer = new TableViewer(composite, 
+                                    SWT.HORIZONTAL | SWT.VERTICAL | SWT.VIRTUAL
+                                    | SWT.FULL_SELECTION | SWT.BORDER);
+        fEventTable = viewer.getTable();
+        /*
         fEventTable = getWidgetFactory().createTable(composite, 
                             SWT.HORIZONTAL | SWT.VERTICAL | SWT.VIRTUAL
                             | SWT.FULL_SELECTION | SWT.BORDER);
-        
+        */
         fEventTable.setHeaderVisible(true);
         fEventTable.setLinesVisible(true);
         
