@@ -12,14 +12,17 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -39,10 +42,13 @@ public class StateEventSection extends AbstractPropertySection {
     private static final int EVENT_HANDLER_COLUMN_WIDTH = 150;
     private static final int GUARD_COLUMN_WIDTH = 150;
     
-    
     private static final RGB EVENT_SPECIAL_COLOR = new RGB(156, 207, 255);
     private static final RGB EVENT_TRANSITION_COLOR = new RGB(206, 255, 206);
     private static final RGB EVENT_INTERNAL_COLOR = new RGB(255, 154, 206);
+    
+    private static final int EVENT_SPECIAL = 1;
+    private static final int EVENT_TRANSITION = 2;
+    private static final int EVENT_INTERNAL = 3;
     
     private CLabel fStateNameLabel;
     private TableViewer fEventTableViewer;
@@ -135,6 +141,8 @@ public class StateEventSection extends AbstractPropertySection {
             fEventTableViewer.getTable().removeAll();
             fEventTableViewer.setInput(getItems());
             
+            setTableBackground();
+            
             resizeEventTable(fTab.getSize());
         }
     }
@@ -147,17 +155,12 @@ public class StateEventSection extends AbstractPropertySection {
         List<Event> internalEventList = new ArrayList<Event>();
         
         for (Event event : fState.getEventList()) {
-            String nextStateName = "";
-            if (event.getNextState() != null 
-                && event.getNextState().getName() != null)  {
-                nextStateName = event.getNextState().getName();
-            }
-            
-            if (event.isSpecialEvent()) {
+            int eventType = getEventType(event);
+            if (eventType ==  EVENT_SPECIAL) {
                 specialEventList.add(event);
-            } else if (!nextStateName.equals(fState.getName())) {
+            } else if (eventType ==  EVENT_TRANSITION) {
                 transitionEventList.add(event);                    
-            } else {
+            } else if (eventType ==  EVENT_INTERNAL) {
                 internalEventList.add(event);
             }
         }
@@ -173,6 +176,47 @@ public class StateEventSection extends AbstractPropertySection {
         }
         
         return eventList;
+    }
+    
+    private void setTableBackground() {
+        Table table = fEventTableViewer.getTable();
+        for (int i = 0; i < table.getItemCount(); i++) {
+            TableItem item = table.getItem(i);
+            // モデルを取得するためにテキストを取得を呼び出す
+            item.getText();     
+            
+            Event event = (Event) item.getData();
+            
+            RGB backColor = null;
+            int eventType = getEventType(event);
+            if (eventType ==  EVENT_SPECIAL) {
+                backColor = EVENT_SPECIAL_COLOR;
+            } else if (eventType ==  EVENT_TRANSITION) {
+                backColor = EVENT_TRANSITION_COLOR;                    
+            } else if (eventType ==  EVENT_INTERNAL) {
+                backColor = EVENT_INTERNAL_COLOR;
+            }
+            item.setBackground(new Color(Display.getCurrent(), backColor));
+        }
+    }
+    
+    private int getEventType(Event event) {
+        String nextStateName = "";
+        if (event.getNextState() != null 
+            && event.getNextState().getName() != null)  {
+            nextStateName = event.getNextState().getName();
+        }
+        
+        int eventType = 0;
+        if (event.isSpecialEvent()) {
+            eventType = EVENT_SPECIAL;
+        } else if (!nextStateName.equals(fState.getName())) {
+            eventType = EVENT_TRANSITION;                    
+        } else {
+            eventType = EVENT_INTERNAL;
+        }
+        
+        return eventType;
     }
     
     private void resizeEventTable(Point tabSize) {
