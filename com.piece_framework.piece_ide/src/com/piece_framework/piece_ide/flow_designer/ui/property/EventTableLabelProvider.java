@@ -11,13 +11,12 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 public class EventTableLabelProvider extends LabelProvider implements
         ITableLabelProvider {
 
-    public static final int EVENT_COLUMN = 0;
-    public static final int NEXT_STATE_COLUMN = 1;
-    public static final int EVENT_HANDLER_COLUMN = 2;
-    public static final int GUARD_COLUMN = 3;
+    private static final int EVENT_COLUMN = 0;
+    private static final int NEXT_STATE_COLUMN = 1;
+    private static final int EVENT_HANDLER_COLUMN = 2;
+    private static final int GUARD_COLUMN = 3;
     
     public Image getColumnImage(Object element, int columnIndex) {
-        // TODO 自動生成されたメソッド・スタブ
         return null;
     }
     

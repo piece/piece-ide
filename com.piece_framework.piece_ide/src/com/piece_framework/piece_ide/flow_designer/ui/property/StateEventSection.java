@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.ControlEvent;
@@ -81,10 +83,22 @@ public class StateEventSection extends AbstractPropertySection {
         fEventTableViewer = new TableViewer(composite, 
                                     SWT.HORIZONTAL | SWT.VERTICAL | SWT.VIRTUAL
                                     | SWT.FULL_SELECTION | SWT.BORDER);
+        Table eventTable = fEventTableViewer.getTable();
+
         fEventTableViewer.setContentProvider(new ArrayContentProvider());
         fEventTableViewer.setLabelProvider(new EventTableLabelProvider());
-        
-        Table eventTable = fEventTableViewer.getTable();
+        fEventTableViewer.setColumnProperties(new String[] {
+                            "Event",
+                            null,
+                            "EventHandler",
+                            "Guard" });
+        fEventTableViewer.setCellEditors(new CellEditor[] {
+                            new TextCellEditor(eventTable),
+                            null,
+                            new TextCellEditor(eventTable),
+                            new TextCellEditor(eventTable) });
+        fEventTableViewer.setCellModifier(
+                            new EventTableCellModifier(fEventTableViewer));
         
         eventTable.setHeaderVisible(true);
         eventTable.setLinesVisible(true);
@@ -182,8 +196,9 @@ public class StateEventSection extends AbstractPropertySection {
         Table table = fEventTableViewer.getTable();
         for (int i = 0; i < table.getItemCount(); i++) {
             TableItem item = table.getItem(i);
-            // モデルを取得するためにテキストを取得を呼び出す
-            item.getText();     
+            // モデルを取得するためにテキストを取得を呼び出しておく。
+            // こうしないと次の getData メソッドが null を返す。
+            item.getText();
             
             Event event = (Event) item.getData();
             
