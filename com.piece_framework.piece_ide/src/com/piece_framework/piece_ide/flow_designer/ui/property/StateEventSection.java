@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.gef.EditPart;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -11,23 +12,19 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
-import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 public class StateEventSection extends AbstractPropertySection {
@@ -42,17 +39,13 @@ public class StateEventSection extends AbstractPropertySection {
     private static final int EVENT_HANDLER_COLUMN_WIDTH = 150;
     private static final int GUARD_COLUMN_WIDTH = 150;
     
-    private static final int EVENT_COLUMN = 0;
-    private static final int NEXT_STATE_COLUMN = 1;
-    private static final int EVENT_HANDLER_COLUMN = 2;
-    private static final int GUARD_COLUMN = 3;
     
     private static final RGB EVENT_SPECIAL_COLOR = new RGB(156, 207, 255);
     private static final RGB EVENT_TRANSITION_COLOR = new RGB(206, 255, 206);
     private static final RGB EVENT_INTERNAL_COLOR = new RGB(255, 154, 206);
     
     private CLabel fStateNameLabel;
-    private Table fEventTable;
+    private TableViewer fEventTableViewer;
     
     private State fState;
     
@@ -79,32 +72,31 @@ public class StateEventSection extends AbstractPropertySection {
         data.top = new FormAttachment(0, 0);
         fStateNameLabel.setLayoutData(data); 
 
-        TableViewer viewer = new TableViewer(composite, 
+        fEventTableViewer = new TableViewer(composite, 
                                     SWT.HORIZONTAL | SWT.VERTICAL | SWT.VIRTUAL
                                     | SWT.FULL_SELECTION | SWT.BORDER);
-        fEventTable = viewer.getTable();
-        /*
-        fEventTable = getWidgetFactory().createTable(composite, 
-                            SWT.HORIZONTAL | SWT.VERTICAL | SWT.VIRTUAL
-                            | SWT.FULL_SELECTION | SWT.BORDER);
-        */
-        fEventTable.setHeaderVisible(true);
-        fEventTable.setLinesVisible(true);
+        fEventTableViewer.setContentProvider(new ArrayContentProvider());
+        fEventTableViewer.setLabelProvider(new EventTableLabelProvider());
         
-        TableColumn columnEventName = new TableColumn(fEventTable, SWT.NONE);
+        Table eventTable = fEventTableViewer.getTable();
+        
+        eventTable.setHeaderVisible(true);
+        eventTable.setLinesVisible(true);
+        
+        TableColumn columnEventName = new TableColumn(eventTable, SWT.NONE);
         columnEventName.setText("イベント名");
         columnEventName.setWidth(EVENT_COLUMN_WIDTH);
         
         TableColumn columnNextStateName = 
-                        new TableColumn(fEventTable, SWT.NULL);
+                        new TableColumn(eventTable, SWT.NULL);
         columnNextStateName.setText("遷移先ステート名");
         columnNextStateName.setWidth(NEXT_STATE_COLUMN_WIDTH);
         
-        TableColumn columnEventHandler = new TableColumn(fEventTable, SWT.NONE);
+        TableColumn columnEventHandler = new TableColumn(eventTable, SWT.NONE);
         columnEventHandler.setText("イベントハンドラ");
         columnEventHandler.setWidth(EVENT_HANDLER_COLUMN_WIDTH);
         
-        TableColumn columnGuard = new TableColumn(fEventTable, SWT.NONE);
+        TableColumn columnGuard = new TableColumn(eventTable, SWT.NONE);
         columnGuard.setText("ガード");
         columnGuard.setWidth(GUARD_COLUMN_WIDTH);
 
@@ -139,82 +131,48 @@ public class StateEventSection extends AbstractPropertySection {
                 fStateNameLabel.setText(
                         fStateNameLabel.getText() + fState.getName());
             }
-                
-            fEventTable.removeAll();
             
-            List<Event> specialEventList = new ArrayList<Event>();
-            List<Event> transitionEventList = new ArrayList<Event>();
-            List<Event> internalEventList = new ArrayList<Event>();
-            
-            for (Event event : fState.getEventList()) {
-                String nextStateName = "";
-                if (event.getNextState() != null 
-                    && event.getNextState().getName() != null)  {
-                    nextStateName = event.getNextState().getName();
-                }
-                
-                if (event.isSpecialEvent()) {
-                    specialEventList.add(event);
-                } else if (!nextStateName.equals(fState.getName())) {
-                    transitionEventList.add(event);                    
-                } else {
-                    internalEventList.add(event);
-                }
-            }
-            
-            for (Event event : specialEventList) {
-                TableItem item = new TableItem(fEventTable, SWT.NONE);
-                setEventData(item, event);
-                item.setBackground(new Color(Display.getCurrent(), 
-                                             EVENT_SPECIAL_COLOR));
-            }
-            for (Event event : transitionEventList) {
-                TableItem item = new TableItem(fEventTable, SWT.NONE);
-                setEventData(item, event);
-                item.setBackground(new Color(Display.getCurrent(), 
-                                             EVENT_TRANSITION_COLOR));
-            }
-            for (Event event : internalEventList) {
-                TableItem item = new TableItem(fEventTable, SWT.NONE);
-                setEventData(item, event);
-                item.setBackground(new Color(Display.getCurrent(), 
-                                             EVENT_INTERNAL_COLOR));
-            }
+            fEventTableViewer.getTable().removeAll();
+            fEventTableViewer.setInput(getItems());
             
             resizeEventTable(fTab.getSize());
         }
     }
     
-    private void setEventData(TableItem item, Event event) {
-        if (event.getName() != null) {
-            item.setText(EVENT_COLUMN, event.getName());
-        }
-        State nextState = event.getNextState();
-        if (nextState != null && nextState.getName() != null) {
-            item.setText(NEXT_STATE_COLUMN, nextState.getName());
-        }
-        EventHandler eventHandler = event.getEventHandler();
-        if (eventHandler != null) {
-            String className = eventHandler.getClassName();
-            String methodName = eventHandler.getMethodName();
-            if (className != null && methodName != null) {
-                item.setText(EVENT_HANDLER_COLUMN, 
-                                className + ":" + methodName);
-            } else if (methodName != null) {
-                item.setText(EVENT_HANDLER_COLUMN, ":" + methodName);
+    private List<Event> getItems() {
+        
+        List<Event> eventList = new ArrayList<Event>();
+        List<Event> specialEventList = new ArrayList<Event>();
+        List<Event> transitionEventList = new ArrayList<Event>();
+        List<Event> internalEventList = new ArrayList<Event>();
+        
+        for (Event event : fState.getEventList()) {
+            String nextStateName = "";
+            if (event.getNextState() != null 
+                && event.getNextState().getName() != null)  {
+                nextStateName = event.getNextState().getName();
+            }
+            
+            if (event.isSpecialEvent()) {
+                specialEventList.add(event);
+            } else if (!nextStateName.equals(fState.getName())) {
+                transitionEventList.add(event);                    
+            } else {
+                internalEventList.add(event);
             }
         }
-        eventHandler = event.getGuardEventHandler();
-        if (eventHandler != null) {
-            String className = eventHandler.getClassName();
-            String methodName = eventHandler.getMethodName();
-            if (className != null && methodName != null) {
-                item.setText(GUARD_COLUMN, 
-                                className + ":" + methodName);
-            } else if (methodName != null) {
-                item.setText(GUARD_COLUMN, ":" + methodName);
-            }
+        
+        for (Event event : specialEventList) {
+            eventList.add(event);
         }
+        for (Event event : transitionEventList) {
+            eventList.add(event);
+        }
+        for (Event event : internalEventList) {
+            eventList.add(event);
+        }
+        
+        return eventList;
     }
     
     private void resizeEventTable(Point tabSize) {
@@ -223,6 +181,6 @@ public class StateEventSection extends AbstractPropertySection {
         data.right = new FormAttachment(TABLE_WIDTH_PERCENT, 0);
         data.top = new FormAttachment(fStateNameLabel, 0);
         data.bottom = new FormAttachment(0, tabSize.y - TABLE_HEIGHT_MARGIN);
-        fEventTable.setLayoutData(data);
+        fEventTableViewer.getTable().setLayoutData(data);
     }
 }
