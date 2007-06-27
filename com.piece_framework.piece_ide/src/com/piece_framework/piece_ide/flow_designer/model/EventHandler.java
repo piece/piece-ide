@@ -63,4 +63,23 @@ public class EventHandler implements Serializable {
     public void setMethodName(String methodName) {
         fMethodName = methodName;
     }
+
+    /**
+     * クラス名・メソッド名を ":" で接続した文字列を返す.
+     * 
+     * @return クラス名・メソッド名を ":" で接続した文字列 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        String className = getClassName();
+        String methodName = getMethodName();
+        
+        if (className != null && methodName != null) {
+            return className + ":" + methodName;
+        } else if (methodName != null) {
+            return ":" + methodName;
+        }
+        return "";
+    }   
 }
