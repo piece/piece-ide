@@ -8,7 +8,7 @@ import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
- * イベント表示テーブルのラベルプロバイダー.
+ * イベント表示テーブルのラベル・プロバイダー.
  * 
  * @author MATSUFUJI Hideharu
  * @version 0.1.0
