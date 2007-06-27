@@ -17,7 +17,7 @@ public class Event implements Serializable {
     
     private String fName;
     private State fNextState;
-    private boolean fSpecialEvent;
+    private boolean fBuiltinEvent;
     private EventHandler fEventHandler;
     private EventHandler fGuardEventHandler;
     
@@ -58,21 +58,21 @@ public class Event implements Serializable {
     }
 
     /**
-     * スペシャルイベントかどうかを返す.
+     * ビルトインイベントかどうかを返す.
      * 
-     * @return スペシャルイベントの場合はTrue
+     * @return ビルトインイベントの場合はTrue
      */
-    public boolean isSpecialEvent() {
-        return fSpecialEvent;
+    public boolean isBuiltinEvent() {
+        return fBuiltinEvent;
     }
 
     /**
-     * スペシャルイベントかどうかを設定する.
+     * ビルトインイベントかどうかを設定する.
      * 
-     * @param specialEvent スペシャルイベントの場合はTrue
+     * @param builtinEvent ビルトインイベントの場合はTrue
      */
-    public void setSpecialEvent(boolean specialEvent) {
-        fSpecialEvent = specialEvent;
+    public void setBuiltinEvent(boolean builtinEvent) {
+        fBuiltinEvent = builtinEvent;
     }
     
     /**

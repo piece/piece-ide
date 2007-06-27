@@ -54,7 +54,7 @@ public class State extends AbstractModel implements IPropertySource {
         if (fStateType == INITIAL_STATE) {
             Event initializeEvent = new Event();
             initializeEvent.setName("Initialize");
-            initializeEvent.setSpecialEvent(true);
+            initializeEvent.setBuiltinEvent(true);
             initializeEvent.setEventHandler(null, "initialize");
             
             fEvents.add(initializeEvent);
@@ -68,21 +68,21 @@ public class State extends AbstractModel implements IPropertySource {
             
             Event entryEvent = new Event();
             entryEvent.setName("Entry");
-            entryEvent.setSpecialEvent(true);
+            entryEvent.setBuiltinEvent(true);
             entryEvent.setEventHandler(null, "entry");
         
             fEvents.add(entryEvent);
             
             Event exitEvent = new Event();
             exitEvent.setName("Exit");
-            exitEvent.setSpecialEvent(true);
+            exitEvent.setBuiltinEvent(true);
             exitEvent.setEventHandler(null, "exit");
         
             fEvents.add(exitEvent);
             
             Event activityEvent = new Event();
             activityEvent.setName("Activity");
-            activityEvent.setSpecialEvent(true);
+            activityEvent.setBuiltinEvent(true);
             activityEvent.setEventHandler(null, "activity");
         
             fEvents.add(activityEvent);
@@ -90,7 +90,7 @@ public class State extends AbstractModel implements IPropertySource {
         } else if (fStateType == FINAL_STATE) {
             Event finalizeEvent = new Event();
             finalizeEvent.setName("Finalize");
-            finalizeEvent.setSpecialEvent(true);
+            finalizeEvent.setBuiltinEvent(true);
             finalizeEvent.setEventHandler(null, "finalize");
         
             fEvents.add(finalizeEvent);

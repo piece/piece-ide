@@ -34,7 +34,7 @@ public class EventTableCellModifier implements ICellModifier {
         
         if (property.equals("Event")) {
             // ビルトインイベントの場合は編集不可
-            if (event.isSpecialEvent()) {
+            if (event.isBuiltinEvent()) {
                 return null;
             }
             
@@ -55,7 +55,7 @@ public class EventTableCellModifier implements ICellModifier {
             }
         } else if (property.equals("Guard")) {
             // ビルトインイベントの場合は編集不可
-            if (event.isSpecialEvent()) {
+            if (event.isBuiltinEvent()) {
                 return null;
             }
             
@@ -87,7 +87,7 @@ public class EventTableCellModifier implements ICellModifier {
         
         if (property.equals("Event")) {
             // ビルトインイベントの場合は編集不可
-            if (!event.isSpecialEvent()) {
+            if (!event.isBuiltinEvent()) {
                 attributeValue = value;
             }
         } else if (property.equals("EventHandler")) {
@@ -109,7 +109,7 @@ public class EventTableCellModifier implements ICellModifier {
             }
         } else if (property.equals("Guard")) {
             // ビルトインイベントの場合は編集不可
-            if (!event.isSpecialEvent()) {
+            if (!event.isBuiltinEvent()) {
                 String guardEventHandlerString = String.valueOf(value);
                 if (guardEventHandlerString != null) {
                     String[] arrayValue = guardEventHandlerString.split(":");

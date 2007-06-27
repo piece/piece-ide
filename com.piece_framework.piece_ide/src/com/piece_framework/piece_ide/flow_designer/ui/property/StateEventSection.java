@@ -287,7 +287,7 @@ public class StateEventSection extends AbstractPropertySection {
         }
         
         int eventType = 0;
-        if (event.isSpecialEvent()) {
+        if (event.isBuiltinEvent()) {
             eventType = EVENT_SPECIAL;
         } else if (!nextStateName.equals(fState.getName())) {
             eventType = EVENT_TRANSITION;                    
