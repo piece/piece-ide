@@ -5,7 +5,6 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
-import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
@@ -62,35 +61,17 @@ public class EventTableLabelProvider extends LabelProvider implements
                 }
                 break;
             case EVENT_HANDLER_COLUMN:
-                return getDisplayEvent(event.getEventHandler());
+                if (event.getEventHandler() != null) {
+                    return event.getEventHandler().toString();
+                }
+                break;
             case GUARD_COLUMN:
-                return getDisplayEvent(event.getGuardEventHandler());
+                if (event.getGuardEventHandler() != null) {
+                    return event.getGuardEventHandler().toString();
+                }
+                break;
             default:
                 break;
-        }
-        
-        return "";
-    }
-
-    /**
-     * イベントハンドラーの表示用文字列として、
-     * クラス名とメソッド名を ":" でつないで返す.
-     * 
-     * @param eventHandler イベントハンドラー
-     * @return 表示用文字列
-     */
-    private String getDisplayEvent(EventHandler eventHandler) {
-        if (eventHandler == null) {
-            return "";
-        }
-        
-        String className = eventHandler.getClassName();
-        String methodName = eventHandler.getMethodName();
-        
-        if (className != null && methodName != null) {
-            return className + ":" + methodName;
-        } else if (methodName != null) {
-            return ":" + methodName;
         }
         
         return "";
