@@ -2,22 +2,13 @@
 package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 
 import java.beans.PropertyChangeEvent;
-import java.util.Iterator;
-import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.MouseEvent;
-import org.eclipse.draw2d.MouseListener;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.MessageBox;
 
-import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.ui.figure.ActionStateFigure;
-import com.piece_framework.piece_ide.flow_designer.ui.figure.EventListFigure;
 
 /**
  * アクションステート・エディットパート.
@@ -27,7 +18,7 @@ import com.piece_framework.piece_ide.flow_designer.ui.figure.EventListFigure;
  * @since 0.1.0
  *
  */
-public class ActionStateEditPart extends StateEditPart implements MouseListener {
+public class ActionStateEditPart extends StateEditPart {
 
     /**
      * フィギュアーを作成する.
@@ -39,10 +30,7 @@ public class ActionStateEditPart extends StateEditPart implements MouseListener 
     protected IFigure createFigure() {
         ActionStateFigure figure = new ActionStateFigure();
         State state = (State) getModel();
-        
         figure.setName(state.getName());
-        
-        //figure.addMouseListener(this);
         
         return figure;
     }
@@ -94,50 +82,11 @@ public class ActionStateEditPart extends StateEditPart implements MouseListener 
     @Override
     public void performRequest(Request request) {
         if (request.getType().equals(RequestConstants.REQ_OPEN)) {
-            
             ActionStateFigure figure = (ActionStateFigure) getFigure();
             figure.setVisibleEventList(!figure.isVisibleEventList());
-            
-            System.out.println("REQ_OPEN:" + request);
-            
-            /*State state = (State) getModel();
-            List<Event> eventList = state.getEventList();
-            
-            StringBuffer events = new StringBuffer();
-            
-            Iterator ite = eventList.iterator();
-            while (ite.hasNext()) {
-                Event event = (Event) ite.next();
-                events.append(event.getName());
-                events.append("\n");
-            }
-            
-            MessageBox msg = new MessageBox(
-                    Display.getDefault().getActiveShell(), SWT.OK);
-            msg.setText("イベント一覧");
-            msg.setMessage(events.toString());
-            msg.open();*/
             
             return;
         }
         super.performRequest(request);
     }
-
-    public void mouseDoubleClicked(MouseEvent me) {
-        ActionStateFigure figure = (ActionStateFigure) getFigure();
-        figure.setVisibleEventList(!figure.isVisibleEventList());
-        System.out.println("DoubleClicked:" + me);
-    }
-
-    public void mousePressed(MouseEvent me) {
-        // TODO 自動生成されたメソッド・スタブ
-        System.out.println("Pressed:" + me);
-    }
-
-    public void mouseReleased(MouseEvent me) {
-        // TODO 自動生成されたメソッド・スタブ
-        System.out.println("Released:" + me);
-    }
-    
-    
 }

@@ -1,7 +1,6 @@
 // $Id$
 package com.piece_framework.piece_ide.flow_designer.command;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.gef.commands.Command;
