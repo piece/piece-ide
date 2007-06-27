@@ -15,11 +15,22 @@ public class Event implements Serializable {
 
     private static final long serialVersionUID = 2259605742197882832L;
     
+    private State fState;
+    
     private String fName;
     private State fNextState;
     private boolean fBuiltinEvent;
     private EventHandler fEventHandler;
     private EventHandler fGuardEventHandler;
+    
+    /**
+     * コンストラクタ.
+     * 
+     * @param state イベントが所属するステート
+     */
+    public Event(State state) {
+        fState = state;
+    }
     
     /**
      * イベント名を返す.
@@ -73,6 +84,39 @@ public class Event implements Serializable {
      */
     public void setBuiltinEvent(boolean builtinEvent) {
         fBuiltinEvent = builtinEvent;
+    }
+    
+    /**
+     * 遷移イベントかどうかを返す.
+     * 自身のステート名と遷移先ステート名が異なる場合は
+     * 遷移イベントと判断する。
+     * 処理としては、内部イベント判定を反転して返す.
+     * 
+     * @return 遷移イベントの場合はTrue
+     */
+    public boolean isTransitionEvent() {
+        return !isInternalEvent();
+    }
+
+    /**
+     * 内部イベントかどうかを返す.
+     * 自身のステート名と遷移先ステート名が同じ場合は
+     * 内部イベントと判断する。
+     * 
+     * @return 内部イベントの場合はTrue
+     */
+    public boolean isInternalEvent() {
+        if (fState != null && fNextState != null) {
+            String ownStateName = fState.getName();
+            String nextStateName = fNextState.getName();
+            
+            if (ownStateName != null
+                && nextStateName != null
+                && ownStateName.equals(nextStateName)) {
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
