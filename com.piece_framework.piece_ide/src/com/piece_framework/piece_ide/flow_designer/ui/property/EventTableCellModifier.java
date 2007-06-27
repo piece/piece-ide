@@ -1,18 +1,25 @@
 package com.piece_framework.piece_ide.flow_designer.ui.property;
 
+import org.eclipse.gef.commands.CommandStack;
+import org.eclipse.gef.ui.parts.GraphicalEditor;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.Item;
 
+import com.piece_framework.piece_ide.flow_designer.command.SetEventAttributeCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 
 public class EventTableCellModifier implements ICellModifier {
 
+    private GraphicalEditor fEditor;
     private TableViewer fEventTableViewer;
     
-    public EventTableCellModifier(TableViewer eventTableViewer) {
+    public EventTableCellModifier(
+                GraphicalEditor editor, 
+                TableViewer eventTableViewer) {
         fEventTableViewer = eventTableViewer;
+        fEditor = editor;
     }
     
     public boolean canModify(Object element, String property) {
@@ -76,15 +83,17 @@ public class EventTableCellModifier implements ICellModifier {
         }
         Event event = (Event) element;
         
+        Object attributeValue = null;
+        
         if (property.equals("Event")) {
             // ビルトインイベントの場合は編集不可
             if (!event.isSpecialEvent()) {
-                event.setName(String.valueOf(value));
+                attributeValue = value;
             }
         } else if (property.equals("EventHandler")) {
-            String eventHandler = String.valueOf(value);
-            if (eventHandler != null) {
-                String[] arrayValue = eventHandler.split(":");
+            String eventHandlerString = String.valueOf(value);
+            if (eventHandlerString != null) {
+                String[] arrayValue = eventHandlerString.split(":");
                 
                 String className = null;
                 String methodName = null;
@@ -96,14 +105,14 @@ public class EventTableCellModifier implements ICellModifier {
                     methodName = arrayValue[0];
                 }
                 
-                event.setEventHandler(className, methodName);
+                attributeValue = new EventHandler(className, methodName);
             }
         } else if (property.equals("Guard")) {
             // ビルトインイベントの場合は編集不可
             if (!event.isSpecialEvent()) {
-                String guardEventHandler = String.valueOf(value);
-                if (guardEventHandler != null) {
-                    String[] arrayValue = guardEventHandler.split(":");
+                String guardEventHandlerString = String.valueOf(value);
+                if (guardEventHandlerString != null) {
+                    String[] arrayValue = guardEventHandlerString.split(":");
                     
                     String className = null;
                     String methodName = null;
@@ -115,11 +124,19 @@ public class EventTableCellModifier implements ICellModifier {
                         methodName = arrayValue[0];
                     }
                     
-                    event.setGuardEventHandler(className, methodName);
+                    attributeValue = new EventHandler(className, methodName);
                 }
             }
         }
-        
+
+        if (attributeValue != null) {
+            CommandStack commandStack = 
+                (CommandStack) fEditor.getAdapter(CommandStack.class);
+            SetEventAttributeCommand command =
+                new SetEventAttributeCommand(
+                        property, attributeValue, event);
+            commandStack.execute(command);
+        }
         fEventTableViewer.update(element, null);
     }
 }

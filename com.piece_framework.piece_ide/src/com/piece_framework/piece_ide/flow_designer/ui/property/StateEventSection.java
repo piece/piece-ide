@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.ui.parts.GraphicalEditor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ISelection;
@@ -97,8 +98,6 @@ public class StateEventSection extends AbstractPropertySection {
                             null,
                             new TextCellEditor(eventTable),
                             new TextCellEditor(eventTable) });
-        fEventTableViewer.setCellModifier(
-                            new EventTableCellModifier(fEventTableViewer));
         
         eventTable.setHeaderVisible(true);
         eventTable.setLinesVisible(true);
@@ -140,6 +139,12 @@ public class StateEventSection extends AbstractPropertySection {
             if (input instanceof EditPart) {
                 fState = (State) ((EditPart) input).getModel();
             }
+        }
+        
+        if (part instanceof GraphicalEditor) {
+            fEventTableViewer.setCellModifier(
+                    new EventTableCellModifier(
+                            (GraphicalEditor) part, fEventTableViewer));
         }
     }
 
