@@ -207,13 +207,13 @@ public class StateEventSection extends AbstractPropertySection {
      */
     private List<Event> getItems() {
         List<Event> eventList = new ArrayList<Event>();
-        List<Event> specialEventList = new ArrayList<Event>();
+        List<Event> builtinEventList = new ArrayList<Event>();
         List<Event> transitionEventList = new ArrayList<Event>();
         List<Event> internalEventList = new ArrayList<Event>();
         
         for (Event event : fState.getEventList()) {
             if (event.isBuiltinEvent()) {
-                specialEventList.add(event);
+                builtinEventList.add(event);
             } else if (event.isTransitionEvent()) {
                 transitionEventList.add(event);                    
             } else if (event.isInternalEvent()) {
@@ -221,15 +221,9 @@ public class StateEventSection extends AbstractPropertySection {
             }
         }
         
-        for (Event event : specialEventList) {
-            eventList.add(event);
-        }
-        for (Event event : transitionEventList) {
-            eventList.add(event);
-        }
-        for (Event event : internalEventList) {
-            eventList.add(event);
-        }
+        eventList.addAll(builtinEventList);
+        eventList.addAll(transitionEventList);
+        eventList.addAll(internalEventList);
         
         return eventList;
     }
