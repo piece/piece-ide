@@ -6,7 +6,8 @@ import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.Item;
 
-import com.piece_framework.piece_ide.flow_designer.command.SetEventAttributeCommand;
+import com.piece_framework.piece_ide.flow_designer
+            .command.SetEventAttributeCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 
