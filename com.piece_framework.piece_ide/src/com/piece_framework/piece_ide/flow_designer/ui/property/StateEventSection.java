@@ -53,13 +53,9 @@ public class StateEventSection extends AbstractPropertySection {
     private static final int EVENT_HANDLER_COLUMN_WIDTH = 150;
     private static final int GUARD_COLUMN_WIDTH = 150;
     
-    private static final RGB EVENT_SPECIAL_COLOR = new RGB(156, 207, 255);
+    private static final RGB EVENT_BUILTIN_COLOR = new RGB(156, 207, 255);
     private static final RGB EVENT_TRANSITION_COLOR = new RGB(206, 255, 206);
     private static final RGB EVENT_INTERNAL_COLOR = new RGB(255, 154, 206);
-    
-    private static final int EVENT_SPECIAL = 1;
-    private static final int EVENT_TRANSITION = 2;
-    private static final int EVENT_INTERNAL = 3;
     
     private CLabel fStateNameLabel;
     private TableViewer fEventTableViewer;
@@ -216,12 +212,11 @@ public class StateEventSection extends AbstractPropertySection {
         List<Event> internalEventList = new ArrayList<Event>();
         
         for (Event event : fState.getEventList()) {
-            int eventType = getEventType(event);
-            if (eventType ==  EVENT_SPECIAL) {
+            if (event.isBuiltinEvent()) {
                 specialEventList.add(event);
-            } else if (eventType ==  EVENT_TRANSITION) {
+            } else if (event.isTransitionEvent()) {
                 transitionEventList.add(event);                    
-            } else if (eventType ==  EVENT_INTERNAL) {
+            } else if (event.isInternalEvent()) {
                 internalEventList.add(event);
             }
         }
@@ -254,52 +249,20 @@ public class StateEventSection extends AbstractPropertySection {
             Event event = (Event) item.getData();
             
             RGB backColor = null;
-            int eventType = getEventType(event);
-            if (eventType ==  EVENT_SPECIAL) {
-                backColor = EVENT_SPECIAL_COLOR;
-            } else if (eventType ==  EVENT_TRANSITION) {
+            if (event.isBuiltinEvent()) {
+                backColor = EVENT_BUILTIN_COLOR;
+            } else if (event.isTransitionEvent()) {
                 backColor = EVENT_TRANSITION_COLOR;                    
-            } else if (eventType ==  EVENT_INTERNAL) {
+            } else if (event.isInternalEvent()) {
                 backColor = EVENT_INTERNAL_COLOR;
             }
             item.setBackground(new Color(Display.getCurrent(), backColor));
         }
     }
-    
+
     /**
-     * イベントタイプを返す.
-     * イベントタイプは次の3つに分けられる。<br>
-     * ビルトインイベント：<br>
-     *      isSpecialEvent メソッドが true を返す。<br>
-     * 遷移イベント：<br>
-     *      遷移先ステートが自分自身のステートではない。<br>
-     * 内部イベント：<br>
-     *      遷移先ステートが自分自身のステートである。<br>
-     * 
-     * @param event イベント
-     * @return イベントタイプ
-     */
-    private int getEventType(Event event) {
-        String nextStateName = "";
-        if (event.getNextState() != null 
-            && event.getNextState().getName() != null)  {
-            nextStateName = event.getNextState().getName();
-        }
-        
-        int eventType = 0;
-        if (event.isBuiltinEvent()) {
-            eventType = EVENT_SPECIAL;
-        } else if (!nextStateName.equals(fState.getName())) {
-            eventType = EVENT_TRANSITION;                    
-        } else {
-            eventType = EVENT_INTERNAL;
-        }
-        
-        return eventType;
-    }
-    
-    /**
-     * プロパティーのリサイズに合わせて、イベント表示テーブルのサイズを修正する.
+     * プロパティーのリサイズに合わせて、イベント表示テーブルの
+     * サイズを修正する.
      * 
      * @param tabSize タブプロパティーのサイズ
      */
