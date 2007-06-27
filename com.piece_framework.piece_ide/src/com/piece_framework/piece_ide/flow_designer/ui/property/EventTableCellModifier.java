@@ -40,18 +40,8 @@ public class EventTableCellModifier implements ICellModifier {
             
             return event.getName();
         } else if (property.equals("EventHandler")) {
-            EventHandler eventHandler = event.getEventHandler();
-            if (eventHandler != null) {
-                String className = "";
-                String methodName = "";
-                
-                if (eventHandler.getClassName() != null) {
-                    className = eventHandler.getClassName();
-                }
-                if (eventHandler.getMethodName() != null) {
-                    methodName = eventHandler.getMethodName();
-                }
-                return className + ":" + methodName;
+            if (event.getEventHandler() != null) {
+                return event.getEventHandler().toString();
             }
         } else if (property.equals("Guard")) {
             // ビルトインイベントの場合は編集不可
@@ -59,18 +49,8 @@ public class EventTableCellModifier implements ICellModifier {
                 return null;
             }
             
-            EventHandler guardEventHandler = event.getGuardEventHandler();
-            if (guardEventHandler != null) {
-                String className = "";
-                String methodName = "";
-                
-                if (guardEventHandler.getClassName() != null) {
-                    className = guardEventHandler.getClassName();
-                }
-                if (guardEventHandler.getMethodName() != null) {
-                    methodName = guardEventHandler.getMethodName();
-                }
-                return className + ":" + methodName;
+            if (event.getGuardEventHandler() != null) {
+                return event.getGuardEventHandler().toString();
             }
         }
         
@@ -93,38 +73,14 @@ public class EventTableCellModifier implements ICellModifier {
         } else if (property.equals("EventHandler")) {
             String eventHandlerString = String.valueOf(value);
             if (eventHandlerString != null) {
-                String[] arrayValue = eventHandlerString.split(":");
-                
-                String className = null;
-                String methodName = null;
-                
-                if (arrayValue.length == 2) {
-                    className = arrayValue[0];
-                    methodName = arrayValue[1];
-                } else if (arrayValue.length == 1) {
-                    methodName = arrayValue[0];
-                }
-                
-                attributeValue = new EventHandler(className, methodName);
+                attributeValue = new EventHandler(eventHandlerString);
             }
         } else if (property.equals("Guard")) {
             // ビルトインイベントの場合は編集不可
             if (!event.isBuiltinEvent()) {
                 String guardEventHandlerString = String.valueOf(value);
                 if (guardEventHandlerString != null) {
-                    String[] arrayValue = guardEventHandlerString.split(":");
-                    
-                    String className = null;
-                    String methodName = null;
-                    
-                    if (arrayValue.length == 2) {
-                        className = arrayValue[0];
-                        methodName = arrayValue[1];
-                    } else if (arrayValue.length == 1) {
-                        methodName = arrayValue[0];
-                    }
-                    
-                    attributeValue = new EventHandler(className, methodName);
+                    attributeValue = new EventHandler(guardEventHandlerString);
                 }
             }
         }

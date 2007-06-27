@@ -29,6 +29,33 @@ public class EventHandler implements Serializable {
     }
     
     /**
+     * コンストラクタ.
+     * クラス名とメソッド名が ":" で接続された文字列からクラス名
+     * とメソッド名を分割して、設定する。
+     * 
+     * @param classAndMethodName クラス名 + ":" + メソッド名
+     */
+    public EventHandler(String classAndMethodName) {
+        if (classAndMethodName == null) {
+            return;
+        }
+        String[] arrayValue = classAndMethodName.split(":");
+        
+        String className = null;
+        String methodName = null;
+        
+        if (arrayValue.length == 2) {
+            className = arrayValue[0];
+            methodName = arrayValue[1];
+        } else if (arrayValue.length == 1) {
+            methodName = arrayValue[0];
+        }
+        
+        setClassName(className);
+        setMethodName(methodName);
+    }
+    
+    /**
      * クラス名を返す.
      * 
      * @return クラス名
