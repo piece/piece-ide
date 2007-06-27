@@ -33,6 +33,14 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
+/**
+ * ステート・プロパティシートのイベントセクション.
+ * 
+ * @author MATSUFUJI Hideharu
+ * @version 0.1.0
+ * @since 0.1.0
+ * 
+ */
 public class StateEventSection extends AbstractPropertySection {
 
     private static final int LABEL_WIDTH_PERCENT = 50;
@@ -60,6 +68,16 @@ public class StateEventSection extends AbstractPropertySection {
     
     private Control fTab;
     
+    /**
+     * コントロールを作成する.
+     * 
+     * @param parent 親コンテナ
+     * @param tabbedPropertySheetPage プロパティシートページ
+     * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
+     *        #createControls(
+     *          org.eclipse.swt.widgets.Composite, 
+     *          org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage)
+     */
     @Override
     public void createControls(
                     Composite parent, 
@@ -131,6 +149,19 @@ public class StateEventSection extends AbstractPropertySection {
         });
     }
 
+    /**
+     * インプットオブジェクトのセッターメソッド.
+     * インプットオブジェクトからステートを取得する。
+     * 取得したパートが GraphicalEditor の場合は、イベント表示テーブルの
+     * セル・モディファイアーを生成する。
+     * 
+     * @param part ワークベンチパート
+     * @param selection セレクトオブジェクト
+     * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
+     *          #setInput(
+     *              org.eclipse.ui.IWorkbenchPart, 
+     *              org.eclipse.jface.viewers.ISelection)
+     */    
     @Override
     public void setInput(IWorkbenchPart part, ISelection selection) {
         super.setInput(part, selection);
@@ -148,6 +179,13 @@ public class StateEventSection extends AbstractPropertySection {
         }
     }
 
+    /**
+     * 画面をリフレッシュする.
+     * ステートから必要な情報を取得し、コントロールにセットする。
+     * 
+     * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
+     *          #refresh()
+     */
     @Override
     public void refresh() {
         if (fState != null) {
@@ -160,14 +198,18 @@ public class StateEventSection extends AbstractPropertySection {
             fEventTableViewer.getTable().removeAll();
             fEventTableViewer.setInput(getItems());
             
-            setTableBackground();
+            setEventTableBackground();
             
             resizeEventTable(fTab.getSize());
         }
     }
     
+    /**
+     * イベントリストをビルトイン・遷移・内部の順番にソートして返す.
+     * 
+     * @return ソートされたイベントリスト
+     */
     private List<Event> getItems() {
-        
         List<Event> eventList = new ArrayList<Event>();
         List<Event> specialEventList = new ArrayList<Event>();
         List<Event> transitionEventList = new ArrayList<Event>();
@@ -197,7 +239,11 @@ public class StateEventSection extends AbstractPropertySection {
         return eventList;
     }
     
-    private void setTableBackground() {
+    /**
+     * イベントテーブルの背景色をイベントタイプに合わせて設定する.
+     * 
+     */
+    private void setEventTableBackground() {
         Table table = fEventTableViewer.getTable();
         for (int i = 0; i < table.getItemCount(); i++) {
             TableItem item = table.getItem(i);
@@ -220,6 +266,19 @@ public class StateEventSection extends AbstractPropertySection {
         }
     }
     
+    /**
+     * イベントタイプを返す.
+     * イベントタイプは次の3つに分けられる。<br>
+     * ビルトインイベント：<br>
+     *      isSpecialEvent メソッドが true を返す。<br>
+     * 遷移イベント：<br>
+     *      遷移先ステートが自分自身のステートではない。<br>
+     * 内部イベント：<br>
+     *      遷移先ステートが自分自身のステートである。<br>
+     * 
+     * @param event イベント
+     * @return イベントタイプ
+     */
     private int getEventType(Event event) {
         String nextStateName = "";
         if (event.getNextState() != null 
@@ -239,6 +298,11 @@ public class StateEventSection extends AbstractPropertySection {
         return eventType;
     }
     
+    /**
+     * プロパティーのリサイズに合わせて、イベント表示テーブルのサイズを修正する.
+     * 
+     * @param tabSize タブプロパティーのサイズ
+     */
     private void resizeEventTable(Point tabSize) {
         FormData data = new FormData();
         data.left = new FormAttachment(0, 0);
