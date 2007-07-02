@@ -8,8 +8,21 @@ import org.eclipse.gef.ui.actions.UndoRetargetAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.ui.actions.ActionFactory;
 
+/**
+ * フローデザイナー・エディターのアクションバー.
+ * 
+ * @author MATSUFUJI Hideharu
+ * @version 0.1.0
+ * @since 0.1.0
+ *
+ */
 public class FlowDesignerActionBarContributor extends ActionBarContributor {
 
+    /**
+     * アクションをビルトする.
+     * 
+     * @see org.eclipse.gef.ui.actions.ActionBarContributor#buildActions()
+     */
     @Override
     protected void buildActions() {
         addRetargetAction(new DeleteRetargetAction());
@@ -17,6 +30,13 @@ public class FlowDesignerActionBarContributor extends ActionBarContributor {
         addRetargetAction(new RedoRetargetAction());        
     }
     
+    /**
+     * ツールバーへコントリビュートする.
+     * 
+     * @param toolBarManager ツールバー・マネージャ
+     * @see org.eclipse.ui.part.EditorActionBarContributor
+     *          #contributeToToolBar(org.eclipse.jface.action.IToolBarManager)
+     */
     @Override
     public void contributeToToolBar(IToolBarManager toolBarManager) {
         toolBarManager.add(getAction(ActionFactory.DELETE.getId()));
@@ -24,8 +44,13 @@ public class FlowDesignerActionBarContributor extends ActionBarContributor {
         toolBarManager.add(getAction(ActionFactory.REDO.getId()));
     }
 
+    /**
+     * グローバル・アクションキーを定義する.
+     * 
+     * @see org.eclipse.gef.ui.actions.ActionBarContributor
+     *          #declareGlobalActionKeys()
+     */
     @Override
     protected void declareGlobalActionKeys() {
     }
-
 }

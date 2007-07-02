@@ -8,16 +8,37 @@ import org.eclipse.gef.ui.actions.GEFActionConstants;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.ui.actions.ActionFactory;
 
+/**
+ * フローデザイナー・エディターのコンテキストメニュー・プロバイダー.
+ * 
+ * @author MATSUFUJI Hideharu
+ * @version 0.1.0
+ * @since 0.1.0
+ *
+ */
 public class FlowDesignerContextMenuProvider extends ContextMenuProvider {
 
     private ActionRegistry fRegistry;
     
+    /**
+     * コンストラクタ.
+     * 
+     * @param viewer ビューア
+     * @param registry アクションレジストリ
+     */
     public FlowDesignerContextMenuProvider(EditPartViewer viewer, 
                                             ActionRegistry registry) {
         super(viewer);
         fRegistry = registry;
     }
 
+    /**
+     * コンテキストメニューをビルドする.
+     * 
+     * @param menu メニューマネージャ
+     * @see org.eclipse.gef.ContextMenuProvider
+     *          #buildContextMenu(org.eclipse.jface.action.IMenuManager)
+     */
     @Override
     public void buildContextMenu(IMenuManager menu) {
         GEFActionConstants.addStandardActionGroups(menu);
@@ -28,7 +49,5 @@ public class FlowDesignerContextMenuProvider extends ContextMenuProvider {
                            fRegistry.getAction(ActionFactory.REDO.getId()));
         menu.appendToGroup(GEFActionConstants.GROUP_EDIT, 
                            fRegistry.getAction(ActionFactory.DELETE.getId()));
-        
     }
-
 }
