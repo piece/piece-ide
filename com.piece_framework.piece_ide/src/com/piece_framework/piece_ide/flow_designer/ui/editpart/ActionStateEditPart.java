@@ -47,19 +47,19 @@ public class ActionStateEditPart extends StateEditPart {
     }
 
     /**
-     * プロパティ変更イベントを処理する.
+     * プロパティー変更イベントを処理する.
      * 
-     * @param evt プロパティ変更イベント
+     * @param event プロパティー変更イベント
      * @see com.piece_framework.piece_ide.flow_designer.
      *          ui.editpart.StateEditPart
      *              #propertyChange(java.beans.PropertyChangeEvent)
      */
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("name")) {
+    public void propertyChange(PropertyChangeEvent event) {
+        if (event.getPropertyName().equals("name")) {
             refreshName();
         }
-        super.propertyChange(evt);
+        super.propertyChange(event);
     }
     
     /**
