@@ -199,8 +199,18 @@ public class State extends AbstractModel implements IPropertySource {
      */
     public void removeEvent(Event event) {
         fEvents.remove(event);
+        firePropertyChange("event", null, (Object) fEvents);
     }
 
+    /**
+     * イベントの変更を通知する.
+     * Event クラスは変更通知先がないので、State を介して行う。
+     * 
+     */
+    public void notifyEventChange() {
+        firePropertyChange("event", null, (Object) fEvents);
+    }
+    
     /**
      * 親コンテナを返す.
      * 

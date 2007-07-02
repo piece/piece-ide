@@ -48,6 +48,7 @@ public class Event implements Serializable {
      */
     public void setName(String name) {
         fName = name;
+        fState.notifyEventChange();
     }
 
     /**
@@ -66,6 +67,7 @@ public class Event implements Serializable {
      */
     public void setNextState(State nextState) {
         fNextState = nextState;
+        fState.notifyEventChange();
     }
 
     /**
@@ -84,6 +86,7 @@ public class Event implements Serializable {
      */
     public void setBuiltinEvent(boolean builtinEvent) {
         fBuiltinEvent = builtinEvent;
+        fState.notifyEventChange();
     }
     
     /**
@@ -135,6 +138,7 @@ public class Event implements Serializable {
      */
     public void setEventHandler(EventHandler eventHandler) {
         fEventHandler = eventHandler;
+        fState.notifyEventChange();
     }
 
     /**
@@ -163,6 +167,7 @@ public class Event implements Serializable {
      */
     public void setGuardEventHandler(EventHandler guardEventHandler) {
         fGuardEventHandler = guardEventHandler;
+        fState.notifyEventChange();
     }
     
     /**
