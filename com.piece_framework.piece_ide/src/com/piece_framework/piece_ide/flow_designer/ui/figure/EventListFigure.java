@@ -79,6 +79,14 @@ public class EventListFigure extends RectangleFigure {
     }
     
     /**
+     * イベントをすべて削除する.
+     * 
+     */
+    public void removeAllEvent() {
+        fEventList = new ArrayList<String>();
+    }
+    
+    /**
      * イベントリストをつなげた文字列を生成し、ラベルにセットする.
      * 
      */

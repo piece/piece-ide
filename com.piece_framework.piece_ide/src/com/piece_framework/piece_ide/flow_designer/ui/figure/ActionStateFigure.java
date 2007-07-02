@@ -27,15 +27,15 @@ public class ActionStateFigure extends RoundedRectangle {
     private Label fNameLabel;
     
     private RectangleFigure fEventList;
-    private EventListFigure fSpecialEventList;
+    private EventListFigure fBuiltinEventList;
     private EventListFigure fTransitionEventList;
     private EventListFigure fInternalEventList;
     private boolean fVisibleEventList;
     
     private static final RGB STATE_COLOR = new RGB(200, 120, 100);
     
-    private static final RGB EVENT_SPECIAL_TITLE_COLOR = new RGB(0, 0, 255);
-    private static final RGB EVENT_SPECIAL_LIST_COLOR = new RGB(156, 207, 255);
+    private static final RGB EVENT_BUILTIN_TITLE_COLOR = new RGB(0, 0, 255);
+    private static final RGB EVENT_BUILTIN_LIST_COLOR = new RGB(156, 207, 255);
     
     private static final RGB EVENT_TRANSITION_TITLE_COLOR = new RGB(0, 255, 0);
     private static final RGB EVENT_TRANSITION_LIST_COLOR = 
@@ -66,13 +66,14 @@ public class ActionStateFigure extends RoundedRectangle {
         fEventList.setBorder(null);
         fEventList.setLayoutManager(new ToolbarLayout());
         
-        fSpecialEventList = 
+        fBuiltinEventList = 
             new EventListFigure(
-                "スペシャルイベント",
-                new Color(Display.getCurrent(), EVENT_SPECIAL_TITLE_COLOR),
-                new Color(Display.getCurrent(), EVENT_SPECIAL_LIST_COLOR));
-        fSpecialEventList.addEvent("イベントはありません。");
-        fEventList.add(fSpecialEventList);
+                "ビルトインイベント",
+                new Color(Display.getCurrent(), EVENT_BUILTIN_TITLE_COLOR),
+                new Color(Display.getCurrent(), EVENT_BUILTIN_LIST_COLOR));
+        addBuiltinEvent("イベントはありません。");
+        //fBuiltinEventList.addEvent("イベントはありません。");
+        fEventList.add(fBuiltinEventList);
         
         fTransitionEventList = 
             new EventListFigure(
@@ -131,6 +132,57 @@ public class ActionStateFigure extends RoundedRectangle {
         if (name != null) {
             fNameLabel.setText(name);
         }
+    }
+    
+    /**
+     * ビルトインイベントを追加する.
+     * 
+     * @param eventName イベント名
+     */
+    public void addBuiltinEvent(String eventName) {
+        fBuiltinEventList.addEvent(eventName);
+    }
+    
+    /**
+     * ビルトインイベント一覧をすべて削除する.
+     * 
+     */
+    public void removeAllBuiltinEvent() {
+        fBuiltinEventList.removeAllEvent();
+    }
+    
+    /**
+     * 遷移イベントを追加する.
+     * 
+     * @param eventName イベント名
+     */
+    public void addTransitionEvent(String eventName) {
+        fTransitionEventList.addEvent(eventName);
+    }
+    
+    /**
+     * 遷移イベント一覧をすべて削除する.
+     * 
+     */
+    public void removeAllTransitionEvent() {
+        fTransitionEventList.removeAllEvent();
+    }
+    
+    /**
+     * 内部イベントを追加する.
+     * 
+     * @param eventName イベント名
+     */
+    public void addInternalEvent(String eventName) {
+        fInternalEventList.addEvent(eventName);
+    }
+    
+    /**
+     * 内部イベント一覧をすべて削除する.
+     * 
+     */
+    public void removeAllInternalEvent() {
+        fInternalEventList.removeAllEvent();
     }
     
     /**

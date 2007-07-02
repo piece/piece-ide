@@ -189,6 +189,7 @@ public class State extends AbstractModel implements IPropertySource {
      */
     public void addEvent(Event event) {
         fEvents.add(event);
+        firePropertyChange("event", null, (Object) fEvents);
     }
     
     /**

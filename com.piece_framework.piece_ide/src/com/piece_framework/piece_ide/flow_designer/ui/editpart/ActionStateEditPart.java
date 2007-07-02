@@ -7,6 +7,7 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
 
+import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.ui.figure.ActionStateFigure;
 
@@ -29,8 +30,9 @@ public class ActionStateEditPart extends StateEditPart {
     @Override
     protected IFigure createFigure() {
         ActionStateFigure figure = new ActionStateFigure();
-        State state = (State) getModel();
-        figure.setName(state.getName());
+        
+        refreshName(figure);
+        refreshEvent(figure);
         
         return figure;
     }
@@ -57,19 +59,45 @@ public class ActionStateEditPart extends StateEditPart {
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         if (event.getPropertyName().equals("name")) {
-            refreshName();
+            refreshName((ActionStateFigure) getFigure());
+        } else if (event.getPropertyName().equals("event")) {
+            refreshEvent((ActionStateFigure) getFigure());
         }
         super.propertyChange(event);
     }
     
     /**
      * ステート名をリフレッシュする.
+     *
+     * @param figure フィギュアー
      */
-    private void refreshName() {
-        ActionStateFigure figure = (ActionStateFigure) getFigure();
+    private void refreshName(ActionStateFigure figure) {
         State state = (State) getModel();
         
         figure.setName(state.getName());
+    }
+    
+    /**
+     * イベントをリフレッシュする.
+     * 
+     * @param figure フィギュアー
+     */
+    private void refreshEvent(ActionStateFigure figure) {
+        State state = (State) getModel();
+        
+        figure.removeAllBuiltinEvent();
+        figure.removeAllTransitionEvent();
+        figure.removeAllInternalEvent();
+        
+        for (Event event : state.getEventList()) {
+            if (event.isBuiltinEvent()) {
+                figure.addBuiltinEvent(event.getName());
+            } else if (event.isTransitionEvent()) {
+                figure.addTransitionEvent(event.getName());
+            } else if (event.isInternalEvent()) {
+                figure.addInternalEvent(event.getName());
+            }
+        }
     }
     
     /**
