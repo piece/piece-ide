@@ -248,6 +248,14 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         return root;
     }
 
+    /**
+     * クラスの型に合ったオブジェクトを返す.
+     * 
+     * @param type クラス
+     * @return 指定されたクラスの型にあったオブジェクト
+     * @see org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette
+     *          #getAdapter(java.lang.Class)
+     */
     @Override
     public Object getAdapter(Class type) {
         if (type == IPropertySheetPage.class) {
@@ -256,9 +264,15 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         return super.getAdapter(type);
     }
 
+    /**
+     * タブ・プロパティが使用するコントリビュートIDを返す.
+     * 
+     * @return コントリビュートID
+     * @see org.eclipse.ui.views.properties.tabbed
+     *          .ITabbedPropertySheetPageContributor#getContributorId()
+     */
     public String getContributorId() {
         System.out.println(getSite().getId());
         return getSite().getId();
     }
-
 }

@@ -7,8 +7,9 @@ import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 
 import com.piece_framework.piece_ide.flow_designer.model.AbstractModel;
 
-public abstract class AbstractModelEditPart extends AbstractGraphicalEditPart implements
-        PropertyChangeListener {
+public abstract class AbstractModelEditPart 
+                    extends AbstractGraphicalEditPart 
+                    implements PropertyChangeListener {
 
     @Override
     public void activate() {
@@ -23,5 +24,4 @@ public abstract class AbstractModelEditPart extends AbstractGraphicalEditPart im
         AbstractModel model = (AbstractModel) getModel();
         model.removePropertyChangeListener(this);
     }
-
 }
