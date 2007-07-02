@@ -4,7 +4,10 @@ package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 import java.beans.PropertyChangeEvent;
 
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.gef.Request;
+import org.eclipse.gef.RequestConstants;
 
+import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.ui.figure.ViewStateFigure;
 
@@ -27,10 +30,10 @@ public class ViewStateEditPart extends StateEditPart {
     @Override
     protected IFigure createFigure() {
         ViewStateFigure figure = new ViewStateFigure();
-        State state = (State) getModel();
         
-        figure.setName(state.getName());
-        figure.setView(state.getView());
+        refreshName(figure);
+        refreshView(figure);
+        refreshEvent(figure);
         
         return figure;
     }
@@ -57,18 +60,21 @@ public class ViewStateEditPart extends StateEditPart {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("name")) {
-            refreshName();
+            refreshName((ViewStateFigure) getFigure());
         } else if (evt.getPropertyName().equals("view")) {
-            refreshView();
+            refreshView((ViewStateFigure) getFigure());
+        } else if (evt.getPropertyName().equals("event")) {
+            refreshEvent((ViewStateFigure) getFigure());
         }
         super.propertyChange(evt);
     }
 
     /**
      * ステート名をリフレッシュする.
+     *
+     * @param figure フィギュアー
      */
-    private void refreshName() {
-        ViewStateFigure figure = (ViewStateFigure) getFigure();
+    private void refreshName(ViewStateFigure figure) {
         State state = (State) getModel();
         
         figure.setName(state.getName());
@@ -76,13 +82,53 @@ public class ViewStateEditPart extends StateEditPart {
     
     /**
      * ビュー名をリフレッシュする.
+     *
+     * @param figure フィギュアー
      */
-    private void refreshView() {
-        ViewStateFigure figure = (ViewStateFigure) getFigure();
+    private void refreshView(ViewStateFigure figure) {
         State state = (State) getModel();
         
         figure.setView(state.getView());
     }
     
+    /**
+     * イベントをリフレッシュする.
+     * 
+     * @param figure フィギュアー
+     */
+    private void refreshEvent(ViewStateFigure figure) {
+        State state = (State) getModel();
+        
+        figure.removeAllBuiltinEvent();
+        figure.removeAllTransitionEvent();
+        figure.removeAllInternalEvent();
+        
+        for (Event event : state.getEventList()) {
+            if (event.isBuiltinEvent()) {
+                figure.addBuiltinEvent(event.getName());
+            } else if (event.isTransitionEvent()) {
+                figure.addTransitionEvent(event.getName());
+            } else if (event.isInternalEvent()) {
+                figure.addInternalEvent(event.getName());
+            }
+        }
+    }
     
+    /**
+     * リクエストを処理する.
+     * 
+     * @param request リクエスト情報
+     * @see org.eclipse.gef.editparts.AbstractEditPart
+     *          #performRequest(org.eclipse.gef.Request)
+     */
+    @Override
+    public void performRequest(Request request) {
+        if (request.getType().equals(RequestConstants.REQ_OPEN)) {
+            ViewStateFigure figure = (ViewStateFigure) getFigure();
+            figure.setVisibleEventList(!figure.isVisibleEventList());
+            
+            return;
+        }
+        super.performRequest(request);
+    }
 }

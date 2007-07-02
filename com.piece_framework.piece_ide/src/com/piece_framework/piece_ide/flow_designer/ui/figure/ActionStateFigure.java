@@ -72,7 +72,6 @@ public class ActionStateFigure extends RoundedRectangle {
                 new Color(Display.getCurrent(), EVENT_BUILTIN_TITLE_COLOR),
                 new Color(Display.getCurrent(), EVENT_BUILTIN_LIST_COLOR));
         addBuiltinEvent("イベントはありません。");
-        //fBuiltinEventList.addEvent("イベントはありません。");
         fEventList.add(fBuiltinEventList);
         
         fTransitionEventList = 
@@ -80,7 +79,7 @@ public class ActionStateFigure extends RoundedRectangle {
                 "遷移イベント",
                 new Color(Display.getCurrent(), EVENT_TRANSITION_TITLE_COLOR),
                 new Color(Display.getCurrent(), EVENT_TRANSITION_LIST_COLOR));
-        fTransitionEventList.addEvent("イベントはありません。");
+        addTransitionEvent("イベントはありません。");
         fEventList.add(fTransitionEventList);
         
         fInternalEventList = 
@@ -88,7 +87,7 @@ public class ActionStateFigure extends RoundedRectangle {
                 "内部イベント",
                 new Color(Display.getCurrent(), EVENT_INTERNAL_TITLE_COLOR),
                 new Color(Display.getCurrent(), EVENT_INTERNAL_LIST_COLOR));
-        fInternalEventList.addEvent("イベントはありません。");
+        addInternalEvent("イベントはありません。");
         fEventList.add(fInternalEventList);
         
         fVisibleEventList = false;
