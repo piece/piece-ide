@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @since 0.1.0
  *
  */
-public class Event implements Serializable {
+public class Event extends AbstractModel implements Serializable {
 
     private static final long serialVersionUID = 2259605742197882832L;
     
@@ -48,7 +48,7 @@ public class Event implements Serializable {
      */
     public void setName(String name) {
         fName = name;
-        fState.notifyEventChange();
+        firePropertyChange("event", null, (Object) this);
     }
 
     /**
@@ -67,7 +67,7 @@ public class Event implements Serializable {
      */
     public void setNextState(State nextState) {
         fNextState = nextState;
-        fState.notifyEventChange();
+        firePropertyChange("event", null, (Object) this);
     }
 
     /**
@@ -86,7 +86,7 @@ public class Event implements Serializable {
      */
     public void setBuiltinEvent(boolean builtinEvent) {
         fBuiltinEvent = builtinEvent;
-        fState.notifyEventChange();
+        firePropertyChange("event", null, (Object) this);
     }
     
     /**
@@ -138,7 +138,7 @@ public class Event implements Serializable {
      */
     public void setEventHandler(EventHandler eventHandler) {
         fEventHandler = eventHandler;
-        fState.notifyEventChange();
+        firePropertyChange("event", null, (Object) this);
     }
 
     /**
@@ -167,7 +167,7 @@ public class Event implements Serializable {
      */
     public void setGuardEventHandler(EventHandler guardEventHandler) {
         fGuardEventHandler = guardEventHandler;
-        fState.notifyEventChange();
+        firePropertyChange("event", null, (Object) this);
     }
     
     /**

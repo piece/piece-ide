@@ -1,6 +1,7 @@
 // $Id$
 package com.piece_framework.piece_ide.flow_designer.model;
 
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +38,6 @@ public class State extends AbstractModel implements IPropertySource {
     
     private int fX;
     private int fY;
-    
-    private Flow fParent;
     
     private List<Transition> fIncomings = new ArrayList<Transition>();
     private List<Transition> fOutgoings = new ArrayList<Transition>();
@@ -189,7 +188,9 @@ public class State extends AbstractModel implements IPropertySource {
      */
     public void addEvent(Event event) {
         fEvents.add(event);
-        firePropertyChange("event", null, (Object) fEvents);
+        for (PropertyChangeListener listener : getPropertyChangeListeners()) {
+            event.addPropertyChangeListener(listener);
+        }
     }
     
     /**
@@ -211,25 +212,6 @@ public class State extends AbstractModel implements IPropertySource {
         firePropertyChange("event", null, (Object) fEvents);
     }
     
-    /**
-     * 親コンテナを返す.
-     * 
-     * @return 親コンテナ
-     */
-    public Flow getParent() {
-        return fParent;
-    }
-
-    /**
-     * 親コンテナを設定する.
-     * 
-     * @param parent 親コンテナ
-     */
-    public void setParent(Flow parent) {
-        fParent = parent;
-        firePropertyChange("parent", null, null);
-    }
-
     /**
      * ステートのX座標を返す.
      * 

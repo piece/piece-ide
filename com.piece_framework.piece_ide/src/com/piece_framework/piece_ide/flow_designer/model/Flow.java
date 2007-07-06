@@ -101,7 +101,6 @@ public class Flow extends AbstractModel implements IPropertySource {
      */
     public void addState(State state) {
         fStates.add(state);
-        state.setParent(this);
         firePropertyChange("state", null, null);
     }
 
@@ -114,7 +113,6 @@ public class Flow extends AbstractModel implements IPropertySource {
      */
     public void removeState(State state) {
         fStates.remove(state);
-        state.setParent(null);
         firePropertyChange("state", null, null);
     }
 
