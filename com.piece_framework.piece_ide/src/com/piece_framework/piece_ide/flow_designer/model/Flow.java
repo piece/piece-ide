@@ -25,6 +25,9 @@ public class Flow extends AbstractModel implements IPropertySource {
     private String fActionClassName;
     private List<State> fStates;
     
+    private int fActionStateSequenceNo;
+    private int fViewStateSequenceNo;
+    
     /**
      * コンストラクタ.
      * ステートリストを初期化する。
@@ -37,7 +40,8 @@ public class Flow extends AbstractModel implements IPropertySource {
         
         setName(name);
         setActionClassName(actionClassName);
-        
+        fActionStateSequenceNo = 1;
+        fViewStateSequenceNo = 1;
         fStates = new ArrayList<State>();
     }
 
@@ -116,6 +120,34 @@ public class Flow extends AbstractModel implements IPropertySource {
         firePropertyChange("state", null, null);
     }
 
+    /**
+     * ステートタイプにあった新しいステート名を返す.
+     * Piece_IDEではステート生成時、自動的に名前が生成される。<br>
+     * 生成規則は以下のとおり。<br>
+     * ・イニシャルステート："InitialState"固定<br>
+     * ・ファイナルステート："FinalState"固定<br>
+     * ・ビューステート："DisplayForm" + 連番<br>
+     * ・アクションステート："Process" + 連番<br>
+     * 
+     * @param stateType ステートタイプ
+     * @return 新しいステート名
+     */
+    public String generateStateName(int stateType) {
+        String stateName = null;
+        if (stateType == State.INITIAL_STATE) {
+            stateName = "InitialState";
+        } else if (stateType == State.VIEW_STATE) {
+            stateName = "DisplayForm" + fViewStateSequenceNo;
+            fViewStateSequenceNo++;
+        } else if (stateType == State.ACTION_STATE) {
+            stateName = "Proccess" + fActionStateSequenceNo;
+            fActionStateSequenceNo++;
+        } else if (stateType == State.FINAL_STATE) {
+            stateName = "FinalState";
+        }
+        return stateName;
+    }
+    
     /**
      * エディット可能なオブジェクトを返す.
      * 

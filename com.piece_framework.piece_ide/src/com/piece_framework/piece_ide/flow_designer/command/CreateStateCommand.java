@@ -62,6 +62,7 @@ public class CreateStateCommand extends Command {
         
         fState.setX(fX);
         fState.setY(fY);
+        fState.setName(fFlow.generateStateName(fState.getStateType()));
         fFlow.addState(fState);
     }
 
