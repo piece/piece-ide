@@ -15,23 +15,12 @@ public class Event extends AbstractModel implements Serializable {
 
     private static final long serialVersionUID = 2259605742197882832L;
     
-    private State fState;
-    
     private String fName;
     private State fNextState;
     private boolean fBuiltinEvent;
     private boolean fInternalEvent;
     private EventHandler fEventHandler;
     private EventHandler fGuardEventHandler;
-    
-    /**
-     * コンストラクタ.
-     * 
-     * @param state イベントが所属するステート
-     */
-    public Event(State state) {
-        fState = state;
-    }
     
     /**
      * イベント名を返す.

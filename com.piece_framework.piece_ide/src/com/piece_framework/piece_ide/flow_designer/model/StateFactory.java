@@ -48,7 +48,7 @@ public class StateFactory implements CreationFactory {
         State state = new State(fStateType);
         
         // 遷移イベント1
-        Event event = new Event(state);
+        Event event = new Event();
         event.setName("TransitionEvent1");
         State nextState = new State(fStateType);
         nextState.setName("next_state1");
@@ -58,7 +58,7 @@ public class StateFactory implements CreationFactory {
         state.addEvent(event);
         
         // 内部イベント1
-        event = new Event(state);
+        event = new Event();
         event.setName("InnerEvent1");
         event.setNextState(state);
         event.setEventHandler("class1", "method1");
@@ -66,7 +66,7 @@ public class StateFactory implements CreationFactory {
         state.addEvent(event);
 
         // 遷移イベント2
-        event = new Event(state);
+        event = new Event();
         event.setName("TransitionEvent2");
         nextState = new State(fStateType);
         nextState.setName("next_state2");
@@ -76,7 +76,7 @@ public class StateFactory implements CreationFactory {
         state.addEvent(event);
         
         // 内部イベント2
-        event = new Event(state);
+        event = new Event();
         event.setName("InnerEvent2");
         event.setNextState(state);
         event.setEventHandler("class2", "method2");
