@@ -49,51 +49,44 @@ public class State extends AbstractModel implements IPropertySource {
      */
     public State(int stateType) {
         fStateType = stateType;
-        
+        createBuiltinEventForStateType();
+    }
+    
+    /**
+     * ステートタイプごとに必要なビルトインイベントを作成する.
+     * 
+     */
+    private void createBuiltinEventForStateType() {
         if (fStateType == INITIAL_STATE) {
-            Event initializeEvent = new Event();
-            initializeEvent.setName("Initialize");
-            initializeEvent.setBuiltinEvent(true);
-            initializeEvent.setEventHandler(null, "initialize");
-            
-            fEvents.add(initializeEvent);
-            
+            fEvents.add(createBuiltinEvent("Initialize", null, "initialize"));
         } else if (fStateType == ACTION_STATE
                     || fStateType == VIEW_STATE) {
-            
-            if (fStateType == ACTION_STATE) {
-                setName("ActionState1");
-            }
-            
-            Event entryEvent = new Event();
-            entryEvent.setName("Entry");
-            entryEvent.setBuiltinEvent(true);
-            entryEvent.setEventHandler(null, "entry");
-        
-            fEvents.add(entryEvent);
-            
-            Event exitEvent = new Event();
-            exitEvent.setName("Exit");
-            exitEvent.setBuiltinEvent(true);
-            exitEvent.setEventHandler(null, "exit");
-        
-            fEvents.add(exitEvent);
-            
-            Event activityEvent = new Event();
-            activityEvent.setName("Activity");
-            activityEvent.setBuiltinEvent(true);
-            activityEvent.setEventHandler(null, "activity");
-        
-            fEvents.add(activityEvent);
-            
+            fEvents.add(createBuiltinEvent("Entry", null, "entry"));
+            fEvents.add(createBuiltinEvent("Exit", null, "exit"));
+            fEvents.add(createBuiltinEvent("Activity", null, "activity"));
         } else if (fStateType == FINAL_STATE) {
-            Event finalizeEvent = new Event();
-            finalizeEvent.setName("Finalize");
-            finalizeEvent.setBuiltinEvent(true);
-            finalizeEvent.setEventHandler(null, "finalize");
-        
-            fEvents.add(finalizeEvent);
+            fEvents.add(createBuiltinEvent("Finalize", null, "finalize"));
         }
+    }
+    
+    /**
+     * ビルトインイベントオブジェクトを作成する.
+     * 
+     * @param eventName ビルトインイベント名
+     * @param className クラス名
+     * @param methodName メソッド名
+     * @return ビルトインイベント
+     */
+    public Event createBuiltinEvent(
+                    String eventName, 
+                    String className, 
+                    String methodName) {
+        Event event = new Event();
+        event.setName(eventName);
+        event.setBuiltinEvent(true);
+        event.setEventHandler(className, methodName);
+        
+        return event;
     }
     
     /**
