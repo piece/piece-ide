@@ -20,6 +20,7 @@ public class Event extends AbstractModel implements Serializable {
     private String fName;
     private State fNextState;
     private boolean fBuiltinEvent;
+    private boolean fInternalEvent;
     private EventHandler fEventHandler;
     private EventHandler fGuardEventHandler;
     
@@ -91,35 +92,31 @@ public class Event extends AbstractModel implements Serializable {
     
     /**
      * 遷移イベントかどうかを返す.
-     * 自身のステート名と遷移先ステート名が異なる場合は
-     * 遷移イベントと判断する。
-     * 処理としては、内部イベント判定を反転して返す.
+     * 内部イベントでなければ、遷移イベントと判断する。
      * 
      * @return 遷移イベントの場合はTrue
      */
     public boolean isTransitionEvent() {
-        return !isInternalEvent();
+        return !fInternalEvent;
     }
 
     /**
+     * インターナルイベントかどうかを設定する.
+     *  
+     * @param internalEvent 内部イベントの場合はTrue
+     */
+    public void setInternalEvent(boolean internalEvent) {
+        fInternalEvent = internalEvent;
+        firePropertyChange("event", null, (Object) this);
+    }
+    
+    /**
      * 内部イベントかどうかを返す.
-     * 自身のステート名と遷移先ステート名が同じ場合は
-     * 内部イベントと判断する。
      * 
      * @return 内部イベントの場合はTrue
      */
     public boolean isInternalEvent() {
-        if (fState != null && fNextState != null) {
-            String ownStateName = fState.getName();
-            String nextStateName = fNextState.getName();
-            
-            if (ownStateName != null
-                && nextStateName != null
-                && ownStateName.equals(nextStateName)) {
-                return true;
-            }
-        }
-        return false;
+        return fInternalEvent;
     }
     
     /**
