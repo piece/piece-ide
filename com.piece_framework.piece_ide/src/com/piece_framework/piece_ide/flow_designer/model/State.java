@@ -88,7 +88,37 @@ public class State extends AbstractModel implements IPropertySource {
         
         return event;
     }
-    
+
+    /**
+     * リスナー追加時、イベントにも同様のリスナーを登録する.
+     * 
+     * @param listener 登録するリスナー
+     * @see com.piece_framework.piece_ide.flow_designer.model.AbstractModel
+     *          #addPropertyChangeListener(java.beans.PropertyChangeListener)
+     */
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        super.addPropertyChangeListener(listener);
+        for (Event event : fEvents) {
+            event.addPropertyChangeListener(listener);
+        }
+    }
+
+    /**
+     * リスナー削除時、イベントからも同様にリスナーを削除する.
+     * 
+     * @param listener 削除するリスナー
+     * @see com.piece_framework.piece_ide.flow_designer.model.AbstractModel
+     *          #removePropertyChangeListener(java.beans.PropertyChangeListener)
+     */
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        super.removePropertyChangeListener(listener);
+        for (Event event : fEvents) {
+            event.removePropertyChangeListener(listener);
+        }
+    }
+
     /**
      * ステートタイプを返す.
      * 
@@ -181,9 +211,6 @@ public class State extends AbstractModel implements IPropertySource {
      */
     public void addEvent(Event event) {
         fEvents.add(event);
-        for (PropertyChangeListener listener : getPropertyChangeListeners()) {
-            event.addPropertyChangeListener(listener);
-        }
     }
     
     /**

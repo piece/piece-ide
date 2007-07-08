@@ -61,6 +61,7 @@ public class StateFactory implements CreationFactory {
         event = new Event();
         event.setName("InnerEvent1");
         event.setNextState(state);
+        event.setInternalEvent(true);
         event.setEventHandler("class1", "method1");
         event.setGuardEventHandler("guard_class1", "guard_method1");
         state.addEvent(event);
@@ -79,6 +80,7 @@ public class StateFactory implements CreationFactory {
         event = new Event();
         event.setName("InnerEvent2");
         event.setNextState(state);
+        event.setInternalEvent(true);
         event.setEventHandler("class2", "method2");
         event.setGuardEventHandler("guard_class2", "guard_method2");
         state.addEvent(event);
