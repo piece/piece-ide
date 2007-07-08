@@ -3,16 +3,9 @@ package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.MarginBorder;
-import org.eclipse.draw2d.RectangleFigure;
-import org.eclipse.draw2d.RoundedRectangle;
-import org.eclipse.draw2d.ToolbarLayout;
-import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.widgets.Display;
 
 /**
  * ビューステート・フィギュアー.
@@ -22,17 +15,10 @@ import org.eclipse.swt.widgets.Display;
  * @since 0.1.0
  *
  */
-public class ViewStateFigure extends RoundedRectangle {
+public class ViewStateFigure extends NormalStateFigure {
 
-    private Label fNameLabel;
     private Label fViewLabel;
-    
-    private RectangleFigure fEventList;
-    private EventListFigure fBuiltinEventList;
-    private EventListFigure fTransitionEventList;
-    private EventListFigure fInternalEventList;
-    private boolean fVisibleEventList;
-    
+
     private static final RGB STATE_COLOR = new RGB(80, 80, 200);
     
     private static final RGB EVENT_BUILTIN_TITLE_COLOR = new RGB(0, 0, 255);
@@ -45,57 +31,17 @@ public class ViewStateFigure extends RoundedRectangle {
     private static final RGB EVENT_INTERNAL_TITLE_COLOR = new RGB(255, 0, 0);
     private static final RGB EVENT_INTERNAL_LIST_COLOR = new RGB(255, 154, 206);
     
-    private static final int MARGIN = 5;
-    
     /**
      * コンストラクタ.
      * ステートに描画するフィギュアーを作成する。
      * 
      */
     public ViewStateFigure() {
-        Color bg = new Color(Display.getCurrent(), STATE_COLOR);
-        setBackgroundColor(bg);
-        
-        setLayoutManager(new XYLayout());
-        setBorder(new MarginBorder(MARGIN));
-        
-        fNameLabel = new Label();
-        fNameLabel.setTextAlignment(Label.CENTER);
-        add(fNameLabel);
+        super();
         
         fViewLabel = new Label();
         fViewLabel.setTextAlignment(Label.CENTER);
         add(fViewLabel);
-        
-        fEventList = new RectangleFigure();
-        fEventList.setBorder(null);
-        fEventList.setLayoutManager(new ToolbarLayout());
-        
-        fBuiltinEventList = 
-            new EventListFigure(
-                "ビルトインイベント",
-                new Color(Display.getCurrent(), EVENT_BUILTIN_TITLE_COLOR),
-                new Color(Display.getCurrent(), EVENT_BUILTIN_LIST_COLOR));
-        addBuiltinEvent("イベントはありません。");
-        fEventList.add(fBuiltinEventList);
-        
-        fTransitionEventList = 
-            new EventListFigure(
-                "遷移イベント",
-                new Color(Display.getCurrent(), EVENT_TRANSITION_TITLE_COLOR),
-                new Color(Display.getCurrent(), EVENT_TRANSITION_LIST_COLOR));
-        addTransitionEvent("イベントはありません。");
-        fEventList.add(fTransitionEventList);
-        
-        fInternalEventList = 
-            new EventListFigure(
-                "内部イベント",
-                new Color(Display.getCurrent(), EVENT_INTERNAL_TITLE_COLOR),
-                new Color(Display.getCurrent(), EVENT_INTERNAL_LIST_COLOR));
-        addInternalEvent("イベントはありません。");
-        fEventList.add(fInternalEventList);
-        
-        fVisibleEventList = false;
     }
     
     /**
@@ -108,41 +54,34 @@ public class ViewStateFigure extends RoundedRectangle {
     public void paint(Graphics graphics) {
         super.paint(graphics);
         
+        fitNameLabel();
+        fitViewLabel();
+        
+        if (isVisibleEventList()) {
+            Dimension nameLabelSize = getNameLabel().getSize();
+            Dimension viewLabelSize = fViewLabel.getSize();
+            
+            fitEventList(nameLabelSize.height
+                         + viewLabelSize.height
+                         + getMargin());
+        }
+    }
+    
+    /**
+     * ビューラベルのサイズ・位置をステートに合わせる.
+     * 
+     */
+    private void fitViewLabel() {
         Dimension stateSize = getSize();
-        Dimension nameLabelSize = fNameLabel.getSize();
+        Dimension nameLabelSize = getNameLabel().getSize();
         Dimension viewLabelSize = fViewLabel.getSize();
         
         Rectangle constraint = new Rectangle(
-            (int) ((stateSize.width - nameLabelSize.width) / 2) - MARGIN, -1, 
-            -1, -1);
-        setConstraint(fNameLabel, constraint);
-        
-        constraint = new Rectangle(
-            (int) ((stateSize.width - viewLabelSize.width) / 2) - MARGIN, 
-            nameLabelSize.height, 
-            -1, -1);
-        setConstraint(fViewLabel, constraint);
-        
-        if (isVisibleEventList()) {
-            Dimension eventListSize = fEventList.getSize();
-            
-            constraint = new Rectangle(
-                (int) ((stateSize.width - eventListSize.width) / 2) - MARGIN, 
-                nameLabelSize.height + viewLabelSize.height + MARGIN, 
+                (int) ((stateSize.width - viewLabelSize.width) / 2)
+                            - getMargin(), 
+                nameLabelSize.height, 
                 -1, -1);
-            setConstraint(fEventList, constraint);
-        }
-    }
-
-    /**
-     * ステート名を設定する.
-     * 
-     * @param name ステート名
-     */
-    public void setName(String name) {
-        if (name != null) {
-            fNameLabel.setText(name);
-        }
+        setConstraint(fViewLabel, constraint);
     }
     
     /**
@@ -155,79 +94,88 @@ public class ViewStateFigure extends RoundedRectangle {
             fViewLabel.setText("[" + view + "]");
         }
     }
-    
+
     /**
-     * ビルトインイベントを追加する.
+     * ステート色を返す.
      * 
-     * @param eventName イベント名
+     * @return ステート色.
+     * @see com.piece_framework.piece_ide.flow_designer.ui.figure
+     *          .NormalStateFigure#getStateColor()
      */
-    public void addBuiltinEvent(String eventName) {
-        fBuiltinEventList.addEvent(eventName);
+    @Override
+    RGB getStateColor() {
+        return STATE_COLOR;
     }
     
     /**
-     * ビルトインイベント一覧をすべて削除する.
+     * ビルトインイベントのタイトル色を返す.
      * 
+     * @return ビルトインイベントのタイトル色
+     * @see com.piece_framework.piece_ide.flow_designer.ui.figure
+     *          .NormalStateFigure#getBuiltinEventTitleColor()
      */
-    public void removeAllBuiltinEvent() {
-        fBuiltinEventList.removeAllEvent();
+    @Override
+    RGB getBuiltinEventTitleColor() {
+        return EVENT_BUILTIN_TITLE_COLOR;
     }
     
     /**
-     * 遷移イベントを追加する.
+     * ビルトインイベントのリスト色を返す.
      * 
-     * @param eventName イベント名
+     * @return ビルトインイベントのリスト色
+     * @see com.piece_framework.piece_ide.flow_designer.ui.figure
+     *          .NormalStateFigure#getBuiltinEventListColor()
      */
-    public void addTransitionEvent(String eventName) {
-        fTransitionEventList.addEvent(eventName);
+    @Override
+    RGB getBuiltinEventListColor() {
+        return EVENT_BUILTIN_LIST_COLOR;
     }
     
     /**
-     * 遷移イベント一覧をすべて削除する.
+     * 遷移イベントのタイトル色を返す.
      * 
+     * @return 遷移イベントのタイトル色
+     * @see com.piece_framework.piece_ide.flow_designer.ui.figure
+     *          .NormalStateFigure#getTransitionEventTitleColor()
      */
-    public void removeAllTransitionEvent() {
-        fTransitionEventList.removeAllEvent();
+    @Override
+    RGB getTransitionEventTitleColor() {
+        return EVENT_TRANSITION_TITLE_COLOR;
     }
     
     /**
-     * 内部イベントを追加する.
+     * 遷移イベントのリスト色を返す.
      * 
-     * @param eventName イベント名
+     * @return 遷移イベントのリスト色
+     * @see com.piece_framework.piece_ide.flow_designer.ui.figure
+     *          .NormalStateFigure#getTransitionEventListColor()
      */
-    public void addInternalEvent(String eventName) {
-        fInternalEventList.addEvent(eventName);
+    @Override
+    RGB getTransitionEventListColor() {
+        return EVENT_TRANSITION_LIST_COLOR;
     }
     
     /**
-     * 内部イベント一覧をすべて削除する.
+     * 内部イベントのタイトル色を返す.
      * 
+     * @return 内部イベントのタイトル色
+     * @see com.piece_framework.piece_ide.flow_designer.ui.figure
+     *          .NormalStateFigure#getInternalEventTitleColor()
      */
-    public void removeAllInternalEvent() {
-        fInternalEventList.removeAllEvent();
+    @Override
+    RGB getInternalEventTitleColor() {
+        return EVENT_INTERNAL_TITLE_COLOR;
     }
     
     /**
-     * イベントリストが表示されているかを返す.
+     * 内部イベントのリスト色を返す.
      * 
-     * @return イベントリストが表示されているか
+     * @return 内部イベントのリスト色
+     * @see com.piece_framework.piece_ide.flow_designer.ui.figure
+     *          .NormalStateFigure#getInternalEventListColor()
      */
-    public boolean isVisibleEventList() {
-        return fVisibleEventList;
-    }
-    
-    /**
-     * イベントリストの表示・非表示を切り替える.
-     * 
-     * @param visible イベントリストを表示するか
-     */
-    public void setVisibleEventList(boolean visible) {
-        if (visible) {
-            add(fEventList);
-        } else {
-            remove(fEventList);
-        }
-        fVisibleEventList = visible;
-        repaint();
+    @Override
+    RGB getInternalEventListColor() {
+        return EVENT_INTERNAL_LIST_COLOR;
     }
 }
