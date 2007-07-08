@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.ChopboxAnchor;
 import org.eclipse.draw2d.ConnectionAnchor;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -16,6 +17,10 @@ import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.Request;
 
 import com.piece_framework.piece_ide.flow_designer.model.State;
+import com.piece_framework.piece_ide.flow_designer.ui.figure.ActionStateFigure;
+import com.piece_framework.piece_ide.flow_designer.ui.figure.FinalStateFigure;
+import com.piece_framework.piece_ide.flow_designer.ui.figure.InitialStateFigure;
+import com.piece_framework.piece_ide.flow_designer.ui.figure.ViewStateFigure;
 
 /**
  * ステート・エディットパート.
@@ -27,6 +32,31 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  */
 public abstract class StateEditPart extends AbstractModelEditPart 
                                              implements NodeEditPart {
+    
+    /**
+     * フィギュアーを生成する.
+     * ステートタイプに合ったフィギュアーを生成する。
+     * 
+     * @return フィギュアー
+     * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart#createFigure()
+     */
+    @Override
+    protected IFigure createFigure() {
+        IFigure figure = null;
+        
+        State state = (State) getModel();
+        if (state.getStateType() == State.INITIAL_STATE) {
+            figure = new InitialStateFigure();
+        } else if (state.getStateType() == State.VIEW_STATE) {
+            figure = new ViewStateFigure();
+        } else if (state.getStateType() == State.ACTION_STATE) {
+            figure = new ActionStateFigure();
+        } else if (state.getStateType() == State.FINAL_STATE) {
+            figure = new FinalStateFigure();
+        }
+        
+        return figure;
+    }
 
     /**
      * プロパティ変更イベント対応メソッド.
@@ -58,7 +88,6 @@ public abstract class StateEditPart extends AbstractModelEditPart
                           new StateComponentEditPolicy());
         installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE,
                           new StateGraphicalNodeEditPolicy());
-        
     }
 
     /**
