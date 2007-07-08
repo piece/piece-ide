@@ -37,7 +37,6 @@ public class FlowLayoutEditPolicy extends XYLayoutEditPolicy {
     @Override
     protected Command createChangeConstraintCommand(EditPart child,
             Object constraint) {
-        
         Rectangle rectangle = (Rectangle) constraint;
         State state = (State) child.getModel();
         
@@ -54,12 +53,19 @@ public class FlowLayoutEditPolicy extends XYLayoutEditPolicy {
      */
     @Override
     protected Command getCreateCommand(CreateRequest request) {
-        
         Point point = request.getLocation();
-        State state = (State) request.getNewObject();
+        State newState = (State) request.getNewObject();
         Flow flow = (Flow) getHost().getModel();
         
-        return new CreateStateCommand(flow, state, point.x, point.y);
+        if (newState.getStateType() == State.FINAL_STATE) {
+            for (State state : flow.getStates()) {
+                if (state.getStateType() == State.FINAL_STATE) {
+                    return null;
+                }
+            }
+        }
+
+        return new CreateStateCommand(flow, newState, point.x, point.y);
     }
 
 }

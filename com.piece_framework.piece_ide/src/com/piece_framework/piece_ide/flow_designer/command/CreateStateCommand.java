@@ -1,8 +1,6 @@
 // $Id$
 package com.piece_framework.piece_ide.flow_designer.command;
 
-import java.util.List;
-
 import org.eclipse.gef.commands.Command;
 
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
@@ -49,17 +47,6 @@ public class CreateStateCommand extends Command {
      */
     @Override
     public void execute() {
-        //ファイナルステート作成時、既にファイナルステートが存在する場合は作成しない。
-        if (fState.getStateType() == State.FINAL_STATE) {
-            List states = fFlow.getStates();
-            for (int i = 0; i < states.size(); i++) {
-                State state = (State) states.get(i);
-                if (state.getStateType() == State.FINAL_STATE) {
-                    return;
-                }
-            }
-        }
-        
         fState.setX(fX);
         fState.setY(fY);
         fState.setName(fFlow.generateStateName(fState.getStateType()));
