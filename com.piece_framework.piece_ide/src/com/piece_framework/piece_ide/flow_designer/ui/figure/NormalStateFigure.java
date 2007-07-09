@@ -14,7 +14,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
 /**
- * ノーマルステート・フィギュアー.
+ * ノーマルステート・抽象フィギュアー.
  * 
  * @author MATSUFUJI Hideharu
  * @version 0.1.0

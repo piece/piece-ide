@@ -1,10 +1,7 @@
 // $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
-import org.eclipse.draw2d.Ellipse;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.widgets.Display;
 
 /**
  * イニシャルステート・フィギュアー.
@@ -14,20 +11,19 @@ import org.eclipse.swt.widgets.Display;
  * @since 0.1.0
  *
  */
-public class InitialStateFigure extends Ellipse {
+public class InitialStateFigure extends SpecialStateFigure {
 
-    private static final int FIGURE_WIDTH = 20;
-    private static final int FIGURE_HEIGHT = 20;
-    
     private static final RGB FIGURE_COLOR = new RGB(0, 0, 0);    
     
     /**
-     * コンストラクタ.
+     * イニシャルステート・フィギュアーの背景色を返す.
      * 
+     * @return イニシャルステート・フィギュアーの背景色
+     * @see com.piece_framework.piece_ide.flow_designer.ui.figure
+     *          .SpecialStateFigure#getFigureColor()
      */
-    public InitialStateFigure() {
-        Color bg = new Color(Display.getCurrent(), FIGURE_COLOR);
-        setBackgroundColor(bg);
-        setSize(FIGURE_WIDTH, FIGURE_HEIGHT);
+    @Override
+    RGB getFigureColor() {
+        return FIGURE_COLOR;
     }
 }
