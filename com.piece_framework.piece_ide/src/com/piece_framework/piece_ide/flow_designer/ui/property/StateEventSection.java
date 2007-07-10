@@ -1,9 +1,12 @@
 package com.piece_framework.piece_ide.flow_designer.ui.property;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.ui.parts.GraphicalEditor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
@@ -15,6 +18,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -33,6 +38,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
+import com.piece_framework.piece_ide.flow_designer.command.DeleteEventCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
@@ -138,6 +144,31 @@ public class StateEventSection extends AbstractPropertySection {
         fDeleteInternalEvent.setLayoutData(data); 
         fDeleteInternalEvent.setEnabled(false);
         
+        fDeleteInternalEvent.addMouseListener(new MouseListener() {
+            public void mouseDoubleClick(MouseEvent mouseEvent) {
+            }
+
+            public void mouseDown(MouseEvent mouseEvent) {
+            }
+
+            public void mouseUp(MouseEvent emouseEvent) {
+                Table eventTable = fEventTableViewer.getTable();
+                if (eventTable == null || eventTable.getSelectionCount() == 0) {
+                    return;
+                }
+                
+                CommandStack commandStack = 
+                    (CommandStack) getPart().getAdapter(CommandStack.class);
+                if (commandStack != null) {
+                    Event event = 
+                        (Event) eventTable.getSelection()[0].getData();
+                    DeleteEventCommand command =
+                        new DeleteEventCommand(fState, event);
+                    commandStack.execute(command);
+                }
+            }
+        });
+        
         fAddInternalEvent =
             getWidgetFactory().createButton(
                     composite, "内部イベント追加", SWT.PUSH);
@@ -234,6 +265,11 @@ public class StateEventSection extends AbstractPropertySection {
             Object input = ((IStructuredSelection) selection).getFirstElement();
             if (input instanceof EditPart) {
                 fState = (State) ((EditPart) input).getModel();
+                fState.addPropertyChangeListener(new PropertyChangeListener() {
+                    public void propertyChange(PropertyChangeEvent event) {
+                        refresh();
+                    }
+                });
             }
         }
         
