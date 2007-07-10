@@ -15,6 +15,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
@@ -188,6 +190,20 @@ public class StateEventSection extends AbstractPropertySection {
         TableColumn columnGuard = new TableColumn(eventTable, SWT.NONE);
         columnGuard.setText("ガード");
         columnGuard.setWidth(GUARD_COLUMN_WIDTH);
+        
+        eventTable.addSelectionListener(new SelectionListener() {
+
+            public void widgetDefaultSelected(SelectionEvent selectionEvent) {
+            }
+
+            public void widgetSelected(SelectionEvent selectionEvent) {
+                Event event = (Event) selectionEvent.item.getData();
+                
+                if (event != null) {
+                    fDeleteInternalEvent.setEnabled(event.isInternalEvent());
+                }
+            }
+        });
     }
 
     /**
