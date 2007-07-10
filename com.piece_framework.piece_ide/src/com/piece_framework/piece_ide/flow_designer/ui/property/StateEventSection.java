@@ -174,22 +174,14 @@ public class StateEventSection extends AbstractPropertySection {
         eventTable.setHeaderVisible(true);
         eventTable.setLinesVisible(true);
         
-        TableColumn columnEventName = new TableColumn(eventTable, SWT.NONE);
-        columnEventName.setText("イベント名");
-        columnEventName.setWidth(EVENT_COLUMN_WIDTH);
-        
-        TableColumn columnNextStateName = 
-                        new TableColumn(eventTable, SWT.NULL);
-        columnNextStateName.setText("遷移先ステート名");
-        columnNextStateName.setWidth(NEXT_STATE_COLUMN_WIDTH);
-        
-        TableColumn columnEventHandler = new TableColumn(eventTable, SWT.NONE);
-        columnEventHandler.setText("イベントハンドラ");
-        columnEventHandler.setWidth(EVENT_HANDLER_COLUMN_WIDTH);
-        
-        TableColumn columnGuard = new TableColumn(eventTable, SWT.NONE);
-        columnGuard.setText("ガード");
-        columnGuard.setWidth(GUARD_COLUMN_WIDTH);
+        createEventTableColumn(
+                eventTable, "イベント名", EVENT_COLUMN_WIDTH);
+        createEventTableColumn(
+                eventTable, "遷移先ステート名", NEXT_STATE_COLUMN_WIDTH);
+        createEventTableColumn(
+                eventTable, "イベントハンドラ", EVENT_HANDLER_COLUMN_WIDTH);
+        createEventTableColumn(
+                eventTable, "ガード", GUARD_COLUMN_WIDTH);
         
         eventTable.addSelectionListener(new SelectionListener() {
 
@@ -204,6 +196,22 @@ public class StateEventSection extends AbstractPropertySection {
                 }
             }
         });
+    }
+
+    /**
+     * イベントテーブルに行を作成する.
+     * 
+     * @param eventTable イベントテーブル
+     * @param columnName 行名
+     * @param width 行幅
+     */
+    private void createEventTableColumn(
+                        Table eventTable, 
+                        String columnName, 
+                        int width) {
+        TableColumn column = new TableColumn(eventTable, SWT.NONE);
+        column.setText(columnName);
+        column.setWidth(width);
     }
 
     /**
