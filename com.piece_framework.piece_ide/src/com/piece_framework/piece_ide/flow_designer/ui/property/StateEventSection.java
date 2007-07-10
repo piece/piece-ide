@@ -20,6 +20,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -58,6 +59,8 @@ public class StateEventSection extends AbstractPropertySection {
     private static final RGB EVENT_INTERNAL_COLOR = new RGB(255, 154, 206);
     
     private CLabel fStateNameLabel;
+    private Button fAddInternalEvent;
+    private Button fDeleteInternalEvent;
     private TableViewer fEventTableViewer;
     
     private State fState;
@@ -143,6 +146,21 @@ public class StateEventSection extends AbstractPropertySection {
                 resizeEventTable(source.getSize());
             }
         });
+        
+        fDeleteInternalEvent =
+            getWidgetFactory().createButton(composite, "内部イベント削除", SWT.PUSH);
+        data = new FormData();
+        data.right = new FormAttachment(100, 0);
+        data.top = new FormAttachment(0, 0);
+        fDeleteInternalEvent.setLayoutData(data); 
+        fDeleteInternalEvent.setEnabled(false);
+        
+        fAddInternalEvent =
+            getWidgetFactory().createButton(composite, "内部イベント追加", SWT.PUSH);
+        data = new FormData();
+        data.right = new FormAttachment(fDeleteInternalEvent, 0);
+        data.top = new FormAttachment(0, 0);
+        fAddInternalEvent.setLayoutData(data);
     }
 
     /**
