@@ -44,8 +44,9 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  */
 public class StateEventSection extends AbstractPropertySection {
 
-    private static final int LABEL_WIDTH_PERCENT = 50;
-    private static final int TABLE_WIDTH_PERCENT = 100;
+    private static final int LABEL_POSITION_PERCENT = 50;
+    private static final int TABLE_POSITION_PERCENT = 100;
+    private static final int BUTTON_POSITION_PERCENT = 100;
     
     private static final int TABLE_HEIGHT_MARGIN = 40;
     
@@ -83,21 +84,73 @@ public class StateEventSection extends AbstractPropertySection {
                     TabbedPropertySheetPage tabbedPropertySheetPage) {
         super.createControls(parent, tabbedPropertySheetPage);
         
-        fTab = tabbedPropertySheetPage.getControl();
-        
         Composite composite = 
             getWidgetFactory().createFlatFormComposite(parent);
         
+        createStateNameLabel(composite); 
+        createInternalEventButton(composite);
+        createEventTable(composite);
+
+        fTab = tabbedPropertySheetPage.getControl();
+        fTab.addControlListener(new ControlListener() {
+
+            public void controlMoved(ControlEvent e) {
+            }
+
+            public void controlResized(ControlEvent e) {
+                Composite source = (Composite) e.getSource();
+                resizeEventTable(source.getSize());
+            }
+        });
+    }
+
+    /**
+     * ステート名ラベルを生成・配置する.
+     * 
+     * @param composite 親コンテナ
+     */
+    private void createStateNameLabel(Composite composite) {
         FormData data;
-        
         fStateNameLabel = 
             getWidgetFactory().createCLabel(composite, "ステート名：");
         data = new FormData();
         data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(LABEL_WIDTH_PERCENT, 0);
+        data.right = new FormAttachment(LABEL_POSITION_PERCENT, 0);
         data.top = new FormAttachment(0, 0);
-        fStateNameLabel.setLayoutData(data); 
+        fStateNameLabel.setLayoutData(data);
+    }
 
+    /**
+     * 内部イベント追加・削除ボタンを生成・配置する.
+     * 
+     * @param composite 親コンテナ
+     */
+    private void createInternalEventButton(Composite composite) {
+        FormData data;
+        fDeleteInternalEvent =
+            getWidgetFactory().createButton(
+                    composite, "内部イベント削除", SWT.PUSH);
+        data = new FormData();
+        data.right = new FormAttachment(BUTTON_POSITION_PERCENT, 0);
+        data.top = new FormAttachment(0, 0);
+        fDeleteInternalEvent.setLayoutData(data); 
+        fDeleteInternalEvent.setEnabled(false);
+        
+        fAddInternalEvent =
+            getWidgetFactory().createButton(
+                    composite, "内部イベント追加", SWT.PUSH);
+        data = new FormData();
+        data.right = new FormAttachment(fDeleteInternalEvent, 0);
+        data.top = new FormAttachment(0, 0);
+        fAddInternalEvent.setLayoutData(data);
+    }
+
+    /**
+     * イベントテーブルを生成・配置する.
+     * 
+     * @param composite 親コンテナ
+     */
+    private void createEventTable(Composite composite) {
         fEventTableViewer = new TableViewer(composite, 
                                     SWT.HORIZONTAL | SWT.VERTICAL | SWT.VIRTUAL
                                     | SWT.FULL_SELECTION | SWT.BORDER);
@@ -135,32 +188,6 @@ public class StateEventSection extends AbstractPropertySection {
         TableColumn columnGuard = new TableColumn(eventTable, SWT.NONE);
         columnGuard.setText("ガード");
         columnGuard.setWidth(GUARD_COLUMN_WIDTH);
-
-        fTab.addControlListener(new ControlListener() {
-
-            public void controlMoved(ControlEvent e) {
-            }
-
-            public void controlResized(ControlEvent e) {
-                Composite source = (Composite) e.getSource();
-                resizeEventTable(source.getSize());
-            }
-        });
-        
-        fDeleteInternalEvent =
-            getWidgetFactory().createButton(composite, "内部イベント削除", SWT.PUSH);
-        data = new FormData();
-        data.right = new FormAttachment(100, 0);
-        data.top = new FormAttachment(0, 0);
-        fDeleteInternalEvent.setLayoutData(data); 
-        fDeleteInternalEvent.setEnabled(false);
-        
-        fAddInternalEvent =
-            getWidgetFactory().createButton(composite, "内部イベント追加", SWT.PUSH);
-        data = new FormData();
-        data.right = new FormAttachment(fDeleteInternalEvent, 0);
-        data.top = new FormAttachment(0, 0);
-        fAddInternalEvent.setLayoutData(data);
     }
 
     /**
@@ -281,7 +308,7 @@ public class StateEventSection extends AbstractPropertySection {
     private void resizeEventTable(Point tabSize) {
         FormData data = new FormData();
         data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(TABLE_WIDTH_PERCENT, 0);
+        data.right = new FormAttachment(TABLE_POSITION_PERCENT, 0);
         data.top = new FormAttachment(fStateNameLabel, 0);
         data.bottom = new FormAttachment(0, tabSize.y - TABLE_HEIGHT_MARGIN);
         fEventTableViewer.getTable().setLayoutData(data);
