@@ -1,11 +1,7 @@
 package com.piece_framework.piece_ide.flow_designer.ui.property;
 
-import org.eclipse.gef.EditPart;
-import org.eclipse.gef.commands.CommandStack;
-import org.eclipse.gef.ui.parts.GraphicalEditor;
+import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -13,11 +9,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
-import com.piece_framework.piece_ide.flow_designer
-            .command.SetStateAttributeCommand;
+import com.piece_framework.piece_ide.flow_designer.command.SetStateAttributeCommand;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
@@ -28,7 +22,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  * @since 0.1.0
  * 
  */
-public class StateGeneralSection extends AbstractPropertySection {
+public class StateGeneralSection extends GeneralPropertySection {
 
     private static final int TEXT_WIDTH_PERCENT = 70;
     
@@ -38,48 +32,6 @@ public class StateGeneralSection extends AbstractPropertySection {
     private CLabel fSummaryLabel;
     private Text fViewName;
     private CLabel fViewNameLabel;
-    
-    private State fState;
-    
-    private IWorkbenchPart fPart;
-    
-    private TextListener fListener = new TextListener() {
-
-        @Override
-        public void changeText(Control control) {
-            String attributeName = null;
-            String attributeValue = ((Text) control).getText();
-            String attributeOldValue = null;
-            
-            if (control == fStateName) {
-                attributeName = "name";
-                attributeOldValue = fState.getName();
-            } else if (control == fSummary) {
-                attributeName = "summary";
-                attributeOldValue = fState.getSummary();
-            } else if (control == fViewName) {
-                attributeName = "view";
-                attributeOldValue = fState.getView();
-            }
-            
-            if ((attributeValue.equals("") && attributeOldValue == null)
-                || attributeValue.equals(attributeOldValue)) {
-                return;
-            }
-            
-            if (fPart instanceof GraphicalEditor) {
-                GraphicalEditor editor = (GraphicalEditor) fPart;
-                CommandStack commandStack = 
-                    (CommandStack) editor.getAdapter(CommandStack.class);
-                
-                SetStateAttributeCommand command = 
-                    new SetStateAttributeCommand(
-                            attributeName, attributeValue, fState);
-                
-                commandStack.execute(command);
-            }
-        }
-    };
     
     /**
      * コントロールを作成する.
@@ -147,17 +99,9 @@ public class StateGeneralSection extends AbstractPropertySection {
         data.top = new FormAttachment(fSummary, 0);
         fViewName.setLayoutData(data);
         
-        fStateName.addListener(SWT.FocusOut, fListener);
-        fStateName.addListener(SWT.Modify, fListener);
-        fStateName.addListener(SWT.KeyDown, fListener);
-        
-        fSummary.addListener(SWT.FocusOut, fListener);
-        fSummary.addListener(SWT.Modify, fListener);
-        fSummary.addListener(SWT.KeyDown, fListener);
-        
-        fViewName.addListener(SWT.FocusOut, fListener);
-        fViewName.addListener(SWT.Modify, fListener);
-        fViewName.addListener(SWT.KeyDown, fListener);
+        setTextListener(fStateName);
+        setTextListener(fSummary);
+        setTextListener(fViewName);
     }
 
     /**
@@ -178,33 +122,32 @@ public class StateGeneralSection extends AbstractPropertySection {
     @Override
     public void setInput(IWorkbenchPart part, ISelection selection) {
         super.setInput(part, selection);
-        if (selection instanceof IStructuredSelection) {
-            Object input = ((IStructuredSelection) selection).getFirstElement();
-            if (input instanceof EditPart) {
-                fState = (State) ((EditPart) input).getModel();
-                
-                fStateName.setVisible(false);
-                fStateNameLabel.setVisible(false);
-                fSummary.setVisible(false);
-                fSummaryLabel.setVisible(false);
-                fViewName.setVisible(false);
-                fViewNameLabel.setVisible(false);
-                
-                if (fState.getStateType() == State.ACTION_STATE
-                    || fState.getStateType() == State.VIEW_STATE) {
-                    fStateName.setVisible(true);
-                    fStateNameLabel.setVisible(true);
-                    fSummary.setVisible(true);
-                    fSummaryLabel.setVisible(true);
-                }
-                if (fState.getStateType() == State.VIEW_STATE) {
-                    fViewName.setVisible(true);
-                    fViewNameLabel.setVisible(true);
-                }
-            }
-        }
         
-        fPart = part;
+        State state = (State) getModel();
+        setGroupVisible(fStateNameLabel, fStateName, false);
+        setGroupVisible(fSummaryLabel, fSummary, false);
+        setGroupVisible(fViewNameLabel, fViewName, false);
+        
+        if (state.getStateType() == State.ACTION_STATE
+            || state.getStateType() == State.VIEW_STATE) {
+            setGroupVisible(fStateNameLabel, fStateName, true);
+            setGroupVisible(fSummaryLabel, fSummary, true);
+        }
+        if (state.getStateType() == State.VIEW_STATE) {
+            setGroupVisible(fViewNameLabel, fViewName, true);
+        }
+    }
+
+    /**
+     * ラベルとテキストの表示・非表示を設定する.
+     * 
+     * @param label ラベル
+     * @param text テキスト
+     * @param visible 表示・非表示
+     */
+    private void setGroupVisible(CLabel label, Text text, boolean visible) {
+        label.setVisible(visible);
+        text.setVisible(visible);
     }
 
     /**
@@ -216,26 +159,92 @@ public class StateGeneralSection extends AbstractPropertySection {
      */
     @Override
     public void refresh() {
+        State state = (State) getModel();
         fStateName.setText("");
         fSummary.setText("");
         fViewName.setText("");
         
-        if (fState != null) {
-            if (fState.getStateType() == State.ACTION_STATE
-                || fState.getStateType() == State.VIEW_STATE) {
-                if (fState.getName() != null) {
-                    fStateName.setText(fState.getName());
+        if (state != null) {
+            if (state.getStateType() == State.ACTION_STATE
+                || state.getStateType() == State.VIEW_STATE) {
+                if (state.getName() != null) {
+                    fStateName.setText(state.getName());
                 }
-                if (fState.getSummary() != null) {
-                    fSummary.setText(fState.getSummary());
+                if (state.getSummary() != null) {
+                    fSummary.setText(state.getSummary());
                 }
             }
             
-            if (fState.getStateType() == State.VIEW_STATE) {
-                if (fState.getView() != null) {
-                    fViewName.setText(fState.getView());
+            if (state.getStateType() == State.VIEW_STATE) {
+                if (state.getView() != null) {
+                    fViewName.setText(state.getView());
                 }
             }
         }
+    }
+
+    /**
+     * コントロールから属性名を返す.
+     * 
+     * @param control コントロール
+     * @return 属性名
+     * @see com.piece_framework.piece_ide.flow_designer.ui.property
+     *          .GeneralPropertySection
+     *              #getAttributeName(org.eclipse.swt.widgets.Control)
+     */
+    @Override
+    String getAttributeName(Control control) {
+        String attributeName = null;
+        
+        if (control == fStateName) {
+            attributeName = "name";
+        } else if (control == fSummary) {
+            attributeName = "summary";
+        } else if (control == fViewName) {
+            attributeName = "view";
+        }
+        
+        return attributeName;
+    }
+
+    /**
+     * コントロールから変更前の属性値を返す.
+     * 
+     * @param control コントロール
+     * @return 変更前の属性値
+     * @see com.piece_framework.piece_ide.flow_designer.ui.property
+     *          .GeneralPropertySection
+     *              #getAttributeOldValue(org.eclipse.swt.widgets.Control)
+     */
+    @Override
+    String getAttributeOldValue(Control control) {
+        String attributeOldValue = null;
+        State state = (State) getModel();
+        
+        if (control == fStateName) {
+            attributeOldValue = state.getName();
+        } else if (control == fSummary) {
+            attributeOldValue = state.getSummary();
+        } else if (control == fViewName) {
+            attributeOldValue = state.getView();
+        }
+        
+        return attributeOldValue;
+    }
+    
+    /**
+     * ステート属性を設定するコマンドを返す.
+     * 
+     * @param attributeName 属性名
+     * @param attributeValue 属性値
+     * @return 属性を設定するコマンド
+     * @see com.piece_framework.piece_ide.flow_designer.ui.property
+     *          .GeneralPropertySection
+     *              #getAttributeCommand(java.lang.String, java.lang.String)
+     */
+    @Override
+    Command getAttributeCommand(String attributeName, String attributeValue) {
+        return new SetStateAttributeCommand(
+                attributeName, attributeValue, (State) getModel());
     }    
 }
