@@ -1,17 +1,12 @@
 package com.piece_framework.piece_ide.flow_designer.ui.property;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.gef.EditPart;
-import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.ui.parts.GraphicalEditor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
@@ -35,9 +30,9 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
+import com.piece_framework.piece_ide.flow_designer.command.CreateEventCommand;
 import com.piece_framework.piece_ide.flow_designer.command.DeleteEventCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
@@ -50,7 +45,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  * @since 0.1.0
  * 
  */
-public class StateEventSection extends AbstractPropertySection {
+public class StateEventSection extends FlowDesignerPropertySection {
 
     private static final int LABEL_POSITION_PERCENT = 50;
     private static final int TABLE_POSITION_PERCENT = 100;
@@ -68,13 +63,47 @@ public class StateEventSection extends AbstractPropertySection {
     private static final RGB EVENT_INTERNAL_COLOR = new RGB(255, 154, 206);
     
     private CLabel fStateNameLabel;
-    private Button fAddInternalEvent;
+    private Button fCreateInternalEvent;
     private Button fDeleteInternalEvent;
     private TableViewer fEventTableViewer;
     
-    private State fState;
-    
     private Control fTab;
+    
+    private MouseListener deleteInternalEventListener = new MouseListener() {
+        public void mouseDoubleClick(MouseEvent mouseEvent) {
+        }
+
+        public void mouseDown(MouseEvent mouseEvent) {
+        }
+
+        public void mouseUp(MouseEvent mouseEvent) {
+            Table eventTable = fEventTableViewer.getTable();
+            if (eventTable == null || eventTable.getSelectionCount() == 0) {
+                return;
+            }
+            
+            executeCommand(new DeleteEventCommand(
+                    (State) getModel(), 
+                    (Event) eventTable.getSelection()[0].getData()));
+        }
+    };
+    
+    private MouseListener createInternalEventListener = new MouseListener() {
+        public void mouseDoubleClick(MouseEvent mouseEvent) {
+        }
+
+        public void mouseDown(MouseEvent mouseEvent) {
+        }
+
+        public void mouseUp(MouseEvent mouseEvent) {
+            Event event = new Event();
+            event.setName("InnerEvent1");
+            event.setNextState((State) getModel());
+            event.setInternalEvent(true);
+            
+            executeCommand(new CreateEventCommand((State) getModel(), event));
+        }
+    };
     
     /**
      * コントロールを作成する.
@@ -101,7 +130,6 @@ public class StateEventSection extends AbstractPropertySection {
 
         fTab = tabbedPropertySheetPage.getControl();
         fTab.addControlListener(new ControlListener() {
-
             public void controlMoved(ControlEvent e) {
             }
 
@@ -144,38 +172,16 @@ public class StateEventSection extends AbstractPropertySection {
         fDeleteInternalEvent.setLayoutData(data); 
         fDeleteInternalEvent.setEnabled(false);
         
-        fDeleteInternalEvent.addMouseListener(new MouseListener() {
-            public void mouseDoubleClick(MouseEvent mouseEvent) {
-            }
-
-            public void mouseDown(MouseEvent mouseEvent) {
-            }
-
-            public void mouseUp(MouseEvent emouseEvent) {
-                Table eventTable = fEventTableViewer.getTable();
-                if (eventTable == null || eventTable.getSelectionCount() == 0) {
-                    return;
-                }
-                
-                CommandStack commandStack = 
-                    (CommandStack) getPart().getAdapter(CommandStack.class);
-                if (commandStack != null) {
-                    Event event = 
-                        (Event) eventTable.getSelection()[0].getData();
-                    DeleteEventCommand command =
-                        new DeleteEventCommand(fState, event);
-                    commandStack.execute(command);
-                }
-            }
-        });
-        
-        fAddInternalEvent =
+        fCreateInternalEvent =
             getWidgetFactory().createButton(
-                    composite, "内部イベント追加", SWT.PUSH);
+                    composite, "内部イベント作成", SWT.PUSH);
         data = new FormData();
         data.right = new FormAttachment(fDeleteInternalEvent, 0);
         data.top = new FormAttachment(0, 0);
-        fAddInternalEvent.setLayoutData(data);
+        fCreateInternalEvent.setLayoutData(data);
+        
+        fDeleteInternalEvent.addMouseListener(deleteInternalEventListener);
+        fCreateInternalEvent.addMouseListener(createInternalEventListener);
     }
 
     /**
@@ -215,7 +221,6 @@ public class StateEventSection extends AbstractPropertySection {
                 eventTable, "ガード", GUARD_COLUMN_WIDTH);
         
         eventTable.addSelectionListener(new SelectionListener() {
-
             public void widgetDefaultSelected(SelectionEvent selectionEvent) {
             }
 
@@ -261,18 +266,6 @@ public class StateEventSection extends AbstractPropertySection {
     @Override
     public void setInput(IWorkbenchPart part, ISelection selection) {
         super.setInput(part, selection);
-        if (selection instanceof IStructuredSelection) {
-            Object input = ((IStructuredSelection) selection).getFirstElement();
-            if (input instanceof EditPart) {
-                fState = (State) ((EditPart) input).getModel();
-                fState.addPropertyChangeListener(new PropertyChangeListener() {
-                    public void propertyChange(PropertyChangeEvent event) {
-                        refresh();
-                    }
-                });
-            }
-        }
-        
         if (part instanceof GraphicalEditor) {
             fEventTableViewer.setCellModifier(
                     new EventTableCellModifier(
@@ -289,11 +282,13 @@ public class StateEventSection extends AbstractPropertySection {
      */
     @Override
     public void refresh() {
-        if (fState != null) {
+        State state = (State) getModel();
+        
+        if (state != null) {
             fStateNameLabel.setText("ステート名：");
-            if (fState.getName() != null) {
+            if (state.getName() != null) {
                 fStateNameLabel.setText(
-                        fStateNameLabel.getText() + fState.getName());
+                        fStateNameLabel.getText() + state.getName());
             }
             
             fEventTableViewer.getTable().removeAll();
@@ -316,7 +311,9 @@ public class StateEventSection extends AbstractPropertySection {
         List<Event> transitionEventList = new ArrayList<Event>();
         List<Event> internalEventList = new ArrayList<Event>();
         
-        for (Event event : fState.getEventList()) {
+        State state = (State) getModel();
+        
+        for (Event event : state.getEventList()) {
             if (event.isBuiltinEvent()) {
                 builtinEventList.add(event);
             } else if (event.isTransitionEvent()) {
