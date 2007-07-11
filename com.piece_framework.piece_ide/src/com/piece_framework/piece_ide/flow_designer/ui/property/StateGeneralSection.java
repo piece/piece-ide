@@ -3,8 +3,6 @@ package com.piece_framework.piece_ide.flow_designer.ui.property;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -24,8 +22,6 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  */
 public class StateGeneralSection extends GeneralPropertySection {
 
-    private static final int TEXT_WIDTH_PERCENT = 70;
-    
     private Text fStateName;
     private CLabel fStateNameLabel;
     private Text fSummary;
@@ -52,53 +48,20 @@ public class StateGeneralSection extends GeneralPropertySection {
         Composite composite = 
             getWidgetFactory().createFlatFormComposite(parent);
         
-        FormData data;
-       
         fStateNameLabel = 
             getWidgetFactory().createCLabel(composite, "ステート名：");
-        data = new FormData();
-        data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(0, STANDARD_LABEL_WIDTH);
-        data.top = new FormAttachment(0, 0);
-        fStateNameLabel.setLayoutData(data);
-        
         fStateName = getWidgetFactory().createText(composite, "");
-        data = new FormData();
-        data.left = new FormAttachment(fStateNameLabel, 0);
-        data.right = new FormAttachment(TEXT_WIDTH_PERCENT, 0);
-        data.top = new FormAttachment(0, 0);
-        fStateName.setLayoutData(data);
-        
         fSummaryLabel = 
             getWidgetFactory().createCLabel(composite, "概要：");
-        data = new FormData();
-        data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(0, STANDARD_LABEL_WIDTH);
-        data.top = new FormAttachment(fStateNameLabel, 0);
-        fSummaryLabel.setLayoutData(data);
-        
         fSummary = getWidgetFactory().createText(composite, "");
-        data = new FormData();
-        data.left = new FormAttachment(fSummaryLabel, 0);
-        data.right = new FormAttachment(TEXT_WIDTH_PERCENT, 0);
-        data.top = new FormAttachment(fStateName, 0);
-        fSummary.setLayoutData(data);
-        
         fViewNameLabel = 
             getWidgetFactory().createCLabel(composite, "ビュー名：");
-        data = new FormData();
-        data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(0, STANDARD_LABEL_WIDTH);
-        data.top = new FormAttachment(fSummaryLabel, 0);
-        fViewNameLabel.setLayoutData(data);
-        
         fViewName = getWidgetFactory().createText(composite, "");
-        data = new FormData();
-        data.left = new FormAttachment(fViewNameLabel, 0);
-        data.right = new FormAttachment(TEXT_WIDTH_PERCENT, 0);
-        data.top = new FormAttachment(fSummary, 0);
-        fViewName.setLayoutData(data);
         
+        arrangeGroup(
+                new CLabel[] {fStateNameLabel, fSummaryLabel, fViewNameLabel},
+                new Text[] {fStateName, fSummary, fViewName});
+
         setTextListener(fStateName);
         setTextListener(fSummary);
         setTextListener(fViewName);

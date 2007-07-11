@@ -2,8 +2,6 @@ package com.piece_framework.piece_ide.flow_designer.ui.property;
 
 import org.eclipse.gef.commands.Command;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -21,9 +19,7 @@ import com.piece_framework.piece_ide.flow_designer.model.Flow;
  * 
  */
 public class FlowGeneralSection extends GeneralPropertySection {
-    
-    private static final int TEXT_WIDTH_PERCENT = 70;
-    
+
     private Text fFlowName;
     private CLabel fFlowNameLabel;
     private Text fActionClassName;
@@ -47,43 +43,23 @@ public class FlowGeneralSection extends GeneralPropertySection {
         
         Composite composite = 
             getWidgetFactory().createFlatFormComposite(parent);
-        
-        FormData data;
-        
+
         fFlowNameLabel = 
             getWidgetFactory().createCLabel(composite, "フロー名：");
-        data = new FormData();
-        data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(0, STANDARD_LABEL_WIDTH);
-        data.top = new FormAttachment(0, 0);
-        fFlowNameLabel.setLayoutData(data);
-        
         fFlowName = getWidgetFactory().createText(composite, "");
-        data = new FormData();
-        data.left = new FormAttachment(fFlowNameLabel, 0);
-        data.right = new FormAttachment(TEXT_WIDTH_PERCENT, 0);
-        data.top = new FormAttachment(0, 0);
-        fFlowName.setLayoutData(data);
         
         fActionClassNameLabel = 
             getWidgetFactory().createCLabel(composite, "アクションクラス：");
-        data = new FormData();
-        data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(0, STANDARD_LABEL_WIDTH);
-        data.top = new FormAttachment(fFlowNameLabel, 0);
-        fActionClassNameLabel.setLayoutData(data);
-        
         fActionClassName = getWidgetFactory().createText(composite, "");
-        data = new FormData();
-        data.left = new FormAttachment(fActionClassNameLabel, 0);
-        data.right = new FormAttachment(TEXT_WIDTH_PERCENT, 0);
-        data.top = new FormAttachment(fFlowName, 0);
-        fActionClassName.setLayoutData(data);
+        
+        arrangeGroup(
+                new CLabel[] {fFlowNameLabel, fActionClassNameLabel},
+                new Text[] {fFlowName, fActionClassName});
         
         setTextListener(fFlowName);
         setTextListener(fActionClassName);
     }
-
+    
     /**
      * 画面をリフレッシュする.
      * フローから必要な情報を取得し、コントロールにセットする。
