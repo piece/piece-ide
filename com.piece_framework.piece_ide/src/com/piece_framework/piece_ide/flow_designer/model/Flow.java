@@ -139,7 +139,7 @@ public class Flow extends AbstractModel implements IPropertySource {
                 stateName = "DisplayForm" + fViewStateSequenceNo;
                 fViewStateSequenceNo++;
             } else if (stateType == State.ACTION_STATE) {
-                stateName = "Proccess" + fActionStateSequenceNo;
+                stateName = "Process" + fActionStateSequenceNo;
                 fActionStateSequenceNo++;
             } else if (stateType == State.FINAL_STATE) {
                 stateName = "FinalState";
