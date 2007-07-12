@@ -80,5 +80,14 @@ public abstract class AbstractModel implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         fSupport.removePropertyChangeListener(listener);
     }
+    
+    /**
+     * プロパティ変更リスナーを取得する.
+     * 
+     * @return リスナー
+     */
+    public PropertyChangeListener[] getPropertyChangeListener() {
+        return fSupport.getPropertyChangeListeners();
+    }
 }
 

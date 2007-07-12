@@ -206,10 +206,14 @@ public class State extends AbstractModel implements IPropertySource {
     
     /**
      * イベントを追加する.
+     * イベントを追加する前にステートに登録されているリスナーをセットする.
      * 
      * @param event イベント
      */
     public void addEvent(Event event) {
+        for (PropertyChangeListener listener : getPropertyChangeListener()) {
+            event.addPropertyChangeListener(listener);
+        }
         fEvents.add(event);
         firePropertyChange("event", null, (Object) fEvents);
     }
