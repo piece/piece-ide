@@ -1,7 +1,9 @@
 package com.piece_framework.piece_ide.flow_designer.ui.property;
 
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -10,6 +12,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import com.piece_framework.piece_ide.flow_designer.command.SetStateAttributeCommand;
+import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
@@ -207,7 +210,15 @@ public class StateGeneralSection extends GeneralPropertySection {
      */
     @Override
     Command getAttributeCommand(String attributeName, String attributeValue) {
+        Flow flow = null;
+        if (getSelection() instanceof IStructuredSelection) {
+            Object input = 
+                ((IStructuredSelection) getSelection()).getFirstElement();
+            if (input instanceof EditPart) {
+                flow = (Flow) ((EditPart) input).getParent().getModel();
+            }
+        }
         return new SetStateAttributeCommand(
-                attributeName, attributeValue, (State) getModel());
+                attributeName, attributeValue, flow, (State) getModel());
     }    
 }
