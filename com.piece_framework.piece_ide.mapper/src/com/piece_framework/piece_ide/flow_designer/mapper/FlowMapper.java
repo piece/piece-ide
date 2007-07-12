@@ -114,7 +114,7 @@ public class FlowMapper {
         ArrayList<LinkedHashMap<String, Object>> 
             actionList = new ArrayList<LinkedHashMap<String, Object>>();
         
-        for (State s : flow.getStates()) {
+        for (State s : flow.getStateList()) {
             
             switch(s.getStateType()) {
             case State.INITIAL_STATE:
