@@ -55,7 +55,7 @@ public class FlowEditPart extends AbstractModelEditPart {
     @Override
     protected List getModelChildren() {
         Flow flow = (Flow) getModel();
-        return flow.getStates();
+        return flow.getStateList();
     }
 
     /**

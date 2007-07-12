@@ -90,9 +90,8 @@ public class Flow extends AbstractModel implements IPropertySource {
      * ステートリストを返す.
      * 
      * @return ステートリスト
-     * @see com.piece_framework.piece_ide.flow_designer.model.IFlow#getStates()
      */
-    public List<State> getStates() {
+    public List<State> getStateList() {
         return fStates;
     }
 
@@ -100,8 +99,6 @@ public class Flow extends AbstractModel implements IPropertySource {
      * ステートを追加する.
      * 
      * @param state ステート
-     * @see com.piece_framework.piece_ide.flow_designer.model.IFlow#addState(
-     *          com.piece_framework.piece_ide.flow_designer.model.State)
      */
     public void addState(State state) {
         fStates.add(state);
@@ -112,8 +109,6 @@ public class Flow extends AbstractModel implements IPropertySource {
      * ステートを削除する.
      * 
      * @param state ステート
-     * @see com.piece_framework.piece_ide.flow_designer.model.IFlow#removeState(
-     *          com.piece_framework.piece_ide.flow_designer.model.State)
      */
     public void removeState(State state) {
         fStates.remove(state);
@@ -128,24 +123,47 @@ public class Flow extends AbstractModel implements IPropertySource {
      * ・ファイナルステート："FinalState"固定<br>
      * ・ビューステート："DisplayForm" + 連番<br>
      * ・アクションステート："Process" + 連番<br>
+     * ビューステートとアクションステートに関しては、手動で入力された
+     * 名前が生成した名前と重複する可能性を考慮して、重複チェックをと
+     * おるまで連番をインクリメントする。
      * 
      * @param stateType ステートタイプ
      * @return 新しいステート名
      */
     public String generateStateName(int stateType) {
         String stateName = null;
-        if (stateType == State.INITIAL_STATE) {
-            stateName = "InitialState";
-        } else if (stateType == State.VIEW_STATE) {
-            stateName = "DisplayForm" + fViewStateSequenceNo;
-            fViewStateSequenceNo++;
-        } else if (stateType == State.ACTION_STATE) {
-            stateName = "Proccess" + fActionStateSequenceNo;
-            fActionStateSequenceNo++;
-        } else if (stateType == State.FINAL_STATE) {
-            stateName = "FinalState";
+        while (!checkUsableStateName(stateName)) {
+            if (stateType == State.INITIAL_STATE) {
+                stateName = "InitialState";
+            } else if (stateType == State.VIEW_STATE) {
+                stateName = "DisplayForm" + fViewStateSequenceNo;
+                fViewStateSequenceNo++;
+            } else if (stateType == State.ACTION_STATE) {
+                stateName = "Proccess" + fActionStateSequenceNo;
+                fActionStateSequenceNo++;
+            } else if (stateType == State.FINAL_STATE) {
+                stateName = "FinalState";
+            }
         }
         return stateName;
+    }
+    
+    /**
+     * 指定されたステート名が使用可能かチェックする.
+     * 
+     * @param stateName ステート名
+     * @return 使用可能なステート名の場合はtrue
+     */
+    public boolean checkUsableStateName(String stateName) {
+        if (stateName == null) {
+            return false;
+        }
+        for (State state : getStateList()) {
+            if (state.getName().equals(stateName)) {
+                return false;
+            }
+        }
+        return true;
     }
     
     /**

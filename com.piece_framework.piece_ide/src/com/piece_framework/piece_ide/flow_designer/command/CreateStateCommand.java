@@ -42,7 +42,7 @@ public class CreateStateCommand extends Command {
     @Override
     public boolean canExecute() {
         if (fState.getStateType() == State.FINAL_STATE) {
-            for (State state : fFlow.getStates()) {
+            for (State state : fFlow.getStateList()) {
                 if (state.getStateType() == State.FINAL_STATE) {
                     return false;
                 }
