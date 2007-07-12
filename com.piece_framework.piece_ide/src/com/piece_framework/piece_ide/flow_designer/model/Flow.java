@@ -159,6 +159,9 @@ public class Flow extends AbstractModel implements IPropertySource {
             return false;
         }
         for (State state : getStateList()) {
+            if (state.getName() == null) {
+                continue;
+            }
             if (state.getName().equals(stateName)) {
                 return false;
             }
