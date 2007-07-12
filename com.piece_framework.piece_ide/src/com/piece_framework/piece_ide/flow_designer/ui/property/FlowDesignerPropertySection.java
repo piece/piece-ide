@@ -26,6 +26,12 @@ public abstract class FlowDesignerPropertySection extends
 
     private AbstractModel fModel;
     
+    private PropertyChangeListener fListener = new PropertyChangeListener() {
+        public void propertyChange(PropertyChangeEvent event) {
+            refresh();
+        }
+    };
+    
     /**
      * インプットオブジェクトのセッターメソッド.
      * インプットオブジェクトからモデルを取得し、リスナーを登録する.
@@ -44,15 +50,23 @@ public abstract class FlowDesignerPropertySection extends
             Object input = ((IStructuredSelection) selection).getFirstElement();
             if (input instanceof EditPart) {
                 fModel = (AbstractModel) ((EditPart) input).getModel();
-                fModel.addPropertyChangeListener(new PropertyChangeListener() {
-                    public void propertyChange(PropertyChangeEvent arg0) {
-                        refresh();
-                    }
-                });
+                fModel.addPropertyChangeListener(fListener);
             }
         }
     }
-    
+
+    /**
+     * モデルに登録したリスナーを削除する.
+     * 
+     * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
+     *          #dispose()
+     */
+    @Override
+    public void dispose() {
+        super.dispose();
+        fModel.removePropertyChangeListener(fListener);
+    }
+
     /**
      * コマンドを実行する.
      * 
