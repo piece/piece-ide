@@ -19,25 +19,36 @@ public class CreateStateCommand extends Command {
     private Flow fFlow;
     private State fState;
     
-    private int fX;
-    private int fY;
-    
     /**
      * コンストラクタ.
      * 
      * @param flow フロー
      * @param state 作成するステート
-     * @param x 作成するステートのX座標
-     * @param y 作成するステートのY座標
      */
-    public CreateStateCommand(Flow flow, 
-                                 State state, 
-                                 int x, int y) {
+    public CreateStateCommand(Flow flow, State state) {
         super();
         fFlow = flow;
         fState = state;
-        fX = x;
-        fY = y;
+    }
+
+    /**
+     * コマンドが実行できるか判断する.
+     * 既にフローにファイナルステートがあるときは
+     * ファイナルステートは追加できない。
+     * 
+     * @return コマンドを実行できるか
+     * @see org.eclipse.gef.commands.Command#canExecute()
+     */
+    @Override
+    public boolean canExecute() {
+        if (fState.getStateType() == State.FINAL_STATE) {
+            for (State state : fFlow.getStates()) {
+                if (state.getStateType() == State.FINAL_STATE) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -47,8 +58,6 @@ public class CreateStateCommand extends Command {
      */
     @Override
     public void execute() {
-        fState.setX(fX);
-        fState.setY(fY);
         fState.setName(fFlow.generateStateName(fState.getStateType()));
         fFlow.addState(fState);
     }

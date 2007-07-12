@@ -54,18 +54,12 @@ public class FlowLayoutEditPolicy extends XYLayoutEditPolicy {
     @Override
     protected Command getCreateCommand(CreateRequest request) {
         Point point = request.getLocation();
-        State newState = (State) request.getNewObject();
         Flow flow = (Flow) getHost().getModel();
+        State state = (State) request.getNewObject();
+        state.setX(point.x);
+        state.setY(point.y);
         
-        if (newState.getStateType() == State.FINAL_STATE) {
-            for (State state : flow.getStates()) {
-                if (state.getStateType() == State.FINAL_STATE) {
-                    return null;
-                }
-            }
-        }
-
-        return new CreateStateCommand(flow, newState, point.x, point.y);
+        return new CreateStateCommand(flow, state);
     }
 
 }
