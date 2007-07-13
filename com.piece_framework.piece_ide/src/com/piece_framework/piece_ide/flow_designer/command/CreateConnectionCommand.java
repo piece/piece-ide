@@ -3,6 +3,7 @@ package com.piece_framework.piece_ide.flow_designer.command;
 
 import org.eclipse.gef.commands.Command;
 
+import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.model.Transition;
 
@@ -19,7 +20,7 @@ public class CreateConnectionCommand extends Command {
     private State fSource;
     private State fTarget;
     private Transition fTransition;
-    
+    private Event fEvent;
     /**
      * コンストラクタ.
      * 
@@ -69,6 +70,12 @@ public class CreateConnectionCommand extends Command {
         fSource.addOutgoing(fTransition);
         fTransition.setSource(fSource);
         fTarget.addIncoming(fTransition);
+        fEvent = new Event();
+        fEvent.setName("Transition");
+        fEvent.setInternalEvent(false);
+        fEvent.setEventHandler(null, "transition");
+        fSource.addEvent(fEvent);
+        
         fTransition.setTarget(fTarget);
     }
     
@@ -82,6 +89,7 @@ public class CreateConnectionCommand extends Command {
         fSource.removeOutgoing(fTransition);
         fTransition.setSource(null);
         fTarget.removeIncoming(fTransition);
+        fSource.removeEvent(fEvent);
         fTransition.setTarget(null);
     }
 }
