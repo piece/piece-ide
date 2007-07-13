@@ -18,17 +18,23 @@ public class CreateStateCommand extends Command {
 
     private Flow fFlow;
     private State fState;
+    private int fX;
+    private int fY;
     
     /**
      * コンストラクタ.
      * 
      * @param flow フロー
      * @param state 作成するステート
+     * @param x X座標
+     * @param y Y座標
      */
-    public CreateStateCommand(Flow flow, State state) {
+    public CreateStateCommand(Flow flow, State state, int x, int y) {
         super();
         fFlow = flow;
         fState = state;
+        fX = x;
+        fY = y;
     }
 
     /**
@@ -59,6 +65,8 @@ public class CreateStateCommand extends Command {
     @Override
     public void execute() {
         fState.setName(fFlow.generateStateName(fState.getStateType()));
+        fState.setX(fX);
+        fState.setY(fY);
         fFlow.addState(fState);
     }
 

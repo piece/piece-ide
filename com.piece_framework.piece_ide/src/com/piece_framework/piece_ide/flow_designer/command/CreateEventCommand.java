@@ -16,17 +16,20 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 public class CreateEventCommand extends Command {
 
     private State fState;
+    private State fNextState;
     private Event fEvent;
     
     /**
      * コンストラクタ.
      * 
      * @param state ステート
+     * @param nextState 遷移先ステート
      * @param event イベント
      */
-    public CreateEventCommand(State state, Event event) {
+    public CreateEventCommand(State state, State nextState, Event event) {
         super();
         fState = state;
+        fNextState = nextState;
         fEvent = event;
     }
 
@@ -37,6 +40,11 @@ public class CreateEventCommand extends Command {
      */
     @Override
     public void execute() {
+        fEvent.setName(fState.generateEventName(fNextState.getName()));
+        fEvent.setNextState(fNextState);
+        if (fState == fNextState) {
+            fEvent.setInternalEvent(true);
+        }
         fState.addEvent(fEvent);
     }
 
