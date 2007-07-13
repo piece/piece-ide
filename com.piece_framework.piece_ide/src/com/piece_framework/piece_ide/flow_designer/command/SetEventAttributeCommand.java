@@ -1,6 +1,7 @@
 package com.piece_framework.piece_ide.flow_designer.command;
 
 import org.eclipse.gef.commands.Command;
+import org.eclipse.jface.dialogs.MessageDialog;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
@@ -21,6 +22,7 @@ public class SetEventAttributeCommand extends Command {
     private Object fAttributeValue;
     private Object fOldValue;
     
+    private State fState;
     private Event fEvent;
 
     /**
@@ -28,18 +30,40 @@ public class SetEventAttributeCommand extends Command {
      * 
      * @param attributeName 属性名
      * @param attributeValue 属性値
+     * @param state ステート
      * @param event イベント
      */
     public SetEventAttributeCommand(
                 String attributeName, 
                 Object attributeValue, 
+                State state,
                 Event event) {
         super();
         fAttributeName = attributeName;
         fAttributeValue = attributeValue;
+        fState = state;
         fEvent = event;
     }
-    
+
+    /**
+     * コマンドが実行できるか判断する.
+     * ステート名の変更時、重複チェックを行う。
+     * 
+     * @return コマンドが実行できるか
+     * @see org.eclipse.gef.commands.Command#canExecute()
+     */
+    @Override
+    public boolean canExecute() {
+        if (fAttributeName.equals("Event")) {
+            if (!fState.checkUsableEventName((String) fAttributeValue)) {
+                MessageDialog.openError(
+                        null, "エラー", "イベント名が重複しています。");
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * 属性名に対応する属性値を設定する.
      * 

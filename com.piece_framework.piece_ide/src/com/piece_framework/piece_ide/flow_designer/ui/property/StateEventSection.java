@@ -267,7 +267,9 @@ public class StateEventSection extends FlowDesignerPropertySection {
         if (part instanceof GraphicalEditor) {
             fEventTableViewer.setCellModifier(
                     new EventTableCellModifier(
-                            (GraphicalEditor) part, fEventTableViewer));
+                            (GraphicalEditor) part, 
+                            fEventTableViewer, 
+                            (State) getModel()));
         }
     }
 

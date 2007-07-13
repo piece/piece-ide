@@ -6,10 +6,10 @@ import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.Item;
 
-import com.piece_framework.piece_ide.flow_designer
-            .command.SetEventAttributeCommand;
+import com.piece_framework.piece_ide.flow_designer.command.SetEventAttributeCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
+import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
  * イベント表示テーブルのセル・モディファイヤー.
@@ -24,17 +24,22 @@ public class EventTableCellModifier implements ICellModifier {
     private GraphicalEditor fEditor;
     private TableViewer fEventTableViewer;
     
+    private State fState;
+    
     /**
      * コンストラクタ.
      * 
      * @param editor グラフィカル・エディター
      * @param eventTableViewer イベント表示テーブル
+     * @param state ステート
      */
     public EventTableCellModifier(
                 GraphicalEditor editor, 
-                TableViewer eventTableViewer) {
+                TableViewer eventTableViewer,
+                State state) {
         fEventTableViewer = eventTableViewer;
         fEditor = editor;
+        fState = state;
     }
     
     /**
@@ -134,7 +139,7 @@ public class EventTableCellModifier implements ICellModifier {
                 (CommandStack) fEditor.getAdapter(CommandStack.class);
             SetEventAttributeCommand command =
                 new SetEventAttributeCommand(
-                        property, attributeValue, event);
+                        property, attributeValue, fState, event);
             commandStack.execute(command);
         }
         fEventTableViewer.update(element, null);

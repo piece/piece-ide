@@ -243,9 +243,36 @@ public class State extends AbstractModel implements IPropertySource {
         if (getName() == null) {
             return null;
         }
-        String stateName = "go" + nextStateName + "From" + getName();
         
-        return stateName;
+        String baseEventName = "go" + nextStateName + "From" + getName();
+        String eventName = baseEventName;
+        int eventSequenceNo = 2;
+        while (!checkUsableEventName(eventName)) {
+            eventName = baseEventName + Integer.toString(eventSequenceNo);
+            eventSequenceNo++;
+        }
+        return eventName;
+    }
+    
+    /**
+     * 指定されたイベント名が使用可能かチェックする.
+     * 
+     * @param eventName イベント名
+     * @return 使用可能なイベント名の場合はtrue
+     */
+    public boolean checkUsableEventName(String eventName) {
+        if (eventName == null) {
+            return false;
+        }
+        for (Event event : getEventList()) {
+            if (event.getName() == null) {
+                continue;
+            }
+            if (event.getName().equals(eventName)) {
+                return false;
+            }
+        }
+        return true;
     }
     
     /**
