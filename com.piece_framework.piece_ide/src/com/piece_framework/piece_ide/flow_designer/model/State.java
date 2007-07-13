@@ -229,6 +229,26 @@ public class State extends AbstractModel implements IPropertySource {
     }
     
     /**
+     * イベント名を生成する.
+     * イベント名は、以下の規則で生成される。<br>
+     * "go" + 遷移先ステート名 + "From" + 遷移元ステート名 
+     * 
+     * @param nextStateName 遷移先ステート名
+     * @return イベント名
+     */
+    public String generateEventName(String nextStateName) {
+        if (nextStateName == null) {
+            return null;
+        }
+        if (getName() == null) {
+            return null;
+        }
+        String stateName = "go" + nextStateName + "From" + getName();
+        
+        return stateName;
+    }
+    
+    /**
      * ステートのX座標を返す.
      * 
      * @return X座標

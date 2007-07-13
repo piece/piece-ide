@@ -96,12 +96,14 @@ public class StateEventSection extends FlowDesignerPropertySection {
         }
 
         public void mouseUp(MouseEvent mouseEvent) {
+            State state = (State) getModel();
+            
             Event event = new Event();
-            event.setName("InnerEvent1");
-            event.setNextState((State) getModel());
+            event.setName(state.generateEventName(state.getName()));
+            event.setNextState(state);
             event.setInternalEvent(true);
             
-            executeCommand(new CreateEventCommand((State) getModel(), event));
+            executeCommand(new CreateEventCommand(state, event));
         }
     };
     
