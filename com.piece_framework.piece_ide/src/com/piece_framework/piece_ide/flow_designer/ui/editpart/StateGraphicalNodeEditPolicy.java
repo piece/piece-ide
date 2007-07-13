@@ -6,10 +6,9 @@ import org.eclipse.gef.editpolicies.GraphicalNodeEditPolicy;
 import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.ReconnectRequest;
 
-import com.piece_framework.piece_ide.
-            flow_designer.command.CreateConnectionCommand;
+import com.piece_framework.piece_ide.flow_designer.command.CreateConnectionCommand;
+import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
-import com.piece_framework.piece_ide.flow_designer.model.Transition;
 
 /**
  * ステートグラフィックノード・エディットポリシー.
@@ -37,10 +36,10 @@ public class StateGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
     @Override
     protected Command getConnectionCompleteCommand(
                             CreateConnectionRequest request) {
-        State state = (State) request.getTargetEditPart().getModel();
+        State nextState = (State) request.getTargetEditPart().getModel();
         CreateConnectionCommand command = 
             (CreateConnectionCommand) request.getStartCommand();
-        command.setTarget(state);
+        command.setNextState(nextState);
         
         return command;
     }
@@ -61,11 +60,11 @@ public class StateGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
     @Override
     protected Command getConnectionCreateCommand(
                             CreateConnectionRequest request) {
-        Transition transition = (Transition) request.getNewObject();
+        Event event = (Event) request.getNewObject();
         State state = (State) request.getTargetEditPart().getModel();
         CreateConnectionCommand command = 
-            new CreateConnectionCommand(transition);
-        command.setSource(state);
+            new CreateConnectionCommand(event);
+        command.setState(state);
         request.setStartCommand(command);
         
         return command;

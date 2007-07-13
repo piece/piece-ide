@@ -5,7 +5,6 @@ import org.eclipse.gef.commands.Command;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
-import com.piece_framework.piece_ide.flow_designer.model.Transition;
 
 /**
  * 遷移作成コマンド.
@@ -17,49 +16,53 @@ import com.piece_framework.piece_ide.flow_designer.model.Transition;
  */
 public class CreateConnectionCommand extends Command {
 
-    private State fSource;
-    private State fTarget;
-    private Transition fTransition;
+    private State fState;
+    private State fNextState;
     private Event fEvent;
+    
     /**
      * コンストラクタ.
      * 
-     * @param transtion 遷移
+     * @param event 遷移イベント
      */
-    public CreateConnectionCommand(Transition transtion) {
+    public CreateConnectionCommand(Event event) {
         super();
-        fTransition = transtion;
+        fEvent = event;
+    }
+
+    /**
+     * 遷移元ステートをセットする.
+     * 
+     * @param state 遷移元ステート
+     */
+    public void setState(State state) {
+        fState = state;
     }
     
     /**
-     * 遷移元ステートを設定する.
+     * 遷移先ステートをセットする.
      * 
-     * @param source 遷移元ステート
+     * @param nextState 遷移先ステート
      */
-    public void setSource(State source) {
-        fSource = source;
-    }
-    
-    /**
-     * 遷移先ステートを設定する.
-     * 
-     * @param target 遷移先ステート
-     */
-    public void setTarget(State target) {
-        fTarget = target;
+    public void setNextState(State nextState) {
+        fNextState = nextState;
     }
     
     /**
      * コマンドを実行できるか判断する.
+     * 遷移元・遷移先ステートがnullでなく、遷移元・遷移先ステートが同一
+     * でなければ、コマンドを実行できるものとする。
      * 
      * @return コマンドを実行できるか
      * @see org.eclipse.gef.commands.Command#canExecute()
      */
     @Override
     public boolean canExecute() {
-        return fSource != null && fTarget != null && !fSource.equals(fTarget);
+        return fState != null 
+                && fNextState != null 
+                && !fState.equals(fNextState);
     }
-    
+
     /**
      * 遷移を作成する.
      * 
@@ -67,16 +70,12 @@ public class CreateConnectionCommand extends Command {
      */
     @Override
     public void execute() {
-        fSource.addOutgoing(fTransition);
-        fTransition.setSource(fSource);
-        fTarget.addIncoming(fTransition);
-        fEvent = new Event();
-        fEvent.setName("Transition");
+        fEvent.setName(fState.generateEventName(fNextState.getName()));
         fEvent.setInternalEvent(false);
-        fEvent.setEventHandler(null, "transition");
-        fSource.addEvent(fEvent);
-        
-        fTransition.setTarget(fTarget);
+        fEvent.setEventHandler(
+                null, 
+                "do" + fEvent.getName() + "On" + fState.getName());
+        fState.addEvent(fEvent);
     }
     
     /**
@@ -86,10 +85,6 @@ public class CreateConnectionCommand extends Command {
      */
     @Override
     public void undo() {
-        fSource.removeOutgoing(fTransition);
-        fTransition.setSource(null);
-        fTarget.removeIncoming(fTransition);
-        fSource.removeEvent(fEvent);
-        fTransition.setTarget(null);
+        fState.removeEvent(fEvent);
     }
 }

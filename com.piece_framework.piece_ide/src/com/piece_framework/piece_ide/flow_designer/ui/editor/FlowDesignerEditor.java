@@ -29,10 +29,10 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
+import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.model.StateFactory;
-import com.piece_framework.piece_ide.flow_designer.model.Transition;
 import com.piece_framework.piece_ide.flow_designer.ui.editpart.FlowDesignerEditFactory;
 import com.piece_framework.piece_ide.plugin.PieceIDEPlugin;
 
@@ -240,7 +240,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         drawer.add(new ConnectionCreationToolEntry(
                 "遷移", 
                 "遷移を設定",
-                new SimpleFactory(Transition.class),
+                new SimpleFactory(Event.class),
                 PieceIDEPlugin.getImageDescriptor("icons/Transition.gif"),
                 PieceIDEPlugin.getImageDescriptor("icons/Transition.gif")));
         root.add(drawer);

@@ -4,9 +4,9 @@ package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
+import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
-import com.piece_framework.piece_ide.flow_designer.model.Transition;
 
 /**
  * フローデザイナー・エディットパートファクトリー.
@@ -35,20 +35,15 @@ public class FlowDesignerEditFactory implements EditPartFactory {
             State state = (State) model;
             if (state.getStateType() == State.INITIAL_STATE) {
                 editPart = new InitialStateEditPart();
-                
             } else if (state.getStateType() == State.FINAL_STATE) {
                 editPart = new FinalStateEditPart();
-                
             } else if (state.getStateType() == State.ACTION_STATE) {
                 editPart = new ActionStateEditPart();
-            
             } else if (state.getStateType() == State.VIEW_STATE) {
                 editPart = new ViewStateEditPart();
-                
             }
-        } else if (model instanceof Transition) {
+        } else if (model instanceof Event) {
             editPart = new TransitionEditPart();
-            
         } else if (model instanceof Flow) {
             editPart = new FlowEditPart();
         }
