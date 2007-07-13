@@ -81,12 +81,12 @@ public class Event extends AbstractModel implements Serializable {
     
     /**
      * 遷移イベントかどうかを返す.
-     * 内部イベントでなければ、遷移イベントと判断する。
+     * 内部イベント・ビルトインイベントでなければ、遷移イベントと判断する。
      * 
      * @return 遷移イベントの場合はTrue
      */
     public boolean isTransitionEvent() {
-        return !fInternalEvent;
+        return !fInternalEvent && !fBuiltinEvent;
     }
 
     /**
