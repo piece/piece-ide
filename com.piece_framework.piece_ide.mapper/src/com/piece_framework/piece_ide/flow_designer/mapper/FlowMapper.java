@@ -27,9 +27,9 @@ public class FlowMapper {
 
         String yamlStr  = Yaml.dump(setFlow(flow));
         
-        yamlStr = yamlStr.replaceAll("!java.util.LinkedHashMap", "");
-        yamlStr = yamlStr.replaceAll("- \r\n *", "- ");  //\r\nはマズイ？
-        yamlStr = yamlStr.replaceAll("--- ", "--- \r\n");
+        // yamlStr = yamlStr.replaceAll("!java.util.LinkedHashMap", "");
+        // yamlStr = yamlStr.replaceAll("- \r\n *", "- ");  //\r\nはマズイ？
+        // yamlStr = yamlStr.replaceAll("--- ", "--- \r\n");
         
         return yamlStr;
         

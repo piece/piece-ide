@@ -32,6 +32,51 @@ public class FlowMapperTest extends TestCase {
     
     
     
+//    /**
+//     * テストケース イメージ(仮).
+//     * 
+//     * yaml と model とで、それぞれ比較できれば
+//     * mapper のテストとしては十分では？
+//     * model の中身はできれば知らないフリをしたいところです。
+//     */
+//    public void testYaml001() {
+//        String scrYaml ;
+//        String expectedYaml ;
+//        String resultYaml ;
+//        Flow   scrYamlFlow ;
+//        Flow   resultYamlFlow ;
+//        FlowMapper mapper = new FlowMapper();
+//        
+//        
+//        scrYaml = "--- \r\n" 
+//                + "firstState: \r\n" 
+//                + "actionState: ・・・・・";
+//        
+//        expectedYaml = scrYaml;
+//        
+//        //yaml read
+//        scrYamlFlow = mapper.read(scrYaml); //未実装        
+//        //yaml dump
+//        resultYaml = mapper.dump(scrYamlFlow);
+//        //yaml read 　-- 出力されたyamlを読込み
+//        resultYamlFlow = mapper.read(resultYaml); //未実装
+//        
+//
+//        
+//        ////場合によっては、モデルを調べる（ポイントになるところだけ）
+//        //String name = scrYamlFlow.getStateList().get(0).getName();
+//        //assertEquals(name, null);
+//        
+//        //yamlの比較
+//        assertEquals("yaml出力結果が一致しない", expectedYaml, resultYaml);
+//        
+//        //modelの比較
+//        assertEquals("モデルが一致しない", scrYamlFlow, resultYamlFlow);
+//        
+//    }
+// 
+    
+    
     
     
     /**
