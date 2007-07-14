@@ -3,6 +3,7 @@ package com.piece_framework.piece_ide.flow_designer.model;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
@@ -226,12 +227,27 @@ public class State extends AbstractModel implements IPropertySource {
     
     /**
      * イベントを削除する.
+     * イベントが保持しているリスナーを削除する。<br>
+     * また遷移イベントの場合は遷移先のステートに変更を通知する。
      * 
      * @param event イベント
      */
     public void removeEvent(Event event) {
+        List<PropertyChangeListener> removeListenerList = 
+                new ArrayList<PropertyChangeListener>();
+        removeListenerList.addAll(
+                Arrays.asList(event.getPropertyChangeListener()));
+        for (PropertyChangeListener listener : removeListenerList) {
+            event.removePropertyChangeListener(listener);
+        }
+        
         fEvents.remove(event);
         firePropertyChange("event", null, (Object) fEvents);
+        
+        if (event.isTransitionEvent() && event.getNextState() != null) {
+            event.getNextState().firePropertyChange(
+                    "target", null, null);
+        }
     }
     
     /**

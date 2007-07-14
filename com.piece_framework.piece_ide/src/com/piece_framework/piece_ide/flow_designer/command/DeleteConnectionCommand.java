@@ -3,8 +3,8 @@ package com.piece_framework.piece_ide.flow_designer.command;
 
 import org.eclipse.gef.commands.Command;
 
+import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
-import com.piece_framework.piece_ide.flow_designer.model.Transition;
 
 /**
  * 遷移削除コマンド.
@@ -15,19 +15,20 @@ import com.piece_framework.piece_ide.flow_designer.model.Transition;
  *
  */
 public class DeleteConnectionCommand extends Command {
-  
-    private State fSource;
-    private State fTarget;
-    private Transition fTransition;
-   
+    
+    private State fState;
+    private Event fEvent;
+    
     /**
      * コンストラクタ.
      * 
-     * @param transtion 削除対象となる遷移
+     * @param state 削除対象が所属するステート
+     * @param event 削除対象となる遷移イベント
      */
-    public DeleteConnectionCommand(Transition transtion) {
+    public DeleteConnectionCommand(State state, Event event) {
         super();
-        fTransition = transtion;
+        fState = state;
+        fEvent = event;
     }
     
     /**
@@ -37,10 +38,7 @@ public class DeleteConnectionCommand extends Command {
      */
     @Override
     public void execute() {
-        fSource.removeOutgoing(fTransition);
-        fTransition.setSource(null);
-        fTarget.removeIncoming(fTransition);
-        fTransition.setTarget(null);
+        fState.removeEvent(fEvent);
     }
     
     /**
@@ -50,27 +48,6 @@ public class DeleteConnectionCommand extends Command {
      */
     @Override
     public void undo() {
-        fSource.addOutgoing(fTransition);
-        fTransition.setSource(fSource);
-        fTarget.addIncoming(fTransition);
-        fTransition.setTarget(fTarget);
-    }
-    
-    /**
-     * 遷移元ステートを設定する.
-     * 
-     * @param source 遷移元ステート
-     */
-    public void setSource(State source) {
-        fSource = source;
-    }
-    
-    /**
-     * 遷移先ステートを設定する.
-     * 
-     * @param target 遷移先ステート
-     */
-    public void setTarget(State target) {
-        fTarget = target;
+        fState.addEvent(fEvent);
     }
 }

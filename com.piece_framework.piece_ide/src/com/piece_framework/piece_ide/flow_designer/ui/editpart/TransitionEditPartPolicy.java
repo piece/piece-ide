@@ -1,12 +1,13 @@
 // $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 
-import com.piece_framework.piece_ide.flow_designer.command.DeleteConnectionCommand;
-import com.piece_framework.piece_ide.flow_designer.model.Transition;
-
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ConnectionEditPolicy;
 import org.eclipse.gef.requests.GroupRequest;
+
+import com.piece_framework.piece_ide.flow_designer.command.DeleteConnectionCommand;
+import com.piece_framework.piece_ide.flow_designer.model.Event;
+import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
  * 遷移・エディットポリシー.
@@ -30,14 +31,13 @@ public class TransitionEditPartPolicy extends ConnectionEditPolicy {
      */
     @Override
     protected Command getDeleteCommand(GroupRequest request) {
-
-        Transition transition = (Transition) getHost().getModel();
-
-        DeleteConnectionCommand command 
-                            = new DeleteConnectionCommand(transition);
-        command.setSource(transition.getSource());
-        command.setTarget(transition.getTarget());
-    
-        return command;
+        State state = null;
+        Event event = (Event) getHost().getModel();
+        if (request.getEditParts().size() > 0) {
+            TransitionEditPart transitionEditPart = 
+                (TransitionEditPart) request.getEditParts().get(0);
+            state = (State) transitionEditPart.getSource().getModel();
+        }
+        return new DeleteConnectionCommand(state, event);
     }
 }
