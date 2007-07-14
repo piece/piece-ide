@@ -2,7 +2,6 @@
 package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 
 import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.draw2d.ChopboxAnchor;
@@ -17,7 +16,6 @@ import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.Request;
 
-import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.ui.figure.ActionStateFigure;
@@ -119,7 +117,7 @@ public abstract class StateEditPart extends AbstractModelEditPart
      */
     @Override
     protected List getModelSourceConnections() {
-        return getTransitionEventList((State) getModel());
+        return ((State) getModel()).getTransitionEventList();
     }
 
     /**
@@ -134,30 +132,10 @@ public abstract class StateEditPart extends AbstractModelEditPart
     @Override
     protected List getModelTargetConnections() {
         Flow flow = (Flow) getParent().getModel();
-        List<Event> transitionEventList = new ArrayList<Event>();
-        for (State state : flow.getStateList()) {
-            if (state == (State) getModel()) {
-                continue;
-            }
-            for (Event event : getTransitionEventList(state)) {
-                if (event.getNextState() == (State) getModel()) {
-                    transitionEventList.add(event);
-                }
-            }
-        }
-        return transitionEventList;
+        
+        return flow.getTransitionEventListToOwnState((State) getModel());
     }
 
-    private List<Event> getTransitionEventList(State state) {
-        List<Event> transitionEventList = new ArrayList<Event>();
-        for (Event event : state.getEventList()) {
-            if (event.isTransitionEvent()) {
-                transitionEventList.add(event);
-            }
-        }
-        return transitionEventList;
-    }
-    
     /**
      * 遷移の線の遷移元のアンカーを返す.
      * 

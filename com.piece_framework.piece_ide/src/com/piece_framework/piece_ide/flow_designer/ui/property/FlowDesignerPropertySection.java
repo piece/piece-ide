@@ -25,10 +25,13 @@ public abstract class FlowDesignerPropertySection extends
         AbstractPropertySection {
 
     private AbstractModel fModel;
+    private boolean fDisposed;
     
     private PropertyChangeListener fListener = new PropertyChangeListener() {
         public void propertyChange(PropertyChangeEvent event) {
-            refresh();
+            if (!fDisposed) {
+                refresh();
+            }
         }
     };
     
@@ -64,7 +67,10 @@ public abstract class FlowDesignerPropertySection extends
     @Override
     public void dispose() {
         super.dispose();
-        fModel.removePropertyChangeListener(fListener);
+        if (fModel != null) {
+            fModel.removePropertyChangeListener(fListener);
+        }
+        fDisposed = true;
     }
 
     /**

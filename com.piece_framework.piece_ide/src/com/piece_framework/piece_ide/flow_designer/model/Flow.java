@@ -96,6 +96,27 @@ public class Flow extends AbstractModel implements IPropertySource {
     }
 
     /**
+     * 指定されたステートが遷移先となるイベントの一覧を返す.
+     * 
+     * @param ownState ステート
+     * @return 遷移イベント
+     */
+    public List<Event> getTransitionEventListToOwnState(State ownState) {
+        List<Event> transitionEventList = new ArrayList<Event>();
+        for (State state : getStateList()) {
+            if (state == ownState) {
+                continue;
+            }
+            for (Event event : state.getTransitionEventList()) {
+                if (event.getNextState() == ownState) {
+                    transitionEventList.add(event);
+                }
+            }
+        }
+        return transitionEventList;
+    }
+    
+    /**
      * ステートを追加する.
      * 
      * @param state ステート

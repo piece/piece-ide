@@ -206,6 +206,21 @@ public class State extends AbstractModel implements IPropertySource {
     }
     
     /**
+     * 遷移イベント一覧を返す.
+     * 
+     * @return 遷移イベント一覧
+     */
+    public List<Event> getTransitionEventList() {
+        List<Event> transitionEventList = new ArrayList<Event>();
+        for (Event event : getEventList()) {
+            if (event.isTransitionEvent()) {
+                transitionEventList.add(event);
+            }
+        }
+        return transitionEventList;
+    }
+    
+    /**
      * イベントを追加する.
      * イベントを追加する前にステートに登録されているリスナーをセットする。<br>
      * また遷移イベントの場合は遷移先のステートに変更を通知する。
@@ -296,6 +311,7 @@ public class State extends AbstractModel implements IPropertySource {
         }
         return true;
     }
+    
     
     /**
      * ステートのX座標を返す.

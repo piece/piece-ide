@@ -1,13 +1,14 @@
 // $Id$
 package com.piece_framework.piece_ide.flow_designer.command;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.gef.commands.Command;
 
+import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
-import com.piece_framework.piece_ide.flow_designer.model.Transition;
 
 /**
  * ステート削除コマンド.
@@ -21,7 +22,7 @@ public class DeleteStateCommand extends Command {
 
     private Flow fFlow;
     private State fState;
-    
+    private List<Event> fEvents;
     /**
      * コンストラクタ.
      * 
@@ -31,6 +32,8 @@ public class DeleteStateCommand extends Command {
     public DeleteStateCommand(Flow flow, State state) {
         fFlow = flow;
         fState = state;
+        fEvents = new ArrayList<Event>();
+        fEvents.addAll(state.getEventList());
     }
 
     /**
@@ -40,18 +43,8 @@ public class DeleteStateCommand extends Command {
      */
     @Override
     public void execute() {
-        // 削除対象のステートをソースとするコネクションの削除
-        List sourceCons = fState.getIncomings();
-        for (int i = 0; i < sourceCons.size(); i++) {
-            Transition source = (Transition) sourceCons.get(i);
-            source.getSource().removeOutgoing(source);
-        }
-
-        // 削除対象のステートをターゲットとするコネクションの削除
-        List targetCons = fState.getOutgoings();
-        for (int i = 0; i < targetCons.size(); i++) {
-            Transition target = (Transition) targetCons.get(i);
-            target.getTarget().removeIncoming(target);
+        for (Event event : fEvents) {
+            fState.removeEvent(event);
         }
         fFlow.removeState(fState);
     }
@@ -64,5 +57,8 @@ public class DeleteStateCommand extends Command {
     @Override
     public void undo() {
         fFlow.addState(fState);
+        for (Event event : fEvents) {
+            fState.addEvent(event);
+        }
     }
 }
