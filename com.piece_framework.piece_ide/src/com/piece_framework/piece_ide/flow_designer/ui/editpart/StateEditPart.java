@@ -64,19 +64,19 @@ public abstract class StateEditPart extends AbstractModelEditPart
     /**
      * プロパティ変更イベント対応メソッド.
      * 
-     * @param evt プロパティ変更イベント
+     * @param event プロパティ変更イベント
      * @see java.beans.PropertyChangeListener
      *          #propertyChange(java.beans.PropertyChangeEvent)
      */
-    public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("x")) {
+    public void propertyChange(PropertyChangeEvent event) {
+        if (event.getPropertyName().equals("x")) {
             refreshVisuals();
-        } else if (evt.getPropertyName().equals("y")) {
+        } else if (event.getPropertyName().equals("y")) {
             refreshVisuals();
-        } else if (evt.getPropertyName().equals("incoming")) {
-            refreshTargetConnections();
-        } else if (evt.getPropertyName().equals("outgoing")) {
+        } else if (event.getPropertyName().equals("event")) {
             refreshSourceConnections();
+        } else if (event.getPropertyName().equals("target")) {
+            refreshTargetConnections();
         }
     }
 
@@ -124,6 +124,8 @@ public abstract class StateEditPart extends AbstractModelEditPart
 
     /**
      * ステートが遷移先になっている遷移リストを返す.
+     * フローが保持する自身を除く全ステートの遷移イベントの
+     * 遷移先ステートを調べる。
      * 
      * @return 遷移リスト
      * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart
@@ -148,7 +150,7 @@ public abstract class StateEditPart extends AbstractModelEditPart
 
     private List<Event> getTransitionEventList(State state) {
         List<Event> transitionEventList = new ArrayList<Event>();
-        for (Event event : ((State) getModel()).getEventList()) {
+        for (Event event : state.getEventList()) {
             if (event.isTransitionEvent()) {
                 transitionEventList.add(event);
             }

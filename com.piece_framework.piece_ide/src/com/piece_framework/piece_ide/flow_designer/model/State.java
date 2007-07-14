@@ -206,7 +206,8 @@ public class State extends AbstractModel implements IPropertySource {
     
     /**
      * イベントを追加する.
-     * イベントを追加する前にステートに登録されているリスナーをセットする.
+     * イベントを追加する前にステートに登録されているリスナーをセットする。<br>
+     * また遷移イベントの場合は遷移先のステートに変更を通知する。
      * 
      * @param event イベント
      */
@@ -216,6 +217,11 @@ public class State extends AbstractModel implements IPropertySource {
         }
         fEvents.add(event);
         firePropertyChange("event", null, (Object) fEvents);
+        
+        if (event.isTransitionEvent() && event.getNextState() != null) {
+            event.getNextState().firePropertyChange(
+                    "target", null, null);
+        }
     }
     
     /**

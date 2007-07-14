@@ -72,6 +72,7 @@ public class CreateConnectionCommand extends Command {
     public void execute() {
         fEvent.setName(fState.generateEventName(fNextState.getName()));
         fEvent.setInternalEvent(false);
+        fEvent.setNextState(fNextState);
         fEvent.setEventHandler(
                 null, 
                 "do" + fEvent.getName() + "On" + fState.getName());
