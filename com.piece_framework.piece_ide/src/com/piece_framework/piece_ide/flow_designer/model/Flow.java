@@ -81,7 +81,7 @@ public class Flow extends AbstractModel implements IPropertySource {
     public void setActionClassName(String actionClassName) {
         if (actionClassName != null) {
             fActionClassName = actionClassName;
-        } else {
+        } else if (fName != null) {
             fActionClassName = fName + "Action";
         }
     }
