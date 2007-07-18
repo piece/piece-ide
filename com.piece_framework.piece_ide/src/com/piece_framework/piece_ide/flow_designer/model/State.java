@@ -78,7 +78,7 @@ public class State extends AbstractModel implements IPropertySource {
      * @param methodName メソッド名
      * @return ビルトインイベント
      */
-    public Event createBuiltinEvent(
+    private Event createBuiltinEvent(
                     String eventName, 
                     String className, 
                     String methodName) {
