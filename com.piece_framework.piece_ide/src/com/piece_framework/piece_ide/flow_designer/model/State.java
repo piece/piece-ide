@@ -59,14 +59,14 @@ public class State extends AbstractModel implements IPropertySource {
      */
     private void createBuiltinEventForStateType() {
         if (fStateType == INITIAL_STATE) {
-            fEvents.add(createBuiltinEvent("Initialize", null, "initialize"));
+            fEvents.add(createBuiltinEvent("Initialize", null, "doInitialize"));
         } else if (fStateType == ACTION_STATE
                     || fStateType == VIEW_STATE) {
-            fEvents.add(createBuiltinEvent("Entry", null, "entry"));
-            fEvents.add(createBuiltinEvent("Exit", null, "exit"));
-            fEvents.add(createBuiltinEvent("Activity", null, "activity"));
+            fEvents.add(createBuiltinEvent("Entry", null, "doEntry"));
+            fEvents.add(createBuiltinEvent("Exit", null, "doExit"));
+            fEvents.add(createBuiltinEvent("Activity", null, "doActivity"));
         } else if (fStateType == FINAL_STATE) {
-            fEvents.add(createBuiltinEvent("Finalize", null, "finalize"));
+            fEvents.add(createBuiltinEvent("Finalize", null, "doFinalize"));
         }
     }
     
@@ -281,7 +281,7 @@ public class State extends AbstractModel implements IPropertySource {
             return null;
         }
         
-        String baseEventName = "go" + nextStateName + "From" + getName();
+        String baseEventName = nextStateName + "From" + getName();
         String eventName = baseEventName;
         int eventSequenceNo = 2;
         while (!checkUsableEventName(eventName)) {
