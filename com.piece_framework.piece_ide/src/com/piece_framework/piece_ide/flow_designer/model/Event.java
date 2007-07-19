@@ -19,6 +19,7 @@ public class Event extends AbstractModel implements Serializable {
     private State fNextState;
     private boolean fBuiltinEvent;
     private boolean fInternalEvent;
+    private boolean fTransitionEvent;
     private EventHandler fEventHandler;
     private EventHandler fGuardEventHandler;
     
@@ -76,6 +77,8 @@ public class Event extends AbstractModel implements Serializable {
      */
     public void setBuiltinEvent(boolean builtinEvent) {
         fBuiltinEvent = builtinEvent;
+        fInternalEvent = false;
+        fTransitionEvent = false;
         firePropertyChange("event", null, (Object) this);
     }
     
@@ -86,16 +89,18 @@ public class Event extends AbstractModel implements Serializable {
      * @return 遷移イベントの場合はTrue
      */
     public boolean isTransitionEvent() {
-        return !fInternalEvent && !fBuiltinEvent;
+        return fTransitionEvent;
     }
 
     /**
-     * インターナルイベントかどうかを設定する.
+     * 遷移イベントかどうかを設定する.
      *  
-     * @param internalEvent 内部イベントの場合はTrue
+     * @param transitionEvent 内部イベントの場合はTrue
      */
-    public void setInternalEvent(boolean internalEvent) {
-        fInternalEvent = internalEvent;
+    public void setTransitionEvent(boolean transitionEvent) {
+        fTransitionEvent = transitionEvent;
+        fBuiltinEvent = false;
+        fInternalEvent = false;
         firePropertyChange("event", null, (Object) this);
     }
     
@@ -106,6 +111,18 @@ public class Event extends AbstractModel implements Serializable {
      */
     public boolean isInternalEvent() {
         return fInternalEvent;
+    }
+    
+    /**
+     * 内部イベントかどうかを設定する.
+     *  
+     * @param internalEvent 内部イベントの場合はTrue
+     */
+    public void setInternalEvent(boolean internalEvent) {
+        fInternalEvent = internalEvent;
+        fBuiltinEvent = false;
+        fTransitionEvent = false;
+        firePropertyChange("event", null, (Object) this);
     }
     
     /**
@@ -164,5 +181,23 @@ public class Event extends AbstractModel implements Serializable {
      */
     public void setGuardEventHandler(String className, String methodName) {
         setGuardEventHandler(new EventHandler(className, methodName));
+    }
+    
+    /**
+     * イベントハンドラのメソッド名を生成する.
+     * イベントハンドラのメソッド名は、以下の規則で生成される。<br>
+     * "do" + イベント名 + "On" + ステート名 
+     * 
+     * @param stateName ステート名
+     * @return イベントハンドラのメソッド名
+     */
+    public String generateEventHandlerMethodName(String stateName) {
+        if (getName() == null) {
+            return null;
+        }
+        if (stateName == null) {
+            return null;
+        }
+        return "do" + getName() + "On" + stateName;
     }
 }
