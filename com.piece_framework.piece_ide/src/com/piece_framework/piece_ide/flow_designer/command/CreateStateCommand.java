@@ -47,9 +47,9 @@ public class CreateStateCommand extends Command {
      */
     @Override
     public boolean canExecute() {
-        if (fState.getStateType() == State.FINAL_STATE) {
+        if (fState.getType() == State.FINAL_STATE) {
             for (State state : fFlow.getStateList()) {
-                if (state.getStateType() == State.FINAL_STATE) {
+                if (state.getType() == State.FINAL_STATE) {
                     return false;
                 }
             }
@@ -64,7 +64,7 @@ public class CreateStateCommand extends Command {
      */
     @Override
     public void execute() {
-        fState.setName(fFlow.generateStateName(fState.getStateType()));
+        fState.setName(fFlow.generateStateName(fState.getType()));
         fState.setX(fX);
         fState.setY(fY);
         fFlow.addState(fState);

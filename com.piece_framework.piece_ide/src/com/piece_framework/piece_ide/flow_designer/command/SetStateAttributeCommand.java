@@ -76,7 +76,7 @@ public class SetStateAttributeCommand extends Command {
         } else if (fAttributeName.equals("summary")) {
             fOldValue = fState.getSummary();
             fState.setSummary(fAttributeValue);
-        } else if (fState.getStateType() == State.VIEW_STATE
+        } else if (fState.getType() == State.VIEW_STATE
                     && fAttributeName.equals("view")) {
             fOldValue = fState.getView();
             fState.setView(fAttributeValue);
@@ -94,7 +94,7 @@ public class SetStateAttributeCommand extends Command {
             fState.setName(fOldValue);
         } else if (fAttributeName.equals("summary")) {
             fState.setSummary(fOldValue);
-        } else if (fState.getStateType() == State.VIEW_STATE
+        } else if (fState.getType() == State.VIEW_STATE
                     && fAttributeName.equals("view")) {
             fState.setView(fOldValue);
         }

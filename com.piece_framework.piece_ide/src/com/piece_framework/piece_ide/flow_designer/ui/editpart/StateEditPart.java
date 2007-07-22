@@ -46,13 +46,13 @@ public abstract class StateEditPart extends AbstractModelEditPart
         IFigure figure = null;
         
         State state = (State) getModel();
-        if (state.getStateType() == State.INITIAL_STATE) {
+        if (state.getType() == State.INITIAL_STATE) {
             figure = new InitialStateFigure();
-        } else if (state.getStateType() == State.VIEW_STATE) {
+        } else if (state.getType() == State.VIEW_STATE) {
             figure = new ViewStateFigure();
-        } else if (state.getStateType() == State.ACTION_STATE) {
+        } else if (state.getType() == State.ACTION_STATE) {
             figure = new ActionStateFigure();
-        } else if (state.getStateType() == State.FINAL_STATE) {
+        } else if (state.getType() == State.FINAL_STATE) {
             figure = new FinalStateFigure();
         }
         

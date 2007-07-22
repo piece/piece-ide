@@ -94,12 +94,12 @@ public class StateGeneralSection extends GeneralPropertySection {
         setGroupVisible(fSummaryLabel, fSummary, false);
         setGroupVisible(fViewNameLabel, fViewName, false);
         
-        if (state.getStateType() == State.ACTION_STATE
-            || state.getStateType() == State.VIEW_STATE) {
+        if (state.getType() == State.ACTION_STATE
+            || state.getType() == State.VIEW_STATE) {
             setGroupVisible(fStateNameLabel, fStateName, true);
             setGroupVisible(fSummaryLabel, fSummary, true);
         }
-        if (state.getStateType() == State.VIEW_STATE) {
+        if (state.getType() == State.VIEW_STATE) {
             setGroupVisible(fViewNameLabel, fViewName, true);
         }
     }
@@ -131,8 +131,8 @@ public class StateGeneralSection extends GeneralPropertySection {
         fViewName.setText("");
         
         if (state != null) {
-            if (state.getStateType() == State.ACTION_STATE
-                || state.getStateType() == State.VIEW_STATE) {
+            if (state.getType() == State.ACTION_STATE
+                || state.getType() == State.VIEW_STATE) {
                 if (state.getName() != null) {
                     fStateName.setText(state.getName());
                 }
@@ -141,7 +141,7 @@ public class StateGeneralSection extends GeneralPropertySection {
                 }
             }
             
-            if (state.getStateType() == State.VIEW_STATE) {
+            if (state.getType() == State.VIEW_STATE) {
                 if (state.getView() != null) {
                     fViewName.setText(state.getView());
                 }

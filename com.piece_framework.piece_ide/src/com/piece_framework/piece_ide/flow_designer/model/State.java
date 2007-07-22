@@ -22,16 +22,18 @@ public class State extends AbstractModel implements IPropertySource {
     
     private static final long serialVersionUID = -7778980617394743980L;
     
-    /** ステート定数：イニシャル・ステート. */
+    /** ステートタイプ定数：イニシャルステート. */
     public static final int INITIAL_STATE = 1;
-    /** ステート定数：ファイナル・ステート. */
+    /** ステートタイプ定数：ファイナルステート. */
     public static final int FINAL_STATE = 2;
-    /** ステート定数：アクション・ステート. */
+    /** ステートタイプ定数：アクションステート. */
     public static final int ACTION_STATE = 3;
-    /** ステート定数：ビュー・ステート. */
+    /** ステートタイプ定数：ビューステート. */
     public static final int VIEW_STATE = 4;
+    /** ステートタイプ定数：不明. */
+    public static final int UNKNOWN_STATE = 0;
     
-    private int fStateType;
+    private int fType;
     private String fName;
     private String fSummary;
     private String fView;
@@ -45,12 +47,24 @@ public class State extends AbstractModel implements IPropertySource {
     
     /**
      * コンストラクタ.
+     * ステートタイプは以下の定数のいずれかである必要があります。<br>
+     * イニシャルステート：INITIAL_STATE<br>
+     * ファイナルステート：FINAL_STATE<br>
+     * アクションステート：ACTION_STATE<br>
+     * ビューステート：VIEW_STATE<br>
+     * これら以外のステートタイプが指定された場合は、UNKNOWN_STATEが
+     * セットされます。
      * 
-     * @param stateType ステートタイプ
+     * @param type ステートタイプ
      */
-    public State(int stateType) {
-        fStateType = stateType;
-        createBuiltinEventForStateType();
+    public State(int type) {
+        if (type == INITIAL_STATE || type == FINAL_STATE
+            || type == VIEW_STATE || type == ACTION_STATE) {
+            fType = type;
+            createBuiltinEventForStateType();
+        } else {
+            fType = UNKNOWN_STATE;
+        }
     }
     
     /**
@@ -58,14 +72,14 @@ public class State extends AbstractModel implements IPropertySource {
      * 
      */
     private void createBuiltinEventForStateType() {
-        if (fStateType == INITIAL_STATE) {
+        if (fType == INITIAL_STATE) {
             fEvents.add(createBuiltinEvent("Initialize", null, "doInitialize"));
-        } else if (fStateType == ACTION_STATE
-                    || fStateType == VIEW_STATE) {
+        } else if (fType == ACTION_STATE
+                    || fType == VIEW_STATE) {
             fEvents.add(createBuiltinEvent("Entry", null, "doEntry"));
             fEvents.add(createBuiltinEvent("Exit", null, "doExit"));
             fEvents.add(createBuiltinEvent("Activity", null, "doActivity"));
-        } else if (fStateType == FINAL_STATE) {
+        } else if (fType == FINAL_STATE) {
             fEvents.add(createBuiltinEvent("Finalize", null, "doFinalize"));
         }
     }
@@ -121,11 +135,17 @@ public class State extends AbstractModel implements IPropertySource {
 
     /**
      * ステートタイプを返す.
+     * ステートタイプは以下の定数のいずれかで返される。<br>
+     * イニシャルステート：INITIAL_STATE<br>
+     * ファイナルステート：FINAL_STATE<br>
+     * アクションステート：ACTION_STATE<br>
+     * ビューステート：VIEW_STATE<br>
+     * 不明：UNKNOWN_STATE<br>
      * 
      * @return ステートタイプ
      */
-    public int getStateType() {
-        return fStateType;
+    public int getType() {
+        return fType;
     }
 
     /**
@@ -175,7 +195,7 @@ public class State extends AbstractModel implements IPropertySource {
      * @return ビュー名
      */
     public String getView() {
-        if (fStateType != VIEW_STATE) {
+        if (fType != VIEW_STATE) {
             return null;
         }
         return fView;
@@ -188,7 +208,7 @@ public class State extends AbstractModel implements IPropertySource {
      * @param view ビュー名
      */
     public void setView(String view) {
-        if (fStateType == VIEW_STATE) {
+        if (fType == VIEW_STATE) {
             String old = fView;
             fView = view;
             firePropertyChange("view", old, fView);
@@ -433,7 +453,7 @@ public class State extends AbstractModel implements IPropertySource {
         List<IPropertyDescriptor> list = new ArrayList<IPropertyDescriptor>();
         
         list.add(new TextPropertyDescriptor("name", "ステート名"));
-        if (fStateType == VIEW_STATE) {
+        if (fType == VIEW_STATE) {
             list.add(new TextPropertyDescriptor("view", "ビュー"));
         }
         list.add(new TextPropertyDescriptor("summary", "概要"));
@@ -462,7 +482,7 @@ public class State extends AbstractModel implements IPropertySource {
             }
         }
         
-        if (fStateType == VIEW_STATE && id.equals("view")) {
+        if (fType == VIEW_STATE && id.equals("view")) {
             if (fView != null) {
                 ret = fView;
             } else {
@@ -493,7 +513,7 @@ public class State extends AbstractModel implements IPropertySource {
     public boolean isPropertySet(Object id) {
         // TODO:Eventに対するプロパティ処理
         return id.equals("name") 
-                || (fStateType == VIEW_STATE && id.equals("view"))
+                || (fType == VIEW_STATE && id.equals("view"))
                 || id.equals("summary");
     }
 
@@ -520,7 +540,7 @@ public class State extends AbstractModel implements IPropertySource {
             setName(String.valueOf(value));
         }
         
-        if (fStateType == VIEW_STATE && id.equals("view")) {
+        if (fType == VIEW_STATE && id.equals("view")) {
             setView(String.valueOf(value));
         }
         

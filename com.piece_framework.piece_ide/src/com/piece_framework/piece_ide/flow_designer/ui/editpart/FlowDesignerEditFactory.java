@@ -33,13 +33,13 @@ public class FlowDesignerEditFactory implements EditPartFactory {
         
         if (model instanceof State) {
             State state = (State) model;
-            if (state.getStateType() == State.INITIAL_STATE) {
+            if (state.getType() == State.INITIAL_STATE) {
                 editPart = new InitialStateEditPart();
-            } else if (state.getStateType() == State.FINAL_STATE) {
+            } else if (state.getType() == State.FINAL_STATE) {
                 editPart = new FinalStateEditPart();
-            } else if (state.getStateType() == State.ACTION_STATE) {
+            } else if (state.getType() == State.ACTION_STATE) {
                 editPart = new ActionStateEditPart();
-            } else if (state.getStateType() == State.VIEW_STATE) {
+            } else if (state.getType() == State.VIEW_STATE) {
                 editPart = new ViewStateEditPart();
             }
         } else if (model instanceof Event) {
