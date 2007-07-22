@@ -53,11 +53,11 @@ public abstract class NormalStateEditPart extends StateEditPart {
         figure.removeAllInternalEvent();
         
         for (Event event : state.getEventList()) {
-            if (event.isBuiltinEvent()) {
+            if (event.getType() == Event.BUILTIN_EVENT) {
                 figure.addBuiltinEvent(event.getName());
-            } else if (event.isTransitionEvent()) {
+            } else if (event.getType() == Event.TRANSITION_EVENT) {
                 figure.addTransitionEvent(event.getName());
-            } else if (event.isInternalEvent()) {
+            } else if (event.getType() == Event.INTERNAL_EVENT) {
                 figure.addInternalEvent(event.getName());
             }
         }

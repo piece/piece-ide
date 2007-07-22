@@ -97,7 +97,7 @@ public class StateEventSection extends FlowDesignerPropertySection {
 
         public void mouseUp(MouseEvent mouseEvent) {
             State state = (State) getModel();
-            Event event = new Event();
+            Event event = new Event(Event.INTERNAL_EVENT);
             
             executeCommand(new CreateEventCommand(state, state, event));
         }
@@ -226,7 +226,8 @@ public class StateEventSection extends FlowDesignerPropertySection {
                 Event event = (Event) selectionEvent.item.getData();
                 
                 if (event != null) {
-                    fDeleteInternalEvent.setEnabled(event.isInternalEvent());
+                    fDeleteInternalEvent.setEnabled(
+                            event.getType() == Event.INTERNAL_EVENT);
                 }
             }
         });
@@ -314,11 +315,11 @@ public class StateEventSection extends FlowDesignerPropertySection {
         State state = (State) getModel();
         
         for (Event event : state.getEventList()) {
-            if (event.isBuiltinEvent()) {
+            if (event.getType() == Event.BUILTIN_EVENT) {
                 builtinEventList.add(event);
-            } else if (event.isTransitionEvent()) {
+            } else if (event.getType() == Event.TRANSITION_EVENT) {
                 transitionEventList.add(event);                    
-            } else if (event.isInternalEvent()) {
+            } else if (event.getType() == Event.INTERNAL_EVENT) {
                 internalEventList.add(event);
             }
         }
@@ -345,11 +346,11 @@ public class StateEventSection extends FlowDesignerPropertySection {
             Event event = (Event) item.getData();
             
             RGB backColor = null;
-            if (event.isBuiltinEvent()) {
+            if (event.getType() == Event.BUILTIN_EVENT) {
                 backColor = EVENT_BUILTIN_COLOR;
-            } else if (event.isTransitionEvent()) {
+            } else if (event.getType() == Event.TRANSITION_EVENT) {
                 backColor = EVENT_TRANSITION_COLOR;                    
-            } else if (event.isInternalEvent()) {
+            } else if (event.getType() == Event.INTERNAL_EVENT) {
                 backColor = EVENT_INTERNAL_COLOR;
             }
             item.setBackground(new Color(Display.getCurrent(), backColor));

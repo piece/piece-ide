@@ -15,13 +15,41 @@ public class Event extends AbstractModel implements Serializable {
 
     private static final long serialVersionUID = 2259605742197882832L;
     
+    /** イベントタイプ定数：ビルトインイベント. */
+    public static final int BUILTIN_EVENT = 1;
+    /** イベントタイプ定数：内部イベント. */
+    public static final int INTERNAL_EVENT = 2;
+    /** イベントタイプ定数：遷移イベント. */
+    public static final int TRANSITION_EVENT = 3;
+    /** イベントタイプ定数：不明. */
+    public static final int UNKNOWN_EVENT = 0;
+    
     private String fName;
     private State fNextState;
-    private boolean fBuiltinEvent;
-    private boolean fInternalEvent;
-    private boolean fTransitionEvent;
+    private int fType;
     private EventHandler fEventHandler;
     private EventHandler fGuardEventHandler;
+    
+    /**
+     * コンストラクタ.
+     * イベントタイプは以下の定数のいずれかである必要があります。<br>
+     * ビルトインイベント：BUILTIN_EVENT<br>
+     * 内部イベント：INTERNAL_EVENT<br>
+     * 遷移イベント：TRANSITION_EVENT<br>
+     * これら以外のイベントタイプが指定された場合は、UNKNOWN_EVENTが
+     * セットされます。
+     * 
+     * @param type イベントタイプ
+     */
+    public Event(int type) {
+        if (type == BUILTIN_EVENT
+            || type == INTERNAL_EVENT
+            || type == TRANSITION_EVENT) {
+            fType = type;
+        } else {
+            fType = UNKNOWN_EVENT;
+        }
+    }
     
     /**
      * イベント名を返す.
@@ -60,69 +88,19 @@ public class Event extends AbstractModel implements Serializable {
         fNextState = nextState;
         firePropertyChange("event", null, (Object) this);
     }
-
-    /**
-     * ビルトインイベントかどうかを返す.
-     * 
-     * @return ビルトインイベントの場合はTrue
-     */
-    public boolean isBuiltinEvent() {
-        return fBuiltinEvent;
-    }
-
-    /**
-     * ビルトインイベントかどうかを設定する.
-     * 
-     * @param builtinEvent ビルトインイベントの場合はTrue
-     */
-    public void setBuiltinEvent(boolean builtinEvent) {
-        fBuiltinEvent = builtinEvent;
-        fInternalEvent = false;
-        fTransitionEvent = false;
-        firePropertyChange("event", null, (Object) this);
-    }
     
     /**
-     * 遷移イベントかどうかを返す.
-     * 内部イベント・ビルトインイベントでなければ、遷移イベントと判断する。
+     * イベントタイプを返す.
+     * イベントタイプは以下の定数のいずれかで返される。<br>
+     * ビルトインイベント：BUILTIN_EVENT<br>
+     * 内部イベント：INTERNAL_EVENT<br>
+     * 遷移イベント：TRANSITION_EVENT<br>
+     * 不明：UNKNOWN_EVENT<br>
      * 
-     * @return 遷移イベントの場合はTrue
+     * @return イベントタイプ
      */
-    public boolean isTransitionEvent() {
-        return fTransitionEvent;
-    }
-
-    /**
-     * 遷移イベントかどうかを設定する.
-     *  
-     * @param transitionEvent 内部イベントの場合はTrue
-     */
-    public void setTransitionEvent(boolean transitionEvent) {
-        fTransitionEvent = transitionEvent;
-        fBuiltinEvent = false;
-        fInternalEvent = false;
-        firePropertyChange("event", null, (Object) this);
-    }
-    
-    /**
-     * 内部イベントかどうかを返す.
-     * 
-     * @return 内部イベントの場合はTrue
-     */
-    public boolean isInternalEvent() {
-        return fInternalEvent;
-    }
-    
-    /**
-     * 内部イベントかどうかを設定する.
-     *  
-     * @param internalEvent 内部イベントの場合はTrue
-     */
-    public void setInternalEvent(boolean internalEvent) {
-        fInternalEvent = internalEvent;
-        fBuiltinEvent = false;
-        fTransitionEvent = false;
-        firePropertyChange("event", null, (Object) this);
+    public int getType() {
+        return fType;
     }
     
     /**

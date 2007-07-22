@@ -71,7 +71,6 @@ public class CreateConnectionCommand extends Command {
     @Override
     public void execute() {
         fEvent.setName(fState.generateEventName(fNextState.getName()));
-        fEvent.setTransitionEvent(true);
         fEvent.setNextState(fNextState);
         fEvent.setEventHandler(
                 null, 

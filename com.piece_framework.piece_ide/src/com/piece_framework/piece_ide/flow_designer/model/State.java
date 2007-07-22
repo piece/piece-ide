@@ -82,9 +82,8 @@ public class State extends AbstractModel implements IPropertySource {
                     String eventName, 
                     String className, 
                     String methodName) {
-        Event event = new Event();
+        Event event = new Event(Event.BUILTIN_EVENT);
         event.setName(eventName);
-        event.setBuiltinEvent(true);
         event.setEventHandler(className, methodName);
         
         return event;
@@ -213,7 +212,7 @@ public class State extends AbstractModel implements IPropertySource {
     public List<Event> getTransitionEventList() {
         List<Event> transitionEventList = new ArrayList<Event>();
         for (Event event : getEventList()) {
-            if (event.isTransitionEvent()) {
+            if (event.getType() == Event.TRANSITION_EVENT) {
                 transitionEventList.add(event);
             }
         }
@@ -234,7 +233,8 @@ public class State extends AbstractModel implements IPropertySource {
         fEvents.add(event);
         firePropertyChange("event", null, (Object) fEvents);
         
-        if (event.isTransitionEvent() && event.getNextState() != null) {
+        if (event.getType() == Event.TRANSITION_EVENT 
+            && event.getNextState() != null) {
             event.getNextState().firePropertyChange(
                     "target", null, null);
         }
@@ -259,7 +259,8 @@ public class State extends AbstractModel implements IPropertySource {
         fEvents.remove(event);
         firePropertyChange("event", null, (Object) fEvents);
         
-        if (event.isTransitionEvent() && event.getNextState() != null) {
+        if (event.getType() == Event.TRANSITION_EVENT
+            && event.getNextState() != null) {
             event.getNextState().firePropertyChange(
                     "target", null, null);
         }

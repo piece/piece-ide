@@ -41,9 +41,6 @@ public class CreateEventCommand extends Command {
     @Override
     public void execute() {
         fEvent.setName(fState.generateEventName(fNextState.getName()));
-        if (fState == fNextState) {
-            fEvent.setInternalEvent(true);
-        }
         fEvent.setNextState(fNextState);
         fEvent.setEventHandler(
                 null, 
