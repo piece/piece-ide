@@ -41,10 +41,7 @@ public class State extends AbstractModel implements IPropertySource {
     
     private int fX;
     private int fY;
-    
-    private List<Transition> fIncomings = new ArrayList<Transition>();
-    private List<Transition> fOutgoings = new ArrayList<Transition>();
-    
+
     /**
      * コンストラクタ.
      * ステートタイプは以下の定数のいずれかである必要があります。<br>
@@ -372,64 +369,6 @@ public class State extends AbstractModel implements IPropertySource {
         int old = fY;
         fY = y;
         firePropertyChagen("y", old, fY);
-    }
-    
-    /**
-     * 自身が遷移先となる遷移リストを返す.
-     * 
-     * @return 自身が遷移先となる遷移リスト
-     */
-    public List getIncomings() {
-        return fIncomings;
-    }
-    
-    /**
-     * 自身が遷移先となる遷移を追加する.
-     * 
-     * @param transition 自身が遷移先となる遷移 
-     */
-    public void addIncoming(Transition transition) {
-        fIncomings.add(transition);
-        firePropertyChange("incoming", null, null);
-    }
-    
-    /**
-     * 自身が遷移先となる遷移を削除する.
-     * 
-     * @param transition 自身が遷移先となる遷移 
-     */
-    public void removeIncoming(Transition transition) {
-        fIncomings.remove(transition);
-        firePropertyChange("incoming", null, null);
-    }
-    
-    /**
-     * 自身が遷移元となる遷移リストを返す.
-     * 
-     * @return 自身が遷移元となる遷移リスト
-     */
-    public List getOutgoings() {
-        return fOutgoings;
-    }
-    
-    /**
-     * 自身が遷移元となる遷移を追加する.
-     * 
-     * @param transition 自身が遷移元となる遷移 
-     */
-    public void addOutgoing(Transition transition) {
-        fOutgoings.add(transition);
-        firePropertyChange("outgoing", null, null);
-    }
-    
-    /**
-     * 自身が遷移元となる遷移を削除する.
-     * 
-     * @param transition 自身が遷移元となる遷移 
-     */
-    public void removeOutgoing(Transition transition) {
-        fOutgoings.remove(transition);
-        firePropertyChange("outgoing", null, null);
     }
 
     /**
