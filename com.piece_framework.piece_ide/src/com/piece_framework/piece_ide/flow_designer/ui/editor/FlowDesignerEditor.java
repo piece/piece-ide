@@ -21,7 +21,6 @@ import org.eclipse.gef.palette.PaletteDrawer;
 import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.PanningSelectionToolEntry;
-import org.eclipse.gef.requests.SimpleFactory;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
@@ -30,6 +29,7 @@ import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributo
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
+import com.piece_framework.piece_ide.flow_designer.model.EventFactory;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.model.StateFactory;
@@ -240,7 +240,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         drawer.add(new ConnectionCreationToolEntry(
                 "遷移", 
                 "遷移を設定",
-                new SimpleFactory(Event.class),
+                new EventFactory(Event.TRANSITION_EVENT),
                 PieceIDEPlugin.getImageDescriptor("icons/Transition.gif"),
                 PieceIDEPlugin.getImageDescriptor("icons/Transition.gif")));
         root.add(drawer);
