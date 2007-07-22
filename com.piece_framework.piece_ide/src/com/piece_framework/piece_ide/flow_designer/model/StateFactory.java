@@ -26,6 +26,8 @@ public class StateFactory implements CreationFactory {
             || State.ACTION_STATE == stateType
             || State.VIEW_STATE == stateType) {
             fStateType = stateType;
+        } else {
+            fStateType = State.UNKNOWN_STATE;
         }
     }
     
@@ -37,13 +39,6 @@ public class StateFactory implements CreationFactory {
      * @see org.eclipse.gef.requests.CreationFactory#getNewObject()
      */
     public Object getNewObject() {
-        if (State.INITIAL_STATE != fStateType 
-            && State.FINAL_STATE != fStateType
-            && State.ACTION_STATE != fStateType
-            && State.VIEW_STATE != fStateType) {
-            return null;
-        }
-        
         return new State(fStateType);
     }
 
