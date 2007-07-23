@@ -50,17 +50,32 @@ public class CreateConnectionCommand extends Command {
     
     /**
      * コマンドを実行できるか判断する.
-     * 遷移元・遷移先ステートがnullでなく、遷移元・遷移先ステートが同一
-     * でなければ、コマンドを実行できるものとする。
+     * ・遷移元・遷移先ステートがnullでなく、遷移元・遷移先ステートが同一
+     * でなければ、コマンドを実行できるものとする。<br>
+     * ・イニシャルステートからはひとつだけ遷移できるものとする。<br>
+     * ・イニシャルステートへの遷移はできない。<br>
+     * ・ファイナルステートからの遷移はできない。<br>
      * 
      * @return コマンドを実行できるか
      * @see org.eclipse.gef.commands.Command#canExecute()
      */
     @Override
     public boolean canExecute() {
-        return fState != null 
-                && fNextState != null 
-                && !fState.equals(fNextState);
+        boolean executable = true;
+        
+        if (fState == null || fNextState == null 
+            || fState.equals(fNextState)) {
+            executable = false;
+        } else if (fState.getType() == State.INITIAL_STATE
+                    && fState.getTransitionEventList().size() > 0) {
+            executable = false;
+        } else if (fNextState.getType() == State.INITIAL_STATE) {
+            executable = false;
+        } else if (fState.getType() == State.FINAL_STATE) {
+            executable = false;
+        }
+        
+        return executable;
     }
 
     /**
