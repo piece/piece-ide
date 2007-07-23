@@ -32,9 +32,6 @@ public class StateComponentEditPolicy extends ComponentEditPolicy {
     protected Command getDeleteCommand(GroupRequest request) {
         Flow parent = (Flow) getHost().getParent().getModel();
         State state = (State) getHost().getModel();
-        if (state.getType() == State.INITIAL_STATE) {
-            return null;
-        }
         return new DeleteStateCommand(parent, state);
     }    
 }

@@ -99,6 +99,23 @@ public class DeleteStateCommand extends Command {
         }
     }
 
+    
+    
+    /**
+     * コマンドを実行できるか判断する.
+     * イニシャルステートでなければ、コマンドを実行できるものとする。
+     * 
+     * @return コマンドを実行できるか
+     * @see org.eclipse.gef.commands.Command#canExecute()
+     */
+    @Override
+    public boolean canExecute() {
+        if (fState.getType() == State.INITIAL_STATE) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * ステート削除コマンドを実行する.
      * ステートの削除は以下の手順で行われる。<br>
