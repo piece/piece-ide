@@ -298,6 +298,14 @@ public class StateEventSection extends FlowDesignerPropertySection {
             setEventTableBackground();
             
             resizeEventTable(fTab.getSize());
+            
+            fCreateInternalEvent.setVisible(true);
+            fDeleteInternalEvent.setVisible(true);
+            if (state.getType() == State.INITIAL_STATE
+                || state.getType() == State.FINAL_STATE) {
+                fCreateInternalEvent.setVisible(false);
+                fDeleteInternalEvent.setVisible(false);
+            }
         }
     }
     
