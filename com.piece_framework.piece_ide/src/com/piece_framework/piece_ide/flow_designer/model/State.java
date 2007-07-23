@@ -66,14 +66,14 @@ public class State extends AbstractModel {
      */
     private void createBuiltinEventForStateType() {
         if (fType == INITIAL_STATE) {
-            fEvents.add(createBuiltinEvent("Initialize", null, "doInitialize"));
+            fEvents.add(createBuiltinEvent("Initial", null, "doInitial"));
         } else if (fType == ACTION_STATE
                     || fType == VIEW_STATE) {
             fEvents.add(createBuiltinEvent("Entry", null, "doEntry"));
             fEvents.add(createBuiltinEvent("Exit", null, "doExit"));
             fEvents.add(createBuiltinEvent("Activity", null, "doActivity"));
         } else if (fType == FINAL_STATE) {
-            fEvents.add(createBuiltinEvent("Finalize", null, "doFinalize"));
+            fEvents.add(createBuiltinEvent("Final", null, "doFinal"));
         }
     }
     
@@ -152,6 +152,8 @@ public class State extends AbstractModel {
 
     /**
      * ステート名を設定する.
+     * ステート名が付加されていないビルトインイベントがある場合は、
+     * 付加する。
      * 
      * @param name ステート名
      */
@@ -159,6 +161,18 @@ public class State extends AbstractModel {
         String old = fName;
         fName = name;
         firePropertyChange("name", old, fName);
+        
+        if (getType() == State.ACTION_STATE || getType() == State.VIEW_STATE) {
+            for (Event event : fEvents) {
+                if (event.getType() == Event.BUILTIN_EVENT) {
+                    EventHandler eventHandler = event.getEventHandler();
+                    if (eventHandler.getMethodName().indexOf(fName) == -1) {
+                        eventHandler.setMethodName(
+                                eventHandler.getMethodName() + "On" + fName);
+                    }
+                }
+            }
+        }
     }
 
     /**

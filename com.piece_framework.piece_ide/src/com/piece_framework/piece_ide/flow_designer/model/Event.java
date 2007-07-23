@@ -164,18 +164,14 @@ public class Event extends AbstractModel implements Serializable {
     /**
      * イベントハンドラのメソッド名を生成する.
      * イベントハンドラのメソッド名は、以下の規則で生成される。<br>
-     * "do" + イベント名 + "On" + ステート名 
+     * "do" + イベント名 
      * 
-     * @param stateName ステート名
      * @return イベントハンドラのメソッド名
      */
-    public String generateEventHandlerMethodName(String stateName) {
+    public String generateEventHandlerMethodName() {
         if (getName() == null) {
             return null;
         }
-        if (stateName == null) {
-            return null;
-        }
-        return "do" + getName() + "On" + stateName;
+        return "do" + getName();
     }
 }
