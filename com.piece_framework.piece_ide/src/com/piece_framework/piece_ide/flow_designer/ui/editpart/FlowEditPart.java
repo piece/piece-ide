@@ -7,7 +7,9 @@ import java.util.List;
 import org.eclipse.draw2d.FreeformLayer;
 import org.eclipse.draw2d.FreeformLayout;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.LayerConstants;
 
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 
@@ -69,5 +71,22 @@ public class FlowEditPart extends AbstractModelEditPart {
         if (event.getPropertyName().equals("state")) {
             refreshChildren();
         }
+    }
+    
+    /**
+     * 指定された子エディットパートを最後に移動する.
+     * さらに親フィギュアーも合わせて最後に移動し、指定された EditPart が
+     * 遷移も含めた全体の中で最後になるようにする。<br>
+     * このようにすることで、最前面に描画されるようになる。
+     * 
+     * @param editPart 最後に移動するエディットパート
+     */
+    public void reorderEditPartToLast(EditPart editPart) {
+        reorderChild(editPart, children.size() - 1);
+        
+        IFigure printableLayer = 
+            (IFigure) getLayer(LayerConstants.PRINTABLE_LAYERS);
+        printableLayer.remove(getFigure().getParent());
+        printableLayer.add(getFigure().getParent());
     }
 }

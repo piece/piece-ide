@@ -84,6 +84,7 @@ public abstract class NormalStateEditPart extends StateEditPart {
 
     /**
      * リクエストを処理する.
+     * ダブルクリック時にビューステート・アクションステートの
      * 
      * @param request リクエスト情報
      * @see org.eclipse.gef.editparts.AbstractEditPart
@@ -92,6 +93,10 @@ public abstract class NormalStateEditPart extends StateEditPart {
     @Override
     public void performRequest(Request request) {
         if (request.getType().equals(RequestConstants.REQ_OPEN)) {
+            if (getParent() instanceof FlowEditPart) {
+                ((FlowEditPart) getParent()).reorderEditPartToLast(this);
+            }
+            
             NormalStateFigure figure = (NormalStateFigure) getFigure();
             figure.setVisibleEventList(!figure.isVisibleEventList());
             
