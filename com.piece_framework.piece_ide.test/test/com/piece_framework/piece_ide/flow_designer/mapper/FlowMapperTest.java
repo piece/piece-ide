@@ -1,3 +1,4 @@
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.mapper;
 
 import junit.framework.TestCase;
@@ -8,6 +9,15 @@ import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piede_framework.piece_ide.flow_designer.mapper.FlowMapper;
 
+/**
+ * イベントテストクラス.
+ * テスト対象：com.piece_framework.piece_ide.flow_designer.model.event
+ * 
+ * @author MATSUFUJI Hideharu
+ * @version 0.1.0
+ * @since 0.1.0
+ *
+ */
 public class FlowMapperTest extends TestCase {
 
     /**
