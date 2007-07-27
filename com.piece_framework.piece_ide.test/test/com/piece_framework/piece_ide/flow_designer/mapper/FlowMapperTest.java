@@ -42,6 +42,10 @@ public class FlowMapperTest extends TestCase {
         viewToFinal.setNextState(finalState);
         viewState.addEvent(viewToFinal);
         
+        flow.addState(initialState);
+        flow.addState(viewState);
+        flow.addState(finalState);
+        
         String yaml = FlowMapper.getYAML(flow);
         
         EventHandler activityEventHandler = null;
@@ -49,11 +53,11 @@ public class FlowMapperTest extends TestCase {
         EventHandler exitEventHandler = null;
         for (Event event : viewState.getEventList()) {
             if (event.getType() == Event.BUILTIN_EVENT) {
-                if (event.getName().indexOf("Activity") != -1) {
+                if (event.getName().equals("Activity")) {
                     activityEventHandler = event.getEventHandler();
-                } else if (event.getName().indexOf("Entry") != -1) {
+                } else if (event.getName().equals("Entry")) {
                     entryEventHandler = event.getEventHandler();
-                } else if (event.getName().indexOf("Exit") != -1) {
+                } else if (event.getName().equals("Exit")) {
                     exitEventHandler = event.getEventHandler();
                 }
             }
@@ -70,16 +74,22 @@ public class FlowMapperTest extends TestCase {
             "lastState:\n"
           + "  name: " + viewState.getName() + "\n"
           + "  view: " + viewState.getView() + "\n"
-          + "  activity:\n"
-          + "    method: " + flow.getActionClassName() + ":"
-          +                  activityEventHandler.getMethodName() + "\n"
           + "  entry:\n"
           + "    method: " + flow.getActionClassName() + ":"
                            + entryEventHandler.getMethodName() + "\n"
+          + "  activity:\n"
+          + "    method: " + flow.getActionClassName() + ":"
+                           + activityEventHandler.getMethodName() + "\n"
           +  "  exit:\n"
           +  "    method: " + flow.getActionClassName() + ":"
                             + exitEventHandler.getMethodName() + "\n");
         
         assertEquals(expectedYAMLBuffer.toString(), yaml);
     }
+    
+    // Initial -> View -> Action -> View -> Final
+    // ファイナルステートへの遷移がふたつある
+    // ガード条件がある
+    // イニシャルステートからの遷移がない
+    // ファイナルステートがない
 }
