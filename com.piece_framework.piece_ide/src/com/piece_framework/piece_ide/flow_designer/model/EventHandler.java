@@ -1,3 +1,4 @@
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.model;
 
 import java.io.Serializable;
