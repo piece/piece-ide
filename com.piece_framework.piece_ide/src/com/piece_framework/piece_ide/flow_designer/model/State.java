@@ -70,8 +70,8 @@ public class State extends AbstractModel {
         } else if (fType == ACTION_STATE
                     || fType == VIEW_STATE) {
             fEvents.add(createBuiltinEvent("Entry", null, "doEntry"));
-            fEvents.add(createBuiltinEvent("Exit", null, "doExit"));
             fEvents.add(createBuiltinEvent("Activity", null, "doActivity"));
+            fEvents.add(createBuiltinEvent("Exit", null, "doExit"));
         } else if (fType == FINAL_STATE) {
             fEvents.add(createBuiltinEvent("Final", null, "doFinal"));
         }
