@@ -328,6 +328,43 @@ public class StateTest extends TestCase {
     }
     
     /**
+     * getEventByNameメソッドテスト.
+     * イベント名からイベントを取得できることをテストする。
+     * 
+     */
+    public void testGetEventByName_ReturnEvent() {
+        State state = new State(State.VIEW_STATE);
+        
+        Event event = state.getEventByName("Activity");
+        assertNotNull(event);
+        assertEquals("Activity", event.getName());
+    }
+    
+    /**
+     * getEventByNameメソッドテスト.
+     * 存在しないイベント名を指定するとnullが返されることをテストする。
+     * 
+     */
+    public void testGetEventByName_ReturnNull() {
+        State state = new State(State.VIEW_STATE);
+        
+        Event event = state.getEventByName("foo");
+        assertNull(event);
+    }
+    
+    /**
+     * getEventByNameメソッドテスト.
+     * イベント名にnullを指定した場合、nullが返されることをテストする。
+     * 
+     */
+    public void testGetEventByName_ReturnNullParameterNull() {
+        State state = new State(State.VIEW_STATE);
+        
+        Event event = state.getEventByName(null);
+        assertNull(event);
+    }
+    
+    /**
      * getTransitionEventListメソッドテスト.
      * 遷移イベントを返すことをテストする。
      * 
