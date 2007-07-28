@@ -232,6 +232,25 @@ public class State extends AbstractModel {
     }
     
     /**
+     * 指定されたイベント名に合致するイベントを返す.
+     * 該当するイベントがない場合はnull を返す。
+     * 
+     * @param eventName イベント名
+     * @return イベント
+     */
+    public Event getEventByName(String eventName) {
+        if (eventName == null) {
+            return null;
+        }
+        for (Event event : getEventList()) {
+            if (eventName.equals(event.getName())) {
+                return event;
+            }
+        }
+        return null;
+    }
+    
+    /**
      * 遷移イベント一覧を返す.
      * 
      * @return 遷移イベント一覧
