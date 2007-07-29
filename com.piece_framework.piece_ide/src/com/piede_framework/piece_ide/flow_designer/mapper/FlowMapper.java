@@ -146,14 +146,7 @@ public class FlowMapper {
             }
             
             Map<String, Object> eventMap = new LinkedHashMap<String, Object>();
-            String methodName = "";
-            if (eventHandler.getClassName() == null) {
-                methodName = fFlow.getActionClassName() + ":"
-                           + eventHandler.getMethodName();
-            } else {
-                methodName = eventHandler.toString();
-            }
-            eventMap.put("method", methodName);
+            eventMap.put("method", getMethodName(eventHandler));
             
             if (event.getName().equals("Activity")) {
                 map.put("activity", eventMap);
@@ -164,7 +157,7 @@ public class FlowMapper {
             }
         }
     }
-
+    
     /**
      * ステートが保持する遷移イベント・内部イベントをMapオブジェクトに追加する.
      * 
@@ -186,40 +179,63 @@ public class FlowMapper {
             Map<String, Object> eventMap = new LinkedHashMap<String, Object>();
             eventMap.put("event", event.getName());
             eventMap.put("nextState", event.getNextState().getName());
-            EventHandler eventHandler = event.getEventHandler();
-            Map<String, Object> eventHandlerMap = 
-                    new LinkedHashMap<String, Object>();
-            if (eventHandler != null) {
-                String methodName = "";
-                if (eventHandler.getClassName() == null) {
-                    methodName = fFlow.getActionClassName() + ":"
-                               + eventHandler.getMethodName();
-                } else {
-                    methodName = eventHandler.toString();
-                }
-                eventHandlerMap.put("method", methodName);
-                eventMap.put("action", eventHandlerMap);
-            }
-            EventHandler guardEventHandler = event.getGuardEventHandler();
-            Map<String, Object> guardEventHandlerMap = 
-                    new LinkedHashMap<String, Object>();
-            if (guardEventHandler != null) {
-                String methodName = "";
-                if (guardEventHandler.getClassName() == null) {
-                    methodName = fFlow.getActionClassName() + ":"
-                               + guardEventHandler.getMethodName();
-                } else {
-                    methodName = guardEventHandler.toString();
-                }
-                guardEventHandlerMap.put("method", methodName);
-                eventMap.put("guard", guardEventHandlerMap);
-            }
+            
+            addEventHandlerToMap(
+                    event.getEventHandler(), "action", eventMap);
+            addEventHandlerToMap(
+                    event.getGuardEventHandler(), "guard", eventMap);
             
             eventList.add(eventMap);
         }
         if (eventList.size() > 0) {
             map.put("transition", eventList);
         }
+    }
+    
+    /**
+     * イベントハンドラをMapオブジェクトに追加する.
+     * 
+     * @param eventHandler イベントハンドラ
+     * @param key キー
+     * @param map Mapオブジェクト
+     */
+    private void addEventHandlerToMap(
+                        EventHandler eventHandler, 
+                        String key, 
+                        Map<String, Object> map) {
+        if (eventHandler == null) {
+            return;
+        }
+        
+        Map<String, Object> eventHandlerMap = 
+                    new LinkedHashMap<String, Object>();
+        eventHandlerMap.put("method", getMethodName(eventHandler));
+        map.put(key, eventHandlerMap);
+    }
+    
+    /**
+     * イベントハンドラからメソッド名を取得する.
+     * イベントハンドラのメソッド名は以下の規則で決定する。<br>
+     * ・イベントハンドラにクラス名が指定されていない場合<br>
+     * 　　[フローに指定されているアクションクラス]＋":"＋<br>
+     * 　　　　[イベントハンドラのメソッド名]<br>
+     * ・イベントハンドラにクラス名が指定されている場合<br>
+     * 　　[イベントハンドラのクラス名]＋":"＋<br>
+     * 　　　　[イベントハンドラのメソッド名]<br>
+     * 　(この場合はEventHandlerクラスのtoStringメソッドで取得できる。)
+     * 
+     * @param eventHandler イベントハンドラ
+     * @return メソッド名
+     */
+    private String getMethodName(EventHandler eventHandler) {
+        String methodName = "";
+        if (eventHandler.getClassName() == null) {
+            methodName = fFlow.getActionClassName() + ":"
+                       + eventHandler.getMethodName();
+        } else {
+            methodName = eventHandler.toString();
+        }
+        return methodName;
     }
     
     /**
