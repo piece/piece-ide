@@ -22,8 +22,6 @@ public class FlowMapperTest extends TestCase {
 
     private Flow fFlow;
     
-    
-    
     /**
      * テストメソッド実行前処理.
      * 
@@ -33,8 +31,6 @@ public class FlowMapperTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         fFlow = new Flow("FlowName", "ActionClass");
-        // TODO 自動生成されたメソッド・スタブ
-        super.setUp();
     }
 
     /**
@@ -64,7 +60,8 @@ public class FlowMapperTest extends TestCase {
         fFlow.addState(viewState);
         fFlow.addState(finalState);
         
-        String yaml = FlowMapper.getYAML(fFlow);
+        FlowMapper flowMapper = new FlowMapper();
+        String yaml = flowMapper.getYAML(fFlow);
         
         StringBuffer expectedYAMLBuffer = new StringBuffer();
         
@@ -113,6 +110,7 @@ public class FlowMapperTest extends TestCase {
         Event viewToAction = new Event(Event.TRANSITION_EVENT);
         viewToAction.setName("Process1FromDisplayForm1");
         viewToAction.setNextState(actionState);
+        viewToAction.setEventHandler(null, "doProcess1FromDisplayForm1");
         viewState1.addEvent(viewToAction);
         
         Event actionToView1 = new Event(Event.TRANSITION_EVENT);
@@ -136,7 +134,8 @@ public class FlowMapperTest extends TestCase {
         fFlow.addState(viewState2);
         fFlow.addState(finalState);
         
-        String yaml = FlowMapper.getYAML(fFlow);
+        FlowMapper flowMapper = new FlowMapper();
+        String yaml = flowMapper.getYAML(fFlow);
         
         StringBuffer expectedYAMLBuffer = new StringBuffer();
         
@@ -153,26 +152,28 @@ public class FlowMapperTest extends TestCase {
         expectedYAMLBuffer.append("\n");
         
         expectedYAMLBuffer.append("viewState:\n");
-        expectedYAMLBuffer.append("\n");
         String view1YAML = 
             "  - "
           + getYAMLofStateInformation(viewState1, 0)
           + getYAMLofBuiltinEvent(viewState1, 0)
           + getYAMLofTransitionEvent(viewState1, 0);
         view1YAML = view1YAML.replace("\n", "\n    ");
-        view1YAML = view1YAML.substring(0, view1YAML.length() - 4);
+        if (view1YAML.endsWith("    ")) {
+            view1YAML = view1YAML.substring(0, view1YAML.length() - 4);
+        }
         expectedYAMLBuffer.append(view1YAML);
         
         expectedYAMLBuffer.append("\n");
         expectedYAMLBuffer.append("actionState:\n");
-        expectedYAMLBuffer.append("\n");
         String actionYAML = 
             "  - "
           + getYAMLofStateInformation(actionState, 0)
           + getYAMLofBuiltinEvent(actionState, 0)
           + getYAMLofTransitionEvent(actionState, 0);
         actionYAML = actionYAML.replace("\n", "\n    ");
-        actionYAML = actionYAML.substring(0, actionYAML.length() - 4);
+        if (actionYAML.endsWith("    ")) {
+            actionYAML = actionYAML.substring(0, actionYAML.length() - 4);
+        }
         expectedYAMLBuffer.append(actionYAML);
         
         assertEquals(expectedYAMLBuffer.toString(), yaml);
@@ -270,7 +271,7 @@ public class FlowMapperTest extends TestCase {
             if (event.getType() == Event.TRANSITION_EVENT
                 || event.getType() == Event.INTERNAL_EVENT) {
                 if (yamlBuffer.toString().length() == 0) {
-                    yamlBuffer.append(sp + "transitioin:\n");
+                    yamlBuffer.append(sp + "transition:\n");
                 }
                 yamlBuffer.append("  - event: "
                                 + event.getName() + "\n");
@@ -281,14 +282,16 @@ public class FlowMapperTest extends TestCase {
                             "    action:\n"
                           + "      method: "
                               + fFlow.getActionClassName() + ":"
-                              + event.getEventHandler().getMethodName());
+                              + event.getEventHandler().getMethodName()
+                              + "\n");
                 }
                 if (event.getGuardEventHandler() != null) {
                     yamlBuffer.append(
                             "    guard:\n"
                           + "      method: "
                               + fFlow.getActionClassName() + ":"
-                              + event.getGuardEventHandler().getMethodName());
+                              + event.getGuardEventHandler().getMethodName()
+                              + "\n");
                 }
             }
         }
