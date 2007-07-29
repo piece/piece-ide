@@ -205,7 +205,7 @@ public class FlowMapper {
                     new LinkedHashMap<String, Object>();
             if (guardEventHandler != null) {
                 String methodName = "";
-                if (eventHandler.getClassName() == null) {
+                if (guardEventHandler.getClassName() == null) {
                     methodName = fFlow.getActionClassName() + ":"
                                + guardEventHandler.getMethodName();
                 } else {
