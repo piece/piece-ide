@@ -41,12 +41,13 @@ public class FlowMapperTest extends TestCase {
      */
     public void testGetYAML_InitialViewFinal_Flow_IsOutputWithYAML() {
         State initialState = new State(State.INITIAL_STATE);
-        State viewState = new State(State.VIEW_STATE);
         
+        State viewState = new State(State.VIEW_STATE);
         viewState.setName("DisplayForm1");
         viewState.setView("Form1");
         
         State finalState = new State(State.FINAL_STATE);
+        finalState.setName("FinalState");
         
         Event initialToView = new Event(Event.TRANSITION_EVENT);
         initialToView.setNextState(viewState);
@@ -101,6 +102,7 @@ public class FlowMapperTest extends TestCase {
         viewState2.setView("Form2");
         
         State finalState = new State(State.FINAL_STATE);
+        finalState.setName("FinalState");
         
         Event initialToView = new Event(Event.TRANSITION_EVENT);
         initialToView.setName("DisplayForm1FromInitialState");
@@ -179,8 +181,71 @@ public class FlowMapperTest extends TestCase {
         assertEquals(expectedYAMLBuffer.toString(), yaml);
     }
     
-
-    // ファイナルステートへの遷移がふたつある
+    /**
+     * getYAML メソッドテスト.
+     * ファイナルステートへの遷移がふたつあるフローを YAML に出力できることをテストする。<br>
+     * [Initial]-->[View]-->[Final]
+     *                         /|
+     *             [View]--------
+     *
+     */
+    public void testGetYAML_TwoStateToFinalState_Flow_IsOutputWithYAML() {
+        State initialState = new State(State.INITIAL_STATE);
+        
+        State viewState1 = new State(State.VIEW_STATE);
+        viewState1.setName("DisplayForm1");
+        viewState1.setView("Form1");
+        
+        State viewState2 = new State(State.VIEW_STATE);
+        viewState2.setName("DisplayForm2");
+        viewState2.setView("Form2");
+        
+        State finalState = new State(State.FINAL_STATE);
+        finalState.setName("FinalState");
+        
+        Event initialToView1 = new Event(Event.TRANSITION_EVENT);
+        initialToView1.setNextState(viewState1);
+        initialState.addEvent(initialToView1);
+        
+        Event view1ToFinal = new Event(Event.TRANSITION_EVENT);
+        view1ToFinal.setName("FinalStateFromDisplayForm1");
+        view1ToFinal.setNextState(finalState);
+        view1ToFinal.setEventHandler(null, "doFinaltStateFromDisplayForm1");
+        viewState1.addEvent(view1ToFinal);
+        
+        Event view2ToFinal = new Event(Event.TRANSITION_EVENT);
+        view2ToFinal.setName("FinalStateFromDisplayForm2");
+        view2ToFinal.setNextState(finalState);
+        view2ToFinal.setEventHandler(null, "doFinaltStateFromDisplayForm2");
+        viewState2.addEvent(view2ToFinal);
+        
+        fFlow.addState(initialState);
+        fFlow.addState(viewState1);
+        fFlow.addState(viewState2);
+        fFlow.addState(finalState);
+        
+        FlowMapper flowMapper = new FlowMapper();
+        String yaml = flowMapper.getYAML(fFlow);
+        
+        StringBuffer expectedYAMLBuffer = new StringBuffer();
+        
+        expectedYAMLBuffer.append(
+            "firstState: " + viewState1.getName() + "\n");
+        
+        expectedYAMLBuffer.append("\n");
+        
+        String lastStateYAML = getYAMLofStateInformation(viewState1, 4)
+                            + getYAMLofBuiltinEvent(viewState1, 4)
+                            + getYAMLofTransitionEvent(viewState1, 4)
+                            + getYAMLofStateInformation(viewState2, 4)
+                            + getYAMLofBuiltinEvent(viewState2, 4)
+                            + getYAMLofTransitionEvent(viewState2, 4);
+        lastStateYAML = lastStateYAML.replace("    name:", "  - name:");
+        expectedYAMLBuffer.append("lastState:\n" + lastStateYAML);
+        
+        assertEquals(expectedYAMLBuffer.toString(), yaml);
+    }
+    
     // ガード条件がある
     // イニシャルステートからの遷移がない
     // ファイナルステートがない
@@ -273,13 +338,13 @@ public class FlowMapperTest extends TestCase {
                 if (yamlBuffer.toString().length() == 0) {
                     yamlBuffer.append(sp + "transition:\n");
                 }
-                yamlBuffer.append("  - event: "
+                yamlBuffer.append(sp + "  - event: "
                                 + event.getName() + "\n");
-                yamlBuffer.append("    nextState: "
+                yamlBuffer.append(sp + "    nextState: "
                                 + event.getNextState().getName() + "\n");
                 if (event.getEventHandler() != null) {
                     yamlBuffer.append(
-                            "    action:\n"
+                            sp + "    action:\n"
                           + "      method: "
                               + fFlow.getActionClassName() + ":"
                               + event.getEventHandler().getMethodName()
@@ -287,7 +352,7 @@ public class FlowMapperTest extends TestCase {
                 }
                 if (event.getGuardEventHandler() != null) {
                     yamlBuffer.append(
-                            "    guard:\n"
+                            sp + "    guard:\n"
                           + "      method: "
                               + fFlow.getActionClassName() + ":"
                               + event.getGuardEventHandler().getMethodName()
