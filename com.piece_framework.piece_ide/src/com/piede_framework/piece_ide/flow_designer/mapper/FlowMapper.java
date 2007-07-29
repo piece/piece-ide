@@ -36,24 +36,27 @@ public class FlowMapper {
     public String getYAML(Flow flow) {
         fFlow = flow;
         
-        Map firstStateMap = new LinkedHashMap();
-        Map finalStateMap = new LinkedHashMap();
-        Map viewStateMap = new LinkedHashMap();
-        List viewStateList = new ArrayList();
-        Map actionStateMap = new LinkedHashMap();
-        List actionStateList = new ArrayList();
+        Map<String, Object> firstStateMap = new LinkedHashMap<String, Object>();
+        Map<String, Object> finalStateMap = new LinkedHashMap<String, Object>();
+        Map<String, Object> viewStateMap = new LinkedHashMap<String, Object>();
+        List<Map> viewStateList = new ArrayList<Map>();
+        Map<String, Object> actionStateMap = 
+                new LinkedHashMap<String, Object>();
+        List<Map> actionStateList = new ArrayList<Map>();
         
         for (State state : fFlow.getStateList()) {
             if (state.getType() == State.INITIAL_STATE) {
                 for (Event event : state.getEventList()) {
                     if (event.getType() == Event.TRANSITION_EVENT) {
-                        firstStateMap.put("firstState", event.getNextState().getName());
+                        firstStateMap.put("firstState", 
+                                event.getNextState().getName());
                         break;
                     }
                 }
             } else if (state.getType() == State.FINAL_STATE) {
                 for (State sourceState : fFlow.getStateListToOwnState(state)) {
-                    Map sourceStateMap = new LinkedHashMap();
+                    Map<String, Object> sourceStateMap = 
+                            new LinkedHashMap<String, Object>();
                     sourceStateMap.put("name", sourceState.getName());
                     if (sourceState.getType() == State.VIEW_STATE) {
                         sourceStateMap.put("view", sourceState.getView());
@@ -75,7 +78,8 @@ public class FlowMapper {
                     continue;
                 }
                 
-                Map stateMap = new LinkedHashMap();
+                Map<String, Object> stateMap = 
+                        new LinkedHashMap<String, Object>();
                 stateMap.put("name", state.getName());
                 if (state.getType() == State.VIEW_STATE) {
                     stateMap.put("view", state.getView());
@@ -116,7 +120,13 @@ public class FlowMapper {
         return formatYAMLString(yamlBuffer.toString());
     }
 
-    private void addBuiltinEventToMap(State state, Map map) {
+    /**
+     * ステートが保持するビルトインイベントをMapオブジェクトに追加する.
+     * 
+     * @param state ステート
+     * @param map Mapオブジェクト
+     */
+    private void addBuiltinEventToMap(State state, Map<String, Object> map) {
         for (Event event : state.getEventList()) {
             if (event.getType() != Event.BUILTIN_EVENT) {
                 continue;
@@ -126,7 +136,7 @@ public class FlowMapper {
                 continue;
             }
             
-            Map eventMap = new LinkedHashMap();
+            Map<String, Object> eventMap = new LinkedHashMap<String, Object>();
             String methodName = "";
             if (eventHandler.getClassName() == null) {
                 methodName = fFlow.getActionClassName() + ":"
@@ -146,19 +156,28 @@ public class FlowMapper {
         }
     }
 
-    private void addTransitionAndInternalEventToMap(State state, Map map) {
-        List eventList = new ArrayList();
+    /**
+     * ステートが保持する遷移イベント・内部イベントをMapオブジェクトに追加する.
+     * 
+     * @param state ステート
+     * @param map Mapオブジェクト
+     */
+    private void addTransitionAndInternalEventToMap(
+                        State state, 
+                        Map<String, Object> map) {
+        List<Map> eventList = new ArrayList<Map>();
         for (Event event : state.getEventList()) {
             if (event.getType() != Event.TRANSITION_EVENT
                 && event.getType() != Event.INTERNAL_EVENT) {
                 continue;
             }
             
-            Map eventMap = new LinkedHashMap();
+            Map<String, Object> eventMap = new LinkedHashMap<String, Object>();
             eventMap.put("event", event.getName());
             eventMap.put("nextState", event.getNextState().getName());
             EventHandler eventHandler = event.getEventHandler();
-            Map eventHandlerMap = new LinkedHashMap();
+            Map<String, Object> eventHandlerMap = 
+                    new LinkedHashMap<String, Object>();
             if (eventHandler != null) {
                 String methodName = "";
                 if (eventHandler.getClassName() == null) {
