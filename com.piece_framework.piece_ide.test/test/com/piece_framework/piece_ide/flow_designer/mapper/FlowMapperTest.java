@@ -35,7 +35,7 @@ public class FlowMapperTest extends TestCase {
 
     /**
      * getYAML メソッドテスト.
-     * 以下のフローを YAML に出力できることをテストする。<br>
+     * 以下のフローをYAMLに出力できることをテストする。<br>
      * [Initial]-->[View]-->[Final]
      *
      */
@@ -81,7 +81,7 @@ public class FlowMapperTest extends TestCase {
     
     /**
      * getYAML メソッドテスト.
-     * 以下のフローを YAML に出力できることをテストする。<br>
+     * 以下のフローをYAMLに出力できることをテストする。<br>
      * [Initial]-->[View]-->[Action]-->[View]-->[Final]
      *               /|         |
      *                -----------
@@ -183,7 +183,8 @@ public class FlowMapperTest extends TestCase {
     
     /**
      * getYAML メソッドテスト.
-     * ファイナルステートへの遷移がふたつあるフローを YAML に出力できることをテストする。<br>
+     * ファイナルステートへの遷移がふたつあるフローをYAMLに
+     * 出力できることをテストする。<br>
      * [Initial]-->[View]-->[Final]
      *                         /|
      *             [View]--------
@@ -255,7 +256,7 @@ public class FlowMapperTest extends TestCase {
 
     /**
      * getYAML メソッドテスト.
-     * イニシャルステートからの遷移がないフローを YAML に
+     * イニシャルステートからの遷移がないフローをYAMLに
      * 出力できることをテストする。<br>
      * [Initial]   [View]-->[Final]
      *
@@ -293,7 +294,7 @@ public class FlowMapperTest extends TestCase {
     
     /**
      * getYAML メソッドテスト.
-     * ファイナルステートがないフローを YAML に出力できることをテストする。<br>
+     * ファイナルステートがないフローをYAMLに出力できることをテストする。<br>
      * [Initial]-->[View]-->[Action]
      *
      */
@@ -365,7 +366,7 @@ public class FlowMapperTest extends TestCase {
     /**
      * getYAML メソッドテスト.
      * ステートの登録順序がイニシャル、ビュー・アクション、ファイナルの
-     * 順番に登録されていないのフローを YAML に出力できることをテストす
+     * 順番に登録されていないのフローをYAMLに出力できることをテストす
      * る。<br>
      * [Initial]-->[View]-->[Action]-->[View]-->[Final]
      *
@@ -409,10 +410,10 @@ public class FlowMapperTest extends TestCase {
         viewState2.addEvent(view2ToFinal);
         
         fFlow.addState(finalState);
-        fFlow.addState(initialState);
         fFlow.addState(viewState2);
         fFlow.addState(actionState);
         fFlow.addState(viewState1);
+        fFlow.addState(initialState);
         
         FlowMapper flowMapper = new FlowMapper();
         String yaml = flowMapper.getYAML(fFlow);
