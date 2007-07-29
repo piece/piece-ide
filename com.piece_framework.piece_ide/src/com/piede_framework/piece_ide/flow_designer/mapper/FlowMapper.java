@@ -37,11 +37,9 @@ public class FlowMapper {
         fFlow = flow;
         
         Map<String, Object> firstStateMap = new LinkedHashMap<String, Object>();
-        Map<String, Object> finalStateMap = new LinkedHashMap<String, Object>();
-        Map<String, Object> viewStateMap = new LinkedHashMap<String, Object>();
+
+        List<Map> finalStateList = new ArrayList<Map>();
         List<Map> viewStateList = new ArrayList<Map>();
-        Map<String, Object> actionStateMap = 
-                new LinkedHashMap<String, Object>();
         List<Map> actionStateList = new ArrayList<Map>();
         
         for (State state : fFlow.getStateList()) {
@@ -62,7 +60,9 @@ public class FlowMapper {
                         sourceStateMap.put("view", sourceState.getView());
                     }
                     addBuiltinEventToMap(sourceState, sourceStateMap);
-                    finalStateMap.put("lastState", sourceStateMap);
+                    addTransitionAndInternalEventToMap(
+                            sourceState, sourceStateMap);
+                    finalStateList.add(sourceStateMap);
                 }
             } else if (state.getType() == State.VIEW_STATE
                      || state.getType() == State.ACTION_STATE) {
@@ -102,18 +102,27 @@ public class FlowMapper {
             yamlBuffer.append(Yaml.dump(firstStateMap, true));
             yamlBuffer.append("\n");
         }
-        if (finalStateMap.size() > 0) {
-            yamlBuffer.append(Yaml.dump(finalStateMap, true));
+        if (finalStateList.size() > 0) {
+            Map<String, Object> map = new LinkedHashMap<String, Object>();
+            if (finalStateList.size() > 1) {
+                map.put("lastState", finalStateList);
+            } else {
+                Map stateMap = (Map) finalStateList.get(0);
+                map.put("lastState", stateMap);
+            }
+            yamlBuffer.append(Yaml.dump(map, true));
             yamlBuffer.append("\n");
         }
         if (viewStateList.size() > 0) {
-            viewStateMap.put("viewState", viewStateList);
-            yamlBuffer.append(Yaml.dump(viewStateMap, true));
+            Map<String, Object> map = new LinkedHashMap<String, Object>();
+            map.put("viewState", viewStateList);
+            yamlBuffer.append(Yaml.dump(map, true));
             yamlBuffer.append("\n");
         }
         if (actionStateList.size() > 0) {
-            actionStateMap.put("actionState", actionStateList);
-            yamlBuffer.append(Yaml.dump(actionStateMap, true));
+            Map<String, Object> map = new LinkedHashMap<String, Object>();
+            map.put("actionState", actionStateList);
+            yamlBuffer.append(Yaml.dump(map, true));
             yamlBuffer.append("\n");
         }
         
@@ -171,7 +180,9 @@ public class FlowMapper {
                 && event.getType() != Event.INTERNAL_EVENT) {
                 continue;
             }
-            
+            if (event.getNextState().getType() == State.FINAL_STATE) {
+                continue;
+            }
             Map<String, Object> eventMap = new LinkedHashMap<String, Object>();
             eventMap.put("event", event.getName());
             eventMap.put("nextState", event.getNextState().getName());
@@ -189,10 +200,26 @@ public class FlowMapper {
                 eventHandlerMap.put("method", methodName);
                 eventMap.put("action", eventHandlerMap);
             }
+            EventHandler guardEventHandler = event.getGuardEventHandler();
+            Map<String, Object> guardEventHandlerMap = 
+                    new LinkedHashMap<String, Object>();
+            if (guardEventHandler != null) {
+                String methodName = "";
+                if (eventHandler.getClassName() == null) {
+                    methodName = fFlow.getActionClassName() + ":"
+                               + guardEventHandler.getMethodName();
+                } else {
+                    methodName = guardEventHandler.toString();
+                }
+                guardEventHandlerMap.put("method", methodName);
+                eventMap.put("guard", guardEventHandlerMap);
+            }
             
             eventList.add(eventMap);
         }
-        map.put("transition", eventList);
+        if (eventList.size() > 0) {
+            map.put("transition", eventList);
+        }
     }
     
     /**
@@ -202,7 +229,7 @@ public class FlowMapper {
      * ・"--- \n" → 空文字列<br>
      * ・"\"" → 空文字列<br>
      * ・" !java.util.LinkedHashMap" → 空文字列<br>
-     * ・"-\n    " → "- "<br>
+     * ・"-\n *" → "- "<br>
      * ・": \n" → ":\n"<br>
      * ・最後の2連続改行 → ひとつの改行のみ<br>
      * 
