@@ -252,8 +252,45 @@ public class FlowMapperTest extends TestCase {
         
         assertEquals(expectedYAMLBuffer.toString(), yaml);
     }
+
+    /**
+     * getYAML メソッドテスト.
+     * イニシャルステートからの遷移がないフローを YAML に
+     * 出力できることをテストする。<br>
+     * [Initial]   [View]-->[Final]
+     *
+     */
+    public void testGetYAML_Initial_ViewFinal_Flow_IsOutputWithYAML() {
+        State initialState = new State(State.INITIAL_STATE);
+        
+        State viewState = new State(State.VIEW_STATE);
+        viewState.setName("DisplayForm1");
+        viewState.setView("Form1");
+        
+        State finalState = new State(State.FINAL_STATE);
+        finalState.setName("FinalState");
+        
+        Event viewToFinal = new Event(Event.TRANSITION_EVENT);
+        viewToFinal.setNextState(finalState);
+        viewState.addEvent(viewToFinal);
+        
+        fFlow.addState(initialState);
+        fFlow.addState(viewState);
+        fFlow.addState(finalState);
+        
+        FlowMapper flowMapper = new FlowMapper();
+        String yaml = flowMapper.getYAML(fFlow);
+        
+        StringBuffer expectedYAMLBuffer = new StringBuffer();
+
+        expectedYAMLBuffer.append(
+              "lastState:\n"
+            + getYAMLofStateInformation(viewState, 2)
+            + getYAMLofBuiltinEvent(viewState, 2));                
+        
+        assertEquals(expectedYAMLBuffer.toString(), yaml);
+    }
     
-    // イニシャルステートからの遷移がない
     // ファイナルステートがない
     // ステートの登録順序がイニシャル、ビュー・アクション、ファイナルの順番に登録されていない
     
