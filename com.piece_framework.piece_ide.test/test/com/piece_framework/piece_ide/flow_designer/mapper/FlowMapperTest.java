@@ -219,6 +219,13 @@ public class FlowMapperTest extends TestCase {
         view2ToFinal.setEventHandler(null, "doFinaltStateFromDisplayForm2");
         viewState2.addEvent(view2ToFinal);
         
+        Event view2ToView2 = new Event(Event.INTERNAL_EVENT);
+        view2ToView2.setName("DisplayForm2FromDisplayForm2");
+        view2ToView2.setNextState(viewState2);
+        view2ToView2.setEventHandler(null, "doDisplayForm2FromDisplayForm2");
+        view2ToView2.setGuardEventHandler(null, "guardMethod");
+        viewState2.addEvent(view2ToView2);
+        
         fFlow.addState(initialState);
         fFlow.addState(viewState1);
         fFlow.addState(viewState2);
@@ -246,7 +253,6 @@ public class FlowMapperTest extends TestCase {
         assertEquals(expectedYAMLBuffer.toString(), yaml);
     }
     
-    // ガード条件がある
     // イニシャルステートからの遷移がない
     // ファイナルステートがない
     // ステートの登録順序がイニシャル、ビュー・アクション、ファイナルの順番に登録されていない
@@ -335,6 +341,10 @@ public class FlowMapperTest extends TestCase {
         for (Event event : state.getEventList()) {
             if (event.getType() == Event.TRANSITION_EVENT
                 || event.getType() == Event.INTERNAL_EVENT) {
+                if (event.getNextState().getType() == State.FINAL_STATE) {
+                    continue;
+                }
+                
                 if (yamlBuffer.toString().length() == 0) {
                     yamlBuffer.append(sp + "transition:\n");
                 }
@@ -345,7 +355,7 @@ public class FlowMapperTest extends TestCase {
                 if (event.getEventHandler() != null) {
                     yamlBuffer.append(
                             sp + "    action:\n"
-                          + "      method: "
+                          + sp + "      method: "
                               + fFlow.getActionClassName() + ":"
                               + event.getEventHandler().getMethodName()
                               + "\n");
@@ -353,7 +363,7 @@ public class FlowMapperTest extends TestCase {
                 if (event.getGuardEventHandler() != null) {
                     yamlBuffer.append(
                             sp + "    guard:\n"
-                          + "      method: "
+                          + sp + "      method: "
                               + fFlow.getActionClassName() + ":"
                               + event.getGuardEventHandler().getMethodName()
                               + "\n");
