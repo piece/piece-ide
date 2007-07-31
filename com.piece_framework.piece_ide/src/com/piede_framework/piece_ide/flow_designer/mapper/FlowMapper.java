@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.ho.yaml.Yaml;
 
+import com.piece_framework.piece_ide.flow_designer.model.AbstractModel;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
@@ -23,7 +24,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  * @since 0.1.0
  * 
  */
-public class FlowMapper {
+public class FlowMapper extends AbstractMapper {
 
     private Flow fFlow;
     
@@ -36,6 +37,14 @@ public class FlowMapper {
     public String getYAML(Flow flow) {
         fFlow = flow;
         
+//        StringBuffer yamlBuffer = new StringBuffer();
+//        yamlBuffer.append(createStateMapper(State.INITIAL_STATE).getYAML(flow));
+//        yamlBuffer.append(createStateMapper(State.FINAL_STATE).getYAML(flow));
+//        yamlBuffer.append(createStateMapper(State.VIEW_STATE).getYAML(flow));
+//        yamlBuffer.append(createStateMapper(State.ACTION_STATE).getYAML(flow));
+//        
+//        return formatYAMLString(yamlBuffer.toString());
+        
         Map<String, Object> firstStateMap = new LinkedHashMap<String, Object>();
 
         List<Map> finalStateList = new ArrayList<Map>();
@@ -44,21 +53,18 @@ public class FlowMapper {
         
         for (State state : fFlow.getStateList()) {
             if (state.getType() == State.INITIAL_STATE) {
-                for (Event event : state.getEventList()) {
-                    if (event.getType() == Event.TRANSITION_EVENT) {
-                        firstStateMap.put("firstState", 
-                                event.getNextState().getName());
-                        break;
-                    }
-                }
+//                for (Event event : state.getEventList()) {
+//                    if (event.getType() == Event.TRANSITION_EVENT) {
+//                        firstStateMap.put("firstState", 
+//                                event.getNextState().getName());
+//                        break;
+//                    }
+//                }
             } else if (state.getType() == State.FINAL_STATE) {
                 for (State sourceState : fFlow.getStateListToOwnState(state)) {
                     Map<String, Object> sourceStateMap = 
                             new LinkedHashMap<String, Object>();
-                    sourceStateMap.put("name", sourceState.getName());
-                    if (sourceState.getType() == State.VIEW_STATE) {
-                        sourceStateMap.put("view", sourceState.getView());
-                    }
+                    addStateInformationToMap(sourceState, sourceStateMap);
                     addBuiltinEventToMap(sourceState, sourceStateMap);
                     addTransitionAndInternalEventToMap(
                             sourceState, sourceStateMap);
@@ -80,10 +86,7 @@ public class FlowMapper {
                 
                 Map<String, Object> stateMap = 
                         new LinkedHashMap<String, Object>();
-                stateMap.put("name", state.getName());
-                if (state.getType() == State.VIEW_STATE) {
-                    stateMap.put("view", state.getView());
-                }
+                addStateInformationToMap(state, stateMap);
                 addBuiltinEventToMap(state, stateMap);
                 addTransitionAndInternalEventToMap(state, stateMap);
                 
@@ -98,9 +101,10 @@ public class FlowMapper {
         }
         
         StringBuffer yamlBuffer = new StringBuffer();
+        yamlBuffer.append(createStateMapper(State.INITIAL_STATE).getYAML(flow));
         if (firstStateMap.size() > 0) {
-            yamlBuffer.append(Yaml.dump(firstStateMap, true));
-            yamlBuffer.append("\n");
+//            yamlBuffer.append(Yaml.dump(firstStateMap, true));
+//            yamlBuffer.append("\n");
         }
         if (finalStateList.size() > 0) {
             Map<String, Object> map = new LinkedHashMap<String, Object>();
@@ -128,7 +132,31 @@ public class FlowMapper {
         
         return formatYAMLString(yamlBuffer.toString());
     }
-
+    
+    private AbstractStateMapper createStateMapper(int stateType) {
+        AbstractStateMapper stateMapper = null;
+        if (stateType == State.INITIAL_STATE) {
+            stateMapper = new InitialStateMapper();
+        }
+        return stateMapper;
+    }
+    
+    /**
+     * ステート名・ビュー名(ビューステートの場合のみ)をMapオブジェクトに
+     * 追加する.
+     * 
+     * @param state ステート
+     * @param map Mapオブジェクト
+     */
+    private void addStateInformationToMap(
+                        State state, 
+                        Map<String, Object> map) {
+        map.put("name", state.getName());
+        if (state.getType() == State.VIEW_STATE) {
+            map.put("view", state.getView());
+        }
+    }
+    
     /**
      * ステートが保持するビルトインイベントをMapオブジェクトに追加する.
      * 
@@ -264,5 +292,11 @@ public class FlowMapper {
         result = result.substring(0, result.length() - 1);
         
         return result;
+    }
+
+    @Override
+    public AbstractModel getModel(String yaml) {
+        // TODO 自動生成されたメソッド・スタブ
+        return null;
     }
 }
