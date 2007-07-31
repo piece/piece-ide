@@ -13,6 +13,8 @@ public class InitialStateMapper extends AbstractStateMapper {
 
     @Override
     public String getYAML(Flow flow) {
+        fFlow = flow;
+        
         State initialState = null;
         for (State state : flow.getStateList()) {
             if (state.getType() == State.INITIAL_STATE) {

@@ -37,14 +37,6 @@ public class FlowMapper extends AbstractMapper {
     public String getYAML(Flow flow) {
         fFlow = flow;
         
-//        StringBuffer yamlBuffer = new StringBuffer();
-//        yamlBuffer.append(createStateMapper(State.INITIAL_STATE).getYAML(flow));
-//        yamlBuffer.append(createStateMapper(State.FINAL_STATE).getYAML(flow));
-//        yamlBuffer.append(createStateMapper(State.VIEW_STATE).getYAML(flow));
-//        yamlBuffer.append(createStateMapper(State.ACTION_STATE).getYAML(flow));
-//        
-//        return formatYAMLString(yamlBuffer.toString());
-        
         Map<String, Object> firstStateMap = new LinkedHashMap<String, Object>();
 
         List<Map> finalStateList = new ArrayList<Map>();
@@ -61,15 +53,15 @@ public class FlowMapper extends AbstractMapper {
 //                    }
 //                }
             } else if (state.getType() == State.FINAL_STATE) {
-                for (State sourceState : fFlow.getStateListToOwnState(state)) {
-                    Map<String, Object> sourceStateMap = 
-                            new LinkedHashMap<String, Object>();
-                    addStateInformationToMap(sourceState, sourceStateMap);
-                    addBuiltinEventToMap(sourceState, sourceStateMap);
-                    addTransitionAndInternalEventToMap(
-                            sourceState, sourceStateMap);
-                    finalStateList.add(sourceStateMap);
-                }
+//                for (State sourceState : fFlow.getStateListToOwnState(state)) {
+//                    Map<String, Object> sourceStateMap = 
+//                            new LinkedHashMap<String, Object>();
+//                    addStateInformationToMap(sourceState, sourceStateMap);
+//                    addBuiltinEventToMap(sourceState, sourceStateMap);
+//                    addTransitionAndInternalEventToMap(
+//                            sourceState, sourceStateMap);
+//                    finalStateList.add(sourceStateMap);
+//                }
             } else if (state.getType() == State.VIEW_STATE
                      || state.getType() == State.ACTION_STATE) {
                 // ファイナルステートへの遷移がある場合はなにもしない
@@ -102,21 +94,22 @@ public class FlowMapper extends AbstractMapper {
         
         StringBuffer yamlBuffer = new StringBuffer();
         yamlBuffer.append(createStateMapper(State.INITIAL_STATE).getYAML(flow));
-        if (firstStateMap.size() > 0) {
+//        if (firstStateMap.size() > 0) {
 //            yamlBuffer.append(Yaml.dump(firstStateMap, true));
 //            yamlBuffer.append("\n");
-        }
-        if (finalStateList.size() > 0) {
-            Map<String, Object> map = new LinkedHashMap<String, Object>();
-            if (finalStateList.size() > 1) {
-                map.put("lastState", finalStateList);
-            } else {
-                Map stateMap = (Map) finalStateList.get(0);
-                map.put("lastState", stateMap);
-            }
-            yamlBuffer.append(Yaml.dump(map, true));
-            yamlBuffer.append("\n");
-        }
+//        }
+        yamlBuffer.append(createStateMapper(State.FINAL_STATE).getYAML(flow));
+//        if (finalStateList.size() > 0) {
+//            Map<String, Object> map = new LinkedHashMap<String, Object>();
+//            if (finalStateList.size() > 1) {
+//                map.put("lastState", finalStateList);
+//            } else {
+//                Map stateMap = (Map) finalStateList.get(0);
+//                map.put("lastState", stateMap);
+//            }
+//            yamlBuffer.append(Yaml.dump(map, true));
+//            yamlBuffer.append("\n");
+//        }
         if (viewStateList.size() > 0) {
             Map<String, Object> map = new LinkedHashMap<String, Object>();
             map.put("viewState", viewStateList);
@@ -137,6 +130,8 @@ public class FlowMapper extends AbstractMapper {
         AbstractStateMapper stateMapper = null;
         if (stateType == State.INITIAL_STATE) {
             stateMapper = new InitialStateMapper();
+        } else if (stateType == State.FINAL_STATE) {
+            stateMapper = new FinalStateMapper();
         }
         return stateMapper;
     }

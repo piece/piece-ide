@@ -13,7 +13,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 
 public abstract class AbstractStateMapper extends AbstractMapper {
 
-    private Flow fFlow;
+    protected Flow fFlow;
     
     @Override
     public AbstractModel getModel(String yaml) {
