@@ -95,6 +95,26 @@ public class FlowTest extends TestCase {
     }
     
     /**
+     * getStateListToOwnStateメソッドテスト.
+     * 指定したステートがnullの場合、空のリストが返される
+     * ことをテストする。
+     * 
+     */
+    public void testGetStateListToOwnState_ReturnEmptyListParameterNull() {
+        Flow flow = new Flow(null, null);
+        
+        State actionState = new State(State.ACTION_STATE);
+        flow.addState(actionState);
+        
+        State viewState = new State(State.VIEW_STATE);
+        flow.addState(viewState);
+        
+        List<State> stateList = flow.getStateListToOwnState(null);
+        
+        assertEquals(0, stateList.size());
+    }
+    
+    /**
      * getTransitionEventListToOwnStateメソッドテスト.
      * 指定したステートに遷移する遷移イベントが返されることをテストする。
      * 
