@@ -101,7 +101,8 @@ public class Flow extends AbstractModel {
         List<State> stateList = new ArrayList<State>();
         for (State state : getStateList()) {
             for (Event event : state.getEventList()) {
-                if (event.getNextState() == ownState) {
+                if (event.getNextState() == ownState
+                    && ownState != null) {
                     stateList.add(state);
                     break;
                 }
