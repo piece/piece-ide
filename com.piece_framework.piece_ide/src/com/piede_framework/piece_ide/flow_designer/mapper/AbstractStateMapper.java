@@ -27,7 +27,7 @@ public abstract class AbstractStateMapper extends AbstractMapper {
     private Flow fFlow;
     
     /**
-     * ステートモデルを取得する.
+     * ステートモデルを返す.
      * 
      * @param yaml YAML文字列
      * @return ステート
@@ -40,6 +40,16 @@ public abstract class AbstractStateMapper extends AbstractMapper {
         return null;
     }
 
+    /**
+     * YAMLを返す.
+     * ステートリストを取得し、必要なMapオブジェクトを生成し、そこから
+     * YAML文字列を抽出する。
+     * 
+     * @param flow フロー
+     * @return YAML文字列
+     * @see com.piede_framework.piece_ide.flow_designer.mapper.AbstractMapper
+     *          #getYAML(com.piece_framework.piece_ide.flow_designer.model.Flow)
+     */
     public String getYAML(Flow flow) {
         fFlow = flow;
         
@@ -48,10 +58,29 @@ public abstract class AbstractStateMapper extends AbstractMapper {
         return convertMapToYAML(map);
     }
     
+    /**
+     * 処理対象となるステートの一覧を返す.
+     * 
+     * @return 処理対象ステートリスト
+     */
     protected abstract List<State> getStateList();
+    
+    
+    /**
+     * YAML出力のためのMapオブジェクトを返す.
+     * 
+     * @param stateList 処理対象ステートリスト
+     * @return YAML文字列
+     */
     protected abstract Map<String, Object> getMapForYAML(
                             List<State> stateList);
     
+    /**
+     * MapオブジェクトをYAMLに変換する.
+     * 
+     * @param map Mapオブジェクト
+     * @return YAML文字列
+     */
     protected String convertMapToYAML(Map<String, Object> map) {
         StringBuffer yamlBuffer = new StringBuffer();
         if (map.size() > 0) {
@@ -61,6 +90,11 @@ public abstract class AbstractStateMapper extends AbstractMapper {
         return formatYAMLString(yamlBuffer.toString());
     }
     
+    /**
+     * フローを返す.
+     * 
+     * @return フロー
+     */
     protected Flow getFlow() {
         return fFlow;
     }

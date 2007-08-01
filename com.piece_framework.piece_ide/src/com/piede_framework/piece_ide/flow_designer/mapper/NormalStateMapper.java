@@ -8,10 +8,28 @@ import java.util.Map;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
+/**
+ * ノーマルステートマッパークラス.
+ * ビューステート、アクションステートのマッパークラス.
+ * 
+ * @author MATSUFUJI Hideharu
+ * @version 0.1.0
+ * @since 0.1.0
+ * 
+ */
 public class NormalStateMapper extends AbstractStateMapper {
 
     private int fStateType;
     
+    /**
+     * コンストラクタ.
+     * ステートタイプを設定する。ステートタイプに、
+     * State.VIEW_STATE, State.ACTION_STATE 以外が
+     * 指定されている場合はState.UNKNOWN_STATEを設
+     * 定する。
+     * 
+     * @param stateType ステートタイプ
+     */
     public NormalStateMapper(int stateType) {
         fStateType = State.UNKNOWN_STATE;
         if (stateType == State.VIEW_STATE
@@ -20,6 +38,16 @@ public class NormalStateMapper extends AbstractStateMapper {
         }
     }
 
+    /**
+     * ビューステートまたはアクションステートの一覧を
+     * 返す.
+     * 但し、ファイナルステートに遷移しているステート
+     * はファイナルステートに定義するので除外する。
+     * 
+     * @return ビューステートまたはアクションステートのリスト
+     * @see com.piede_framework.piece_ide.flow_designer.mapper
+     *          .AbstractStateMapper#getStateList()
+     */
     @Override
     protected List<State> getStateList() {
         List<State> stateList = new ArrayList<State>();
@@ -45,7 +73,15 @@ public class NormalStateMapper extends AbstractStateMapper {
         return stateList;
     }
 
-    
+    /**
+     * ビューステートまたはアクションステートをMapオブジェクト
+     * にセットして返す.
+     * 
+     * @param stateList ビューステートまたはアクションステートのリスト
+     * @return YAML出力のためのMapオブジェクト
+     * @see com.piede_framework.piece_ide.flow_designer.mapper
+     *          .AbstractStateMapper#getMapForYAML(java.util.List)
+     */
     @Override
     protected Map<String, Object> getMapForYAML(List<State> stateList) {
         List<Map> stateListForYAML = new ArrayList<Map>();

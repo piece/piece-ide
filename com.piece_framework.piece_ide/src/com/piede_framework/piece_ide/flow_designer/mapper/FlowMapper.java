@@ -18,7 +18,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 public class FlowMapper extends AbstractMapper {
 
     /**
-     * フローモデルを取得する.
+     * フローモデルを返す.
      * 
      * @param yaml YAML文字列
      * @return フローモデル

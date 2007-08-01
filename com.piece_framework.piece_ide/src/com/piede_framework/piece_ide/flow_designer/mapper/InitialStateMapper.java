@@ -8,8 +8,25 @@ import java.util.Map;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
+/**
+ * イニシャルステートマッパークラス.
+ * 
+ * @author MATSUFUJI Hideharu
+ * @version 0.1.0
+ * @since 0.1.0
+ * 
+ */
 public class InitialStateMapper extends AbstractStateMapper {
 
+    /**
+     * イニシャルステートを返す.
+     * イニシャルステートはフロー内にひとつしかないはずなので、
+     * ひとつ見つかった時点で処理は終了する。
+     * 
+     * @return イニシャルステートを含むリスト
+     * @see com.piede_framework.piece_ide.flow_designer.mapper
+     *          .AbstractStateMapper#getStateList()
+     */
     @Override
     protected List<State> getStateList() {
         List<State> stateList = new ArrayList<State>();
@@ -22,6 +39,15 @@ public class InitialStateMapper extends AbstractStateMapper {
         return stateList;
     }
     
+    /**
+     * イニシャルステートから遷移しているステートをMapオブジェクト
+     * にセットして返す.
+     * 
+     * @param stateList イニシャルステートを含むリスト
+     * @return YAML出力のためのMapオブジェクト
+     * @see com.piede_framework.piece_ide.flow_designer.mapper
+     *          .AbstractStateMapper#getMapForYAML(java.util.List)
+     */
     @Override
     protected Map<String, Object> getMapForYAML(List<State> stateList) {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
