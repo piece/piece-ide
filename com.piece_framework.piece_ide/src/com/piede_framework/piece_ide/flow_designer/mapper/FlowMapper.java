@@ -1,16 +1,7 @@
 // $Id$
 package com.piede_framework.piece_ide.flow_designer.mapper;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.ho.yaml.Yaml;
-
 import com.piece_framework.piece_ide.flow_designer.model.AbstractModel;
-import com.piece_framework.piece_ide.flow_designer.model.Event;
-import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
@@ -26,108 +17,28 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  */
 public class FlowMapper extends AbstractMapper {
 
-    private Flow fFlow;
-    
     /**
      * 指定されたFlowをYAMLで出力する.
      * 
      * @param flow フロー
      * @return YAML
      */
-    public String getYAML(Flow flow) {
-        fFlow = flow;
-        
-        Map<String, Object> firstStateMap = new LinkedHashMap<String, Object>();
-
-        List<Map> finalStateList = new ArrayList<Map>();
-        List<Map> viewStateList = new ArrayList<Map>();
-        List<Map> actionStateList = new ArrayList<Map>();
-        
-        for (State state : fFlow.getStateList()) {
-            if (state.getType() == State.INITIAL_STATE) {
-//                for (Event event : state.getEventList()) {
-//                    if (event.getType() == Event.TRANSITION_EVENT) {
-//                        firstStateMap.put("firstState", 
-//                                event.getNextState().getName());
-//                        break;
-//                    }
-//                }
-            } else if (state.getType() == State.FINAL_STATE) {
-//                for (State sourceState : fFlow.getStateListToOwnState(state)) {
-//                    Map<String, Object> sourceStateMap = 
-//                            new LinkedHashMap<String, Object>();
-//                    addStateInformationToMap(sourceState, sourceStateMap);
-//                    addBuiltinEventToMap(sourceState, sourceStateMap);
-//                    addTransitionAndInternalEventToMap(
-//                            sourceState, sourceStateMap);
-//                    finalStateList.add(sourceStateMap);
-//                }
-            } else if (state.getType() == State.VIEW_STATE
-                     || state.getType() == State.ACTION_STATE) {
-//                // ファイナルステートへの遷移がある場合はなにもしない
-//                boolean finalStateFlag = false;
-//                for (Event event : state.getTransitionEventList()) {
-//                    if (event.getNextState().getType() == State.FINAL_STATE) {
-//                        finalStateFlag = true;
-//                        break;
-//                    }
-//                }
-//                if (finalStateFlag) {
-//                    continue;
-//                }
-//                
-//                Map<String, Object> stateMap = 
-//                        new LinkedHashMap<String, Object>();
-//                addStateInformationToMap(state, stateMap);
-//                addBuiltinEventToMap(state, stateMap);
-//                addTransitionAndInternalEventToMap(state, stateMap);
-//                
-//                if (state.getType() == State.VIEW_STATE) {
-//                    viewStateList.add(stateMap);
-//                } else if (state.getType() == State.ACTION_STATE) {
-//                    actionStateList.add(stateMap);
-//                }
-            } else {
-                continue;
-            }
-        }
-        
+    public String getYAML(Flow flow) {        
         StringBuffer yamlBuffer = new StringBuffer();
         yamlBuffer.append(createStateMapper(State.INITIAL_STATE).getYAML(flow));
-//        if (firstStateMap.size() > 0) {
-//            yamlBuffer.append(Yaml.dump(firstStateMap, true));
-//            yamlBuffer.append("\n");
-//        }
         yamlBuffer.append(createStateMapper(State.FINAL_STATE).getYAML(flow));
-//        if (finalStateList.size() > 0) {
-//            Map<String, Object> map = new LinkedHashMap<String, Object>();
-//            if (finalStateList.size() > 1) {
-//                map.put("lastState", finalStateList);
-//            } else {
-//                Map stateMap = (Map) finalStateList.get(0);
-//                map.put("lastState", stateMap);
-//            }
-//            yamlBuffer.append(Yaml.dump(map, true));
-//            yamlBuffer.append("\n");
-//        }
         yamlBuffer.append(createStateMapper(State.VIEW_STATE).getYAML(flow));
-//        if (viewStateList.size() > 0) {
-//            Map<String, Object> map = new LinkedHashMap<String, Object>();
-//            map.put("viewState", viewStateList);
-//            yamlBuffer.append(Yaml.dump(map, true));
-//            yamlBuffer.append("\n");
-//        }
         yamlBuffer.append(createStateMapper(State.ACTION_STATE).getYAML(flow));
-//        if (actionStateList.size() > 0) {
-//            Map<String, Object> map = new LinkedHashMap<String, Object>();
-//            map.put("actionState", actionStateList);
-//            yamlBuffer.append(Yaml.dump(map, true));
-//            yamlBuffer.append("\n");
-//        }
         
         return formatYAMLString(yamlBuffer.toString());
     }
     
+    /**
+     * ステートタイプにあったマッパーを生成する.
+     * 
+     * @param stateType ステートタイプ
+     * @return マッパー
+     */
     private AbstractStateMapper createStateMapper(int stateType) {
         AbstractStateMapper stateMapper = null;
         if (stateType == State.INITIAL_STATE) {
@@ -141,132 +52,7 @@ public class FlowMapper extends AbstractMapper {
         }
         return stateMapper;
     }
-    
-    /**
-     * ステート名・ビュー名(ビューステートの場合のみ)をMapオブジェクトに
-     * 追加する.
-     * 
-     * @param state ステート
-     * @param map Mapオブジェクト
-     */
-    private void addStateInformationToMap(
-                        State state, 
-                        Map<String, Object> map) {
-        map.put("name", state.getName());
-        if (state.getType() == State.VIEW_STATE) {
-            map.put("view", state.getView());
-        }
-    }
-    
-    /**
-     * ステートが保持するビルトインイベントをMapオブジェクトに追加する.
-     * 
-     * @param state ステート
-     * @param map Mapオブジェクト
-     */
-    private void addBuiltinEventToMap(State state, Map<String, Object> map) {
-        for (Event event : state.getEventList()) {
-            if (event.getType() != Event.BUILTIN_EVENT) {
-                continue;
-            }
-            EventHandler eventHandler = event.getEventHandler();
-            if (eventHandler == null) {
-                continue;
-            }
-            
-            Map<String, Object> eventMap = new LinkedHashMap<String, Object>();
-            eventMap.put("method", getMethodName(eventHandler));
-            
-            if (event.getName().equals("Activity")) {
-                map.put("activity", eventMap);
-            } else if (event.getName().equals("Entry")) {
-                map.put("entry", eventMap);
-            } else if (event.getName().equals("Exit")) {
-                map.put("exit", eventMap);
-            }
-        }
-    }
-    
-    /**
-     * ステートが保持する遷移イベント・内部イベントをMapオブジェクトに追加する.
-     * 
-     * @param state ステート
-     * @param map Mapオブジェクト
-     */
-    private void addTransitionAndInternalEventToMap(
-                        State state, 
-                        Map<String, Object> map) {
-        List<Map> eventList = new ArrayList<Map>();
-        for (Event event : state.getEventList()) {
-            if (event.getType() != Event.TRANSITION_EVENT
-                && event.getType() != Event.INTERNAL_EVENT) {
-                continue;
-            }
-            if (event.getNextState().getType() == State.FINAL_STATE) {
-                continue;
-            }
-            Map<String, Object> eventMap = new LinkedHashMap<String, Object>();
-            eventMap.put("event", event.getName());
-            eventMap.put("nextState", event.getNextState().getName());
-            
-            addEventHandlerToMap(
-                    event.getEventHandler(), "action", eventMap);
-            addEventHandlerToMap(
-                    event.getGuardEventHandler(), "guard", eventMap);
-            
-            eventList.add(eventMap);
-        }
-        if (eventList.size() > 0) {
-            map.put("transition", eventList);
-        }
-    }
-    
-    /**
-     * イベントハンドラをMapオブジェクトに追加する.
-     * 
-     * @param eventHandler イベントハンドラ
-     * @param key キー
-     * @param map Mapオブジェクト
-     */
-    private void addEventHandlerToMap(
-                        EventHandler eventHandler, 
-                        String key, 
-                        Map<String, Object> map) {
-        if (eventHandler == null) {
-            return;
-        }
-        
-        Map<String, Object> eventHandlerMap = 
-                    new LinkedHashMap<String, Object>();
-        eventHandlerMap.put("method", getMethodName(eventHandler));
-        map.put(key, eventHandlerMap);
-    }
-    
-    /**
-     * イベントハンドラからメソッド名を取得する.
-     * イベントハンドラのメソッド名は以下の規則で決定する。<br>
-     * ・イベントハンドラにクラス名が指定されていない場合<br>
-     * 　　[フローに指定されているアクションクラス]＋":"＋<br>
-     * 　　　　[イベントハンドラのメソッド名]<br>
-     * ・イベントハンドラにクラス名が指定されている場合<br>
-     * 　　[イベントハンドラのクラス名]＋":"＋<br>
-     * 　　　　[イベントハンドラのメソッド名]<br>
-     * 　(この場合はEventHandlerクラスのtoStringメソッドで取得できる。)
-     * 
-     * @param eventHandler イベントハンドラ
-     * @return メソッド名
-     */
-    private String getMethodName(EventHandler eventHandler) {
-        String methodName = "";
-        if (eventHandler.getClassName() == null) {
-            methodName = fFlow.getActionClassName() + ":"
-                       + eventHandler.getMethodName();
-        } else {
-            methodName = eventHandler.toString();
-        }
-        return methodName;
-    }
-    
+
     /**
      * YAML文字列を整形する.
      * 以下の規則に従って整形する。<br>
@@ -295,6 +81,14 @@ public class FlowMapper extends AbstractMapper {
         return result;
     }
 
+    /**
+     * モデルを取得する.
+     * 
+     * @param yaml YAML 文字列
+     * @return モデル
+     * @see com.piede_framework.piece_ide.flow_designer.mapper.AbstractMapper
+     *          #getModel(java.lang.String)
+     */
     @Override
     public AbstractModel getModel(String yaml) {
         // TODO 自動生成されたメソッド・スタブ
