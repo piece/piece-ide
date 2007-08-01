@@ -5,50 +5,47 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ho.yaml.Yaml;
-
-import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 public class FinalStateMapper extends AbstractStateMapper {
 
     @Override
-    public String getYAML(Flow flow) {
-        fFlow = flow;
-       
-        State finalState = null;
-        for (State state : flow.getStateList()) {
+    protected List<State> getStateList() {
+        List<State> stateList = new ArrayList<State>();
+        for (State state : getFlow().getStateList()) {
             if (state.getType() == State.FINAL_STATE) {
-                finalState = state;
+                stateList.add(state);
                 break;
             }
         }
+        return stateList;
+    }
+    
+    @Override
+    protected Map<String, Object> getMapForYAML(List<State> stateList) {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        if (stateList.size() != 1) {
+            return map;
+        }
         
-        List<Map> stateList = new ArrayList<Map>();
-        for (State state : flow.getStateListToOwnState(finalState)) {
+        State finalState = stateList.get(0);
+        List<Map> stateListForYaml = new ArrayList<Map>();
+        for (State state : getFlow().getStateListToOwnState(finalState)) {
             Map<String, Object> stateMap = new LinkedHashMap<String, Object>();
             addStateInformationToMap(state, stateMap);
             addBuiltinEventToMap(state, stateMap);
             addTransitionAndInternalEventToMap(state, stateMap);
             
-            stateList.add(stateMap);
+            stateListForYaml.add(stateMap);
         }
         
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
-        if (stateList.size() > 1) {
-            map.put("lastState", stateList);
-        } else if (stateList.size() == 1) {
-            Map stateMap = (Map) stateList.get(0);
+        if (stateListForYaml.size() > 1) {
+            map.put("lastState", stateListForYaml);
+        } else if (stateListForYaml.size() == 1) {
+            Map stateMap = (Map) stateListForYaml.get(0);
             map.put("lastState", stateMap);
         }
-        
-        StringBuffer yamlBuffer = new StringBuffer();
-        if (map.size() > 0) {
-            yamlBuffer.append(Yaml.dump(map, true));
-            yamlBuffer.append("\n\n");
-        }
-        
-        return formatYAMLString(yamlBuffer.toString());
-    }
 
+        return map;
+    }
 }

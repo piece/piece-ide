@@ -5,22 +5,66 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ho.yaml.Yaml;
+
 import com.piece_framework.piece_ide.flow_designer.model.AbstractModel;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
+/**
+ * ステートマッパー抽象クラス.
+ * すべてのステートマッパーのスーパークラスとなる。
+ * 
+ * @author MATSUFUJI Hideharu
+ * @version 0.1.0
+ * @since 0.1.0
+ * 
+ */
 public abstract class AbstractStateMapper extends AbstractMapper {
 
-    protected Flow fFlow;
+    private Flow fFlow;
     
+    /**
+     * ステートモデルを取得する.
+     * 
+     * @param yaml YAML文字列
+     * @return ステート
+     * @see com.piede_framework.piece_ide.flow_designer.mapper.AbstractMapper
+     *          #getModel(java.lang.String)
+     */
     @Override
     public AbstractModel getModel(String yaml) {
         // TODO 自動生成されたメソッド・スタブ
         return null;
     }
 
+    public String getYAML(Flow flow) {
+        fFlow = flow;
+        
+        List<State> stateList = getStateList();
+        Map<String, Object> map = getMapForYAML(stateList);
+        return convertMapToYAML(map);
+    }
+    
+    protected abstract List<State> getStateList();
+    protected abstract Map<String, Object> getMapForYAML(
+                            List<State> stateList);
+    
+    protected String convertMapToYAML(Map<String, Object> map) {
+        StringBuffer yamlBuffer = new StringBuffer();
+        if (map.size() > 0) {
+            yamlBuffer.append(Yaml.dump(map, true));
+            yamlBuffer.append("\n\n");
+        }
+        return formatYAMLString(yamlBuffer.toString());
+    }
+    
+    protected Flow getFlow() {
+        return fFlow;
+    }
+    
     /**
      * ステート名・ビュー名(ビューステートの場合のみ)をMapオブジェクトに
      * 追加する.

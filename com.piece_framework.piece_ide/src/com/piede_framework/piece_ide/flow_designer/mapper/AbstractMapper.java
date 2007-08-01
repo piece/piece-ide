@@ -3,11 +3,33 @@ package com.piede_framework.piece_ide.flow_designer.mapper;
 import com.piece_framework.piece_ide.flow_designer.model.AbstractModel;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 
+/**
+ * マッパー抽象クラス.
+ * すべてのYAML-モデル間マッパーのスーパークラスとなる。
+ * 
+ * @author MATSUFUJI Hideharu
+ * @version 0.1.0
+ * @since 0.1.0
+ * 
+ */
 public abstract class AbstractMapper {
-    public abstract String getYAML(Flow flow);
     
+    /**
+     * モデルを取得する.
+     * 
+     * @param yaml YAML文字列
+     * @return モデル
+     */
     public abstract AbstractModel getModel(String yaml);
     
+    /**
+     * YAML文字列を取得する.
+     * 
+     * @param flow フロー
+     * @return YAML文字列
+     */
+    public abstract String getYAML(Flow flow);
+
     /**
      * YAML文字列を整形する.
      * 以下の規則に従って整形する。<br>

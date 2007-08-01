@@ -18,6 +18,20 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 public class FlowMapper extends AbstractMapper {
 
     /**
+     * フローモデルを取得する.
+     * 
+     * @param yaml YAML文字列
+     * @return フローモデル
+     * @see com.piede_framework.piece_ide.flow_designer.mapper.AbstractMapper
+     *          #getModel(java.lang.String)
+     */
+    @Override
+    public AbstractModel getModel(String yaml) {
+        // TODO 自動生成されたメソッド・スタブ
+        return null;
+    }
+    
+    /**
      * 指定されたFlowをYAMLで出力する.
      * 
      * @param flow フロー
@@ -51,19 +65,5 @@ public class FlowMapper extends AbstractMapper {
             stateMapper = new NormalStateMapper(State.ACTION_STATE);
         }
         return stateMapper;
-    }
-
-    /**
-     * モデルを取得する.
-     * 
-     * @param yaml YAML 文字列
-     * @return モデル
-     * @see com.piede_framework.piece_ide.flow_designer.mapper.AbstractMapper
-     *          #getModel(java.lang.String)
-     */
-    @Override
-    public AbstractModel getModel(String yaml) {
-        // TODO 自動生成されたメソッド・スタブ
-        return null;
     }
 }

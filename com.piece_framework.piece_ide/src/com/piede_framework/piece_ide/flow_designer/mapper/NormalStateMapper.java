@@ -5,10 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ho.yaml.Yaml;
-
 import com.piece_framework.piece_ide.flow_designer.model.Event;
-import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 public class NormalStateMapper extends AbstractStateMapper {
@@ -22,17 +19,15 @@ public class NormalStateMapper extends AbstractStateMapper {
             fStateType = stateType;
         }
     }
-    
+
     @Override
-    public String getYAML(Flow flow) {
-        fFlow = flow;
-        
+    protected List<State> getStateList() {
+        List<State> stateList = new ArrayList<State>();
         if (fStateType == State.UNKNOWN_STATE) {
-            return "";
+            return stateList;
         }
         
-        List<State> stateList = new ArrayList<State>();
-        for (State state : flow.getStateList()) {
+        for (State state : getFlow().getStateList()) {
             if (state.getType() == fStateType) {
                 // ファイナルステートへの遷移がある場合はなにもしない
                 boolean finalStateFlag = false;
@@ -47,7 +42,12 @@ public class NormalStateMapper extends AbstractStateMapper {
                 }
             }
         }
-        
+        return stateList;
+    }
+
+    
+    @Override
+    protected Map<String, Object> getMapForYAML(List<State> stateList) {
         List<Map> stateListForYAML = new ArrayList<Map>();
         for (State state : stateList) {
             Map<String, Object> stateMap = 
@@ -68,13 +68,6 @@ public class NormalStateMapper extends AbstractStateMapper {
             }
         }
         
-        StringBuffer yamlBuffer = new StringBuffer();
-        if (map.size() > 0) {
-            yamlBuffer.append(Yaml.dump(map, true));
-            yamlBuffer.append("\n\n");
-        }
-        
-        return formatYAMLString(yamlBuffer.toString());
+        return map;
     }
-
 }
