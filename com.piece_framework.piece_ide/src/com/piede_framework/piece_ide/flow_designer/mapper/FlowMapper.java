@@ -64,29 +64,29 @@ public class FlowMapper extends AbstractMapper {
 //                }
             } else if (state.getType() == State.VIEW_STATE
                      || state.getType() == State.ACTION_STATE) {
-                // ファイナルステートへの遷移がある場合はなにもしない
-                boolean finalStateFlag = false;
-                for (Event event : state.getTransitionEventList()) {
-                    if (event.getNextState().getType() == State.FINAL_STATE) {
-                        finalStateFlag = true;
-                        break;
-                    }
-                }
-                if (finalStateFlag) {
-                    continue;
-                }
-                
-                Map<String, Object> stateMap = 
-                        new LinkedHashMap<String, Object>();
-                addStateInformationToMap(state, stateMap);
-                addBuiltinEventToMap(state, stateMap);
-                addTransitionAndInternalEventToMap(state, stateMap);
-                
-                if (state.getType() == State.VIEW_STATE) {
-                    viewStateList.add(stateMap);
-                } else if (state.getType() == State.ACTION_STATE) {
-                    actionStateList.add(stateMap);
-                }
+//                // ファイナルステートへの遷移がある場合はなにもしない
+//                boolean finalStateFlag = false;
+//                for (Event event : state.getTransitionEventList()) {
+//                    if (event.getNextState().getType() == State.FINAL_STATE) {
+//                        finalStateFlag = true;
+//                        break;
+//                    }
+//                }
+//                if (finalStateFlag) {
+//                    continue;
+//                }
+//                
+//                Map<String, Object> stateMap = 
+//                        new LinkedHashMap<String, Object>();
+//                addStateInformationToMap(state, stateMap);
+//                addBuiltinEventToMap(state, stateMap);
+//                addTransitionAndInternalEventToMap(state, stateMap);
+//                
+//                if (state.getType() == State.VIEW_STATE) {
+//                    viewStateList.add(stateMap);
+//                } else if (state.getType() == State.ACTION_STATE) {
+//                    actionStateList.add(stateMap);
+//                }
             } else {
                 continue;
             }
@@ -110,18 +110,20 @@ public class FlowMapper extends AbstractMapper {
 //            yamlBuffer.append(Yaml.dump(map, true));
 //            yamlBuffer.append("\n");
 //        }
-        if (viewStateList.size() > 0) {
-            Map<String, Object> map = new LinkedHashMap<String, Object>();
-            map.put("viewState", viewStateList);
-            yamlBuffer.append(Yaml.dump(map, true));
-            yamlBuffer.append("\n");
-        }
-        if (actionStateList.size() > 0) {
-            Map<String, Object> map = new LinkedHashMap<String, Object>();
-            map.put("actionState", actionStateList);
-            yamlBuffer.append(Yaml.dump(map, true));
-            yamlBuffer.append("\n");
-        }
+        yamlBuffer.append(createStateMapper(State.VIEW_STATE).getYAML(flow));
+//        if (viewStateList.size() > 0) {
+//            Map<String, Object> map = new LinkedHashMap<String, Object>();
+//            map.put("viewState", viewStateList);
+//            yamlBuffer.append(Yaml.dump(map, true));
+//            yamlBuffer.append("\n");
+//        }
+        yamlBuffer.append(createStateMapper(State.ACTION_STATE).getYAML(flow));
+//        if (actionStateList.size() > 0) {
+//            Map<String, Object> map = new LinkedHashMap<String, Object>();
+//            map.put("actionState", actionStateList);
+//            yamlBuffer.append(Yaml.dump(map, true));
+//            yamlBuffer.append("\n");
+//        }
         
         return formatYAMLString(yamlBuffer.toString());
     }
@@ -132,6 +134,10 @@ public class FlowMapper extends AbstractMapper {
             stateMapper = new InitialStateMapper();
         } else if (stateType == State.FINAL_STATE) {
             stateMapper = new FinalStateMapper();
+        } else if (stateType == State.VIEW_STATE) {
+            stateMapper = new NormalStateMapper(State.VIEW_STATE);
+        } else if (stateType == State.ACTION_STATE) {
+            stateMapper = new NormalStateMapper(State.ACTION_STATE);
         }
         return stateMapper;
     }
