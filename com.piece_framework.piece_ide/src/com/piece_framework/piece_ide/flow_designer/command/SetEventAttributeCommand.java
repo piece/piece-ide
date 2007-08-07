@@ -48,13 +48,22 @@ public class SetEventAttributeCommand extends Command {
 
     /**
      * コマンドが実行できるか判断する.
-     * ステート名の変更時、重複チェックを行う。
+     * 以下のチェックを行う。<br>
+     * ・旧データ値と同じ場合は実行不可。<br>
+     * ・イベント名の変更時、重複チェックを行い、重複している場合は実行不可。<br>
      * 
      * @return コマンドが実行できるか
      * @see org.eclipse.gef.commands.Command#canExecute()
      */
     @Override
     public boolean canExecute() {
+//        if (getOldValue().equals(fAttributeValue)) {
+//            return false;
+//        }
+        if (isSameValue()) {
+            return false;
+        }
+        
         if (fAttributeName.equals("Event")) {
             if (!fState.checkUsableEventName((String) fAttributeValue)) {
                 MessageDialog.openError(
@@ -72,19 +81,8 @@ public class SetEventAttributeCommand extends Command {
      */
     @Override
     public void execute() {
-        if (fAttributeName.equals("Event")) {
-            fOldValue = fEvent.getName();
-            fEvent.setName((String) fAttributeValue);
-        } else if (fAttributeName.equals("NextState")) {
-            fOldValue = fEvent.getNextState();
-            fEvent.setNextState((State) fAttributeValue);
-        } else if (fAttributeName.equals("EventHandler")) {
-            fOldValue = fEvent.getEventHandler();
-            fEvent.setEventHandler((EventHandler) fAttributeValue);
-        } else if (fAttributeName.equals("Guard")) {
-            fOldValue = fEvent.getGuardEventHandler();
-            fEvent.setGuardEventHandler((EventHandler) fAttributeValue);
-        }
+        fOldValue = getOldValue();
+        setValue(fAttributeValue);
     }
 
     /**
@@ -94,14 +92,71 @@ public class SetEventAttributeCommand extends Command {
      */
     @Override
     public void undo() {
+        setValue(fOldValue);
+    }
+    
+    /**
+     * 属性名に該当する現在の属性値を返す.
+     * 
+     * @return 属性値
+     */
+    private Object getOldValue() {
+        Object oldValue = null;
+        
         if (fAttributeName.equals("Event")) {
-            fEvent.setName((String) fOldValue);
+            oldValue = fEvent.getName();
         } else if (fAttributeName.equals("NextState")) {
-            fEvent.setNextState((State) fOldValue);
+            oldValue = fEvent.getNextState();
         } else if (fAttributeName.equals("EventHandler")) {
-            fEvent.setEventHandler((EventHandler) fOldValue);
+            oldValue = fEvent.getEventHandler();
         } else if (fAttributeName.equals("Guard")) {
-            fEvent.setGuardEventHandler((EventHandler) fOldValue);
+            oldValue = fEvent.getGuardEventHandler();
         }
+        
+        return oldValue;
+    }
+    
+    /**
+     * 属性値を設定する.
+     * 
+     * @param value 属性値
+     */
+    private void setValue(Object value) {
+        if (fAttributeName.equals("Event")) {
+            fEvent.setName((String) value);
+        } else if (fAttributeName.equals("NextState")) {
+            fEvent.setNextState((State) value);
+        } else if (fAttributeName.equals("EventHandler")) {
+            fEvent.setEventHandler((EventHandler) value);
+        } else if (fAttributeName.equals("Guard")) {
+            fEvent.setGuardEventHandler((EventHandler) value);
+        }
+    }
+    
+    /**
+     * 現在の属性値と新しい属性値が同じかを比較する.
+     * 比較内容は以下のとおり。<br>
+     * ・イベント名：文字列を比較<br>
+     * ・遷移先ステート：ステート名を比較<br>
+     * ・イベントハンドラ：クラス、メソッド名を比較<br>
+     * ・ガードイベントハンドラ：クラス、メソッド名を比較<br>
+     * 
+     * @return 現在の属性値と新しい属性値が同じか
+     */
+    private boolean isSameValue() {
+        Object oldValue = getOldValue();
+        boolean isSame = false;
+        
+        if (fAttributeName.equals("Event")) {
+            isSame = oldValue.equals(fAttributeValue);
+        } else if (fAttributeName.equals("NextState")) {
+            isSame = ((State) oldValue).getName().equals(
+                            ((State) fAttributeValue).getName());
+        } else if (fAttributeName.equals("EventHandler")
+                    || fAttributeName.equals("Guard")) {
+            isSame = oldValue.toString().equals(fAttributeValue.toString());
+        }
+         
+        return isSame;
     }
 }
