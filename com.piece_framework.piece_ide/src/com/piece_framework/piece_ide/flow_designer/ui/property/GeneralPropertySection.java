@@ -36,6 +36,7 @@ public abstract class GeneralPropertySection extends
             }
             
             executeCommand(getAttributeCommand(attributeName, attributeValue));
+            refresh();
         }
     };
 

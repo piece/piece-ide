@@ -47,13 +47,19 @@ public class SetStateAttributeCommand extends Command {
 
     /**
      * コマンドが実行できるか判断する.
-     * ステート名の変更時、重複チェックを行う。
+     * 以下のチェックを行う。<br>
+     * ・旧データ値と同じ場合は実行不可。<br>
+     * ・ステート名の変更時、重複チェックを行い、重複している場合は実行不可。<br>
      * 
      * @return コマンドが実行できるか
      * @see org.eclipse.gef.commands.Command#canExecute()
      */
     @Override
     public boolean canExecute() {
+        if (getOldValue() != null && getOldValue().equals(fAttributeValue)) {
+            return false;
+        }
+        
         if (fAttributeName.equals("name")) {
             if (!fFlow.checkUsableStateName(fAttributeValue)) {
                 MessageDialog.openError(
@@ -71,17 +77,8 @@ public class SetStateAttributeCommand extends Command {
      */
     @Override
     public void execute() {
-        if (fAttributeName.equals("name")) {
-            fOldValue = fState.getName();
-            fState.setName(fAttributeValue);
-        } else if (fAttributeName.equals("summary")) {
-            fOldValue = fState.getSummary();
-            fState.setSummary(fAttributeValue);
-        } else if (fState.getType() == State.VIEW_STATE
-                    && fAttributeName.equals("view")) {
-            fOldValue = fState.getView();
-            fState.setView(fAttributeValue);
-        }
+        fOldValue = getOldValue();
+        setValue(fAttributeValue);
     }
 
     /**
@@ -91,13 +88,42 @@ public class SetStateAttributeCommand extends Command {
      */
     @Override
     public void undo() {
+        setValue(fOldValue);
+    }
+    
+    /**
+     * 属性名に該当する現在の属性値を返す.
+     * 
+     * @return 属性値
+     */
+    private String getOldValue() {
+        String oldValue = null;
+        
         if (fAttributeName.equals("name")) {
-            fState.setName(fOldValue);
+            oldValue = fState.getName();
         } else if (fAttributeName.equals("summary")) {
-            fState.setSummary(fOldValue);
+            oldValue = fState.getSummary();
         } else if (fState.getType() == State.VIEW_STATE
                     && fAttributeName.equals("view")) {
-            fState.setView(fOldValue);
+            oldValue = fState.getView();            
+        }
+        
+        return oldValue;
+    }
+    
+    /**
+     * 属性値を設定する.
+     * 
+     * @param value 属性値
+     */
+    private void setValue(String value) {
+        if (fAttributeName.equals("name")) {
+            fState.setName(value);
+        } else if (fAttributeName.equals("summary")) {
+            fState.setSummary(value);
+        } else if (fState.getType() == State.VIEW_STATE
+                    && fAttributeName.equals("view")) {
+            fState.setView(value);
         }
     }
 }

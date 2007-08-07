@@ -57,9 +57,6 @@ public class SetEventAttributeCommand extends Command {
      */
     @Override
     public boolean canExecute() {
-//        if (getOldValue().equals(fAttributeValue)) {
-//            return false;
-//        }
         if (isSameValue()) {
             return false;
         }
