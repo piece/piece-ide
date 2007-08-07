@@ -16,6 +16,8 @@ import org.eclipse.swt.widgets.Listener;
  */
 public abstract class TextListener implements Listener {
     
+    private boolean fChangeTextFlag = false;
+    
     /**
      * キー・ダウン、フォーカスアウトのイベントを処理する.
      * 
@@ -25,15 +27,17 @@ public abstract class TextListener implements Listener {
      */
     public void handleEvent(Event event) {
         switch (event.type) {
-        case SWT.KeyDown:
-            if (event.character == SWT.CR) {
-                changeText((Control) event.widget);
-            }
+        case SWT.FocusIn:
+            fChangeTextFlag = false;
             break;
         case SWT.FocusOut:
-            changeText((Control) event.widget);
+            if (fChangeTextFlag) {
+                changeText((Control) event.widget);
+                fChangeTextFlag = false;
+            }
             break;
         default:
+            fChangeTextFlag = true;
             break;
         }
     }
