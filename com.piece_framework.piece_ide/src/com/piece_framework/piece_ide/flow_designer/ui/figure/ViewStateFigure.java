@@ -90,8 +90,10 @@ public class ViewStateFigure extends NormalStateFigure {
      * @param view ビュー名
      */
     public void setView(String view) {
-        if (view != null) {
+        if (view != null && view.length() > 0) {
             fViewLabel.setText("[" + view + "]");
+        } else {
+            fViewLabel.setText("");
         }
     }
 
