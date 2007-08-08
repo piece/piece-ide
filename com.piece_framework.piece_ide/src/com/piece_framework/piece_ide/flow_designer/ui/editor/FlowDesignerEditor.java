@@ -1,12 +1,9 @@
 // $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.editor;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.EventObject;
 
 import org.eclipse.core.resources.IFile;
@@ -35,6 +32,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.model.StateFactory;
 import com.piece_framework.piece_ide.flow_designer.ui.editpart.FlowDesignerEditFactory;
 import com.piece_framework.piece_ide.plugin.PieceIDEPlugin;
+import com.piede_framework.piece_ide.flow_designer.mapper.FlowWriter;
 
 //import piece_ide.flow_designer.ui.editpart.FlowDesignerEditFactory;
 //import piece_ide.PieceIDEPlugin;
@@ -158,19 +156,10 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
      */
     @Override
     public void doSave(IProgressMonitor monitor) {
-        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-        
         try {
-            ObjectOutputStream objectOut = new ObjectOutputStream(byteOut);
-            objectOut.writeObject(fFlow);
-            objectOut.close();
-            
-            IFile file = ((IFileEditorInput) getEditorInput()).getFile();
-            file.setContents(
-                    new ByteArrayInputStream(byteOut.toByteArray()), 
-                    true,
-                    false,
-                    monitor);
+            FlowWriter.write(fFlow,
+                             ((IFileEditorInput) getEditorInput()).getFile(),
+                             monitor);
             getCommandStack().markSaveLocation();
             
         } catch (CoreException ce) {
