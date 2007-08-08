@@ -138,7 +138,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
             fFlow = new Flow(flowName, actionClassName);
             
             State initialState = new State(State.INITIAL_STATE);
-            
+            initialState.setName(fFlow.generateStateName(State.INITIAL_STATE));
             initialState.setX(INITAL_STATE_X);
             initialState.setY(INITAL_STATE_Y);
             
