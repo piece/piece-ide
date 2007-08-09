@@ -24,6 +24,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
+import org.osgi.service.prefs.BackingStoreException;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.EventFactory;
@@ -170,6 +171,8 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
             // TODO: オブジェクト読み込み時の例外処理
             ioe.printStackTrace();
             
+        } catch (BackingStoreException bse) {
+            bse.printStackTrace();
         }
     }
     
