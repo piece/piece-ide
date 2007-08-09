@@ -1,9 +1,7 @@
 package com.piede_framework.piece_ide.flow_designer.mapper;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
@@ -39,15 +37,23 @@ public final class FlowWriter {
      */
     public static void write(Flow flow, IFile file, IProgressMonitor monitor) 
                             throws CoreException, IOException {
-        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-        ObjectOutputStream objectOut = new ObjectOutputStream(byteOut);
-        objectOut.writeObject(flow);
-        objectOut.close();
-        
+        FlowMapper mapper = new FlowMapper();
+        String yamlString = mapper.getYAML(flow);
         file.setContents(
-                new ByteArrayInputStream(byteOut.toByteArray()), 
+                new ByteArrayInputStream(yamlString.getBytes()), 
                 true,
                 false,
                 monitor);
+        
+//        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+//        ObjectOutputStream objectOut = new ObjectOutputStream(byteOut);
+//        objectOut.writeObject(flow);
+//        objectOut.close();
+//        
+//        file.setContents(
+//                new ByteArrayInputStream(byteOut.toByteArray()), 
+//                true,
+//                false,
+//                monitor);
     }
 }
