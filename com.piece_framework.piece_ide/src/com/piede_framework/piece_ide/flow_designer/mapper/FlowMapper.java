@@ -1,6 +1,11 @@
 // $Id$
 package com.piede_framework.piece_ide.flow_designer.mapper;
 
+import java.util.Iterator;
+import java.util.Map;
+
+import org.ho.yaml.Yaml;
+
 import com.piece_framework.piece_ide.flow_designer.model.AbstractModel;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
@@ -29,9 +34,24 @@ public class FlowMapper extends AbstractMapper {
     public AbstractModel getModel(String yaml) {
         Flow flow = new Flow(null, null);
         
-        flow.addState(new State(State.INITIAL_STATE));
-        flow.addState(new State(State.VIEW_STATE));
-        flow.addState(new State(State.FINAL_STATE));
+        Object object = Yaml.load(yaml);
+        if (!(object instanceof Map)) {
+            return null;
+        }
+        Map map = (Map) object;
+        Iterator iterator = map.keySet().iterator();
+        while (iterator.hasNext()) {
+            AbstractStateMapper stateMapper = 
+                    createStateMapper((String) iterator.next());
+            if (stateMapper == null) {
+                continue;
+            }
+            
+            State state = (State) stateMapper.getModel(yaml);
+            if (state != null) {
+                flow.addState(state);
+            }
+        }
         
         return flow;
     }
@@ -68,6 +88,26 @@ public class FlowMapper extends AbstractMapper {
             stateMapper = new NormalStateMapper(State.VIEW_STATE);
         } else if (stateType == State.ACTION_STATE) {
             stateMapper = new NormalStateMapper(State.ACTION_STATE);
+        }
+        return stateMapper;
+    }
+    
+    /**
+     * ステートタイプにあったマッパーを生成する.
+     * 
+     * @param stateType ステートタイプ
+     * @return マッパー
+     */
+    private AbstractStateMapper createStateMapper(String stateType) {
+        AbstractStateMapper stateMapper = null;
+        if (stateType.equalsIgnoreCase("firstState")) {
+            stateMapper = createStateMapper(State.INITIAL_STATE);
+        } else if (stateType.equalsIgnoreCase("lastState")) {
+            stateMapper = createStateMapper(State.FINAL_STATE);
+        } else if (stateType.equalsIgnoreCase("viewState")) {
+            stateMapper = createStateMapper(State.VIEW_STATE);
+        } else if (stateType.equalsIgnoreCase("actionState")) {
+            stateMapper = createStateMapper(State.ACTION_STATE);
         }
         return stateMapper;
     }
