@@ -3,7 +3,6 @@ package com.piece_framework.piece_ide.flow_designer.ui.editor;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.EventObject;
 
 import org.eclipse.core.resources.IFile;
@@ -33,6 +32,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.model.StateFactory;
 import com.piece_framework.piece_ide.flow_designer.ui.editpart.FlowDesignerEditFactory;
 import com.piece_framework.piece_ide.plugin.PieceIDEPlugin;
+import com.piede_framework.piece_ide.flow_designer.mapper.FlowReader;
 import com.piede_framework.piece_ide.flow_designer.mapper.FlowWriter;
 
 //import piece_ide.flow_designer.ui.editpart.FlowDesignerEditFactory;
@@ -99,11 +99,14 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         try {
             IFile file = ((IFileEditorInput) getEditorInput()).getFile();
             setPartName(file.getName());
-            ObjectInputStream in = new ObjectInputStream(file.getContents());
-            fFlow = (Flow) in.readObject();
-            in.close();
+//            ObjectInputStream in = new ObjectInputStream(file.getContents());
+//            fFlow = (Flow) in.readObject();
+//            in.close();
             
-            needInit = false;
+            fFlow = FlowReader.read(file);
+            if (fFlow != null) {
+                needInit = false;
+            }
             
         } catch (CoreException ce) {
             // TODO: オブジェクト読み込み時の例外処理

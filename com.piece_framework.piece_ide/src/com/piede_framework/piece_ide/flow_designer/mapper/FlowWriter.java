@@ -69,7 +69,7 @@ public final class FlowWriter {
             String[] folders = yamlFile.getFullPath().toString().split("/");
             StringBuffer serializeFolderName = new StringBuffer();
             serializeFolderName.append(".settings/flow");
-            for (int i = 2; i < folders.length - 1; i++) {
+            for (int i = 0; i < folders.length - 1; i++) {
                 serializeFolderName.append("/" + folders[i]);
                 IFolder folder = yamlFile.getProject().getFolder(
                                     new Path(serializeFolderName.toString()));
