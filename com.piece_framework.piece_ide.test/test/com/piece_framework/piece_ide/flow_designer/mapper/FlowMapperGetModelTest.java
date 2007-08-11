@@ -2,6 +2,7 @@ package com.piece_framework.piece_ide.flow_designer.mapper;
 
 import junit.framework.TestCase;
 
+import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piede_framework.piece_ide.flow_designer.mapper.FlowMapper;
@@ -50,6 +51,7 @@ public class FlowMapperGetModelTest extends TestCase {
         Flow flow = (Flow) flowMapper.getModel(yamlString);
         
         assertNotNull(flow);
+        assertEquals(3, flow.getStateList().size());
         
         State initialState = null;
         State viewState = null;
@@ -67,22 +69,40 @@ public class FlowMapperGetModelTest extends TestCase {
             }   
         }
         
+        // ステートのアサーション
         assertNotNull(initialState);
+        
         assertNotNull(viewState);
+        assertEquals("DisplayForm1", viewState.getName());
+        assertEquals("Form1", viewState.getView());
+        
         assertNotNull(finalState);
         
-//        viewState.setName("DisplayForm1");
-//        viewState.setView("Form1");
-//        
-//        finalState.setName("FinalState");
-//        
-//        Event initialToView = new Event(Event.TRANSITION_EVENT);
-//        initialToView.setNextState(viewState);
-//        initialState.addEvent(initialToView);
-//        
-//        Event viewToFinal = new Event(Event.TRANSITION_EVENT);
-//        viewToFinal.setNextState(finalState);
-//        viewState.addEvent(viewToFinal);
+        // イベントのアサーション
+        assertEquals(2, initialState.getEventList().size());
+        Event initialToView = null;
+        for (Event event : initialState.getEventList()) {
+            if (event.getType() == Event.TRANSITION_EVENT) {
+                initialToView = event;
+            }
+        }
+        assertNotNull(initialToView);
+        assertEquals(viewState, initialToView.getNextState());
+        
+        assertEquals(4, viewState.getEventList().size());
+        Event viewToFinal = null;
+        for (Event event : viewState.getEventList()) {
+            if (event.getType() == Event.TRANSITION_EVENT) {
+                viewToFinal = event;
+            }
+        }
+        assertNotNull(viewToFinal);
+        assertEquals(finalState, viewToFinal.getNextState());
+        
+        assertEquals(1, finalState.getEventList().size());
     }
-
+    
+    // YAMLが不正な場合
+    // 不正なキーが含まれている
+    
 }
