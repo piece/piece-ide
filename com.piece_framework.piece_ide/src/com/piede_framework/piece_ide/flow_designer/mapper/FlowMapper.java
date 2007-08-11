@@ -27,8 +27,13 @@ public class FlowMapper extends AbstractMapper {
      */
     @Override
     public AbstractModel getModel(String yaml) {
-        // TODO 自動生成されたメソッド・スタブ
-        return null;
+        Flow flow = new Flow(null, null);
+        
+        flow.addState(new State(State.INITIAL_STATE));
+        flow.addState(new State(State.VIEW_STATE));
+        flow.addState(new State(State.FINAL_STATE));
+        
+        return flow;
     }
     
     /**
