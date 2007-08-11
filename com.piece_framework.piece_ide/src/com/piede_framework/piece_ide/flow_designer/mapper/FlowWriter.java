@@ -6,16 +6,13 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ProjectScope;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.preferences.IScopeContext;
+import org.eclipse.core.runtime.Path;
 import org.osgi.service.prefs.BackingStoreException;
-import org.osgi.service.prefs.Preferences;
 
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
-import com.piece_framework.piece_ide.plugin.PieceIDEPlugin;
 
 /**
  * フローライター.
@@ -38,49 +35,65 @@ public final class FlowWriter {
      * FlowオブジェクトをYAMLファイルとシリアライズファイルに書き込む.
      * 
      * @param flow Flowオブジェクト
-     * @param file YAMLファイル(.flowファイル)
+     * @param yamlFile YAMLファイル(.flowファイル)
      * @param monitor プログレスモニターe
      * @throws CoreException コア例外
      * @throws IOException I/O例外
      * @throws BackingStoreException ストア例外
      */
-    public static void write(Flow flow, IFile file, IProgressMonitor monitor) 
-                            throws CoreException, IOException, BackingStoreException {
+    public static void write(
+                            Flow flow, 
+                            IFile yamlFile, 
+                            IProgressMonitor monitor) 
+                    throws CoreException, IOException, BackingStoreException {
         FlowMapper mapper = new FlowMapper();
         String yamlString = mapper.getYAML(flow);
-        file.setContents(
+        yamlFile.setContents(
                 new ByteArrayInputStream(yamlString.getBytes()), 
                 true,
                 false,
                 monitor);
         
-        if (file.getProject() != null) {
-            IProject project = file.getProject();
-            IScopeContext projectScope = new ProjectScope(project);
-            Preferences projectNode = projectScope.getNode(
-                                        PieceIDEPlugin.PLUGIN_ID);
-            
+        if (yamlFile.getProject() != null) {
             ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
             ObjectOutputStream objectOut = new ObjectOutputStream(byteOut);
             objectOut.writeObject(flow);
             objectOut.close();
+
+            IFolder flowFolder = yamlFile.getProject().getFolder(
+                                        new Path(".settings/flow"));
+            if (!flowFolder.exists()) {
+                flowFolder.create(true, true, monitor);
+            }
             
-            projectNode.putByteArray(file.getName(), byteOut.toByteArray());
+            String[] folders = yamlFile.getFullPath().toString().split("/");
+            StringBuffer serializeFolderName = new StringBuffer();
+            serializeFolderName.append(".settings/flow");
+            for (int i = 2; i < folders.length - 1; i++) {
+                serializeFolderName.append("/" + folders[i]);
+                IFolder folder = yamlFile.getProject().getFolder(
+                                    new Path(serializeFolderName.toString()));
+                if (!folder.exists()) {
+                    folder.create(true, true, monitor);
+                }
+            }
             
-            projectNode.flush();
-            
-            System.out.println(project);
-            System.out.println(projectScope);
-            System.out.println(projectNode);
-        
+            IFile serializeFile = yamlFile.getProject().getFile(
+                    new Path(serializeFolderName.toString() + "/" 
+                              + yamlFile.getName() + "_obj"));
+           
+            if (!serializeFile.exists()) {
+                serializeFile.create(
+                    new ByteArrayInputStream(byteOut.toByteArray()),
+                    true, 
+                    monitor);
+            } else {
+                serializeFile.setContents(
+                    new ByteArrayInputStream(byteOut.toByteArray()), 
+                    true,
+                    false,
+                    monitor);
+            }
         }
-        
-        
-        
-//        file.setContents(
-//                new ByteArrayInputStream(byteOut.toByteArray()), 
-//                true,
-//                false,
-//                monitor);
     }
 }
