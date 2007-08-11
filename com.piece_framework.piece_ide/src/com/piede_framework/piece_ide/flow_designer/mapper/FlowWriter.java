@@ -6,10 +6,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.osgi.service.prefs.BackingStoreException;
 
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
@@ -46,6 +44,24 @@ public final class FlowWriter {
                             IFile yamlFile, 
                             IProgressMonitor monitor) 
                     throws CoreException, IOException, BackingStoreException {
+        writeYAML(flow, yamlFile, monitor);
+        
+        writeSerializeFile(flow, yamlFile, monitor);
+    }
+    
+    /**
+     * FlowオブジェクトをYAMLファイルに書き込む.
+     * 
+     * @param flow Flowオブジェクト
+     * @param yamlFile YAMLファイル(.flowファイル)
+     * @param monitor プログレスモニターe
+     * @throws CoreException コア例外
+     */
+    private static void writeYAML(
+                                Flow flow, 
+                                IFile yamlFile, 
+                                IProgressMonitor monitor) 
+                     throws CoreException {
         FlowMapper mapper = new FlowMapper();
         String yamlString = mapper.getYAML(flow);
         yamlFile.setContents(
@@ -53,47 +69,44 @@ public final class FlowWriter {
                 true,
                 false,
                 monitor);
+    }
+    
+    /**
+     * Flowオブジェクトをシリアライズファイルに書き込む.
+     * 
+     * @param flow Flowオブジェクト
+     * @param yamlFile YAMLファイル(.flowファイル)
+     * @param monitor プログレスモニターe
+     * @throws CoreException コア例外
+     * @throws IOException I/O例外
+     */
+    private static void writeSerializeFile(
+                                Flow flow, 
+                                IFile yamlFile, 
+                                IProgressMonitor monitor) 
+                     throws CoreException, IOException {
+        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+        ObjectOutputStream objectOut = new ObjectOutputStream(byteOut);
+        objectOut.writeObject(flow);
+        objectOut.close();
         
-        if (yamlFile.getProject() != null) {
-            ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-            ObjectOutputStream objectOut = new ObjectOutputStream(byteOut);
-            objectOut.writeObject(flow);
-            objectOut.close();
+        IFile serializeFlowFile = 
+            FlowSerializeUtility.createFlowSeirializeFile(yamlFile);
 
-            IFolder flowFolder = yamlFile.getProject().getFolder(
-                                        new Path(".settings/flow"));
-            if (!flowFolder.exists()) {
-                flowFolder.create(true, true, monitor);
-            }
-            
-            String[] folders = yamlFile.getFullPath().toString().split("/");
-            StringBuffer serializeFolderName = new StringBuffer();
-            serializeFolderName.append(".settings/flow");
-            for (int i = 0; i < folders.length - 1; i++) {
-                serializeFolderName.append("/" + folders[i]);
-                IFolder folder = yamlFile.getProject().getFolder(
-                                    new Path(serializeFolderName.toString()));
-                if (!folder.exists()) {
-                    folder.create(true, true, monitor);
-                }
-            }
-            
-            IFile serializeFile = yamlFile.getProject().getFile(
-                    new Path(serializeFolderName.toString() + "/" 
-                              + yamlFile.getName() + "_obj"));
-           
-            if (!serializeFile.exists()) {
-                serializeFile.create(
-                    new ByteArrayInputStream(byteOut.toByteArray()),
-                    true, 
-                    monitor);
-            } else {
-                serializeFile.setContents(
-                    new ByteArrayInputStream(byteOut.toByteArray()), 
-                    true,
-                    false,
-                    monitor);
-            }
+        if (serializeFlowFile == null) {
+            return;
+        }
+        if (!serializeFlowFile.exists()) {
+            serializeFlowFile.create(
+                new ByteArrayInputStream(byteOut.toByteArray()),
+                true, 
+                monitor);
+        } else {
+            serializeFlowFile.setContents(
+                new ByteArrayInputStream(byteOut.toByteArray()), 
+                true,
+                false,
+                monitor);
         }
     }
 }

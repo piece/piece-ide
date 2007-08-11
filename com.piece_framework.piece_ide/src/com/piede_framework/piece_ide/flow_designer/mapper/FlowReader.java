@@ -37,21 +37,19 @@ public final class FlowReader {
      */
     public static Flow read(IFile yamlFile) 
                     throws CoreException, IOException, ClassNotFoundException {
-        Flow flow = null;
+        Flow serializeFlow = null;
         
-        if (yamlFile.getProject() != null) {
-            IFile serializeFile = yamlFile.getProject().getFile(
-                    ".settings/flow" 
-                    + yamlFile.getFullPath().toString() + "_obj");
-            
-            if (serializeFile.exists()) {
+        IFile serializeFlowFile = 
+                FlowSerializeUtility.getFlowSeirializeFile(yamlFile); 
+        if (serializeFlowFile != null) {
+            if (serializeFlowFile.exists()) {
                 ObjectInputStream in = 
-                    new ObjectInputStream(serializeFile.getContents());
-                flow = (Flow) in.readObject();
+                    new ObjectInputStream(serializeFlowFile.getContents());
+                serializeFlow = (Flow) in.readObject();
                 in.close();
             }
         }
         
-        return flow;
+        return serializeFlow;
     }
 }

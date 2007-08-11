@@ -99,9 +99,6 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         try {
             IFile file = ((IFileEditorInput) getEditorInput()).getFile();
             setPartName(file.getName());
-//            ObjectInputStream in = new ObjectInputStream(file.getContents());
-//            fFlow = (Flow) in.readObject();
-//            in.close();
             
             fFlow = FlowReader.read(file);
             if (fFlow != null) {
