@@ -92,8 +92,8 @@ public class EventTest extends TestCase {
     
     /**
      * generateEventHandlerMethodNameメソッドテスト.
-     * イベントハンドラ名を生成するとdo+イベント名+"On"+ステート名が
-     * 返されることをテストする。
+     * イベントハンドラ名を生成するとdo+イベント名が返されること
+     * をテストする。
      */
     public void testGenerateEventHandlerMethodName_ReturnEventHandlerMethodName() {
         Event event = new Event(Event.TRANSITION_EVENT);
@@ -106,8 +106,8 @@ public class EventTest extends TestCase {
     
     /**
      * generateEventHandlerMethodNameメソッドテスト.
-     * ステート名がnullの場合、イベント名がnullの場合は生成されるイベ
-     * ントハンドラのメソッド名がnullであることをテストする。
+     * イベント名がnullの場合は生成されるイベントハンドラのメソッ
+     * ド名がnullであることをテストする。
      * 
      */
     public void testGenerateEventHandlerMethodName_ReturnNull() {
