@@ -90,12 +90,36 @@ public class FlowMapperGetModelTest extends TestCase {
         assertEquals(viewState, initialToView.getNextState());
         
         assertEquals(4, viewState.getEventList().size());
+        
+        Event activityEvent = null;
+        Event entryEvent = null;
+        Event exitEvent = null;
         Event viewToFinal = null;
         for (Event event : viewState.getEventList()) {
-            if (event.getType() == Event.TRANSITION_EVENT) {
+            if (event.getType() == Event.BUILTIN_EVENT) {
+                if (event.getName().equals("Activity")) {
+                    activityEvent = event;
+                } else if (event.getName().equals("Entry")) {
+                    entryEvent = event;
+                } else if (event.getName().equals("Exit")) {
+                    exitEvent = event;
+                }
+            } else if (event.getType() == Event.TRANSITION_EVENT) {
                 viewToFinal = event;
             }
         }
+        assertNotNull(activityEvent);
+        assertNotNull(activityEvent.getEventHandler());
+        assertEquals("ActionClass:doActivityOnDisplayForm1", 
+                     activityEvent.getEventHandler().toString());
+        assertNotNull(entryEvent);
+        assertNotNull(entryEvent.getEventHandler());
+        assertEquals("ActionClass:doEntryOnDisplayForm1", 
+                     entryEvent.getEventHandler().toString());
+        assertNotNull(exitEvent);
+        assertNotNull(exitEvent.getEventHandler());
+        assertEquals("ActionClass:doExitOnDisplayForm1", 
+                     exitEvent.getEventHandler().toString());
         assertNotNull(viewToFinal);
         assertEquals(finalState, viewToFinal.getNextState());
         
@@ -103,6 +127,6 @@ public class FlowMapperGetModelTest extends TestCase {
     }
     
     // YAMLが不正な場合
-    // 不正なキーが含まれている
+    // トップレベルで不正なキーが含まれている
     
 }
