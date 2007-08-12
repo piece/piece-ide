@@ -54,7 +54,7 @@ public class State extends AbstractModel {
         if (type == INITIAL_STATE || type == FINAL_STATE
             || type == VIEW_STATE || type == ACTION_STATE) {
             fType = type;
-            createBuiltinEventForStateType();
+            createBuiltinEventByStateType();
         } else {
             fType = UNKNOWN_STATE;
         }
@@ -64,16 +64,16 @@ public class State extends AbstractModel {
      * ステートタイプごとに必要なビルトインイベントを作成する.
      * 
      */
-    private void createBuiltinEventForStateType() {
+    private void createBuiltinEventByStateType() {
         if (fType == INITIAL_STATE) {
-            fEvents.add(createBuiltinEvent("Initial", null, "doInitial"));
+            fEvents.add(createBuiltinEvent("Initial"));
         } else if (fType == ACTION_STATE
                     || fType == VIEW_STATE) {
-            fEvents.add(createBuiltinEvent("Entry", null, "doEntry"));
-            fEvents.add(createBuiltinEvent("Activity", null, "doActivity"));
-            fEvents.add(createBuiltinEvent("Exit", null, "doExit"));
+            fEvents.add(createBuiltinEvent("Entry"));
+            fEvents.add(createBuiltinEvent("Activity"));
+            fEvents.add(createBuiltinEvent("Exit"));
         } else if (fType == FINAL_STATE) {
-            fEvents.add(createBuiltinEvent("Final", null, "doFinal"));
+            fEvents.add(createBuiltinEvent("Final"));
         }
     }
     
@@ -81,17 +81,11 @@ public class State extends AbstractModel {
      * ビルトインイベントオブジェクトを作成する.
      * 
      * @param eventName ビルトインイベント名
-     * @param className クラス名
-     * @param methodName メソッド名
      * @return ビルトインイベント
      */
-    private Event createBuiltinEvent(
-                    String eventName, 
-                    String className, 
-                    String methodName) {
+    private Event createBuiltinEvent(String eventName) {
         Event event = new Event(Event.BUILTIN_EVENT);
         event.setName(eventName);
-        event.setEventHandler(className, methodName);
         
         return event;
     }
@@ -166,7 +160,8 @@ public class State extends AbstractModel {
             for (Event event : fEvents) {
                 if (event.getType() == Event.BUILTIN_EVENT) {
                     EventHandler eventHandler = event.getEventHandler();
-                    if (eventHandler.getMethodName().indexOf(fName) == -1) {
+                    if (eventHandler != null
+                        && eventHandler.getMethodName().indexOf(fName) == -1) {
                         eventHandler.setMethodName(
                                 eventHandler.getMethodName() + "On" + fName);
                     }
