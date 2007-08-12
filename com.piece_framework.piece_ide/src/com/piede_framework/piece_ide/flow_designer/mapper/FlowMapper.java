@@ -194,7 +194,7 @@ public class FlowMapper extends AbstractMapper {
                 
                 Event event = new Event(Event.TRANSITION_EVENT);
                 event.setName(
-                    (String) getValueIgnoreCase((Map) map, "name"));
+                    (String) getValueIgnoreCase((Map) map, "event"));
                 event.setNextState(
                     flow.getStateByName(
                         (String) getValueIgnoreCase((Map) map, "nextState")));
