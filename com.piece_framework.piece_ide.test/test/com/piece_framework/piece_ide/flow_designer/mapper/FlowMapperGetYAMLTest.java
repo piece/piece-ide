@@ -507,22 +507,27 @@ public class FlowMapperGetYAMLTest extends TestCase {
         EventHandler exitEventHandler = 
             state.getEventByName("Exit").getEventHandler();
         
-        yamlBuffer.append(
-                sp + "entry:\n"
-              + sp + "  method: "
-                        + fFlow.getActionClassName() + ":"
-                        + entryEventHandler.getMethodName() + "\n");
-        yamlBuffer.append(
-                sp + "activity:\n"
-              + sp + "  method: "
-                        + fFlow.getActionClassName() + ":"
-                        + activityEventHandler.getMethodName() + "\n");
-        yamlBuffer.append(
-                sp + "exit:\n"
-              + sp + "  method: "
-                        + fFlow.getActionClassName() + ":"
-                        + exitEventHandler.getMethodName() + "\n");
-        
+        if (entryEventHandler != null) {
+            yamlBuffer.append(
+                    sp + "entry:\n"
+                  + sp + "  method: "
+                            + fFlow.getActionClassName() + ":"
+                            + entryEventHandler.getMethodName() + "\n");
+        }
+        if (activityEventHandler != null) {
+            yamlBuffer.append(
+                    sp + "activity:\n"
+                  + sp + "  method: "
+                            + fFlow.getActionClassName() + ":"
+                            + activityEventHandler.getMethodName() + "\n");
+        }
+        if (exitEventHandler != null) {
+            yamlBuffer.append(
+                    sp + "exit:\n"
+                  + sp + "  method: "
+                            + fFlow.getActionClassName() + ":"
+                            + exitEventHandler.getMethodName() + "\n");
+        }
         return yamlBuffer.toString();
     }
     
