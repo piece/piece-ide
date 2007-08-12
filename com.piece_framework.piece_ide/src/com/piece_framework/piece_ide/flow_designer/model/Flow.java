@@ -112,6 +112,22 @@ public class Flow extends AbstractModel {
     }
     
     /**
+     * 指定されたステート名に合致するステートを返す.
+     * 該当するステートがない場合はnull を返す。
+     * 
+     * @param stateName ステート名
+     * @return ステート
+     */
+    public State getStateByName(String stateName) {
+        for (State state : getStateList()) {
+            if (state.getName().equals(stateName)) {
+                return state;
+            }
+        }
+        return null;
+    }
+    
+    /**
      * 指定されたステートが遷移先となるイベントの一覧を返す.
      * 
      * @param ownState ステート
