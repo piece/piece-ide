@@ -334,4 +334,61 @@ public class FlowTest extends TestCase {
             assertEquals(0, listeners.length);
         }
     }
+    
+    /**
+     * getStateByNameメソッドテスト.
+     * 指定されたステート名のステートが返されることをテストする。
+     * 
+     */
+    public void testGetStateByNameShouldReturnTheState() {
+        Flow flow = new Flow(null, null);
+        
+        State viewState1 = new State(State.VIEW_STATE);
+        viewState1.setName("DisplayForm1");
+        State viewState2 = new State(State.VIEW_STATE);
+        viewState2.setName("DisplayForm2");
+        State actionState = new State(State.ACTION_STATE);
+        actionState.setName("Process1");
+        
+        flow.addState(viewState1);
+        flow.addState(viewState2);
+        flow.addState(actionState);
+        
+        State state = flow.getStateByName("DisplayForm2");
+        assertEquals(viewState2, state);
+    }
+    
+    /**
+     * getStateByNameメソッドテスト.
+     * 指定されたステート名がない場合のnullが返されることをテストする。
+     * 
+     */
+    public void testGetStateByNameShouldReturnNullBecauseOfTheStateNotFound() {
+        Flow flow = new Flow(null, null);
+        
+        State viewState1 = new State(State.VIEW_STATE);
+        viewState1.setName("DisplayForm1");
+        
+        flow.addState(viewState1);
+        
+        State state = flow.getStateByName("DisplayForm2");
+        assertNull(state);
+    }
+    
+    /**
+     * getStateByNameメソッドテスト.
+     * ステート名にnullを渡した場合、nullが返されることをテストする。
+     * 
+     **/
+    public void testGetStateByNameShouldReturnNullBecauseOfStateNameIsNull() {
+        Flow flow = new Flow(null, null);
+        
+        State viewState1 = new State(State.VIEW_STATE);
+        viewState1.setName("DisplayForm1");
+        
+        flow.addState(viewState1);
+        
+        State state = flow.getStateByName(null);
+        assertNull(state);
+    }
 }
