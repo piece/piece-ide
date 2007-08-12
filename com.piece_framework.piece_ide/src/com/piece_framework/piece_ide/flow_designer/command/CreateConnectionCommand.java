@@ -87,9 +87,6 @@ public class CreateConnectionCommand extends Command {
     public void execute() {
         fEvent.setName(fState.generateEventName(fNextState.getName()));
         fEvent.setNextState(fNextState);
-        fEvent.setEventHandler(
-                null, 
-                fEvent.generateEventHandlerMethodName());
         fState.addEvent(fEvent);
     }
     

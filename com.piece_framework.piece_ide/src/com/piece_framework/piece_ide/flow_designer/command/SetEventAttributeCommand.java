@@ -142,8 +142,11 @@ public class SetEventAttributeCommand extends Command {
      */
     private boolean isSameValue() {
         Object oldValue = getOldValue();
-        boolean isSame = false;
+        if (oldValue == null) {
+            return false;
+        }
         
+        boolean isSame = false;
         if (fAttributeName.equals("Event")) {
             isSame = oldValue.equals(fAttributeValue);
         } else if (fAttributeName.equals("NextState")) {

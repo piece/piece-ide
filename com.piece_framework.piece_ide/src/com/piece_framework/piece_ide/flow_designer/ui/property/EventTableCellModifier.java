@@ -82,6 +82,15 @@ public class EventTableCellModifier implements ICellModifier {
         } else if (property.equals("EventHandler")) {
             if (event.getEventHandler() != null) {
                 return event.getEventHandler().toString();
+            } else {
+                if (fState.getType() == State.INITIAL_STATE
+                    || fState.getType() == State.FINAL_STATE) {
+                    return event.generateEventHandlerMethodName();
+                } else if (fState.getType() == State.VIEW_STATE
+                            || fState.getType() == State.ACTION_STATE) {
+                    return event.generateEventHandlerMethodName() 
+                            + "On" + fState.getName();
+                }
             }
         } else if (property.equals("Guard")) {
             // ビルトインイベントの場合は編集不可
