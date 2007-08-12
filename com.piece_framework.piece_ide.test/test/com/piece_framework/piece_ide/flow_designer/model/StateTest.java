@@ -20,7 +20,7 @@ public class StateTest extends TestCase {
   
     /**
      * コンストラクタテスト.
-     * イニシャルステートを生成すると、自動的にInitializeイベントが
+     * イニシャルステートを生成すると、自動的にInitialイベントが
      * 生成されることをテストする。
      * 
      */
@@ -33,14 +33,8 @@ public class StateTest extends TestCase {
         assertEquals(Event.BUILTIN_EVENT, event.getType());
         assertEquals("Initial", event.getName());
         assertNull(event.getNextState());
-        
-        EventHandler eventHandler = event.getEventHandler();
-        assertEquals(null, eventHandler.getClassName());
-        assertEquals("doInitial", eventHandler.getMethodName());
-        
-        state.setName("State1");
-        assertEquals("doInitial", 
-                    event.getEventHandler().getMethodName());
+        assertNull(event.getEventHandler());
+        assertNull(event.getGuardEventHandler());
     }
     
     /**
@@ -56,36 +50,14 @@ public class StateTest extends TestCase {
         
         for (Event event : state.getEventList()) {
             assertEquals(Event.BUILTIN_EVENT, event.getType());
+            if (!event.getName().equals("Entry")
+                && !event.getName().equals("Exit")
+                && !event.getName().equals("Activity")) {
+                fail();
+            }
             assertNull(event.getNextState());
-            
-            EventHandler eventHandler = event.getEventHandler();
-            if (event.getName().equals("Entry")) {
-                assertEquals(null, eventHandler.getClassName());
-                assertEquals("doEntry", eventHandler.getMethodName());
-            } else if (event.getName().equals("Exit")) {
-                assertEquals(null, eventHandler.getClassName());
-                assertEquals("doExit", eventHandler.getMethodName());
-            } else if (event.getName().equals("Activity")) {
-                assertEquals(null, eventHandler.getClassName());
-                assertEquals("doActivity", eventHandler.getMethodName());
-            } else {
-                fail();
-            }
-        }
-        
-        state.setName("State1");
-        for (Event event : state.getEventList()) {
-            EventHandler eventHandler = event.getEventHandler();
-            if (event.getName().equals("Entry")) {
-                assertEquals("doEntryOnState1", eventHandler.getMethodName());
-            } else if (event.getName().equals("Exit")) {
-                assertEquals("doExitOnState1", eventHandler.getMethodName());
-            } else if (event.getName().equals("Activity")) {
-                assertEquals("doActivityOnState1", 
-                            eventHandler.getMethodName());
-            } else {
-                fail();
-            }
+            assertNull(event.getEventHandler());
+            assertNull(event.getGuardEventHandler());
         }
     }
     
@@ -102,42 +74,20 @@ public class StateTest extends TestCase {
         
         for (Event event : state.getEventList()) {
             assertEquals(Event.BUILTIN_EVENT, event.getType());
+            if (!event.getName().equals("Entry")
+                && !event.getName().equals("Exit")
+                && !event.getName().equals("Activity")) {
+                fail();
+            }
             assertNull(event.getNextState());
-            
-            EventHandler eventHandler = event.getEventHandler();
-            if (event.getName().equals("Entry")) {
-                assertEquals(null, eventHandler.getClassName());
-                assertEquals("doEntry", eventHandler.getMethodName());
-            } else if (event.getName().equals("Exit")) {
-                assertEquals(null, eventHandler.getClassName());
-                assertEquals("doExit", eventHandler.getMethodName());
-            } else if (event.getName().equals("Activity")) {
-                assertEquals(null, eventHandler.getClassName());
-                assertEquals("doActivity", eventHandler.getMethodName());
-            } else {
-                fail();
-            }
-        }
-
-        state.setName("State1");
-        for (Event event : state.getEventList()) {
-            EventHandler eventHandler = event.getEventHandler();
-            if (event.getName().equals("Entry")) {
-                assertEquals("doEntryOnState1", eventHandler.getMethodName());
-            } else if (event.getName().equals("Exit")) {
-                assertEquals("doExitOnState1", eventHandler.getMethodName());
-            } else if (event.getName().equals("Activity")) {
-                assertEquals("doActivityOnState1", 
-                            eventHandler.getMethodName());
-            } else {
-                fail();
-            }
+            assertNull(event.getEventHandler());
+            assertNull(event.getGuardEventHandler());
         }
     }
     
     /**
      * コンストラクタテスト.
-     * ファイナルステートを生成すると、自動的にFinalizeイベントが
+     * ファイナルステートを生成すると、自動的にFinalイベントが
      * 生成されることをテストすることをテストする。
      * 
      */
@@ -150,14 +100,8 @@ public class StateTest extends TestCase {
         assertEquals(Event.BUILTIN_EVENT, event.getType());
         assertEquals("Final", event.getName());
         assertNull(event.getNextState());
-        
-        EventHandler eventHandler = event.getEventHandler();
-        assertEquals(null, eventHandler.getClassName());
-        assertEquals("doFinal", eventHandler.getMethodName());
-        
-        state.setName("State1");
-        assertEquals("doFinal", 
-                    event.getEventHandler().getMethodName());
+        assertNull(event.getEventHandler());
+        assertNull(event.getGuardEventHandler());
     }
     
     /**
