@@ -2,6 +2,7 @@
 package com.piede_framework.piece_ide.flow_designer.mapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -49,14 +50,50 @@ public class FlowMapper extends AbstractMapper {
         
         State initialState = null;
         State finalState = null;
-        List<State> viewStateList = new ArrayList<State>();
-        List<State> actionStateList = new ArrayList<State>();
+        List<State> normalStateList = new ArrayList<State>();
+        Map<State, List> transitionMap = new HashMap<State, List>();
         
-        if (viewValue != null && viewValue instanceof Map) {
-            
+        if (viewValue != null && viewValue instanceof List) {
+            Iterator iterator = ((List) viewValue).iterator();
+            while (iterator.hasNext()) {
+                Object viewMap = iterator.next();
+                if (!(viewMap instanceof Map)) {
+                    continue;
+                }
+                State state = new State(State.VIEW_STATE);
+                state.setName(
+                        (String) getValueIgnoreCase((Map) viewMap, "name"));
+                state.setView(
+                        (String) getValueIgnoreCase((Map) viewMap, "view"));
+                
+                Object transitionValue = 
+                    getValueIgnoreCase((Map) viewMap, "transition");
+                if (transitionValue != null && transitionValue instanceof List) {
+                    transitionMap.put(state, (List) transitionValue);
+                }
+                
+                normalStateList.add(state);
+            }
         }
-        if (actionValue != null && actionValue instanceof Map) {
-            
+        if (actionValue != null && actionValue instanceof List) {
+            Iterator iterator = ((List) actionValue).iterator();
+            while (iterator.hasNext()) {
+                Object actionMap = iterator.next();
+                if (!(actionMap instanceof Map)) {
+                    continue;
+                }
+                State state = new State(State.ACTION_STATE);
+                state.setName(
+                        (String) getValueIgnoreCase((Map) actionMap, "name"));
+                
+                Object transitionValue = 
+                    getValueIgnoreCase((Map) actionMap, "transition");
+                if (transitionValue != null && transitionValue instanceof List) {
+                    transitionMap.put(state, (List) transitionValue);
+                }
+                
+                normalStateList.add(state);
+            }
         }
         if (lastValue != null && lastValue instanceof Map) {
             finalState = new State(State.FINAL_STATE);
@@ -113,39 +150,18 @@ public class FlowMapper extends AbstractMapper {
             transitionEvent.setNextState(finalState);
             state.addEvent(transitionEvent);
             
-            if (state.getType() == State.VIEW_STATE) {
-                viewStateList.add(state);
-            } else if (state.getType() == State.ACTION_STATE) {
-                actionStateList.add(state);
-            }
-            
-            Iterator iterator = ((Map) lastValue).keySet().iterator();
-            while (iterator.hasNext()) {
-                Object key = iterator.next();
-                Object value = ((Map) lastValue).get(key);
-                System.out.println(key + ":" + value);
-            }
+            normalStateList.add(state);
         }
         if (initialValue != null && initialValue instanceof String) {
             initialState = new State(State.INITIAL_STATE);
             initialState.setName("Initial");
             Event transitionEvent = null;
-            for (State state : viewStateList) {
+            for (State state : normalStateList) {
                 if (state.getName().equals((String) initialValue)) {
                     transitionEvent = new Event(Event.TRANSITION_EVENT);
                     transitionEvent.setName(
                             initialState.generateEventName(state.getName()));
                     transitionEvent.setNextState(state);
-                }
-            }
-            if (transitionEvent == null) {
-                for (State state : actionStateList) {
-                    if (state.getName().equals((String) initialValue)) {
-                        transitionEvent = new Event(Event.TRANSITION_EVENT);
-                        transitionEvent.setName(
-                            initialState.generateEventName(state.getName()));
-                        transitionEvent.setNextState(state);
-                    }
                 }
             }
             if (transitionEvent != null) {
@@ -159,12 +175,35 @@ public class FlowMapper extends AbstractMapper {
         if (finalState != null) {
             flow.addState(finalState);
         }
-        for (State state : viewStateList) {
+        for (State state : normalStateList) {
             flow.addState(state);
         }
-        for (State state : actionStateList) {
-            flow.addState(state);
+        
+        for (State state : normalStateList) {
+            List transitionList = transitionMap.get(state);
+            if (transitionList == null) {
+                continue;
+            }
+            
+            Iterator iterator = transitionList.iterator();
+            while (iterator.hasNext()) {
+                Object map = iterator.next();
+                if (!(map instanceof Map)) {
+                    continue;
+                }
+                
+                Event event = new Event(Event.TRANSITION_EVENT);
+                event.setName(
+                    (String) getValueIgnoreCase((Map) map, "name"));
+                event.setNextState(
+                    flow.getStateByName(
+                        (String) getValueIgnoreCase((Map) map, "nextState")));
+                
+                state.addEvent(event);
+            }
         }
+        
+        
         
 //        Iterator iterator = map.keySet().iterator();
 //        while (iterator.hasNext()) {
