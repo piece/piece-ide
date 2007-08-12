@@ -103,9 +103,10 @@ public class EventHandler implements Serializable {
         String className = getClassName();
         String methodName = getMethodName();
         
-        if (className != null && methodName != null) {
+        if (className != null && className.length() > 0 
+            && methodName != null && methodName.length() > 0) {
             return className + ":" + methodName;
-        } else if (methodName != null) {
+        } else if (methodName != null && methodName.length() > 0) {
             return ":" + methodName;
         }
         return "";
