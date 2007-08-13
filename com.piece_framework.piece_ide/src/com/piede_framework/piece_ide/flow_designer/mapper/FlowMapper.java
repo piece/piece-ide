@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ho.yaml.Yaml;
+import org.ho.yaml.exception.YamlException;
 
 import com.piece_framework.piece_ide.flow_designer.model.AbstractModel;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
@@ -37,16 +38,23 @@ public class FlowMapper extends AbstractMapper {
      */
     @Override
     public AbstractModel getModel(String yaml) {
-        Object object = Yaml.load(yaml);
-        if (object == null || !(object instanceof Map)) {
+        Object yamlObject = null;
+        try {
+            yamlObject = Yaml.load(yaml);
+        } catch (YamlException ye) {
+            ye.printStackTrace();
+        }
+        if (yamlObject == null || !(yamlObject instanceof Map)) {
             return null;
         }
         
         Flow flow = new Flow(null, null);
-        Object initialValue = getValueIgnoreCase((Map) object, "firstState");
-        Object lastValue = getValueIgnoreCase((Map) object, "lastState");
-        Object viewValue = getValueIgnoreCase((Map) object, "viewState");
-        Object actionValue = getValueIgnoreCase((Map) object, "actionState");
+        Object initialValue = 
+                getValueIgnoreCase((Map) yamlObject, "firstState");
+        Object lastValue = getValueIgnoreCase((Map) yamlObject, "lastState");
+        Object viewValue = getValueIgnoreCase((Map) yamlObject, "viewState");
+        Object actionValue = 
+                getValueIgnoreCase((Map) yamlObject, "actionState");
         
         State initialState = null;
         State finalState = null;
@@ -296,26 +304,17 @@ public class FlowMapper extends AbstractMapper {
                 state.addEvent(event);
             }
         }
-        
-        
-        
-//        Iterator iterator = map.keySet().iterator();
-//        while (iterator.hasNext()) {
-//            AbstractStateMapper stateMapper = 
-//                    createStateMapper((String) iterator.next());
-//            if (stateMapper == null) {
-//                continue;
-//            }
-//            
-//            State state = (State) stateMapper.getModel(yaml);
-//            if (state != null) {
-//                flow.addState(state);
-//            }
-//        }
-        
         return flow;
     }
     
+    /**
+     * 文字列をキーに持つMapオブジェクトから値を取得する.
+     * キーとなる文字列の大文字・小文字は無視する。
+     * 
+     * @param map Mapオブジェクト
+     * @param key キー
+     * @return 値
+     */
     private Object getValueIgnoreCase(Map map, String key) {
         if (map == null) {
             return null;
@@ -363,26 +362,6 @@ public class FlowMapper extends AbstractMapper {
             stateMapper = new NormalStateMapper(State.VIEW_STATE);
         } else if (stateType == State.ACTION_STATE) {
             stateMapper = new NormalStateMapper(State.ACTION_STATE);
-        }
-        return stateMapper;
-    }
-    
-    /**
-     * ステートタイプにあったマッパーを生成する.
-     * 
-     * @param stateType ステートタイプ
-     * @return マッパー
-     */
-    private AbstractStateMapper createStateMapper(String stateType) {
-        AbstractStateMapper stateMapper = null;
-        if (stateType.equalsIgnoreCase("firstState")) {
-            stateMapper = createStateMapper(State.INITIAL_STATE);
-        } else if (stateType.equalsIgnoreCase("lastState")) {
-            stateMapper = createStateMapper(State.FINAL_STATE);
-        } else if (stateType.equalsIgnoreCase("viewState")) {
-            stateMapper = createStateMapper(State.VIEW_STATE);
-        } else if (stateType.equalsIgnoreCase("actionState")) {
-            stateMapper = createStateMapper(State.ACTION_STATE);
         }
         return stateMapper;
     }
