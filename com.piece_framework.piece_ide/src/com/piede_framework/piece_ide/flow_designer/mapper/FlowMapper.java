@@ -68,54 +68,9 @@ public class FlowMapper extends AbstractMapper {
                 if (!(viewMap instanceof Map)) {
                     continue;
                 }
-                State state = new State(State.VIEW_STATE);
-                state.setName(
-                        (String) getValueIgnoreCase((Map) viewMap, "name"));
-                state.setView(
-                        (String) getValueIgnoreCase((Map) viewMap, "view"));
                 
-                Object activityValue = 
-                            getValueIgnoreCase((Map) viewMap, "activity");
-                if (activityValue != null && activityValue instanceof Map) {
-                    Object methodValue = 
-                        getValueIgnoreCase((Map) activityValue, "method");
-                    if (methodValue != null && methodValue instanceof String) {
-                        Event event = state.getEventByName("Activity");
-                        event.setEventHandler(
-                                new EventHandler((String) methodValue));
-                    }
-                }
-                Object entryValue = 
-                            getValueIgnoreCase((Map) viewMap, "entry");
-                if (entryValue != null && entryValue instanceof Map) {
-                    Object methodValue = 
-                        getValueIgnoreCase((Map) entryValue, "method");
-                    if (methodValue != null && methodValue instanceof String) {
-                        Event event = state.getEventByName("Entry");
-                        event.setEventHandler(
-                                new EventHandler((String) methodValue));
-                    }
-                }
-                Object exitValue = 
-                            getValueIgnoreCase((Map) viewMap, "exit");
-                if (exitValue != null && exitValue instanceof Map) {
-                    Object methodValue = 
-                        getValueIgnoreCase((Map) exitValue, "method");
-                    if (methodValue != null && methodValue instanceof String) {
-                        Event event = state.getEventByName("Exit");
-                        event.setEventHandler(
-                                new EventHandler((String) methodValue));
-                    }
-                }
-                
-                Object transitionValue = 
-                    getValueIgnoreCase((Map) viewMap, "transition");
-                if (transitionValue != null
-                    && transitionValue instanceof List) {
-                    transitionMap.put(state, (List) transitionValue);
-                }
-                
-                normalStateList.add(state);
+                normalStateList.add(
+                        createNormalState((Map) viewMap, transitionMap));
             }
         }
         if (actionValue != null && actionValue instanceof List) {
@@ -125,52 +80,9 @@ public class FlowMapper extends AbstractMapper {
                 if (!(actionMap instanceof Map)) {
                     continue;
                 }
-                State state = new State(State.ACTION_STATE);
-                state.setName(
-                        (String) getValueIgnoreCase((Map) actionMap, "name"));
                 
-                Object activityValue = 
-                            getValueIgnoreCase((Map) actionMap, "activity");
-                if (activityValue != null && activityValue instanceof Map) {
-                    Object methodValue = 
-                        getValueIgnoreCase((Map) activityValue, "method");
-                    if (methodValue != null && methodValue instanceof String) {
-                        Event event = state.getEventByName("Activity");
-                        event.setEventHandler(
-                                new EventHandler((String) methodValue));
-                    }
-                }
-                Object entryValue = 
-                            getValueIgnoreCase((Map) actionMap, "entry");
-                if (entryValue != null && entryValue instanceof Map) {
-                    Object methodValue = 
-                        getValueIgnoreCase((Map) entryValue, "method");
-                    if (methodValue != null && methodValue instanceof String) {
-                        Event event = state.getEventByName("Entry");
-                        event.setEventHandler(
-                                new EventHandler((String) methodValue));
-                    }
-                }
-                Object exitValue = 
-                            getValueIgnoreCase((Map) actionMap, "exit");
-                if (exitValue != null && exitValue instanceof Map) {
-                    Object methodValue = 
-                        getValueIgnoreCase((Map) exitValue, "method");
-                    if (methodValue != null && methodValue instanceof String) {
-                        Event event = state.getEventByName("Exit");
-                        event.setEventHandler(
-                                new EventHandler((String) methodValue));
-                    }
-                }
-                
-                Object transitionValue = 
-                    getValueIgnoreCase((Map) actionMap, "transition");
-                if (transitionValue != null
-                    && transitionValue instanceof List) {
-                    transitionMap.put(state, (List) transitionValue);
-                }
-                
-                normalStateList.add(state);
+                normalStateList.add(
+                        createNormalState((Map) actionMap, transitionMap));
             }
         }
         if (lastValue != null 
@@ -192,57 +104,7 @@ public class FlowMapper extends AbstractMapper {
             while (iterator.hasNext()) {
                 Map lastMap = (Map) iterator.next();
                 
-                State state = null;
-                Object view = getValueIgnoreCase(lastMap, "view");
-                if (view != null) {
-                    state = new State(State.VIEW_STATE);
-                    state.setView((String) view);
-                } else {
-                    state = new State(State.ACTION_STATE);
-                }
-                state.setName(
-                        (String) getValueIgnoreCase(lastMap, "name"));
-                
-                Object activityValue = 
-                            getValueIgnoreCase(lastMap, "activity");
-                if (activityValue != null && activityValue instanceof Map) {
-                    Object methodValue = 
-                        getValueIgnoreCase((Map) activityValue, "method");
-                    if (methodValue != null && methodValue instanceof String) {
-                        Event event = state.getEventByName("Activity");
-                        event.setEventHandler(
-                                new EventHandler((String) methodValue));
-                    }
-                }
-                Object entryValue = 
-                            getValueIgnoreCase(lastMap, "entry");
-                if (entryValue != null && entryValue instanceof Map) {
-                    Object methodValue = 
-                        getValueIgnoreCase((Map) entryValue, "method");
-                    if (methodValue != null && methodValue instanceof String) {
-                        Event event = state.getEventByName("Entry");
-                        event.setEventHandler(
-                                new EventHandler((String) methodValue));
-                    }
-                }
-                Object exitValue = 
-                            getValueIgnoreCase(lastMap, "exit");
-                if (exitValue != null && exitValue instanceof Map) {
-                    Object methodValue = 
-                        getValueIgnoreCase((Map) exitValue, "method");
-                    if (methodValue != null && methodValue instanceof String) {
-                        Event event = state.getEventByName("Exit");
-                        event.setEventHandler(
-                                new EventHandler((String) methodValue));
-                    }
-                }
-                
-                Object transitionValue = 
-                    getValueIgnoreCase((Map) lastMap, "transition");
-                if (transitionValue != null 
-                    && transitionValue instanceof List) {
-                    transitionMap.put(state, (List) transitionValue);
-                }
+                State state = createNormalState(lastMap, transitionMap);
                 
                 Event transitionEvent = new Event(Event.TRANSITION_EVENT);
                 transitionEvent.setName(
@@ -281,54 +143,12 @@ public class FlowMapper extends AbstractMapper {
             flow.addState(state);
         }
         
-        for (State state : normalStateList) {
-            List transitionList = transitionMap.get(state);
-            if (transitionList == null) {
-                continue;
-            }
-            
-            Iterator iterator = transitionList.iterator();
-            while (iterator.hasNext()) {
-                Object map = iterator.next();
-                if (!(map instanceof Map)) {
-                    continue;
-                }
-                
-                Event event = new Event(Event.TRANSITION_EVENT);
-                event.setName(
-                    (String) getValueIgnoreCase((Map) map, "event"));
-                event.setNextState(
-                    flow.getStateByName(
-                        (String) getValueIgnoreCase((Map) map, "nextState")));
-                
-                state.addEvent(event);
-            }
-        }
+        setTransitionEvent(flow, normalStateList, transitionMap);
+        
         return flow;
     }
-    
-    /**
-     * 文字列をキーに持つMapオブジェクトから値を取得する.
-     * キーとなる文字列の大文字・小文字は無視する。
-     * 
-     * @param map Mapオブジェクト
-     * @param key キー
-     * @return 値
-     */
-    private Object getValueIgnoreCase(Map map, String key) {
-        if (map == null) {
-            return null;
-        }
-        
-        Iterator iterator = map.keySet().iterator();
-        while (iterator.hasNext()) {
-            String mapKey = (String) iterator.next();
-            if (key.equalsIgnoreCase(mapKey)) {
-                 return map.get(mapKey);
-            }
-        }
-        return null;
-    }
+
+
     
     /**
      * 指定されたFlowをYAMLで出力する.
@@ -364,5 +184,125 @@ public class FlowMapper extends AbstractMapper {
             stateMapper = new NormalStateMapper(State.ACTION_STATE);
         }
         return stateMapper;
+    }
+    
+    /**
+     * 文字列をキーに持つMapオブジェクトから値を取得する.
+     * キーとなる文字列の大文字・小文字は無視する。
+     * 
+     * @param map Mapオブジェクト
+     * @param key キー
+     * @return 値
+     */
+    private Object getValueIgnoreCase(Map map, String key) {
+        if (map == null) {
+            return null;
+        }
+        
+        Iterator iterator = map.keySet().iterator();
+        while (iterator.hasNext()) {
+            String mapKey = (String) iterator.next();
+            if (key.equalsIgnoreCase(mapKey)) {
+                 return map.get(mapKey);
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * ノーマルステート(ビューステート、アクションステート)を生成する.
+     * ビューステートかアクションステートかの判断はMapオブジェクトがviewキーを
+     * 保持しているかで判断する。
+     * 
+     * @param stateMap ステートMapオブジェクト
+     * @param transitionMap 遷移Mapオブジェクト
+     * @return ノーマルステート(ビューステート、アクションステート)
+     */
+    private State createNormalState(
+                        Map stateMap, 
+                        Map<State, List> transitionMap) {
+        State state = null;
+        Object view = getValueIgnoreCase(stateMap, "view");
+        if (view != null) {
+            state = new State(State.VIEW_STATE);
+            state.setView((String) view);
+        } else {
+            state = new State(State.ACTION_STATE);
+        }
+        state.setName(
+                (String) getValueIgnoreCase(stateMap, "name"));
+        
+        setBuiltinEventHandler(stateMap, state, "Activity");
+        setBuiltinEventHandler(stateMap, state, "Entry");
+        setBuiltinEventHandler(stateMap, state, "Exit");
+
+        Object transitionValue = 
+            getValueIgnoreCase(stateMap, "transition");
+        if (transitionValue != null
+            && transitionValue instanceof List) {
+            transitionMap.put(state, (List) transitionValue);
+        }
+        
+        return state;
+    }
+    
+    /**
+     * 遷移イベントを各ステートにセットする.
+     * 
+     * @param flow フロー
+     * @param normalStateList ノーマルステートリスト
+     * @param transitionMap 遷移Mapオブジェクト
+     */
+    private void setTransitionEvent(
+            Flow flow, 
+            List<State> normalStateList, 
+            Map<State, List> transitionMap) {
+        for (State state : normalStateList) {
+            List transitionList = transitionMap.get(state);
+            if (transitionList == null) {
+                continue;
+            }
+            
+            Iterator iterator = transitionList.iterator();
+            while (iterator.hasNext()) {
+                Object map = iterator.next();
+                if (!(map instanceof Map)) {
+                    continue;
+                }
+                
+                Event event = new Event(Event.TRANSITION_EVENT);
+                event.setName(
+                    (String) getValueIgnoreCase((Map) map, "event"));
+                event.setNextState(
+                    flow.getStateByName(
+                        (String) getValueIgnoreCase((Map) map, "nextState")));
+                
+                state.addEvent(event);
+            }
+        }
+    }
+    
+    /**
+     * ビルトインイベントをステートにセットする.
+     * 
+     * @param map Mapオブジェクト
+     * @param state ステート
+     * @param eventName ビルトインイベント名
+     */
+    private void setBuiltinEventHandler(
+                        Map map, 
+                        State state, 
+                        String eventName) {
+        Object value = 
+                    getValueIgnoreCase(map, eventName);
+        if (value != null && value instanceof Map) {
+            Object methodValue = 
+                getValueIgnoreCase((Map) value, "method");
+            if (methodValue != null && methodValue instanceof String) {
+                Event event = state.getEventByName(eventName);
+                event.setEventHandler(
+                        new EventHandler((String) methodValue));
+            }
+        }
     }
 }
