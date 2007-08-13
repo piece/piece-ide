@@ -94,7 +94,6 @@ public class FlowMapperGetModelTest extends TestCase {
         Event entryEvent = viewState.getEventByName("Entry");
         Event exitEvent = viewState.getEventByName("Exit");
         Event viewToFinal = viewState.getEventByName("FinalFromDisplayForm1");
-
         assertNotNull(activityEvent);
         assertNotNull(activityEvent.getEventHandler());
         assertEquals("ActionClass:doActivityOnDisplayForm1", 
@@ -371,9 +370,223 @@ public class FlowMapperGetModelTest extends TestCase {
      * [Initial]-->[View]-->[Action]
      *
      */
-    // ビューステート、アクションステートのビルトインイベントを定義する!!
+    public void testGetModelShouldReturn_NothingFinal_Flow() {
+        String yamlString = 
+              "firstState: DisplayForm1\n"
+            + "\n"
+            + "viewState:\n"
+            + "  - name: DisplayForm1\n"
+            + "    view: Form1\n"
+            + "    entry:\n"
+            + "      method: ActionClass:doEntryOnDisplayForm1\n"
+            + "    activity:\n"
+            + "      method: ActionClass:doActivityOnDisplayForm1\n"
+            + "    exit:\n"
+            + "      method: ActionClass:doExitOnDisplayForm1\n"
+            + "    transition:\n"
+            + "      - event: Process1FromDisplayForm1\n"
+            + "        nextState: Process1\n"
+            + "        action:\n"
+            + "          method: FlowAction:doProcess1FromDisplayForm1\n"
+            + "        guard:\n"
+            + "          method: GuardAction:guardMethod\n"
+            + "\n"
+            + "actionState:\n"
+            + "  - name: Process1\n"
+            + "    entry:\n"
+            + "      method: ActionClass:doEntryOnProcess1\n"
+            + "    activity:\n"
+            + "      method: ActionClass:doActivityOnProcess1\n"
+            + "    exit:\n"
+            + "      method: ActionClass:doExitOnProcess1\n";
+
+        
+        FlowMapper flowMapper = new FlowMapper();
+        Flow flow = (Flow) flowMapper.getModel(yamlString);
+        
+        assertNotNull(flow);
+        assertEquals(3, flow.getStateList().size());
+        
+        State initialState = null;
+        List<State> viewStateList = new ArrayList<State>();
+        List<State> actionStateList = new ArrayList<State>();
+        
+        for (State state : flow.getStateList()) {
+            if (state.getType() == State.INITIAL_STATE) {
+                initialState = state;
+            } else if (state.getType() == State.VIEW_STATE) {
+                viewStateList.add(state);
+            } else if (state.getType() == State.ACTION_STATE) {
+                actionStateList.add(state);
+            } else {
+                fail();
+            }
+        }
+
+        // ステートのアサーション
+        assertNotNull(initialState);
+        
+        assertEquals(1, viewStateList.size());
+        State viewState1 = flow.getStateByName("DisplayForm1");
+        assertEquals("Form1", viewState1.getView());
+        
+        assertEquals(1, actionStateList.size());
+        State actionState = flow.getStateByName("Process1");
+        
+        // イベントのアサーション
+        assertEquals(2, initialState.getEventList().size());
+        Event initialToView1 = 
+            initialState.getEventByName("DisplayForm1FromInitial");
+        assertNotNull(initialToView1);
+        assertEquals(viewState1, initialToView1.getNextState());
+        
+        assertEquals(4, viewState1.getEventList().size());
+        Event activityEventOnViewState1 = 
+            viewState1.getEventByName("Activity");
+        Event entryEventOnViewState1 = 
+            viewState1.getEventByName("Entry");
+        Event exitEventOnViewState1 = 
+            viewState1.getEventByName("Exit");
+        Event view1ToAction = 
+            viewState1.getEventByName("Process1FromDisplayForm1");
+        assertNotNull(activityEventOnViewState1);
+        assertNotNull(activityEventOnViewState1.getEventHandler());
+        assertEquals("ActionClass:doActivityOnDisplayForm1", 
+                activityEventOnViewState1.getEventHandler().toString());
+        assertNotNull(entryEventOnViewState1);
+        assertNotNull(entryEventOnViewState1.getEventHandler());
+        assertEquals("ActionClass:doEntryOnDisplayForm1", 
+                entryEventOnViewState1.getEventHandler().toString());
+        assertNotNull(exitEventOnViewState1);
+        assertNotNull(exitEventOnViewState1.getEventHandler());
+        assertEquals("ActionClass:doExitOnDisplayForm1", 
+                exitEventOnViewState1.getEventHandler().toString());
+        assertNotNull(view1ToAction);
+        assertEquals(actionState, view1ToAction.getNextState());
+
+        assertEquals(3, actionState.getEventList().size());
+        Event activityEventOnActionState = 
+            actionState.getEventByName("Activity");
+        Event entryEventOnActionState = 
+            actionState.getEventByName("Entry");
+        Event exitEventOnActionState = 
+            actionState.getEventByName("Exit");
+        assertNotNull(activityEventOnActionState);
+        assertNotNull(activityEventOnActionState.getEventHandler());
+        assertEquals("ActionClass:doActivityOnProcess1", 
+                activityEventOnActionState.getEventHandler().toString());
+        assertNotNull(entryEventOnActionState);
+        assertNotNull(entryEventOnActionState.getEventHandler());
+        assertEquals("ActionClass:doEntryOnProcess1", 
+                entryEventOnActionState.getEventHandler().toString());
+        assertNotNull(exitEventOnActionState);
+        assertNotNull(exitEventOnActionState.getEventHandler());
+        assertEquals("ActionClass:doExitOnProcess1", 
+                exitEventOnActionState.getEventHandler().toString());
+    }
     
-    // YAMLが不正な場合
+    /**
+     * getModel メソッドテスト.
+     * 遷移先のステート名の綴りが間違っているYAMLからフローが取得できることを
+     * テストする。<br>
+     *
+     */
+    public void testGetModelShouldReturn_NothingNextState_Flow() {
+        String yamlString = 
+                  "firstState: DisplayForm1xx\n"
+                + "\n"
+                + "lastState:\n"
+                + "  name: DisplayForm2\n"
+                + "  view: Form2\n"
+                + "\n"
+                + "viewState:\n"
+                + "  - name: DisplayForm1\n"
+                + "    view: Form1\n"
+                + "    transition:\n"
+                + "      - event: Process1FromDisplayForm1\n"
+                + "        nextState: Process1xx\n"
+                + "        action:\n"
+                + "          method: ActionClass:doProcess1FromDisplayForm1\n"
+                + "\n"
+                + "actionState:\n"
+                + "  - name: Process1\n"
+                + "    transition:\n"
+                + "      - event: DisplayForm2FromProcess1\n"
+                + "        nextState: DisplayForm2xx\n"
+                + "      - event: DisplayForm1FromProcess1\n"
+                + "        nextState: DisplayForm1xx\n";
+        
+        FlowMapper flowMapper = new FlowMapper();
+        Flow flow = (Flow) flowMapper.getModel(yamlString);
+        
+        assertNotNull(flow);
+        assertEquals(5, flow.getStateList().size());
+        
+        State initialState = null;
+        State finalState = null;
+        List<State> viewStateList = new ArrayList<State>();
+        List<State> actionStateList = new ArrayList<State>();
+        
+        for (State state : flow.getStateList()) {
+            if (state.getType() == State.INITIAL_STATE) {
+                initialState = state;
+            } else if (state.getType() == State.FINAL_STATE) {
+                finalState = state;
+            } else if (state.getType() == State.VIEW_STATE) {
+                viewStateList.add(state);
+            } else if (state.getType() == State.ACTION_STATE) {
+                actionStateList.add(state);
+            } else {
+                fail();
+            }
+        }
+        
+        // ステートのアサーション
+        assertNotNull(initialState);
+        
+        assertEquals(2, viewStateList.size());
+        State viewState1 = flow.getStateByName("DisplayForm1");
+        State viewState2 = flow.getStateByName("DisplayForm2");
+        assertEquals("Form1", viewState1.getView());
+        assertEquals("Form2", viewState2.getView());
+        
+        assertEquals(1, actionStateList.size());
+        State actionState = flow.getStateByName("Process1");
+        
+        assertNotNull(finalState);
+        
+        // イベントのアサーション
+        assertEquals(1, initialState.getEventList().size());
+        assertEquals(0, initialState.getTransitionEventList().size());
+
+        assertEquals(4, viewState1.getEventList().size());
+        assertNormalStateBiuldinEvent(viewState1);
+        Event view1ToAction = 
+            viewState1.getEventByName("Process1FromDisplayForm1");
+        assertNotNull(view1ToAction);
+        assertNull(view1ToAction.getNextState());
+    
+        assertEquals(4, viewState2.getEventList().size());
+        assertNormalStateBiuldinEvent(viewState2);
+        Event view2ToFinal = 
+            viewState2.getEventByName("FinalFromDisplayForm2");
+        assertNotNull(view2ToFinal);
+        assertEquals(finalState, view2ToFinal.getNextState());
+
+        assertEquals(5, actionState.getEventList().size());
+        assertNormalStateBiuldinEvent(actionState);
+        Event actionToView1 = 
+            actionState.getEventByName("DisplayForm1FromProcess1");
+        Event actionToView2 = 
+            actionState.getEventByName("DisplayForm2FromProcess1");
+        assertNotNull(actionToView1);
+        assertNull(actionToView1.getNextState());
+        assertNotNull(actionToView2);
+        assertNull(actionToView2.getNextState());
+        
+        assertEquals(1, finalState.getEventList().size());
+    }
+    // YAMLのインデントがおかしい
     // トップレベルで不正なキーが含まれている
     
     /**
