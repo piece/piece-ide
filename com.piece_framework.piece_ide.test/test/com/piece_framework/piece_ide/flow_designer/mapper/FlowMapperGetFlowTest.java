@@ -11,7 +11,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piede_framework.piece_ide.flow_designer.mapper.FlowMapper;
 
 /**
- * フローマッパーモデル取得テスト.
+ * フローマッパー フローモデル取得テスト.
  * テスト対象：com.piece_framework.piece_ide.flow_designer.mapper.FlowMapper
  * 
  * @author MATSUFUJI Hideharu
@@ -19,7 +19,7 @@ import com.piede_framework.piece_ide.flow_designer.mapper.FlowMapper;
  * @since 0.1.0
  *
  */
-public class FlowMapperGetModelTest extends TestCase {
+public class FlowMapperGetFlowTest extends TestCase {
 
     /**
      * テストメソッド実行前処理.
@@ -32,12 +32,12 @@ public class FlowMapperGetModelTest extends TestCase {
     }
     
     /**
-     * getModel メソッドテスト.
+     * getFlow メソッドテスト.
      * YAMLから以下のフローを取得できることをテストする。<br>
      * [Initial]-->[View]-->[Final]
      *
      */
-    public void testGetModelShouldReturn_InitialViewFinal_Flow() {
+    public void testGetFlowShouldReturn_InitialViewFinal_Flow() {
         String yamlString = 
                         "firstState: DisplayForm1\n"
                       + "\n"
@@ -52,7 +52,7 @@ public class FlowMapperGetModelTest extends TestCase {
                       + "    method: ActionClass:doExitOnDisplayForm1\n";
     
         FlowMapper flowMapper = new FlowMapper();
-        Flow flow = (Flow) flowMapper.getModel(yamlString);
+        Flow flow = flowMapper.getFlow(yamlString);
         
         assertNotNull(flow);
         assertEquals(3, flow.getStateList().size());
@@ -113,14 +113,14 @@ public class FlowMapperGetModelTest extends TestCase {
     }
     
     /**
-     * getModel メソッドテスト.
+     * getFlow メソッドテスト.
      * YAMLから以下のフローを取得できることをテストする。<br>
      * [Initial]-->[View]-->[Action]-->[View]-->[Final]
      *               /|         |
      *                -----------
      *
      */
-    public void testGetModelShouldReturn_InitialViewActionViewFinal_Flow() {
+    public void testGetFlowShouldReturn_InitialViewActionViewFinal_Flow() {
         String yamlString = 
                   "firstState: DisplayForm1\n"
                 + "\n"
@@ -146,7 +146,7 @@ public class FlowMapperGetModelTest extends TestCase {
                 + "        nextState: DisplayForm1\n";
         
         FlowMapper flowMapper = new FlowMapper();
-        Flow flow = (Flow) flowMapper.getModel(yamlString);
+        Flow flow = flowMapper.getFlow(yamlString);
         
         assertNotNull(flow);
         assertEquals(5, flow.getStateList().size());
@@ -220,7 +220,7 @@ public class FlowMapperGetModelTest extends TestCase {
     }
     
     /**
-     * getModel メソッドテスト.
+     * getFlow メソッドテスト.
      * ファイナルステートへの遷移がふたつあるYAMLからフロー
      * を取得できることをテストする。<br>
      * [Initial]-->[View]-->[Final]
@@ -228,7 +228,7 @@ public class FlowMapperGetModelTest extends TestCase {
      *             [View]--------
      *
      */
-    public void testGetModelShouldReturn_TwoStateToFinalState_Flow() {
+    public void testGetFlowShouldReturn_TwoStateToFinalState_Flow() {
         String yamlString = 
               "firstState: DisplayForm1\n"
             + "\n"
@@ -246,7 +246,7 @@ public class FlowMapperGetModelTest extends TestCase {
             + "          method: ActionClass:guardMethod\n";
 
           FlowMapper flowMapper = new FlowMapper();
-          Flow flow = (Flow) flowMapper.getModel(yamlString);
+          Flow flow = flowMapper.getFlow(yamlString);
           
           assertNotNull(flow);
           assertEquals(4, flow.getStateList().size());
@@ -307,20 +307,20 @@ public class FlowMapperGetModelTest extends TestCase {
     }
     
     /**
-     * getModel メソッドテスト.
+     * getFlow メソッドテスト.
      * イニシャルステートからの遷移がないYAMLからをフローを取
      * 得できることをテストする。<br>
      * [Initial]   [View]-->[Final]
      *
      */
-    public void testGetModelShouldReturn_Initial_ViewFinal_Flow() {
+    public void testGetFlowShouldReturn_Initial_ViewFinal_Flow() {
         String yamlString = 
               "lastState:\n"
             + "  name: DisplayForm1\n"
             + "  view: Form1\n";
 
           FlowMapper flowMapper = new FlowMapper();
-          Flow flow = (Flow) flowMapper.getModel(yamlString);
+          Flow flow = flowMapper.getFlow(yamlString);
           
           assertNotNull(flow);
           assertEquals(3, flow.getStateList().size());
@@ -364,13 +364,13 @@ public class FlowMapperGetModelTest extends TestCase {
           assertEquals(1, finalState.getEventList().size());
     }
     /**
-     * getModel メソッドテスト.
+     * getFlow メソッドテスト.
      * ファイナルステートがないYAMLからフローが取得できることを
      * テストする。<br>
      * [Initial]-->[View]-->[Action]
      *
      */
-    public void testGetModelShouldReturn_NothingFinal_Flow() {
+    public void testGetFlowShouldReturn_NothingFinal_Flow() {
         String yamlString = 
               "firstState: DisplayForm1\n"
             + "\n"
@@ -402,7 +402,7 @@ public class FlowMapperGetModelTest extends TestCase {
 
         
         FlowMapper flowMapper = new FlowMapper();
-        Flow flow = (Flow) flowMapper.getModel(yamlString);
+        Flow flow = flowMapper.getFlow(yamlString);
         
         assertNotNull(flow);
         assertEquals(3, flow.getStateList().size());
@@ -486,12 +486,12 @@ public class FlowMapperGetModelTest extends TestCase {
     }
     
     /**
-     * getModel メソッドテスト.
+     * getFlow メソッドテスト.
      * 遷移先のステート名の綴りが間違っているYAMLからフローが取得できることを
      * テストする。<br>
      *
      */
-    public void testGetModelShouldReturn_NothingNextState_Flow() {
+    public void testGetFlowShouldReturn_NothingNextState_Flow() {
         String yamlString = 
                   "firstState: DisplayForm1xx\n"
                 + "\n"
@@ -517,7 +517,7 @@ public class FlowMapperGetModelTest extends TestCase {
                 + "        nextState: DisplayForm1xx\n";
         
         FlowMapper flowMapper = new FlowMapper();
-        Flow flow = (Flow) flowMapper.getModel(yamlString);
+        Flow flow = flowMapper.getFlow(yamlString);
         
         assertNotNull(flow);
         assertEquals(5, flow.getStateList().size());
@@ -588,11 +588,11 @@ public class FlowMapperGetModelTest extends TestCase {
     }
     
     /**
-     * getModel メソッドテスト.
+     * getFlow メソッドテスト.
      * インデントが異常なYAMLからフローが取得できることをテストする。<br>
      *
      */
-    public void testGetModelShouldReturn_Null() {
+    public void testGetFlowShouldReturn_Null() {
         String yamlString = 
                   "firstState: DisplayForm1xx\n"
                 + "\n"
@@ -618,19 +618,18 @@ public class FlowMapperGetModelTest extends TestCase {
                 + "nextState: DisplayForm1xx\n";
         
         FlowMapper flowMapper = new FlowMapper();
-        Flow flow = (Flow) flowMapper.getModel(yamlString);
+        Flow flow = flowMapper.getFlow(yamlString);
         
         assertNull(flow);
     }
 
-    // トップレベルで不正なキーが含まれている
     /**
-     * getModel メソッドテスト.
+     * getFlow メソッドテスト.
      * トップレベルのキーに不正な値が含まれているYAMLからフローが
      * 取得できることをテストする。<br>
      *
      */
-    public void testGetModelShouldReturn_NothingAction_Flow() {
+    public void testGetFlowShouldReturn_NothingAction_Flow() {
         String yamlString = 
                   "firstState: DisplayForm1\n"
                 + "\n"
@@ -656,7 +655,7 @@ public class FlowMapperGetModelTest extends TestCase {
                 + "        nextState: DisplayForm1\n";
         
         FlowMapper flowMapper = new FlowMapper();
-        Flow flow = (Flow) flowMapper.getModel(yamlString);
+        Flow flow = flowMapper.getFlow(yamlString);
         
         assertNotNull(flow);
         assertEquals(4, flow.getStateList().size());
