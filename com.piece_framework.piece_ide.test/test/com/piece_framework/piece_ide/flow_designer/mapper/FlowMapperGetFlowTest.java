@@ -559,13 +559,12 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(1, initialState.getEventList().size());
         assertEquals(0, initialState.getTransitionEventList().size());
 
-        assertEquals(4, viewState1.getEventList().size());
+        assertEquals(3, viewState1.getEventList().size());
         assertNormalStateBiuldinEvent(viewState1);
         Event view1ToAction = 
             viewState1.getEventByName("Process1FromDisplayForm1");
-        assertNotNull(view1ToAction);
-        assertNull(view1ToAction.getNextState());
-    
+        assertNull(view1ToAction);
+
         assertEquals(4, viewState2.getEventList().size());
         assertNormalStateBiuldinEvent(viewState2);
         Event view2ToFinal = 
@@ -573,16 +572,14 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertNotNull(view2ToFinal);
         assertEquals(finalState, view2ToFinal.getNextState());
 
-        assertEquals(5, actionState.getEventList().size());
+        assertEquals(3, actionState.getEventList().size());
         assertNormalStateBiuldinEvent(actionState);
         Event actionToView1 = 
             actionState.getEventByName("DisplayForm1FromProcess1");
         Event actionToView2 = 
             actionState.getEventByName("DisplayForm2FromProcess1");
-        assertNotNull(actionToView1);
-        assertNull(actionToView1.getNextState());
-        assertNotNull(actionToView2);
-        assertNull(actionToView2.getNextState());
+        assertNull(actionToView1);
+        assertNull(actionToView2);
         
         assertEquals(1, finalState.getEventList().size());
     }
@@ -699,13 +696,12 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertNotNull(initialToView1);
         assertEquals(viewState1, initialToView1.getNextState());
         
-        assertEquals(4, viewState1.getEventList().size());
+        assertEquals(3, viewState1.getEventList().size());
         assertNormalStateBiuldinEvent(viewState1);
         Event view1ToAction = 
             viewState1.getEventByName("Process1FromDisplayForm1");
-        assertNotNull(view1ToAction);
-        assertNull(view1ToAction.getNextState());
-    
+        assertNull(view1ToAction);
+
         assertEquals(4, viewState2.getEventList().size());
         assertNormalStateBiuldinEvent(viewState2);
         Event view2ToFinal = 
