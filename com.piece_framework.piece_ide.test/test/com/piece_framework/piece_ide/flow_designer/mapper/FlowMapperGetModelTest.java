@@ -37,7 +37,7 @@ public class FlowMapperGetModelTest extends TestCase {
      * [Initial]-->[View]-->[Final]
      *
      */
-    public void testGetModelShouldReturn_Initial_View_Final_Flow() {
+    public void testGetModelShouldReturn_InitialViewFinal_Flow() {
         String yamlString = 
                         "firstState: DisplayForm1\n"
                       + "\n"
@@ -84,12 +84,8 @@ public class FlowMapperGetModelTest extends TestCase {
         
         // イベントのアサーション
         assertEquals(2, initialState.getEventList().size());
-        Event initialToView = null;
-        for (Event event : initialState.getEventList()) {
-            if (event.getType() == Event.TRANSITION_EVENT) {
-                initialToView = event;
-            }
-        }
+        Event initialToView = 
+            initialState.getEventByName("DisplayForm1FromInitial");
         assertNotNull(initialToView);
         assertEquals(viewState, initialToView.getNextState());
         
@@ -125,7 +121,7 @@ public class FlowMapperGetModelTest extends TestCase {
      *                -----------
      *
      */
-    public void testGetModelShouldReturn_Initial_View_Action_View_Final_Flow() {
+    public void testGetModelShouldReturn_InitialViewActionViewFinal_Flow() {
         String yamlString = 
                   "firstState: DisplayForm1\n"
                 + "\n"
@@ -191,12 +187,8 @@ public class FlowMapperGetModelTest extends TestCase {
         
         // イベントのアサーション
         assertEquals(2, initialState.getEventList().size());
-        Event initialToView1 = null;
-        for (Event event : initialState.getEventList()) {
-            if (event.getType() == Event.TRANSITION_EVENT) {
-                initialToView1 = event;
-            }
-        }
+        Event initialToView1 = 
+            initialState.getEventByName("DisplayForm1FromInitial");
         assertNotNull(initialToView1);
         assertEquals(viewState1, initialToView1.getNextState());
         
@@ -209,7 +201,8 @@ public class FlowMapperGetModelTest extends TestCase {
     
         assertEquals(4, viewState2.getEventList().size());
         assertNormalStateBiuldinEvent(viewState2);
-        Event view2ToFinal = viewState2.getEventByName("FinalFromDisplayForm2");
+        Event view2ToFinal = 
+            viewState2.getEventByName("FinalFromDisplayForm2");
         assertNotNull(view2ToFinal);
         assertEquals(finalState, view2ToFinal.getNextState());
 
@@ -228,29 +221,111 @@ public class FlowMapperGetModelTest extends TestCase {
     }
     
     /**
-     * getYAML メソッドテスト.
-     * ファイナルステートへの遷移がふたつあるフローをYAMLに
-     * 出力できることをテストする。<br>
+     * getModel メソッドテスト.
+     * ファイナルステートへの遷移がふたつあるYAMLからフロー
+     * を取得できることをテストする。<br>
      * [Initial]-->[View]-->[Final]
      *                         /|
      *             [View]--------
      *
      */
+    public void testGetModelShouldReturn_TwoStateToFinalState_Flow() {
+        String yamlString = 
+              "firstState: DisplayForm1\n"
+            + "\n"
+            + "lastState:\n"
+            + "  - name: DisplayForm1\n"
+            + "    view: Form1\n"
+            + "  - name: DisplayForm2\n"
+            + "    view: Form2\n"
+            + "    transition:\n"
+            + "      - event: DisplayForm2FromDisplayForm2\n"
+            + "        nextState: DisplayForm2\n"
+            + "        action:\n"
+            + "          method: ActionClass:doDisplayForm2FromDisplayForm2\n"
+            + "        guard:\n"
+            + "          method: ActionClass:guardMethod\n";
+
+          FlowMapper flowMapper = new FlowMapper();
+          Flow flow = (Flow) flowMapper.getModel(yamlString);
+          
+          assertNotNull(flow);
+          assertEquals(4, flow.getStateList().size());
+          
+          State initialState = null;
+          State finalState = null;
+          List<State> viewStateList = new ArrayList<State>();
+          List<State> actionStateList = new ArrayList<State>();
+          
+          for (State state : flow.getStateList()) {
+              if (state.getType() == State.INITIAL_STATE) {
+                  initialState = state;
+              } else if (state.getType() == State.FINAL_STATE) {
+                  finalState = state;
+              } else if (state.getType() == State.VIEW_STATE) {
+                  viewStateList.add(state);
+              } else if (state.getType() == State.ACTION_STATE) {
+                  actionStateList.add(state);
+              } else {
+                  fail();
+              }
+          }
+          
+          // ステートのアサーション
+          assertNotNull(initialState);
+          
+          assertEquals(2, viewStateList.size());
+          State viewState1 = flow.getStateByName("DisplayForm1");
+          State viewState2 = flow.getStateByName("DisplayForm2");
+          assertEquals("Form1", viewState1.getView());
+          assertEquals("Form2", viewState2.getView());
+          
+          assertNotNull(finalState);
+          
+          // イベントのアサーション
+          assertEquals(2, initialState.getEventList().size());
+          Event initialToView1 = 
+              initialState.getEventByName("DisplayForm1FromInitial");
+          assertNotNull(initialToView1);
+          assertEquals(viewState1, initialToView1.getNextState());
+          
+          assertEquals(4, viewState1.getEventList().size());
+          assertNormalStateBiuldinEvent(viewState1);
+          Event view1ToFinal = 
+              viewState1.getEventByName("FinalFromDisplayForm1");
+          assertNotNull(view1ToFinal);
+          assertEquals(finalState, view1ToFinal.getNextState());
+      
+          assertEquals(5, viewState2.getEventList().size());
+          assertNormalStateBiuldinEvent(viewState2);
+          Event view2ToView2 = 
+              viewState2.getEventByName("DisplayForm2FromDisplayForm2");
+          assertNotNull(view2ToView2);
+          assertEquals(viewState2, view2ToView2.getNextState());
+          Event view2ToFinal = 
+              viewState2.getEventByName("FinalFromDisplayForm2");
+          assertNotNull(view2ToFinal);
+          assertEquals(finalState, view2ToFinal.getNextState());
+
+          assertEquals(1, finalState.getEventList().size());
+    }
     
     /**
-     * getYAML メソッドテスト.
-     * イニシャルステートからの遷移がないフローをYAMLに
-     * 出力できることをテストする。<br>
+     * getModel メソッドテスト.
+     * イニシャルステートからの遷移がないYAMLからをフローを取
+     * 得できることをテストする。<br>
      * [Initial]   [View]-->[Final]
      *
      */
     
     /**
-     * getYAML メソッドテスト.
-     * ファイナルステートがないフローをYAMLに出力できることをテストする。<br>
+     * getModel メソッドテスト.
+     * ファイナルステートがないYAMLからフローが取得できることを
+     * テストする。<br>
      * [Initial]-->[View]-->[Action]
      *
      */
+    // ビューステート、アクションステートのビルトインイベントを定義する!!
     
     // YAMLが不正な場合
     // トップレベルで不正なキーが含まれている
