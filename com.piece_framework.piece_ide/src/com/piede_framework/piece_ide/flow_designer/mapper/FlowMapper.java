@@ -68,7 +68,8 @@ public class FlowMapper extends AbstractMapper {
                 
                 Object transitionValue = 
                     getValueIgnoreCase((Map) viewMap, "transition");
-                if (transitionValue != null && transitionValue instanceof List) {
+                if (transitionValue != null
+                    && transitionValue instanceof List) {
                     transitionMap.put(state, (List) transitionValue);
                 }
                 
@@ -88,7 +89,8 @@ public class FlowMapper extends AbstractMapper {
                 
                 Object transitionValue = 
                     getValueIgnoreCase((Map) actionMap, "transition");
-                if (transitionValue != null && transitionValue instanceof List) {
+                if (transitionValue != null
+                    && transitionValue instanceof List) {
                     transitionMap.put(state, (List) transitionValue);
                 }
                 
@@ -161,7 +163,8 @@ public class FlowMapper extends AbstractMapper {
                 
                 Object transitionValue = 
                     getValueIgnoreCase((Map) lastMap, "transition");
-                if (transitionValue != null && transitionValue instanceof List) {
+                if (transitionValue != null 
+                    && transitionValue instanceof List) {
                     transitionMap.put(state, (List) transitionValue);
                 }
                 
@@ -174,9 +177,10 @@ public class FlowMapper extends AbstractMapper {
                 normalStateList.add(state);
             }
         }
+        
+        initialState = new State(State.INITIAL_STATE);
+        initialState.setName("Initial");
         if (initialValue != null && initialValue instanceof String) {
-            initialState = new State(State.INITIAL_STATE);
-            initialState.setName("Initial");
             Event transitionEvent = null;
             for (State state : normalStateList) {
                 if (state.getName().equals((String) initialValue)) {
