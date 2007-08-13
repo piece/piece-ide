@@ -27,6 +27,11 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  */
 public class FlowMapper extends AbstractMapper {
 
+    private Flow fFlow;
+    private Map fYAMLMap;
+    private List<State> fNormalStateList;
+    private Map<State, List> fTransitionMap;
+    
     /**
      * フローモデルを返す.
      * 
@@ -34,53 +39,22 @@ public class FlowMapper extends AbstractMapper {
      * @return フローモデル
      */
     public Flow getFlow(String yaml) {
-        Object yamlObject = null;
-        try {
-            yamlObject = Yaml.load(yaml);
-        } catch (YamlException ye) {
-            ye.printStackTrace();
-        }
-        if (yamlObject == null || !(yamlObject instanceof Map)) {
+        fYAMLMap = getYAMLMap(yaml);
+        if (fYAMLMap == null) {
             return null;
         }
         
-        Flow flow = new Flow(null, null);
-        Object initialValue = 
-                getValueIgnoreCase((Map) yamlObject, "firstState");
-        Object lastValue = getValueIgnoreCase((Map) yamlObject, "lastState");
-        Object viewValue = getValueIgnoreCase((Map) yamlObject, "viewState");
-        Object actionValue = 
-                getValueIgnoreCase((Map) yamlObject, "actionState");
+        Object initialValue = getValueIgnoreCase(fYAMLMap, "firstState");
+        Object lastValue = getValueIgnoreCase(fYAMLMap, "lastState");
         
+        fFlow = new Flow(null, null);
         State initialState = null;
         State finalState = null;
-        List<State> normalStateList = new ArrayList<State>();
-        Map<State, List> transitionMap = new HashMap<State, List>();
+        fNormalStateList = new ArrayList<State>();
+        fTransitionMap = new HashMap<State, List>();
         
-        if (viewValue != null && viewValue instanceof List) {
-            Iterator iterator = ((List) viewValue).iterator();
-            while (iterator.hasNext()) {
-                Object viewMap = iterator.next();
-                if (!(viewMap instanceof Map)) {
-                    continue;
-                }
-                
-                normalStateList.add(
-                        createNormalState((Map) viewMap, transitionMap));
-            }
-        }
-        if (actionValue != null && actionValue instanceof List) {
-            Iterator iterator = ((List) actionValue).iterator();
-            while (iterator.hasNext()) {
-                Object actionMap = iterator.next();
-                if (!(actionMap instanceof Map)) {
-                    continue;
-                }
-                
-                normalStateList.add(
-                        createNormalState((Map) actionMap, transitionMap));
-            }
-        }
+        createNormalStateList();
+        
         if (lastValue != null 
             && (lastValue instanceof Map || lastValue instanceof List)) {
             List<Map> lastList = new ArrayList<Map>();
@@ -100,7 +74,7 @@ public class FlowMapper extends AbstractMapper {
             while (iterator.hasNext()) {
                 Map lastMap = (Map) iterator.next();
                 
-                State state = createNormalState(lastMap, transitionMap);
+                State state = createNormalState(lastMap);
                 
                 Event transitionEvent = new Event(Event.TRANSITION_EVENT);
                 transitionEvent.setName(
@@ -108,43 +82,49 @@ public class FlowMapper extends AbstractMapper {
                 transitionEvent.setNextState(finalState);
                 state.addEvent(transitionEvent);
                 
-                normalStateList.add(state);
+                fNormalStateList.add(state);
             }
         }
         
         initialState = new State(State.INITIAL_STATE);
         initialState.setName("Initial");
         if (initialValue != null && initialValue instanceof String) {
-            Event transitionEvent = null;
-            for (State state : normalStateList) {
-                if (state.getName().equals((String) initialValue)) {
-                    transitionEvent = new Event(Event.TRANSITION_EVENT);
-                    transitionEvent.setName(
-                            initialState.generateEventName(state.getName()));
-                    transitionEvent.setNextState(state);
-                }
-            }
-            if (transitionEvent != null) {
-                initialState.addEvent(transitionEvent);
-            }
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("event", 
+                    ((String) initialValue) + "From" + initialState.getName());
+            map.put("nextState", (String) initialValue);
+            List<Object> list = new ArrayList<Object>();
+            list.add(map);
+            fTransitionMap.put(initialState, list);
+            
+//            Event transitionEvent = null;
+//            for (State state : fNormalStateList) {
+//                if (state.getName().equals((String) initialValue)) {
+//                    transitionEvent = new Event(Event.TRANSITION_EVENT);
+//                    transitionEvent.setName(
+//                            initialState.generateEventName(state.getName()));
+//                    transitionEvent.setNextState(state);
+//                }
+//            }
+//            if (transitionEvent != null) {
+//                initialState.addEvent(transitionEvent);
+//            }
         }
         
         if (initialState != null) {
-            flow.addState(initialState);
+            fFlow.addState(initialState);
         }
         if (finalState != null) {
-            flow.addState(finalState);
+            fFlow.addState(finalState);
         }
-        for (State state : normalStateList) {
-            flow.addState(state);
+        for (State state : fNormalStateList) {
+            fFlow.addState(state);
         }
         
-        setTransitionEvent(flow, normalStateList, transitionMap);
+        addTransitionEvent();
         
-        return flow;
+        return fFlow;
     }
-
-
     
     /**
      * 指定されたFlowをYAMLで出力する.
@@ -181,28 +161,40 @@ public class FlowMapper extends AbstractMapper {
         }
         return stateMapper;
     }
-    
-    /**
-     * 文字列をキーに持つMapオブジェクトから値を取得する.
-     * キーとなる文字列の大文字・小文字は無視する。
-     * 
-     * @param map Mapオブジェクト
-     * @param key キー
-     * @return 値
-     */
-    private Object getValueIgnoreCase(Map map, String key) {
-        if (map == null) {
+
+    private Map getYAMLMap(String yaml) {
+        Object yamlObject = null;
+        try {
+            yamlObject = Yaml.load(yaml);
+        } catch (YamlException ye) {
+            ye.printStackTrace();
+        }
+        if (yamlObject == null || !(yamlObject instanceof Map)) {
             return null;
         }
         
-        Iterator iterator = map.keySet().iterator();
-        while (iterator.hasNext()) {
-            String mapKey = (String) iterator.next();
-            if (key.equalsIgnoreCase(mapKey)) {
-                 return map.get(mapKey);
+        return (Map) yamlObject;
+    }
+
+    private void createNormalStateList() {
+        String[] stateNameList = {"viewState", "actionState"};
+        for (String stateName : stateNameList) {
+            Object value = getValueIgnoreCase(fYAMLMap, stateName);
+            if (value == null || !(value instanceof List)) {
+                continue;
+            }
+            
+            Iterator iterator = ((List) value).iterator();
+            while (iterator.hasNext()) {
+                Object map = iterator.next();
+                if (!(map instanceof Map)) {
+                    continue;
+                }
+                
+                fNormalStateList.add(
+                        createNormalState((Map) map));
             }
         }
-        return null;
     }
     
     /**
@@ -211,12 +203,9 @@ public class FlowMapper extends AbstractMapper {
      * 保持しているかで判断する。
      * 
      * @param stateMap ステートMapオブジェクト
-     * @param transitionMap 遷移Mapオブジェクト
      * @return ノーマルステート(ビューステート、アクションステート)
      */
-    private State createNormalState(
-                        Map stateMap, 
-                        Map<State, List> transitionMap) {
+    private State createNormalState(Map stateMap) {
         State state = null;
         Object view = getValueIgnoreCase(stateMap, "view");
         if (view != null) {
@@ -236,25 +225,19 @@ public class FlowMapper extends AbstractMapper {
             getValueIgnoreCase(stateMap, "transition");
         if (transitionValue != null
             && transitionValue instanceof List) {
-            transitionMap.put(state, (List) transitionValue);
+            fTransitionMap.put(state, (List) transitionValue);
         }
         
         return state;
     }
     
     /**
-     * 遷移イベントを各ステートにセットする.
+     * 遷移イベントを各ステートに追加する.
      * 
-     * @param flow フロー
-     * @param normalStateList ノーマルステートリスト
-     * @param transitionMap 遷移Mapオブジェクト
      */
-    private void setTransitionEvent(
-            Flow flow, 
-            List<State> normalStateList, 
-            Map<State, List> transitionMap) {
-        for (State state : normalStateList) {
-            List transitionList = transitionMap.get(state);
+    private void addTransitionEvent() {
+        for (State state : fFlow.getStateList()) {
+            List transitionList = fTransitionMap.get(state);
             if (transitionList == null) {
                 continue;
             }
@@ -266,14 +249,15 @@ public class FlowMapper extends AbstractMapper {
                     continue;
                 }
                 
-                Event event = new Event(Event.TRANSITION_EVENT);
-                event.setName(
-                    (String) getValueIgnoreCase((Map) map, "event"));
-                event.setNextState(
-                    flow.getStateByName(
-                        (String) getValueIgnoreCase((Map) map, "nextState")));
-                
-                state.addEvent(event);
+                State nextState = fFlow.getStateByName(
+                        (String) getValueIgnoreCase((Map) map, "nextState"));
+                if (nextState != null) {
+                    Event event = new Event(Event.TRANSITION_EVENT);
+                    event.setName(
+                        (String) getValueIgnoreCase((Map) map, "event"));
+                    event.setNextState(nextState);
+                    state.addEvent(event);
+                }
             }
         }
     }
@@ -300,5 +284,28 @@ public class FlowMapper extends AbstractMapper {
                         new EventHandler((String) methodValue));
             }
         }
+    }
+    
+    /**
+     * 文字列をキーに持つMapオブジェクトから値を取得する.
+     * キーとなる文字列の大文字・小文字は無視する。
+     * 
+     * @param map Mapオブジェクト
+     * @param key キー
+     * @return 値
+     */
+    private Object getValueIgnoreCase(Map map, String key) {
+        if (map == null) {
+            return null;
+        }
+        
+        Iterator iterator = map.keySet().iterator();
+        while (iterator.hasNext()) {
+            String mapKey = (String) iterator.next();
+            if (key.equalsIgnoreCase(mapKey)) {
+                 return map.get(mapKey);
+            }
+        }
+        return null;
     }
 }
