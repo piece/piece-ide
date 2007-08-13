@@ -10,7 +10,6 @@ import java.util.Map;
 import org.ho.yaml.Yaml;
 import org.ho.yaml.exception.YamlException;
 
-import com.piece_framework.piece_ide.flow_designer.model.AbstractModel;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
@@ -33,11 +32,8 @@ public class FlowMapper extends AbstractMapper {
      * 
      * @param yaml YAML文字列
      * @return フローモデル
-     * @see com.piede_framework.piece_ide.flow_designer.mapper.AbstractMapper
-     *          #getModel(java.lang.String)
      */
-    @Override
-    public AbstractModel getModel(String yaml) {
+    public Flow getFlow(String yaml) {
         Object yamlObject = null;
         try {
             yamlObject = Yaml.load(yaml);
