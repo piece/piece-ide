@@ -66,6 +66,40 @@ public class FlowMapper extends AbstractMapper {
                 state.setView(
                         (String) getValueIgnoreCase((Map) viewMap, "view"));
                 
+                Object activityValue = 
+                            getValueIgnoreCase((Map) viewMap, "activity");
+                if (activityValue != null && activityValue instanceof Map) {
+                    Object methodValue = 
+                        getValueIgnoreCase((Map) activityValue, "method");
+                    if (methodValue != null && methodValue instanceof String) {
+                        Event event = state.getEventByName("Activity");
+                        event.setEventHandler(
+                                new EventHandler((String) methodValue));
+                    }
+                }
+                Object entryValue = 
+                            getValueIgnoreCase((Map) viewMap, "entry");
+                if (entryValue != null && entryValue instanceof Map) {
+                    Object methodValue = 
+                        getValueIgnoreCase((Map) entryValue, "method");
+                    if (methodValue != null && methodValue instanceof String) {
+                        Event event = state.getEventByName("Entry");
+                        event.setEventHandler(
+                                new EventHandler((String) methodValue));
+                    }
+                }
+                Object exitValue = 
+                            getValueIgnoreCase((Map) viewMap, "exit");
+                if (exitValue != null && exitValue instanceof Map) {
+                    Object methodValue = 
+                        getValueIgnoreCase((Map) exitValue, "method");
+                    if (methodValue != null && methodValue instanceof String) {
+                        Event event = state.getEventByName("Exit");
+                        event.setEventHandler(
+                                new EventHandler((String) methodValue));
+                    }
+                }
+                
                 Object transitionValue = 
                     getValueIgnoreCase((Map) viewMap, "transition");
                 if (transitionValue != null
@@ -86,6 +120,40 @@ public class FlowMapper extends AbstractMapper {
                 State state = new State(State.ACTION_STATE);
                 state.setName(
                         (String) getValueIgnoreCase((Map) actionMap, "name"));
+                
+                Object activityValue = 
+                            getValueIgnoreCase((Map) actionMap, "activity");
+                if (activityValue != null && activityValue instanceof Map) {
+                    Object methodValue = 
+                        getValueIgnoreCase((Map) activityValue, "method");
+                    if (methodValue != null && methodValue instanceof String) {
+                        Event event = state.getEventByName("Activity");
+                        event.setEventHandler(
+                                new EventHandler((String) methodValue));
+                    }
+                }
+                Object entryValue = 
+                            getValueIgnoreCase((Map) actionMap, "entry");
+                if (entryValue != null && entryValue instanceof Map) {
+                    Object methodValue = 
+                        getValueIgnoreCase((Map) entryValue, "method");
+                    if (methodValue != null && methodValue instanceof String) {
+                        Event event = state.getEventByName("Entry");
+                        event.setEventHandler(
+                                new EventHandler((String) methodValue));
+                    }
+                }
+                Object exitValue = 
+                            getValueIgnoreCase((Map) actionMap, "exit");
+                if (exitValue != null && exitValue instanceof Map) {
+                    Object methodValue = 
+                        getValueIgnoreCase((Map) exitValue, "method");
+                    if (methodValue != null && methodValue instanceof String) {
+                        Event event = state.getEventByName("Exit");
+                        event.setEventHandler(
+                                new EventHandler((String) methodValue));
+                    }
+                }
                 
                 Object transitionValue = 
                     getValueIgnoreCase((Map) actionMap, "transition");
