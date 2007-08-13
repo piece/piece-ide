@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.ho.yaml.Yaml;
 
-import com.piece_framework.piece_ide.flow_designer.model.AbstractModel;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
@@ -25,20 +24,6 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 public abstract class AbstractStateMapper extends AbstractMapper {
 
     private Flow fFlow;
-    
-    /**
-     * ステートモデルを返す.
-     * 
-     * @param yaml YAML文字列
-     * @return ステート
-     * @see com.piede_framework.piece_ide.flow_designer.mapper.AbstractMapper
-     *          #getModel(java.lang.String)
-     */
-    @Override
-    public AbstractModel getModel(String yaml) {
-        // TODO 自動生成されたメソッド・スタブ
-        return null;
-    }
 
     /**
      * YAMLを返す.

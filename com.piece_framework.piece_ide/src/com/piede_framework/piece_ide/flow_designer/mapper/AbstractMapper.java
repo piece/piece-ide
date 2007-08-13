@@ -1,6 +1,5 @@
 package com.piede_framework.piece_ide.flow_designer.mapper;
 
-import com.piece_framework.piece_ide.flow_designer.model.AbstractModel;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 
 /**
@@ -13,15 +12,7 @@ import com.piece_framework.piece_ide.flow_designer.model.Flow;
  * 
  */
 public abstract class AbstractMapper {
-    
-    /**
-     * モデルを取得する.
-     * 
-     * @param yaml YAML文字列
-     * @return モデル
-     */
-    public abstract AbstractModel getModel(String yaml);
-    
+
     /**
      * YAML文字列を取得する.
      * 
