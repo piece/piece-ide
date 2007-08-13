@@ -43,73 +43,14 @@ public class FlowMapper extends AbstractMapper {
         if (fYAMLMap == null) {
             return null;
         }
-        
-        Object initialValue = getValueIgnoreCase(fYAMLMap, "firstState");
-        Object lastValue = getValueIgnoreCase(fYAMLMap, "lastState");
-        
+
         fFlow = new Flow(null, null);
-        State initialState = null;
-        State finalState = null;
         fNormalStateList = new ArrayList<State>();
         fTransitionMap = new HashMap<State, List>();
         
-        createNormalStateList();
-        
-        if (lastValue != null 
-            && (lastValue instanceof Map || lastValue instanceof List)) {
-            List<Map> lastList = new ArrayList<Map>();
-            if (lastValue instanceof Map) {
-                lastList.add((Map) lastValue);
-            } else if (lastValue instanceof List) {
-                Iterator iterator = ((List) lastValue).iterator();
-                while (iterator.hasNext()) {
-                    lastList.add((Map) iterator.next());
-                }
-            }
-            
-            finalState = new State(State.FINAL_STATE);
-            finalState.setName("Final");
-            
-            Iterator iterator = lastList.iterator();
-            while (iterator.hasNext()) {
-                Map lastMap = (Map) iterator.next();
-                
-                State state = createNormalState(lastMap);
-                
-                Event transitionEvent = new Event(Event.TRANSITION_EVENT);
-                transitionEvent.setName(
-                        state.generateEventName(finalState.getName()));
-                transitionEvent.setNextState(finalState);
-                state.addEvent(transitionEvent);
-                
-                fNormalStateList.add(state);
-            }
-        }
-        
-        initialState = new State(State.INITIAL_STATE);
-        initialState.setName("Initial");
-        if (initialValue != null && initialValue instanceof String) {
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("event", 
-                    ((String) initialValue) + "From" + initialState.getName());
-            map.put("nextState", (String) initialValue);
-            List<Object> list = new ArrayList<Object>();
-            list.add(map);
-            fTransitionMap.put(initialState, list);
-            
-//            Event transitionEvent = null;
-//            for (State state : fNormalStateList) {
-//                if (state.getName().equals((String) initialValue)) {
-//                    transitionEvent = new Event(Event.TRANSITION_EVENT);
-//                    transitionEvent.setName(
-//                            initialState.generateEventName(state.getName()));
-//                    transitionEvent.setNextState(state);
-//                }
-//            }
-//            if (transitionEvent != null) {
-//                initialState.addEvent(transitionEvent);
-//            }
-        }
+        State initialState = createInitialState();
+        State finalState = createFinalState();
+        addNormalStateList();
         
         if (initialState != null) {
             fFlow.addState(initialState);
@@ -162,6 +103,12 @@ public class FlowMapper extends AbstractMapper {
         return stateMapper;
     }
 
+    /**
+     * YAMLからMapオブジェクトを取得する.
+     * 
+     * @param yaml YAML文字列
+     * @return Mapオブジェクト
+     */
     private Map getYAMLMap(String yaml) {
         Object yamlObject = null;
         try {
@@ -176,7 +123,90 @@ public class FlowMapper extends AbstractMapper {
         return (Map) yamlObject;
     }
 
-    private void createNormalStateList() {
+    /**
+     * イニシャルステートを生成する.
+     * 
+     * @return イニシャルステート
+     */
+    private State createInitialState() {
+        State initialState = new State(State.INITIAL_STATE);
+        initialState.setName("Initial");
+        
+        Object value = getValueIgnoreCase(fYAMLMap, "firstState");
+        if (value != null && value instanceof String) {
+            setTransitionEventMap(initialState, (String) value);
+        }
+        
+        return initialState;
+    }
+    
+    /**
+     * ファイナルステートを生成する.
+     * 
+     * @return ファイナルステート
+     */
+    private State createFinalState() {
+        Object value = getValueIgnoreCase(fYAMLMap, "lastState");
+        
+        if (value != null 
+            && (value instanceof Map || value instanceof List)) {
+            List<Map> lastList = new ArrayList<Map>();
+            if (value instanceof Map) {
+                lastList.add((Map) value);
+            } else if (value instanceof List) {
+                Iterator iterator = ((List) value).iterator();
+                while (iterator.hasNext()) {
+                    lastList.add((Map) iterator.next());
+                }
+            }
+            
+            State finalState = new State(State.FINAL_STATE);
+            finalState.setName("Final");
+            
+            Iterator iterator = lastList.iterator();
+            while (iterator.hasNext()) {
+                Map lastMap = (Map) iterator.next();
+                
+                State state = createNormalState(lastMap);
+                fNormalStateList.add(state);
+                
+                setTransitionEventMap(state, finalState.getName());
+            }
+            return finalState;
+        }
+        
+        return null;
+    }
+    
+    /**
+     * 遷移イベントを遷移Mapオブジェクトにセットする.
+     * 
+     * @param state 遷移元ステート
+     * @param nextStateName 遷移先ステート名
+     */
+    private void setTransitionEventMap(State state, String nextStateName) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("event", 
+                nextStateName + "From" + state.getName());
+        map.put("nextState", nextStateName);
+        
+        List<Object> list = new ArrayList<Object>();
+        if (fTransitionMap.get(state) != null) {
+            Iterator iteratorTransition = 
+                ((List) fTransitionMap.get(state)).iterator();
+            while (iteratorTransition.hasNext()) {
+                list.add(iteratorTransition.next());
+            }
+        }
+        list.add(map);
+        fTransitionMap.put(state, list);
+    }
+    
+    /**
+     * ノーマルステート(ビューステート、アクションステート)をセットする.
+     * 
+     */
+    private void addNormalStateList() {
         String[] stateNameList = {"viewState", "actionState"};
         for (String stateName : stateNameList) {
             Object value = getValueIgnoreCase(fYAMLMap, stateName);
