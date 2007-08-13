@@ -255,7 +255,6 @@ public class FlowMapperGetModelTest extends TestCase {
           State initialState = null;
           State finalState = null;
           List<State> viewStateList = new ArrayList<State>();
-          List<State> actionStateList = new ArrayList<State>();
           
           for (State state : flow.getStateList()) {
               if (state.getType() == State.INITIAL_STATE) {
@@ -264,8 +263,6 @@ public class FlowMapperGetModelTest extends TestCase {
                   finalState = state;
               } else if (state.getType() == State.VIEW_STATE) {
                   viewStateList.add(state);
-              } else if (state.getType() == State.ACTION_STATE) {
-                  actionStateList.add(state);
               } else {
                   fail();
               }
@@ -317,7 +314,56 @@ public class FlowMapperGetModelTest extends TestCase {
      * [Initial]   [View]-->[Final]
      *
      */
-    
+    public void testGetModelShouldReturn_Initial_ViewFinal_Flow() {
+        String yamlString = 
+              "lastState:\n"
+            + "  name: DisplayForm1\n"
+            + "  view: Form1\n";
+
+          FlowMapper flowMapper = new FlowMapper();
+          Flow flow = (Flow) flowMapper.getModel(yamlString);
+          
+          assertNotNull(flow);
+          assertEquals(3, flow.getStateList().size());
+          
+          State initialState = null;
+          State finalState = null;
+          List<State> viewStateList = new ArrayList<State>();
+          
+          for (State state : flow.getStateList()) {
+              if (state.getType() == State.INITIAL_STATE) {
+                  initialState = state;
+              } else if (state.getType() == State.FINAL_STATE) {
+                  finalState = state;
+              } else if (state.getType() == State.VIEW_STATE) {
+                  viewStateList.add(state);
+              } else {
+                  fail();
+              }
+          }
+          
+          // ステートのアサーション
+          assertNotNull(initialState);
+          
+          assertEquals(1, viewStateList.size());
+          State viewState1 = flow.getStateByName("DisplayForm1");
+          assertEquals("Form1", viewState1.getView());
+          
+          assertNotNull(finalState);
+          
+          // イベントのアサーション
+          assertEquals(1, initialState.getEventList().size());
+          assertEquals(0, initialState.getTransitionEventList().size());
+          
+          assertEquals(4, viewState1.getEventList().size());
+          assertNormalStateBiuldinEvent(viewState1);
+          Event view1ToFinal = 
+              viewState1.getEventByName("FinalFromDisplayForm1");
+          assertNotNull(view1ToFinal);
+          assertEquals(finalState, view1ToFinal.getNextState());
+
+          assertEquals(1, finalState.getEventList().size());
+    }
     /**
      * getModel メソッドテスト.
      * ファイナルステートがないYAMLからフローが取得できることを
