@@ -95,62 +95,84 @@ public class FlowMapper extends AbstractMapper {
                 normalStateList.add(state);
             }
         }
-        if (lastValue != null && lastValue instanceof Map) {
+        if (lastValue != null 
+            && (lastValue instanceof Map || lastValue instanceof List)) {
+            List<Map> lastList = new ArrayList<Map>();
+            if (lastValue instanceof Map) {
+                lastList.add((Map) lastValue);
+            } else if (lastValue instanceof List) {
+                Iterator iterator = ((List) lastValue).iterator();
+                while (iterator.hasNext()) {
+                    lastList.add((Map) iterator.next());
+                }
+            }
+            
             finalState = new State(State.FINAL_STATE);
             finalState.setName("Final");
             
-            State state = null;
-            Object view = getValueIgnoreCase((Map) lastValue, "view");
-            if (view != null) {
-                state = new State(State.VIEW_STATE);
-                state.setView((String) view);
-            } else {
-                state = new State(State.ACTION_STATE);
-            }
-            state.setName(
-                    (String) getValueIgnoreCase((Map) lastValue, "name"));
-            
-            Object activityValue = 
-                        getValueIgnoreCase((Map) lastValue, "activity");
-            if (activityValue != null && activityValue instanceof Map) {
-                Object methodValue = 
-                    getValueIgnoreCase((Map) activityValue, "method");
-                if (methodValue != null && methodValue instanceof String) {
-                    Event event = state.getEventByName("Activity");
-                    event.setEventHandler(
-                            new EventHandler((String) methodValue));
+            Iterator iterator = lastList.iterator();
+            while (iterator.hasNext()) {
+                Map lastMap = (Map) iterator.next();
+                
+                State state = null;
+                Object view = getValueIgnoreCase(lastMap, "view");
+                if (view != null) {
+                    state = new State(State.VIEW_STATE);
+                    state.setView((String) view);
+                } else {
+                    state = new State(State.ACTION_STATE);
                 }
-            }
-            Object entryValue = 
-                        getValueIgnoreCase((Map) lastValue, "entry");
-            if (entryValue != null && entryValue instanceof Map) {
-                Object methodValue = 
-                    getValueIgnoreCase((Map) entryValue, "method");
-                if (methodValue != null && methodValue instanceof String) {
-                    Event event = state.getEventByName("Entry");
-                    event.setEventHandler(
-                            new EventHandler((String) methodValue));
+                state.setName(
+                        (String) getValueIgnoreCase(lastMap, "name"));
+                
+                Object activityValue = 
+                            getValueIgnoreCase(lastMap, "activity");
+                if (activityValue != null && activityValue instanceof Map) {
+                    Object methodValue = 
+                        getValueIgnoreCase((Map) activityValue, "method");
+                    if (methodValue != null && methodValue instanceof String) {
+                        Event event = state.getEventByName("Activity");
+                        event.setEventHandler(
+                                new EventHandler((String) methodValue));
+                    }
                 }
-            }
-            Object exitValue = 
-                        getValueIgnoreCase((Map) lastValue, "exit");
-            if (exitValue != null && exitValue instanceof Map) {
-                Object methodValue = 
-                    getValueIgnoreCase((Map) exitValue, "method");
-                if (methodValue != null && methodValue instanceof String) {
-                    Event event = state.getEventByName("Exit");
-                    event.setEventHandler(
-                            new EventHandler((String) methodValue));
+                Object entryValue = 
+                            getValueIgnoreCase(lastMap, "entry");
+                if (entryValue != null && entryValue instanceof Map) {
+                    Object methodValue = 
+                        getValueIgnoreCase((Map) entryValue, "method");
+                    if (methodValue != null && methodValue instanceof String) {
+                        Event event = state.getEventByName("Entry");
+                        event.setEventHandler(
+                                new EventHandler((String) methodValue));
+                    }
                 }
+                Object exitValue = 
+                            getValueIgnoreCase(lastMap, "exit");
+                if (exitValue != null && exitValue instanceof Map) {
+                    Object methodValue = 
+                        getValueIgnoreCase((Map) exitValue, "method");
+                    if (methodValue != null && methodValue instanceof String) {
+                        Event event = state.getEventByName("Exit");
+                        event.setEventHandler(
+                                new EventHandler((String) methodValue));
+                    }
+                }
+                
+                Object transitionValue = 
+                    getValueIgnoreCase((Map) lastMap, "transition");
+                if (transitionValue != null && transitionValue instanceof List) {
+                    transitionMap.put(state, (List) transitionValue);
+                }
+                
+                Event transitionEvent = new Event(Event.TRANSITION_EVENT);
+                transitionEvent.setName(
+                        state.generateEventName(finalState.getName()));
+                transitionEvent.setNextState(finalState);
+                state.addEvent(transitionEvent);
+                
+                normalStateList.add(state);
             }
-            
-            Event transitionEvent = new Event(Event.TRANSITION_EVENT);
-            transitionEvent.setName(
-                    state.generateEventName(finalState.getName()));
-            transitionEvent.setNextState(finalState);
-            state.addEvent(transitionEvent);
-            
-            normalStateList.add(state);
         }
         if (initialValue != null && initialValue instanceof String) {
             initialState = new State(State.INITIAL_STATE);
