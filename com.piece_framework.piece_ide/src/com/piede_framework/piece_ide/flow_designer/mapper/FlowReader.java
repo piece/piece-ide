@@ -1,5 +1,7 @@
 package com.piede_framework.piece_ide.flow_designer.mapper;
 
+import java.io.BufferedInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -28,6 +30,10 @@ public final class FlowReader {
     
     /**
      * YAMLファイルとシリアライズファイルからFlowオブジェクトを読み込む.
+     * YAMLファイルから読み込んだFlowオブジェトとシリアライズファイルか
+     * ら読み込んだFlowオブジェクトを比較し、一致すればシリアライズファ
+     * イｒから読み込んだFlowオブジェクトを返す。
+     * 異なる場合はYAMLファイルから読み込んだFlowオブジェクトを返す。
      * 
      * @param yamlFile YAMLファイル(.flowファイル)
      * @return Flowオブジェクト
@@ -37,7 +43,25 @@ public final class FlowReader {
      */
     public static Flow read(IFile yamlFile) 
                     throws CoreException, IOException, ClassNotFoundException {
+        Flow yamlFlow = null;
         Flow serializeFlow = null;
+        
+        BufferedInputStream bufferedIn = null;
+        try {
+            bufferedIn = new BufferedInputStream(yamlFile.getContents());
+            StringBuffer yamlBuffer = new StringBuffer();
+            int read = 0;
+            while ((read = bufferedIn.read()) != -1) {
+                yamlBuffer.append((char) read);
+            }
+            FlowMapper flowMapper = new FlowMapper();
+            yamlFlow = flowMapper.getFlow(yamlBuffer.toString());
+            
+        } catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
         
         IFile serializeFlowFile = 
                 FlowSerializeUtility.getFlowSeirializeFile(yamlFile); 
@@ -50,6 +74,15 @@ public final class FlowReader {
             }
         }
         
-        return serializeFlow;
+        Flow returnFlow = yamlFlow;
+        if (compareFlow(yamlFlow, serializeFlow)) {
+            returnFlow = serializeFlow;
+        }
+        
+        return returnFlow;
+    }
+    
+    public static boolean compareFlow(Flow flow1, Flow flow2) {
+        return true;
     }
 }
