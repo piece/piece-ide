@@ -84,6 +84,17 @@ public final class FlowReader {
             returnFlow = serializeFlow;
         }
         
+        if (returnFlow != null) {
+            String fileName = yamlFile.getName();
+            String flowName = fileName.substring(0, fileName.indexOf('.'));
+            if (returnFlow.getName() == null) {
+                returnFlow.setName(flowName);
+            }
+            if (returnFlow.getActionClassName() == null) {
+                returnFlow.setActionClassName(flowName + "Action");
+            }
+        }
+        
         return returnFlow;
     }
     

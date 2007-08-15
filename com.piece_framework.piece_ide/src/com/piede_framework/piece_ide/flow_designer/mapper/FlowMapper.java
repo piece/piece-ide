@@ -285,6 +285,14 @@ public class FlowMapper extends AbstractMapper {
                     Event event = new Event(Event.TRANSITION_EVENT);
                     event.setName(
                         (String) getValueIgnoreCase((Map) map, "event"));
+
+                    event.setEventHandler(
+                        getEventHandler(
+                                (Map) getValueIgnoreCase((Map) map, "action")));
+                    event.setGuardEventHandler(
+                            getEventHandler(
+                                (Map) getValueIgnoreCase((Map) map, "guard")));
+                    
                     event.setNextState(nextState);
                     state.addEvent(event);
                 }
@@ -304,16 +312,37 @@ public class FlowMapper extends AbstractMapper {
                         State state, 
                         String eventName) {
         Object value = 
-                    getValueIgnoreCase(map, eventName);
+            getValueIgnoreCase(map, eventName);
         if (value != null && value instanceof Map) {
-            Object methodValue = 
-                getValueIgnoreCase((Map) value, "method");
-            if (methodValue != null && methodValue instanceof String) {
-                Event event = state.getEventByName(eventName);
-                event.setEventHandler(
-                        new EventHandler((String) methodValue));
+            EventHandler eventHandler = getEventHandler((Map) value);
+            Event event = state.getEventByName(eventName);
+            if (eventHandler != null && event != null) {
+                event.setEventHandler(eventHandler);
             }
         }
+    }
+    
+    /**
+     * Mapオブジェクトからイベントハンドラを取得する.
+     * Mapオブジェクトは遷移またはビルトインイベントのMapオブジェクト
+     * である必要があります。
+     * 
+     * @param map Mapオブジェクト
+     * @return イベントハンドラ
+     */
+    private EventHandler getEventHandler(Map map) {
+        if (map == null) {
+            return null;
+        }
+        
+        EventHandler returnEventHandler = null;
+        Object methodValue = 
+            getValueIgnoreCase(map, "method");
+        if (methodValue != null && methodValue instanceof String) {
+            returnEventHandler = 
+                    new EventHandler((String) methodValue);
+        }
+        return returnEventHandler;
     }
     
     /**
