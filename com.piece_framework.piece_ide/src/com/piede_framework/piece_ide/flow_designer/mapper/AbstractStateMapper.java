@@ -188,8 +188,13 @@ public abstract class AbstractStateMapper extends AbstractMapper {
      * イベントハンドラからメソッド名を取得する.
      * イベントハンドラのメソッド名は以下の規則で決定する。<br>
      * ・イベントハンドラにクラス名が指定されていない場合<br>
+     * 　・フローにアクションクラスが指定されている場合<br>
      * 　　[フローに指定されているアクションクラス]＋":"＋<br>
      * 　　　　[イベントハンドラのメソッド名]<br>
+     * 　・フローにアクションクラスが指定されていない場合<br>
+     * 　　[イベントハンドラのメソッド名]<br>
+     * 　　(この場合はEventHandlerクラスのtoStringメソッドで取得できる。)
+     * 
      * ・イベントハンドラにクラス名が指定されている場合<br>
      * 　　[イベントハンドラのクラス名]＋":"＋<br>
      * 　　　　[イベントハンドラのメソッド名]<br>
@@ -200,7 +205,8 @@ public abstract class AbstractStateMapper extends AbstractMapper {
      */
     protected String getMethodName(EventHandler eventHandler) {
         String methodName = "";
-        if (eventHandler.getClassName() == null) {
+        if (eventHandler.getClassName() == null
+            && fFlow.getActionClassName() != null) {
             methodName = fFlow.getActionClassName() + ":"
                        + eventHandler.getMethodName();
         } else {

@@ -107,7 +107,7 @@ public class EventHandler implements Serializable {
             && methodName != null && methodName.length() > 0) {
             return className + ":" + methodName;
         } else if (methodName != null && methodName.length() > 0) {
-            return ":" + methodName;
+            return methodName;
         }
         return "";
     }   
