@@ -608,21 +608,21 @@ public class FlowMapperGetYAMLTest extends TestCase {
             yamlBuffer.append(
                     sp + "entry:\n"
                   + sp + "  method: "
-                            + getActionClassName()
+                            + getClassName(entryEventHandler)
                             + entryEventHandler.getMethodName() + "\n");
         }
         if (activityEventHandler != null) {
             yamlBuffer.append(
                     sp + "activity:\n"
                   + sp + "  method: "
-                            + getActionClassName()
+                            + getClassName(activityEventHandler)
                             + activityEventHandler.getMethodName() + "\n");
         }
         if (exitEventHandler != null) {
             yamlBuffer.append(
                     sp + "exit:\n"
                   + sp + "  method: "
-                            + getActionClassName()
+                            + getClassName(exitEventHandler)
                             + exitEventHandler.getMethodName() + "\n");
         }
         return yamlBuffer.toString();
@@ -661,7 +661,7 @@ public class FlowMapperGetYAMLTest extends TestCase {
                     EventHandler eventHandler = event.getEventHandler();
                     String methodName = "";
                     if (eventHandler.getClassName() == null) {
-                        methodName = getActionClassName()
+                        methodName = getClassName(eventHandler)
                                    + eventHandler.getMethodName();
                     } else {
                         methodName = eventHandler.toString();
@@ -676,7 +676,7 @@ public class FlowMapperGetYAMLTest extends TestCase {
                                 event.getGuardEventHandler();
                     String methodName = "";
                     if (guardEventHandler.getClassName() == null) {
-                        methodName = getActionClassName()
+                        methodName = getClassName(guardEventHandler)
                                    + guardEventHandler.getMethodName();
                     } else {
                         methodName = guardEventHandler.toString();
@@ -693,14 +693,16 @@ public class FlowMapperGetYAMLTest extends TestCase {
     }
     
     /**
-     * フローからアクションクラス名を取得する.
+     * イベントハンドラからクラス名を取得する.
+     * クラス名がない場合は空文字を返す。
      * 
-     * @return アクションクラス名
+     * @param eventHandler イベントハンドラ
+     * @return クラス名
      */
-    private String getActionClassName()  {
+    private String getClassName(EventHandler eventHandler)  {
         String className = "";
-        if (fFlow.getActionClassName() != null) {
-            className = fFlow.getActionClassName() + ":";
+        if (eventHandler.getClassName() != null) {
+            className = eventHandler.getClassName() + ":";
         }
         return className;
     }
