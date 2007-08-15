@@ -130,7 +130,7 @@ public class FlowMapper extends AbstractMapper {
      */
     private State createInitialState() {
         State initialState = new State(State.INITIAL_STATE);
-        initialState.setName("Initial");
+        initialState.setName(fFlow.generateStateName(State.INITIAL_STATE));
         
         Object value = getValueIgnoreCase(fYAMLMap, "firstState");
         if (value != null && value instanceof String) {
@@ -161,7 +161,7 @@ public class FlowMapper extends AbstractMapper {
             }
             
             State finalState = new State(State.FINAL_STATE);
-            finalState.setName("Final");
+            finalState.setName(fFlow.generateStateName(State.FINAL_STATE));
             
             Iterator iterator = lastList.iterator();
             while (iterator.hasNext()) {
@@ -238,7 +238,7 @@ public class FlowMapper extends AbstractMapper {
     private State createNormalState(Map stateMap) {
         State state = null;
         Object view = getValueIgnoreCase(stateMap, "view");
-        if (view != null) {
+        if (stateMap.containsKey("view")) {
             state = new State(State.VIEW_STATE);
             state.setView((String) view);
         } else {
