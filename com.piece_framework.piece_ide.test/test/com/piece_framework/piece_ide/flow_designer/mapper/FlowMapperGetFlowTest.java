@@ -85,7 +85,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         // イベントのアサーション
         assertEquals(2, initialState.getEventList().size());
         Event initialToView = 
-            initialState.getEventByName("DisplayForm1FromInitial");
+            initialState.getEventByName("DisplayForm1FromInitialState");
         assertNotNull(initialToView);
         assertEquals(viewState, initialToView.getNextState());
         
@@ -93,7 +93,8 @@ public class FlowMapperGetFlowTest extends TestCase {
         Event activityEvent = viewState.getEventByName("Activity");
         Event entryEvent = viewState.getEventByName("Entry");
         Event exitEvent = viewState.getEventByName("Exit");
-        Event viewToFinal = viewState.getEventByName("FinalFromDisplayForm1");
+        Event viewToFinal = viewState.getEventByName(
+                                "FinalStateFromDisplayForm1");
         assertNotNull(activityEvent);
         assertNotNull(activityEvent.getEventHandler());
         assertEquals("ActionClass:doActivityOnDisplayForm1", 
@@ -187,7 +188,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         // イベントのアサーション
         assertEquals(2, initialState.getEventList().size());
         Event initialToView1 = 
-            initialState.getEventByName("DisplayForm1FromInitial");
+            initialState.getEventByName("DisplayForm1FromInitialState");
         assertNotNull(initialToView1);
         assertEquals(viewState1, initialToView1.getNextState());
         
@@ -201,7 +202,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(4, viewState2.getEventList().size());
         assertNormalStateBiuldinEvent(viewState2);
         Event view2ToFinal = 
-            viewState2.getEventByName("FinalFromDisplayForm2");
+            viewState2.getEventByName("FinalStateFromDisplayForm2");
         assertNotNull(view2ToFinal);
         assertEquals(finalState, view2ToFinal.getNextState());
 
@@ -281,14 +282,14 @@ public class FlowMapperGetFlowTest extends TestCase {
         // イベントのアサーション
         assertEquals(2, initialState.getEventList().size());
         Event initialToView1 = 
-            initialState.getEventByName("DisplayForm1FromInitial");
+            initialState.getEventByName("DisplayForm1FromInitialState");
         assertNotNull(initialToView1);
         assertEquals(viewState1, initialToView1.getNextState());
         
         assertEquals(4, viewState1.getEventList().size());
         assertNormalStateBiuldinEvent(viewState1);
         Event view1ToFinal = 
-            viewState1.getEventByName("FinalFromDisplayForm1");
+            viewState1.getEventByName("FinalStateFromDisplayForm1");
         assertNotNull(view1ToFinal);
         assertEquals(finalState, view1ToFinal.getNextState());
     
@@ -299,7 +300,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertNotNull(view2ToView2);
         assertEquals(viewState2, view2ToView2.getNextState());
         Event view2ToFinal = 
-            viewState2.getEventByName("FinalFromDisplayForm2");
+            viewState2.getEventByName("FinalStateFromDisplayForm2");
         assertNotNull(view2ToFinal);
         assertEquals(finalState, view2ToFinal.getNextState());
 
@@ -357,7 +358,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(4, viewState1.getEventList().size());
         assertNormalStateBiuldinEvent(viewState1);
         Event view1ToFinal = 
-            viewState1.getEventByName("FinalFromDisplayForm1");
+            viewState1.getEventByName("FinalStateFromDisplayForm1");
         assertNotNull(view1ToFinal);
         assertEquals(finalState, view1ToFinal.getNextState());
 
@@ -436,7 +437,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         // イベントのアサーション
         assertEquals(2, initialState.getEventList().size());
         Event initialToView1 = 
-            initialState.getEventByName("DisplayForm1FromInitial");
+            initialState.getEventByName("DisplayForm1FromInitialState");
         assertNotNull(initialToView1);
         assertEquals(viewState1, initialToView1.getNextState());
         
@@ -568,7 +569,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(4, viewState2.getEventList().size());
         assertNormalStateBiuldinEvent(viewState2);
         Event view2ToFinal = 
-            viewState2.getEventByName("FinalFromDisplayForm2");
+            viewState2.getEventByName("FinalStateFromDisplayForm2");
         assertNotNull(view2ToFinal);
         assertEquals(finalState, view2ToFinal.getNextState());
 
@@ -692,7 +693,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         // イベントのアサーション
         assertEquals(2, initialState.getEventList().size());
         Event initialToView1 = 
-            initialState.getEventByName("DisplayForm1FromInitial");
+            initialState.getEventByName("DisplayForm1FromInitialState");
         assertNotNull(initialToView1);
         assertEquals(viewState1, initialToView1.getNextState());
         
@@ -705,7 +706,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(4, viewState2.getEventList().size());
         assertNormalStateBiuldinEvent(viewState2);
         Event view2ToFinal = 
-            viewState2.getEventByName("FinalFromDisplayForm2");
+            viewState2.getEventByName("FinalStateFromDisplayForm2");
         assertNotNull(view2ToFinal);
         assertEquals(finalState, view2ToFinal.getNextState());
         

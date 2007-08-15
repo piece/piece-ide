@@ -461,6 +461,103 @@ public class FlowMapperGetYAMLTest extends TestCase {
     }
     
     /**
+     * getYAML メソッドテスト.
+     * フローにアクションクラスが指定されていないかつイベントハンドラ
+     * にもアクションクラスが指定されていない場合、メソッドのみが返さ
+     * れることをチェックする。
+     * 
+     */
+    public void testGetYAMLShouldReturnTheYAMLWhichTheEventHandlerHasMethodOnly() {
+        State initialState = new State(State.INITIAL_STATE);
+        State viewState1 = new State(State.VIEW_STATE);
+        
+        viewState1.setName("DisplayForm1");
+        viewState1.setView("Form1");
+        
+        State actionState = new State(State.ACTION_STATE);
+        actionState.setName("Process1");
+
+        State viewState2 = new State(State.VIEW_STATE);
+        viewState2.setName("DisplayForm2");
+        viewState2.setView("Form2");
+        
+        State finalState = new State(State.FINAL_STATE);
+        finalState.setName("FinalState");
+        
+        Event initialToView = new Event(Event.TRANSITION_EVENT);
+        initialToView.setName("DisplayForm1FromInitialState");
+        initialToView.setNextState(viewState1);
+        initialState.addEvent(initialToView);
+        
+        Event view1ToAction = new Event(Event.TRANSITION_EVENT);
+        view1ToAction.setName("Process1FromDisplayForm1");
+        view1ToAction.setNextState(actionState);
+        view1ToAction.setEventHandler(null, "doProcess1FromDisplayForm1");
+        viewState1.addEvent(view1ToAction);
+        
+        Event actionToView1 = new Event(Event.TRANSITION_EVENT);
+        actionToView1.setName("DisplayForm2FromProcess1");
+        actionToView1.setNextState(viewState2);
+        actionState.addEvent(actionToView1);
+        
+        Event view2ToFinal = new Event(Event.TRANSITION_EVENT);
+        view2ToFinal.setName("FinalStateFromDisplayForm2");
+        view2ToFinal.setNextState(finalState);
+        viewState2.addEvent(view2ToFinal);
+        
+        fFlow = new Flow(null, null);
+        fFlow.addState(finalState);
+        fFlow.addState(viewState2);
+        fFlow.addState(actionState);
+        fFlow.addState(viewState1);
+        fFlow.addState(initialState);
+        
+        FlowMapper flowMapper = new FlowMapper();
+        String yaml = flowMapper.getYAML(fFlow);
+        
+        StringBuffer expectedYAMLBuffer = new StringBuffer();
+        
+        expectedYAMLBuffer.append(
+            "firstState: " + viewState1.getName() + "\n");
+        
+        expectedYAMLBuffer.append("\n");
+        
+        expectedYAMLBuffer.append(
+                "lastState:\n"
+              + getYAMLofStateInformation(viewState2, 2)
+              + getYAMLofBuiltinEvent(viewState2, 2));                
+        
+        expectedYAMLBuffer.append("\n");
+        
+        expectedYAMLBuffer.append("viewState:\n");
+        String view1YAML = 
+            "  - "
+          + getYAMLofStateInformation(viewState1, 0)
+          + getYAMLofBuiltinEvent(viewState1, 0)
+          + getYAMLofTransitionEvent(viewState1, 0);
+        view1YAML = view1YAML.replace("\n", "\n    ");
+        if (view1YAML.endsWith("    ")) {
+            view1YAML = view1YAML.substring(0, view1YAML.length() - 4);
+        }
+        expectedYAMLBuffer.append(view1YAML);
+        
+        expectedYAMLBuffer.append("\n");
+        expectedYAMLBuffer.append("actionState:\n");
+        String actionYAML = 
+            "  - "
+          + getYAMLofStateInformation(actionState, 0)
+          + getYAMLofBuiltinEvent(actionState, 0)
+          + getYAMLofTransitionEvent(actionState, 0);
+        actionYAML = actionYAML.replace("\n", "\n    ");
+        if (actionYAML.endsWith("    ")) {
+            actionYAML = actionYAML.substring(0, actionYAML.length() - 4);
+        }
+        expectedYAMLBuffer.append(actionYAML);
+        
+        assertEquals(expectedYAMLBuffer.toString(), yaml);
+    }
+    
+    /**
      * ステート名・ビュー名のYAMLを返す.
      * 
      * @param state ステート
@@ -511,21 +608,21 @@ public class FlowMapperGetYAMLTest extends TestCase {
             yamlBuffer.append(
                     sp + "entry:\n"
                   + sp + "  method: "
-                            + fFlow.getActionClassName() + ":"
+                            + getActionClassName()
                             + entryEventHandler.getMethodName() + "\n");
         }
         if (activityEventHandler != null) {
             yamlBuffer.append(
                     sp + "activity:\n"
                   + sp + "  method: "
-                            + fFlow.getActionClassName() + ":"
+                            + getActionClassName()
                             + activityEventHandler.getMethodName() + "\n");
         }
         if (exitEventHandler != null) {
             yamlBuffer.append(
                     sp + "exit:\n"
                   + sp + "  method: "
-                            + fFlow.getActionClassName() + ":"
+                            + getActionClassName()
                             + exitEventHandler.getMethodName() + "\n");
         }
         return yamlBuffer.toString();
@@ -564,7 +661,7 @@ public class FlowMapperGetYAMLTest extends TestCase {
                     EventHandler eventHandler = event.getEventHandler();
                     String methodName = "";
                     if (eventHandler.getClassName() == null) {
-                        methodName = fFlow.getActionClassName() + ":"
+                        methodName = getActionClassName()
                                    + eventHandler.getMethodName();
                     } else {
                         methodName = eventHandler.toString();
@@ -579,7 +676,7 @@ public class FlowMapperGetYAMLTest extends TestCase {
                                 event.getGuardEventHandler();
                     String methodName = "";
                     if (guardEventHandler.getClassName() == null) {
-                        methodName = fFlow.getActionClassName() + ":"
+                        methodName = getActionClassName()
                                    + guardEventHandler.getMethodName();
                     } else {
                         methodName = guardEventHandler.toString();
@@ -595,4 +692,16 @@ public class FlowMapperGetYAMLTest extends TestCase {
         return yamlBuffer.toString();
     }
     
+    /**
+     * フローからアクションクラス名を取得する.
+     * 
+     * @return アクションクラス名
+     */
+    private String getActionClassName()  {
+        String className = "";
+        if (fFlow.getActionClassName() != null) {
+            className = fFlow.getActionClassName() + ":";
+        }
+        return className;
+    }
 }
