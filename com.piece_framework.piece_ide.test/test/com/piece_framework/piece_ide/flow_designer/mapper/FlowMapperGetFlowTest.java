@@ -85,11 +85,13 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(2, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
         assertEvent(initialState, 
                 "DisplayForm1FromInitialState", 
+                Event.TRANSITION_EVENT,
                 viewState, 
                 null, 
                 null);
@@ -97,21 +99,25 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(4, viewState.getEventList().size());
         assertEvent(viewState, 
                 "Activity", 
+                Event.BUILTIN_EVENT,
                 null, 
                 "ActionClass:doActivityOnDisplayForm1", 
                 null);
         assertEvent(viewState, 
                 "Entry", 
+                Event.BUILTIN_EVENT,
                 null, 
                 "ActionClass:doEntryOnDisplayForm1", 
                 null);
         assertEvent(viewState, 
                 "Exit", 
+                Event.BUILTIN_EVENT,
                 null, 
                 "ActionClass:doExitOnDisplayForm1", 
                 null);
         assertEvent(viewState, 
                 "FinalStateFromDisplayForm1", 
+                Event.TRANSITION_EVENT,
                 finalState, 
                 null, 
                 null);
@@ -119,6 +125,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(1, finalState.getEventList().size());
         assertEvent(finalState, 
                 "Final", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
@@ -200,11 +207,13 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(2, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
         assertEvent(initialState, 
                 "DisplayForm1FromInitialState", 
+                Event.TRANSITION_EVENT,
                 viewState1, 
                 null, 
                 null);
@@ -213,6 +222,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertNullNormalStateBiuldinEvent(viewState1);
         assertEvent(viewState1, 
                 "Process1FromDisplayForm1", 
+                Event.TRANSITION_EVENT,
                 actionState, 
                 "ActionClass:doProcess1FromDisplayForm1", 
                 null);
@@ -221,6 +231,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertNullNormalStateBiuldinEvent(viewState2);
         assertEvent(viewState2, 
                 "FinalStateFromDisplayForm2", 
+                Event.TRANSITION_EVENT,
                 finalState, 
                 null, 
                 null);
@@ -229,11 +240,13 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertNullNormalStateBiuldinEvent(actionState);
         assertEvent(actionState, 
                 "DisplayForm1FromProcess1", 
+                Event.TRANSITION_EVENT,
                 viewState1, 
                 null, 
                 null);
         assertEvent(actionState, 
                 "DisplayForm2FromProcess1", 
+                Event.TRANSITION_EVENT,
                 viewState2, 
                 null, 
                 null);
@@ -241,6 +254,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(1, finalState.getEventList().size());
         assertEvent(finalState, 
                 "Final", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
@@ -309,11 +323,13 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(2, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
         assertEvent(initialState, 
                 "DisplayForm1FromInitialState", 
+                Event.TRANSITION_EVENT,
                 viewState1, 
                 null, 
                 null);
@@ -322,6 +338,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertNullNormalStateBiuldinEvent(viewState1);
         assertEvent(viewState1, 
                 "FinalStateFromDisplayForm1", 
+                Event.TRANSITION_EVENT,
                 finalState, 
                 null, 
                 null);
@@ -330,11 +347,13 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertNullNormalStateBiuldinEvent(viewState2);
         assertEvent(viewState2, 
                 "DisplayForm2FromDisplayForm2", 
+                Event.INTERNAL_EVENT,
                 viewState2, 
                 "ActionClass:doDisplayForm2FromDisplayForm2", 
                 "ActionClass:guardMethod");
         assertEvent(viewState2, 
                 "FinalStateFromDisplayForm2", 
+                Event.TRANSITION_EVENT,
                 finalState, 
                 null, 
                 null);
@@ -342,6 +361,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(1, finalState.getEventList().size());
         assertEvent(finalState, 
                 "Final", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
@@ -395,6 +415,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(1, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
@@ -403,6 +424,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertNullNormalStateBiuldinEvent(viewState1);
         assertEvent(viewState1, 
                 "FinalStateFromDisplayForm1", 
+                Event.TRANSITION_EVENT,
                 finalState, 
                 null, 
                 null);
@@ -410,6 +432,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(1, finalState.getEventList().size());
         assertEvent(finalState, 
                 "Final", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
@@ -488,11 +511,13 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(2, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
         assertEvent(initialState, 
                 "DisplayForm1FromInitialState", 
+                Event.TRANSITION_EVENT,
                 viewState1, 
                 null, 
                 null);
@@ -500,21 +525,25 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(4, viewState1.getEventList().size());
         assertEvent(viewState1, 
                 "Activity", 
+                Event.BUILTIN_EVENT,
                 null, 
                 "ActionClass:doActivityOnDisplayForm1", 
                 null);
         assertEvent(viewState1, 
                 "Entry", 
+                Event.BUILTIN_EVENT,
                 null, 
                 "ActionClass:doEntryOnDisplayForm1", 
                 null);
         assertEvent(viewState1, 
                 "Exit", 
+                Event.BUILTIN_EVENT,
                 null, 
                 "ActionClass:doExitOnDisplayForm1", 
                 null);
         assertEvent(viewState1, 
                 "Process1FromDisplayForm1", 
+                Event.TRANSITION_EVENT,
                 actionState, 
                 "FlowAction:doProcess1FromDisplayForm1", 
                 "GuardAction:guardMethod");
@@ -522,16 +551,19 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(3, actionState.getEventList().size());
         assertEvent(actionState, 
                 "Activity", 
+                Event.BUILTIN_EVENT,
                 null, 
                 "ActionClass:doActivityOnProcess1", 
                 null);
         assertEvent(actionState, 
                 "Entry", 
+                Event.BUILTIN_EVENT,
                 null, 
                 "ActionClass:doEntryOnProcess1", 
                 null);
         assertEvent(actionState, 
                 "Exit", 
+                Event.BUILTIN_EVENT,
                 null, 
                 "ActionClass:doExitOnProcess1", 
                 null);
@@ -611,6 +643,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(1, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
@@ -622,6 +655,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertNullNormalStateBiuldinEvent(viewState2);
         assertEvent(viewState2, 
                 "FinalStateFromDisplayForm2", 
+                Event.TRANSITION_EVENT,
                 finalState, 
                 null, 
                 null);
@@ -632,6 +666,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(1, finalState.getEventList().size());
         assertEvent(finalState, 
                 "Final", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
@@ -746,11 +781,13 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(2, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
         assertEvent(initialState, 
                 "DisplayForm1FromInitialState", 
+                Event.TRANSITION_EVENT,
                 viewState1, 
                 null, 
                 null);
@@ -762,6 +799,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertNullNormalStateBiuldinEvent(viewState2);
         assertEvent(viewState2, 
                 "FinalStateFromDisplayForm2", 
+                Event.TRANSITION_EVENT,
                 finalState, 
                 null, 
                 null);
@@ -769,6 +807,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(1, finalState.getEventList().size());
         assertEvent(finalState, 
                 "Final", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
@@ -856,16 +895,19 @@ public class FlowMapperGetFlowTest extends TestCase {
     private void assertNullNormalStateBiuldinEvent(State state) {
         assertEvent(state, 
                 "Activity", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
         assertEvent(state, 
                 "Entry", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
         assertEvent(state, 
                 "Exit", 
+                Event.BUILTIN_EVENT,
                 null, 
                 null, 
                 null);
@@ -876,6 +918,7 @@ public class FlowMapperGetFlowTest extends TestCase {
      * 
      * @param state 対象ステート
      * @param eventName イベント名
+     * @param expectedEventType イベントタイプ
      * @param expectedNextState 予期している次ステート
      * @param expectedEventHandler 予期しているイベントハンドラ
      * @param expectedGuardEventHandler 予期しているガード
@@ -883,6 +926,7 @@ public class FlowMapperGetFlowTest extends TestCase {
     private void assertEvent(
             State state, 
             String eventName, 
+            int expectedEventType,
             State expectedNextState,
             String expectedEventHandler, 
             String expectedGuardEventHandler) {
@@ -891,6 +935,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertNotNull(event);
         
         assertEquals(expectedNextState, event.getNextState());
+        assertEquals(expectedEventType, event.getType());
         
         if (expectedEventHandler == null) {
             assertNull(event.getEventHandler());
