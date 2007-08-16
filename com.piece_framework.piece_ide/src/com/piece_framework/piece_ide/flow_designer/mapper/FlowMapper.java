@@ -282,10 +282,15 @@ public class FlowMapper extends AbstractMapper {
                 State nextState = fFlow.getStateByName(
                         (String) getValueIgnoreCase((Map) map, "nextState"));
                 if (nextState != null) {
-                    Event event = new Event(Event.TRANSITION_EVENT);
+                    Event event = null;
+                    if (nextState != state) {
+                        event = new Event(Event.TRANSITION_EVENT);
+                    } else {
+                        event = new Event(Event.INTERNAL_EVENT);
+                    }
                     event.setName(
                         (String) getValueIgnoreCase((Map) map, "event"));
-
+                    
                     event.setEventHandler(
                         getEventHandler(
                                 (Map) getValueIgnoreCase((Map) map, "action")));
