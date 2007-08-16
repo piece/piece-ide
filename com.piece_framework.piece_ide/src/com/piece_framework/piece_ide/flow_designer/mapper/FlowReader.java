@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.dialogs.MessageDialog;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
@@ -61,11 +62,17 @@ public final class FlowReader {
             }
             FlowMapper flowMapper = new FlowMapper();
             yamlFlow = flowMapper.getFlow(yamlBuffer.toString());
-            
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
         } catch (IOException ioe) {
             ioe.printStackTrace();
+        }
+        if (yamlFlow == null) {
+            MessageDialog.openError(
+                    null, 
+                    "エラー", 
+                    "フローを読み込めませんでした。\n"
+                        + "YAML フォーマットが不正な可能性があります。");
         }
         
         IFile serializeFlowFile = 
