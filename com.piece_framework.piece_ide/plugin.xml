@@ -37,48 +37,6 @@
             name="Flow Designer"/>
    </extension>
    <extension
-         point="org.eclipse.ui.editorActions">
-      <editorContribution
-            id="com.piece_framework.piece_ide.flow_designer.editorActions"
-            targetID="com.piece_framework.piece_ide.flow_designer.editor">
-         <menu
-               label="フローデザイナー"
-               id="flowDesignerMenu">
-            <separator
-                   name="flowDesignerGroup">
-            </separator>
-         </menu>
-         <action
-               label="ファイナルステート"
-               icon="icons/sample.gif"
-               class="com.piece_framework.piece_ide.flow_designer.editor_actions.FinalStateAction"
-               menubarPath="flowDesignerMenu/flowDesignerGroup"
-               id="com.piece_framework.piece_ide.flow_designer.editor_actions.FinalStateAction">
-         </action>
-         <action
-               label="アクションステート"
-               icon="icons/sample.gif"
-               class="com.piece_framework.piece_ide.flow_designer.editor_actions.ActionStateAction"
-               menubarPath="flowDesignerMenu/flowDesignerGroup"
-               id="com.piece_framework.piece_ide.flow_designer.editor_actions.ActionStateAction">
-         </action>
-         <action
-               label="ビューステート"
-               icon="icons/sample.gif"
-               class="com.piece_framework.piece_ide.flow_designer.editor_actions.ViewStateAction"
-               menubarPath="flowDesignerMenu/flowDesignerGroup"
-               id="com.piece_framework.piece_ide.flow_designer.editor_actions.ViewStateAction">
-         </action>
-         <action
-               label="イニシャルステート"
-               icon="icons/sample.gif"
-               class="com.piece_framework.piece_ide.flow_designer.editor_actions.InitialStateAction"
-               menubarPath="flowDesignerMenu/flowDesignerGroup"
-               id="com.piece_framework.piece_ide.flow_designer.editor_actions.InitialStateAction">
-         </action>
-       </editorContribution>
-   </extension>
-   <extension
          point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
       <propertyContributor
             contributorId="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor"
