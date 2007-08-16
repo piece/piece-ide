@@ -8,7 +8,6 @@ import junit.framework.TestCase;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
-import com.piede_framework.piece_ide.flow_designer.mapper.FlowMapper;
 
 /**
  * フローマッパー フローモデル取得テスト.

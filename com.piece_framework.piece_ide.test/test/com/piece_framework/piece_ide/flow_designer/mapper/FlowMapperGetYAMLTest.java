@@ -7,7 +7,6 @@ import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
-import com.piede_framework.piece_ide.flow_designer.mapper.FlowMapper;
 
 /**
  * フローマッパーYAML取得テスト.
