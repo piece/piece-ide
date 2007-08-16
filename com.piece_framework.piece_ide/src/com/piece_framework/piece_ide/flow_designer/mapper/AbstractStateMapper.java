@@ -1,4 +1,4 @@
-package com.piede_framework.piece_ide.flow_designer.mapper;
+package com.piece_framework.piece_ide.flow_designer.mapper;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -32,7 +32,7 @@ public abstract class AbstractStateMapper extends AbstractMapper {
      * 
      * @param flow フロー
      * @return YAML文字列
-     * @see com.piede_framework.piece_ide.flow_designer.mapper.AbstractMapper
+     * @see com.piece_framework.piece_ide.flow_designer.mapper.AbstractMapper
      *          #getYAML(com.piece_framework.piece_ide.flow_designer.model.Flow)
      */
     public String getYAML(Flow flow) {

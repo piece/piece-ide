@@ -1,5 +1,5 @@
 // $Id$
-package com.piede_framework.piece_ide.flow_designer.mapper;
+package com.piece_framework.piece_ide.flow_designer.mapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;

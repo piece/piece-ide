@@ -1,4 +1,4 @@
-package com.piede_framework.piece_ide.flow_designer.mapper;
+package com.piece_framework.piece_ide.flow_designer.mapper;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -24,7 +24,7 @@ public class InitialStateMapper extends AbstractStateMapper {
      * ひとつ見つかった時点で処理は終了する。
      * 
      * @return イニシャルステートを含むリスト
-     * @see com.piede_framework.piece_ide.flow_designer.mapper
+     * @see com.piece_framework.piece_ide.flow_designer.mapper
      *          .AbstractStateMapper#getStateList()
      */
     @Override
@@ -45,7 +45,7 @@ public class InitialStateMapper extends AbstractStateMapper {
      * 
      * @param stateList イニシャルステートを含むリスト
      * @return YAML出力のためのMapオブジェクト
-     * @see com.piede_framework.piece_ide.flow_designer.mapper
+     * @see com.piece_framework.piece_ide.flow_designer.mapper
      *          .AbstractStateMapper#getMapForYAML(java.util.List)
      */
     @Override

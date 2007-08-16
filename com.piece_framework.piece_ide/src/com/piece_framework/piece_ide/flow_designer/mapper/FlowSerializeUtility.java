@@ -1,4 +1,4 @@
-package com.piede_framework.piece_ide.flow_designer.mapper;
+package com.piece_framework.piece_ide.flow_designer.mapper;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
