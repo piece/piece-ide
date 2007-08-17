@@ -1,7 +1,8 @@
 // $Id: FinalStateFigure.java 115 2007-07-09 11:21:17Z matsufuji $
 package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
-import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.graphics.Image;
+import com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin;
 
 /**
  * ファイナルステート・フィギュアー.
@@ -13,17 +14,20 @@ import org.eclipse.swt.graphics.RGB;
  */
 public class FinalStateFigure extends SpecialStateFigure {
     
-    private static final RGB FIGURE_COLOR = new RGB(255, 255, 255);
+    private static Image FIGURE_IMG
+    = FlowDesignerPlugin.getImageDescriptor("icons/FinalStateLarge.gif").createImage();
 
     /**
-     * ファイナルステート・フィギュアーの背景色を返す.
+     * ファイナルステート・フィギュアーのイメージを返す.
      * 
-     * @return ファイナルステート・フィギュアーの背景色
+     * @return ファイナルステート・フィギュアーのイメージ
      * @see com.piece_framework.piece_ide.flow_designer.ui.figure
-     *          .SpecialStateFigure#getFigureColor()
+     *          .SpecialStateFigure#getFigureImage()
      */
     @Override
-    RGB getFigureColor() {
-        return FIGURE_COLOR;
+    Image getFigureImage() {
+        return FlowDesignerPlugin.getImageDescriptor(
+                        "icons/FinalStateLarge.gif").createImage();
     }
+    
 }

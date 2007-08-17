@@ -1,7 +1,8 @@
 // $Id: InitialStateFigure.java 115 2007-07-09 11:21:17Z matsufuji $
 package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
-import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.graphics.Image;
+import com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin;
 
 /**
  * イニシャルステート・フィギュアー.
@@ -12,18 +13,17 @@ import org.eclipse.swt.graphics.RGB;
  *
  */
 public class InitialStateFigure extends SpecialStateFigure {
-
-    private static final RGB FIGURE_COLOR = new RGB(0, 0, 0);    
-    
+   
     /**
-     * イニシャルステート・フィギュアーの背景色を返す.
+     * イニシャルステート・フィギュアーのイメージを返す.
      * 
-     * @return イニシャルステート・フィギュアーの背景色
+     * @return イニシャルステート・フィギュアーのイメージ
      * @see com.piece_framework.piece_ide.flow_designer.ui.figure
-     *          .SpecialStateFigure#getFigureColor()
+     *          .SpecialStateFigure#getFigureImage()
      */
     @Override
-    RGB getFigureColor() {
-        return FIGURE_COLOR;
+    Image getFigureImage() {
+        return FlowDesignerPlugin.getImageDescriptor(
+                        "icons/InitialStateLarge.gif").createImage();
     }
 }

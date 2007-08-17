@@ -1,10 +1,8 @@
 // $Id: SpecialStateFigure.java 180 2007-07-27 00:57:08Z matsufuji $
 package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
-import org.eclipse.draw2d.Ellipse;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.draw2d.ImageFigure;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * スペシャルステート・抽象フィギュアー.
@@ -14,7 +12,7 @@ import org.eclipse.swt.widgets.Display;
  * @since 0.1.0
  *
  */
-public abstract class SpecialStateFigure extends Ellipse {
+public abstract class SpecialStateFigure extends ImageFigure {
 
     private static final int FIGURE_WIDTH = 20;
     private static final int FIGURE_HEIGHT = 20;
@@ -24,16 +22,15 @@ public abstract class SpecialStateFigure extends Ellipse {
      * 
      */
     public SpecialStateFigure() {
-        Color bg = new Color(Display.getCurrent(), getFigureColor());
-        setBackgroundColor(bg);
+        setImage(getFigureImage());
         setSize(FIGURE_WIDTH, FIGURE_HEIGHT);
     }
     
     /**
-     * フィギュアーの背景色を返す.
+     * フィギュアーのイメージを返す.
      * 
-     * @return フィギュアーの背景色
+     * @return フィギュアーのイメージ
      */
-    abstract RGB getFigureColor();
+    abstract Image getFigureImage();
     
 }
