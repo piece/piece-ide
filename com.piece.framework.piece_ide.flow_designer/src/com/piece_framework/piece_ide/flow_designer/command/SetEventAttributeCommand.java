@@ -145,6 +145,9 @@ public class SetEventAttributeCommand extends Command {
         if (oldValue == null) {
             return false;
         }
+        if (fAttributeValue == null) {
+            return false;
+        }
         
         boolean isSame = false;
         if (fAttributeName.equals("Event")) {
