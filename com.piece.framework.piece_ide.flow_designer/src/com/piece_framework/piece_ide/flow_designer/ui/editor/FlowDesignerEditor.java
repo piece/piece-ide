@@ -209,32 +209,32 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         
         PaletteDrawer drawer = new PaletteDrawer("ステート");
         drawer.add(new CreationToolEntry(
-                "ビューステート", 
-                "ビューステートを作成",
-                new StateFactory(State.VIEW_STATE),
-                FlowDesignerPlugin.getImageDescriptor("icons/ViewState.gif"),
-                FlowDesignerPlugin.getImageDescriptor("icons/ViewState.gif")));
+            "ビューステート", 
+            "ビューステートを作成",
+            new StateFactory(State.VIEW_STATE),
+            FlowDesignerPlugin.getImageDescriptor("icons/ViewState.gif"),
+            FlowDesignerPlugin.getImageDescriptor("icons/ViewState.gif")));
         drawer.add(new CreationToolEntry(
-                "アクションステート", 
-                "アクションステートを作成",
-                new StateFactory(State.ACTION_STATE),
-                FlowDesignerPlugin.getImageDescriptor("icons/ActionState.gif"),
-                FlowDesignerPlugin.getImageDescriptor("icons/ActionState.gif")));
+            "アクションステート", 
+            "アクションステートを作成",
+            new StateFactory(State.ACTION_STATE),
+            FlowDesignerPlugin.getImageDescriptor("icons/ActionState.gif"),
+            FlowDesignerPlugin.getImageDescriptor("icons/ActionState.gif")));
         drawer.add(new CreationToolEntry(
-                "ファイナルステート", 
-                "ファイナルステートを作成",
-                new StateFactory(State.FINAL_STATE),
-                FlowDesignerPlugin.getImageDescriptor("icons/FinalState.gif"),
-                FlowDesignerPlugin.getImageDescriptor("icons/FinalState.gif")));
+            "ファイナルステート", 
+            "ファイナルステートを作成",
+            new StateFactory(State.FINAL_STATE),
+            FlowDesignerPlugin.getImageDescriptor("icons/FinalState.gif"),
+            FlowDesignerPlugin.getImageDescriptor("icons/FinalState.gif")));
         root.add(drawer);
         
         drawer = new PaletteDrawer("コネクタ");
         drawer.add(new ConnectionCreationToolEntry(
-                "遷移", 
-                "遷移を設定",
-                new EventFactory(Event.TRANSITION_EVENT),
-                FlowDesignerPlugin.getImageDescriptor("icons/Transition.gif"),
-                FlowDesignerPlugin.getImageDescriptor("icons/Transition.gif")));
+            "遷移", 
+            "遷移を設定",
+            new EventFactory(Event.TRANSITION_EVENT),
+            FlowDesignerPlugin.getImageDescriptor("icons/Transition.gif"),
+            FlowDesignerPlugin.getImageDescriptor("icons/Transition.gif")));
         root.add(drawer);
         
         return root;

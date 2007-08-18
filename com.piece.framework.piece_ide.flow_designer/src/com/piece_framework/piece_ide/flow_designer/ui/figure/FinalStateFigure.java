@@ -14,9 +14,6 @@ import com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin;
  */
 public class FinalStateFigure extends SpecialStateFigure {
     
-    private static Image FIGURE_IMG
-    = FlowDesignerPlugin.getImageDescriptor("icons/FinalStateLarge.gif").createImage();
-
     /**
      * ファイナルステート・フィギュアーのイメージを返す.
      * 
@@ -29,5 +26,4 @@ public class FinalStateFigure extends SpecialStateFigure {
         return FlowDesignerPlugin.getImageDescriptor(
                         "icons/FinalStateLarge.gif").createImage();
     }
-    
 }
