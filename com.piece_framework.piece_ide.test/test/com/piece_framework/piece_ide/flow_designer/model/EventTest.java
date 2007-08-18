@@ -131,4 +131,42 @@ public class EventTest extends TestCase {
         assertNull(propertyChangeEvent.getOldValue());
         assertEquals(event, (Event) propertyChangeEvent.getNewValue());
     }
+    
+    /**
+     * getName/setName メソッドテスト.
+     * イベント名に空文字を渡した場合、nullが返されることをテストする。
+     * 
+     */
+    public void testGetNameShouldReturnNull() {
+        Event event = new Event(Event.INTERNAL_EVENT);
+        
+        event.setName("");
+        assertNull(event.getName());
+    }
+    
+    /**
+     * getEventHandler/setEventHandler メソッドテスト.
+     * イベントハンドラに空文字を渡した場合、イベントハンドラ自身が
+     * nullで返されることをテストする。
+     * 
+     */
+    public void testGetEventHandlerShouldReturnNull() {
+        Event event = new Event(Event.INTERNAL_EVENT);
+        
+        event.setEventHandler("", "");
+        assertNull(event.getEventHandler());
+    }
+    
+    /**
+     * getGuardEventHandler/setGuardEventHandler メソッドテスト.
+     * ガードに空文字を渡した場合、ガード自身がnullで返されることを
+     * テストする。
+     * 
+     */
+    public void testGetGuardEventHandlerShouldReturnNull() {
+        Event event = new Event(Event.INTERNAL_EVENT);
+        
+        event.setGuardEventHandler("", "");
+        assertNull(event.getGuardEventHandler());
+    }
 }

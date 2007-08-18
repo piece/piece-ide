@@ -379,7 +379,7 @@ public class FlowTest extends TestCase {
      * getStateByNameメソッドテスト.
      * ステート名にnullを渡した場合、nullが返されることをテストする。
      * 
-     **/
+     */
     public void testGetStateByNameShouldReturnNullBecauseOfStateNameIsNull() {
         Flow flow = new Flow(null, null);
         
@@ -390,5 +390,29 @@ public class FlowTest extends TestCase {
         
         State state = flow.getStateByName(null);
         assertNull(state);
+    }
+    
+    /**
+     * getName/setName メソッドテスト.
+     * フロー名に空文字を渡した場合、nullが返されることをテストする。
+     * 
+     */
+    public void testGetNameShouldReturnNull() {
+        Flow flow = new Flow(null, null);
+        
+        flow.setName("");
+        assertNull(flow.getName());
+    }
+    
+    /**
+     * getActionClassName/setActionClassName メソッドテスト.
+     * アクションクラス名に空文字を渡した場合、nullが返されることをテストする。
+     * 
+     */
+    public void testGetActionClassNameShouldReturnNull() {
+        Flow flow = new Flow(null, null);
+        
+        flow.setActionClassName("");
+        assertNull(flow.getActionClassName());
     }
 }

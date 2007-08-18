@@ -567,4 +567,40 @@ public class StateTest extends TestCase {
         
         assertFalse(state.checkUsableEventName(null));
     }
+    
+    /**
+     * getName/setName メソッドテスト.
+     * ステート名に空文字を渡した場合、nullが返されることをテストする。
+     * 
+     */
+    public void testGetNameShouldReturnNull() {
+        State state = new State(State.VIEW_STATE);
+        
+        state.setName("");
+        assertNull(state.getName());
+    }
+    
+    /**
+     * getSummary/setSummary メソッドテスト.
+     * 概要に空文字を渡した場合、nullが返されることをテストする。
+     * 
+     */
+    public void testGetSummaryShouldReturnNull() {
+        State state = new State(State.VIEW_STATE);
+        
+        state.setSummary("");
+        assertNull(state.getSummary());
+    }
+    
+    /**
+     * getView/setView メソッドテスト.
+     * ビュー名に空文字を渡した場合、nullが返されることをテストする。
+     * 
+     */
+    public void testGetViewShouldReturnNull() {
+        State state = new State(State.VIEW_STATE);
+        
+        state.setView("");
+        assertNull(state.getView());
+    }
 }
