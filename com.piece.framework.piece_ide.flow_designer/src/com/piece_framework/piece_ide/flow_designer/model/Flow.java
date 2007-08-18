@@ -36,6 +36,10 @@ public class Flow extends AbstractModel {
         
         setName(name);
         setActionClassName(actionClassName);
+        if (getActionClassName() == null && getName() != null) {
+            setActionClassName(getName() + "Action");
+        }
+        
         fActionStateSequenceNo = 1;
         fViewStateSequenceNo = 1;
         fStates = new ArrayList<State>();
@@ -56,7 +60,11 @@ public class Flow extends AbstractModel {
      * @param name フロー名
      */
     public void setName(String name) {
-        fName = name;
+        if (name != null && name.length() > 0) {
+            fName = name;
+        } else {
+            fName = null;
+        }
     }
     
     /**
@@ -70,15 +78,14 @@ public class Flow extends AbstractModel {
 
     /**
      * アクションクラス名を設定する.
-     * null の場合はフロー名＋Actionにする。
      * 
      * @param actionClassName アクションクラス名
      */
     public void setActionClassName(String actionClassName) {
-        if (actionClassName != null) {
+        if (actionClassName != null && actionClassName.length() > 0) {
             fActionClassName = actionClassName;
-        } else if (fName != null) {
-            fActionClassName = fName + "Action";
+        } else {
+            fActionClassName = null;
         }
     }
 

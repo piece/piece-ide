@@ -66,7 +66,11 @@ public class Event extends AbstractModel implements Serializable {
      * @param name イベント名
      */
     public void setName(String name) {
-        fName = name;
+        if (name != null && name.length() > 0) {
+            fName = name;
+        } else {
+            fName = null;
+        }
         firePropertyChange("event", null, (Object) this);
     }
 
@@ -129,7 +133,11 @@ public class Event extends AbstractModel implements Serializable {
      * @param methodName メソッド名
      */
     public void setEventHandler(String className, String methodName) {
-        setEventHandler(new EventHandler(className, methodName));
+        if (methodName != null && methodName.length() > 0) {
+            setEventHandler(new EventHandler(className, methodName));
+        } else {
+            setEventHandler(null);
+        }
     }
     
     /**
@@ -158,7 +166,11 @@ public class Event extends AbstractModel implements Serializable {
      * @param methodName メソッド名
      */
     public void setGuardEventHandler(String className, String methodName) {
-        setGuardEventHandler(new EventHandler(className, methodName));
+        if (methodName != null && methodName.length() > 0) {
+            setGuardEventHandler(new EventHandler(className, methodName));
+        } else {
+            setGuardEventHandler(null);
+        }
     }
     
     /**

@@ -71,7 +71,11 @@ public class EventHandler implements Serializable {
      * @param className クラス名
      */
     public void setClassName(String className) {
-        fClassName = className;
+        if (className != null && className.length() > 0) {
+            fClassName = className;
+        } else {
+            fClassName = null;
+        }
     }
 
     /**
@@ -89,7 +93,11 @@ public class EventHandler implements Serializable {
      * @param methodName メソッド名
      */
     public void setMethodName(String methodName) {
-        fMethodName = methodName;
+        if (methodName != null && methodName.length() > 0) {
+            fMethodName = methodName;
+        } else {
+            fMethodName = null;
+        }
     }
 
     /**
@@ -109,6 +117,6 @@ public class EventHandler implements Serializable {
         } else if (methodName != null && methodName.length() > 0) {
             return methodName;
         }
-        return "";
+        return null;
     }   
 }

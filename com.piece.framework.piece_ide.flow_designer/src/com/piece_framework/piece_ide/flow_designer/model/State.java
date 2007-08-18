@@ -153,7 +153,11 @@ public class State extends AbstractModel {
      */
     public void setName(String name) {
         String old = fName;
-        fName = name;
+        if (name != null && name.length() > 0) {
+            fName = name;
+        } else {
+            fName = null;
+        }
         firePropertyChange("name", old, fName);
         
         if (getType() == State.ACTION_STATE || getType() == State.VIEW_STATE) {
@@ -186,7 +190,11 @@ public class State extends AbstractModel {
      */
     public void setSummary(String summary) {
         String old = fSummary;
-        fSummary = summary;
+        if (summary != null && summary.length() > 0) {
+            fSummary = summary;
+        } else {
+            fSummary = null;
+        }
         firePropertyChange("summary", old, fSummary);
     }
     
@@ -212,7 +220,11 @@ public class State extends AbstractModel {
     public void setView(String view) {
         if (fType == VIEW_STATE) {
             String old = fView;
-            fView = view;
+            if (view != null && view.length() > 0) {
+                fView = view;
+            } else {
+                fView = null;
+            }
             firePropertyChange("view", old, fView);
         }
     }
