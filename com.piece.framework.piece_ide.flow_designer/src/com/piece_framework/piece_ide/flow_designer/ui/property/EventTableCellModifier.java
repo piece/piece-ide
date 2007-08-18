@@ -131,27 +131,28 @@ public class EventTableCellModifier implements ICellModifier {
             }
         } else if (property.equals("EventHandler")) {
             String eventHandlerString = String.valueOf(value);
-            if (eventHandlerString != null) {
+            if (eventHandlerString != null 
+                && eventHandlerString.length() > 0) {
                 attributeValue = new EventHandler(eventHandlerString);
             }
         } else if (property.equals("Guard")) {
             // ビルトインイベントの場合は編集不可
             if (event.getType() != Event.BUILTIN_EVENT) {
                 String guardEventHandlerString = String.valueOf(value);
-                if (guardEventHandlerString != null) {
+                if (guardEventHandlerString != null
+                    && guardEventHandlerString.length() > 0) {
                     attributeValue = new EventHandler(guardEventHandlerString);
                 }
             }
         }
+        
+        CommandStack commandStack = 
+            (CommandStack) fEditor.getAdapter(CommandStack.class);
+        SetEventAttributeCommand command =
+            new SetEventAttributeCommand(
+                    property, attributeValue, fState, event);
+        commandStack.execute(command);
 
-        if (attributeValue != null) {
-            CommandStack commandStack = 
-                (CommandStack) fEditor.getAdapter(CommandStack.class);
-            SetEventAttributeCommand command =
-                new SetEventAttributeCommand(
-                        property, attributeValue, fState, event);
-            commandStack.execute(command);
-        }
         fEventTableViewer.update(element, null);
     }
 }
