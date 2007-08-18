@@ -10,7 +10,7 @@
             contributorClass="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerActionBarContributor"
             default="true"
             extensions="flow"
-            icon="icons/sample.gif"
+            icon="icons/FlowDesigner.gif"
             id="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor"
             name="Flow Designer"/>
    </extension>
