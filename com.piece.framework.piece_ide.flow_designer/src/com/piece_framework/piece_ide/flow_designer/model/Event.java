@@ -119,25 +119,15 @@ public class Event extends AbstractModel implements Serializable {
     /**
      * イベントハンドラを設定する.
      * 
-     * @param eventHandler イベントハンドラ
+     * @param classAndMethodName クラス名 + ":" + メソッド名
      */
-    public void setEventHandler(EventHandler eventHandler) {
-        fEventHandler = eventHandler;
-        firePropertyChange("event", null, (Object) this);
-    }
-
-    /**
-     * イベントハンドラを設定する.
-     * 
-     * @param className クラス名
-     * @param methodName メソッド名
-     */
-    public void setEventHandler(String className, String methodName) {
-        if (methodName != null && methodName.length() > 0) {
-            setEventHandler(new EventHandler(className, methodName));
+    public void setEventHandler(String classAndMethodName) {
+        if (classAndMethodName != null && classAndMethodName.length() > 0) {
+            fEventHandler = new EventHandler(classAndMethodName);
         } else {
-            setEventHandler(null);
+            fEventHandler = null;
         }
+        firePropertyChange("event", null, (Object) this);
     }
     
     /**
@@ -152,25 +142,15 @@ public class Event extends AbstractModel implements Serializable {
     /**
      * ガード用イベントハンドラを設定する.
      * 
-     * @param guardEventHandler ガード用イベントハンドラ
+     * @param classAndMethodName クラス名 + ":" + メソッド名
      */
-    public void setGuardEventHandler(EventHandler guardEventHandler) {
-        fGuardEventHandler = guardEventHandler;
-        firePropertyChange("event", null, (Object) this);
-    }
-    
-    /**
-     * ガード用イベントハンドラを設定する.
-     * 
-     * @param className クラス名
-     * @param methodName メソッド名
-     */
-    public void setGuardEventHandler(String className, String methodName) {
-        if (methodName != null && methodName.length() > 0) {
-            setGuardEventHandler(new EventHandler(className, methodName));
+    public void setGuardEventHandler(String classAndMethodName) {
+        if (classAndMethodName != null && classAndMethodName.length() > 0) {
+            fGuardEventHandler = new EventHandler(classAndMethodName);
         } else {
-            setGuardEventHandler(null);
+            fGuardEventHandler = null;
         }
+        firePropertyChange("event", null, (Object) this);
     }
     
     /**
