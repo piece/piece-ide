@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Item;
 
 import com.piece_framework.piece_ide.flow_designer.command.SetEventAttributeCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
-import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
@@ -72,7 +71,7 @@ public class EventTableCellModifier implements ICellModifier {
     public Object getValue(Object element, String property) {
         Event event = (Event) element;
         
-        if (property.equals("Event")) {
+        if (property.equals("Name")) {
             // ビルトインイベントの場合は編集不可
             if (event.getType() == Event.BUILTIN_EVENT) {
                 return null;
@@ -92,7 +91,7 @@ public class EventTableCellModifier implements ICellModifier {
                             + "On" + fState.getName();
                 }
             }
-        } else if (property.equals("Guard")) {
+        } else if (property.equals("GuardEventHandler")) {
             // ビルトインイベントの場合は編集不可
             if (event.getType() == Event.BUILTIN_EVENT) {
                 return null;
@@ -124,25 +123,17 @@ public class EventTableCellModifier implements ICellModifier {
         
         Object attributeValue = null;
         
-        if (property.equals("Event")) {
+        if (property.equals("Name")) {
             // ビルトインイベントの場合は編集不可
             if (event.getType() != Event.BUILTIN_EVENT) {
                 attributeValue = value;
             }
         } else if (property.equals("EventHandler")) {
-            String eventHandlerString = String.valueOf(value);
-            if (eventHandlerString != null 
-                && eventHandlerString.length() > 0) {
-                attributeValue = new EventHandler(eventHandlerString);
-            }
-        } else if (property.equals("Guard")) {
+            attributeValue = String.valueOf(value);
+        } else if (property.equals("GuardEventHandler")) {
             // ビルトインイベントの場合は編集不可
             if (event.getType() != Event.BUILTIN_EVENT) {
-                String guardEventHandlerString = String.valueOf(value);
-                if (guardEventHandlerString != null
-                    && guardEventHandlerString.length() > 0) {
-                    attributeValue = new EventHandler(guardEventHandlerString);
-                }
+                attributeValue = String.valueOf(value);
             }
         }
         

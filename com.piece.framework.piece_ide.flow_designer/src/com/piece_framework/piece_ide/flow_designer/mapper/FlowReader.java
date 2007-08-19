@@ -80,7 +80,11 @@ public final class FlowReader {
             if (serializeFlowFile.exists()) {
                 ObjectInputStream in = 
                     new ObjectInputStream(serializeFlowFile.getContents());
-                serializeFlow = (Flow) in.readObject();
+                try {
+                    serializeFlow = (Flow) in.readObject();
+                } catch (ClassNotFoundException cnfe) {
+                    cnfe.printStackTrace();
+                }
                 in.close();
             }
         }

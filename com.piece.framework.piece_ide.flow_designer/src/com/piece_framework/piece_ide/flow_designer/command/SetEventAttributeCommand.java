@@ -1,11 +1,11 @@
 // $Id: SetEventAttributeCommand.java 232 2007-08-12 01:24:05Z matsufuji $
 package com.piece_framework.piece_ide.flow_designer.command;
 
-import org.eclipse.gef.commands.Command;
+import java.lang.reflect.Method;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
-import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
@@ -17,14 +17,9 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  * @since 0.1.0
  *
  */
-public class SetEventAttributeCommand extends Command {
-
+public class SetEventAttributeCommand extends AbstractSetAttributeCommand {
     private String fAttributeName;
-    private Object fAttributeValue;
-    private Object fOldValue;
-    
     private State fState;
-    private Event fEvent;
 
     /**
      * コンストラクタ.
@@ -41,125 +36,38 @@ public class SetEventAttributeCommand extends Command {
                 Event event) {
         super();
         fAttributeName = attributeName;
-        fAttributeValue = attributeValue;
         fState = state;
-        fEvent = event;
+        
+        setModel(event);
+        Method setterMethod = createMethod(Event.class, 
+                                           "set" + attributeName, 
+                                           new Class[]{String.class});
+        setSetterMethod(setterMethod);
+        setAttributeValue(attributeValue);
+        Method getterMethod = createMethod(Event.class, 
+                                           "get" + attributeName, 
+                                           null);  
+        Object oldValue = (String) executeMethod(getterMethod, event, null);
+        setOldValue(oldValue);
     }
 
     /**
-     * コマンドが実行できるか判断する.
-     * 以下のチェックを行う。<br>
-     * ・旧データ値と同じ場合は実行不可。<br>
-     * ・イベント名の変更時、重複チェックを行い、重複している場合は実行不可。<br>
+     * コマンド実行の可否を決める個別の条件を判断する.
+     * ・イベント名が重複している場合は実行不可とする。<br>
      * 
-     * @return コマンドが実行できるか
-     * @see org.eclipse.gef.commands.Command#canExecute()
+     * @return コマンドが実行できる場合はtrueを返す。
+     * @see com.piece_framework.piece_ide.flow_designer.command
+     *          .AbstractSetAttributeCommand#canExecuteSpecialCase()
      */
     @Override
-    public boolean canExecute() {
-        if (isSameValue()) {
-            return false;
-        }
-        
-        if (fAttributeName.equals("Event")) {
-            if (!fState.checkUsableEventName((String) fAttributeValue)) {
-                MessageDialog.openError(
-                        null, "エラー", "イベント名が重複しています。");
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * 属性名に対応する属性値を設定する.
-     * 
-     * @see org.eclipse.gef.commands.Command#execute()
-     */
-    @Override
-    public void execute() {
-        fOldValue = getOldValue();
-        setValue(fAttributeValue);
-    }
-
-    /**
-     * 待避してあった前回値を使って、設定を元に戻す.
-     * 
-     * @see org.eclipse.gef.commands.Command#undo()
-     */
-    @Override
-    public void undo() {
-        setValue(fOldValue);
-    }
-    
-    /**
-     * 属性名に該当する現在の属性値を返す.
-     * 
-     * @return 属性値
-     */
-    private Object getOldValue() {
-        Object oldValue = null;
-        
-        if (fAttributeName.equals("Event")) {
-            oldValue = fEvent.getName();
-        } else if (fAttributeName.equals("NextState")) {
-            oldValue = fEvent.getNextState();
-        } else if (fAttributeName.equals("EventHandler")) {
-            oldValue = fEvent.getEventHandler();
-        } else if (fAttributeName.equals("Guard")) {
-            oldValue = fEvent.getGuardEventHandler();
-        }
-        
-        return oldValue;
-    }
-    
-    /**
-     * 属性値を設定する.
-     * 
-     * @param value 属性値
-     */
-    private void setValue(Object value) {
-        if (fAttributeName.equals("Event")) {
-            fEvent.setName((String) value);
-        } else if (fAttributeName.equals("NextState")) {
-            fEvent.setNextState((State) value);
-        } else if (fAttributeName.equals("EventHandler")) {
-            fEvent.setEventHandler((EventHandler) value);
-        } else if (fAttributeName.equals("Guard")) {
-            fEvent.setGuardEventHandler((EventHandler) value);
-        }
-    }
-    
-    /**
-     * 現在の属性値と新しい属性値が同じかを比較する.
-     * 比較内容は以下のとおり。<br>
-     * ・イベント名：文字列を比較<br>
-     * ・遷移先ステート：ステート名を比較<br>
-     * ・イベントハンドラ：クラス、メソッド名を比較<br>
-     * ・ガードイベントハンドラ：クラス、メソッド名を比較<br>
-     * 
-     * @return 現在の属性値と新しい属性値が同じか
-     */
-    private boolean isSameValue() {
-        Object oldValue = getOldValue();
-        if (oldValue == null) {
-            return false;
-        }
-        if (fAttributeValue == null) {
-            return false;
-        }
-        
-        boolean isSame = false;
-        if (fAttributeName.equals("Event")) {
-            isSame = oldValue.equals(fAttributeValue);
-        } else if (fAttributeName.equals("NextState")) {
-            isSame = ((State) oldValue).getName().equals(
-                            ((State) fAttributeValue).getName());
-        } else if (fAttributeName.equals("EventHandler")
-                    || fAttributeName.equals("Guard")) {
-            isSame = oldValue.toString().equals(fAttributeValue.toString());
-        }
-         
-        return isSame;
+    boolean canExecuteSpecialCase() {
+      if (fAttributeName.equals("Event")) {
+          if (!fState.checkUsableEventName((String) getAttributeValue())) {
+              MessageDialog.openError(
+                      null, "エラー", "イベント名が重複しています。");
+              return false;
+          }
+      }
+      return true;
     }
 }

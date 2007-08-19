@@ -197,10 +197,10 @@ public class StateEventSection extends FlowDesignerPropertySection {
         fEventTableViewer.setContentProvider(new ArrayContentProvider());
         fEventTableViewer.setLabelProvider(new EventTableLabelProvider());
         fEventTableViewer.setColumnProperties(new String[] {
-                            "Event",
+                            "Name",
                             null,
                             "EventHandler",
-                            "Guard" });
+                            "GuardEventHandler" });
         fEventTableViewer.setCellEditors(new CellEditor[] {
                             new TextCellEditor(eventTable),
                             null,
