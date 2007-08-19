@@ -8,7 +8,6 @@ import java.util.Map;
 import org.ho.yaml.Yaml;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
-import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
@@ -111,13 +110,12 @@ public abstract class AbstractStateMapper extends AbstractMapper {
             if (event.getType() != Event.BUILTIN_EVENT) {
                 continue;
             }
-            EventHandler eventHandler = event.getEventHandler();
-            if (eventHandler == null) {
+            if (event.getEventHandler() == null) {
                 continue;
             }
             
             Map<String, Object> eventMap = new LinkedHashMap<String, Object>();
-            eventMap.put("method", eventHandler.toString());
+            eventMap.put("method", event.getEventHandlerMethodName());
             
             if (event.getName().equals("Activity")) {
                 map.put("activity", eventMap);
@@ -152,9 +150,9 @@ public abstract class AbstractStateMapper extends AbstractMapper {
             eventMap.put("nextState", event.getNextState().getName());
             
             addEventHandlerToMap(
-                    event.getEventHandler(), "action", eventMap);
+                    event.getEventHandlerMethodName(), "action", eventMap);
             addEventHandlerToMap(
-                    event.getGuardEventHandler(), "guard", eventMap);
+                    event.getGuardEventHandlerMethodName(), "guard", eventMap);
             
             eventList.add(eventMap);
         }
@@ -166,21 +164,21 @@ public abstract class AbstractStateMapper extends AbstractMapper {
     /**
      * イベントハンドラをMapオブジェクトに追加する.
      * 
-     * @param eventHandler イベントハンドラ
+     * @param eventHandlerMethodName イベントハンドラメソッド名
      * @param key キー
      * @param map Mapオブジェクト
      */
     protected void addEventHandlerToMap(
-                        EventHandler eventHandler, 
+                        String eventHandlerMethodName, 
                         String key, 
                         Map<String, Object> map) {
-        if (eventHandler == null) {
+        if (eventHandlerMethodName == null) {
             return;
         }
         
         Map<String, Object> eventHandlerMap = 
                     new LinkedHashMap<String, Object>();
-        eventHandlerMap.put("method", eventHandler.toString());
+        eventHandlerMap.put("method", eventHandlerMethodName);
         map.put(key, eventHandlerMap);
     }
 }

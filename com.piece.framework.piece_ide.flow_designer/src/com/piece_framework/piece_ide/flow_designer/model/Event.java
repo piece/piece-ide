@@ -112,10 +112,40 @@ public class Event extends AbstractModel implements Serializable {
      * 
      * @return イベントハンドラ
      */
-    public EventHandler getEventHandler() {
-        return fEventHandler;
+    public String getEventHandler() {
+        if (fEventHandler == null) {
+            return null;
+        }
+        if (fEventHandler.getMethodName() == null) {
+            return null;
+        }
+        return fEventHandler.toString();
     }
 
+    /**
+     * イベントハンドラのクラス名を返す.
+     * 
+     * @return イベントハンドラのクラス名.
+     */
+    public String getEventHandlerClassName() {
+        if (fEventHandler == null) {
+            return null;
+        }
+        return fEventHandler.getClassName();
+    }
+    
+    /**
+     * イベントハンドラのメソッド名を返す.
+     * 
+     * @return イベントハンドラのメソッド名.
+     */
+    public String getEventHandlerMethodName() {
+        if (fEventHandler == null) {
+            return null;
+        }
+        return fEventHandler.getMethodName();
+    }
+    
     /**
      * イベントハンドラを設定する.
      * 
@@ -135,8 +165,38 @@ public class Event extends AbstractModel implements Serializable {
      * 
      * @return ガード用イベントハンドラ
      */
-    public EventHandler getGuardEventHandler() {
-        return fGuardEventHandler;
+    public String getGuardEventHandler() {
+        if (fGuardEventHandler == null) {
+            return null;
+        }
+        if (fGuardEventHandler.getMethodName() == null) {
+            return null;
+        }
+        return fGuardEventHandler.toString();
+    }
+    
+    /**
+     * ガード要イベントハンドラのクラス名を返す.
+     * 
+     * @return ガード要イベントハンドラのクラス名
+     */
+    public String getGuardEventHandlerClassName() {
+        if (fGuardEventHandler == null) {
+            return null;
+        }
+        return fGuardEventHandler.getClassName();
+    }
+    
+    /**
+     * ガード要イベントハンドラのメソッド名を返す.
+     * 
+     * @return ガード要イベントハンドラのメソッド名
+     */
+    public String getGuardEventHandlerMethodName() {
+        if (fGuardEventHandler == null) {
+            return null;
+        }
+        return fGuardEventHandler.getMethodName();
     }
     
     /**

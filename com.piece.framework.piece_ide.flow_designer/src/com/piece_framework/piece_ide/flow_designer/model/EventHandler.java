@@ -24,10 +24,10 @@ public class EventHandler implements Serializable {
      * @param className クラス名
      * @param methodName メソッド名
      */
-    public EventHandler(String className, String methodName) {
-        setClassName(className);
-        setMethodName(methodName);
-    }
+//    public EventHandler(String className, String methodName) {
+//        setClassName(className);
+//        setMethodName(methodName);
+//    }
     
     /**
      * コンストラクタ.
@@ -36,7 +36,7 @@ public class EventHandler implements Serializable {
      * 
      * @param classAndMethodName クラス名 + ":" + メソッド名
      */
-    public EventHandler(String classAndMethodName) {
+    protected EventHandler(String classAndMethodName) {
         if (classAndMethodName == null) {
             return;
         }
@@ -49,7 +49,11 @@ public class EventHandler implements Serializable {
             className = arrayValue[0];
             methodName = arrayValue[1];
         } else if (arrayValue.length == 1) {
-            methodName = arrayValue[0];
+            if (classAndMethodName.endsWith(":")) {
+                className = arrayValue[0];
+            } else {
+                methodName = arrayValue[0];
+            }
         }
         
         setClassName(className);

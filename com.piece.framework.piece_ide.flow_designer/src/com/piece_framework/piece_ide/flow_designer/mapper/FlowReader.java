@@ -12,7 +12,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.MessageDialog;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
-import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
@@ -176,12 +175,9 @@ public final class FlowReader {
         }
         
         Method getNameMethod = null;
-        Method toStringMethod = null;
         try {
             getNameMethod = 
                 State.class.getMethod("getName", (Class[]) null);
-            toStringMethod = 
-                EventHandler.class.getMethod("toString", (Class[]) null);
         } catch (NoSuchMethodException nsme) {
         }
         
@@ -191,13 +187,11 @@ public final class FlowReader {
             return false;
         }
         if (!compareObject(event1.getEventHandler(),
-                           event2.getEventHandler(), 
-                           toStringMethod)) {
+                           event2.getEventHandler(), null)) {
             return false;
         }
         if (!compareObject(event1.getGuardEventHandler(),
-                           event2.getGuardEventHandler(), 
-                           toStringMethod)) {
+                           event2.getGuardEventHandler(), null)) {
             return false;
         }
         return true;

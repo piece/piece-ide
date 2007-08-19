@@ -11,7 +11,6 @@ import org.ho.yaml.Yaml;
 import org.ho.yaml.exception.YamlException;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
-import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
@@ -319,10 +318,9 @@ public class FlowMapper extends AbstractMapper {
         Object value = 
             getValueIgnoreCase(map, eventName);
         if (value != null && value instanceof Map) {
-            EventHandler eventHandler = getEventHandler((Map) value);
             Event event = state.getEventByName(eventName);
-            if (eventHandler != null && event != null) {
-                event.setEventHandler(eventHandler);
+            if (event != null) {
+                event.setEventHandler(getEventHandler((Map) value));
             }
         }
     }
@@ -335,19 +333,15 @@ public class FlowMapper extends AbstractMapper {
      * @param map Mapオブジェクト
      * @return イベントハンドラ
      */
-    private EventHandler getEventHandler(Map map) {
+    private String getEventHandler(Map map) {
         if (map == null) {
             return null;
         }
         
-        EventHandler returnEventHandler = null;
         Object methodValue = 
             getValueIgnoreCase(map, "method");
-        if (methodValue != null && methodValue instanceof String) {
-            returnEventHandler = 
-                    new EventHandler((String) methodValue);
-        }
-        return returnEventHandler;
+        
+        return (String) methodValue;
     }
     
     /**
