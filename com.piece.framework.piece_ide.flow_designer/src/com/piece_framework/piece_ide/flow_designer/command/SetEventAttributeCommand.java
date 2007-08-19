@@ -31,7 +31,7 @@ public class SetEventAttributeCommand extends AbstractSetAttributeCommand {
      */
     public SetEventAttributeCommand(
                 String attributeName, 
-                Object attributeValue, 
+                String attributeValue, 
                 State state,
                 Event event) {
         super();
@@ -61,13 +61,20 @@ public class SetEventAttributeCommand extends AbstractSetAttributeCommand {
      */
     @Override
     boolean canExecuteSpecialCase() {
-      if (fAttributeName.equals("Event")) {
-          if (!fState.checkUsableEventName((String) getAttributeValue())) {
-              MessageDialog.openError(
-                      null, "エラー", "イベント名が重複しています。");
-              return false;
-          }
-      }
-      return true;
+        Event event = (Event) getModel();
+        if (event.getType() == Event.BUILTIN_EVENT) {
+            if (fAttributeName.equals("Name") 
+                || fAttributeName.equals("GuardEventHandler")) {
+                return false;
+            }
+        }
+        if (fAttributeName.equals("Name")) {
+            if (!fState.checkUsableEventName((String) getAttributeValue())) {
+                MessageDialog.openError(
+                        null, "エラー", "イベント名が重複しています。");
+                return false;
+            }
+        }
+        return true;
     }
 }

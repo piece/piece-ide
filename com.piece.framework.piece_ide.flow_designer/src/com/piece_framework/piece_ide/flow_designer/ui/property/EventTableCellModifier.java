@@ -120,22 +120,7 @@ public class EventTableCellModifier implements ICellModifier {
             element = ((Item) element).getData();
         }
         Event event = (Event) element;
-        
-        Object attributeValue = null;
-        
-        if (property.equals("Name")) {
-            // ビルトインイベントの場合は編集不可
-            if (event.getType() != Event.BUILTIN_EVENT) {
-                attributeValue = value;
-            }
-        } else if (property.equals("EventHandler")) {
-            attributeValue = String.valueOf(value);
-        } else if (property.equals("GuardEventHandler")) {
-            // ビルトインイベントの場合は編集不可
-            if (event.getType() != Event.BUILTIN_EVENT) {
-                attributeValue = String.valueOf(value);
-            }
-        }
+        String attributeValue = String.valueOf(value);
         
         CommandStack commandStack = 
             (CommandStack) fEditor.getAdapter(CommandStack.class);
