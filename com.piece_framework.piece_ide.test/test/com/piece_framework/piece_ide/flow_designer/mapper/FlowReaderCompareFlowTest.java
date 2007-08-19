@@ -129,7 +129,7 @@ public class FlowReaderCompareFlowTest extends TestCase {
      */
     public void testComapreFlowShouldReturnFalseBecauseOfTheEventHandlerIsDifferent() {
         State state = fFlow1.getStateList().get(2);
-        state.getEventList().get(0).setEventHandler("TestClass", "TestMethod");
+        state.getEventList().get(0).setEventHandler("TestClass:TestMethod");
         assertFalse(FlowReader.compareFlow(fFlow1, fFlow2));
     }
     
@@ -142,7 +142,7 @@ public class FlowReaderCompareFlowTest extends TestCase {
     public void testComapreFlowShouldReturnFalseBecauseOfTheGuardIsDifferent() {
         State state = fFlow1.getStateList().get(2);
         state.getTransitionEventList().get(0).setGuardEventHandler(
-                                            "TestClass", "TestMethod");
+                                            "TestClass:TestMethod");
         assertFalse(FlowReader.compareFlow(fFlow1, fFlow2));
     }
     
@@ -205,7 +205,7 @@ public class FlowReaderCompareFlowTest extends TestCase {
         Event view1ToAction = new Event(Event.TRANSITION_EVENT);
         view1ToAction.setName("Process1FromDisplayForm1");
         view1ToAction.setNextState(actionState);
-        view1ToAction.setEventHandler(null, "doProcess1FromDisplayForm1");
+        view1ToAction.setEventHandler("doProcess1FromDisplayForm1");
         viewState1.addEvent(view1ToAction);
         
         Event actionToView1 = new Event(Event.TRANSITION_EVENT);

@@ -111,7 +111,7 @@ public class FlowMapperGetYAMLTest extends TestCase {
         Event view1ToAction = new Event(Event.TRANSITION_EVENT);
         view1ToAction.setName("Process1FromDisplayForm1");
         view1ToAction.setNextState(actionState);
-        view1ToAction.setEventHandler(null, "doProcess1FromDisplayForm1");
+        view1ToAction.setEventHandler("doProcess1FromDisplayForm1");
         viewState1.addEvent(view1ToAction);
         
         Event actionToView1 = new Event(Event.TRANSITION_EVENT);
@@ -210,20 +210,20 @@ public class FlowMapperGetYAMLTest extends TestCase {
         Event view1ToFinal = new Event(Event.TRANSITION_EVENT);
         view1ToFinal.setName("FinalStateFromDisplayForm1");
         view1ToFinal.setNextState(finalState);
-        view1ToFinal.setEventHandler(null, "doFinaltStateFromDisplayForm1");
+        view1ToFinal.setEventHandler("doFinaltStateFromDisplayForm1");
         viewState1.addEvent(view1ToFinal);
         
         Event view2ToFinal = new Event(Event.TRANSITION_EVENT);
         view2ToFinal.setName("FinalStateFromDisplayForm2");
         view2ToFinal.setNextState(finalState);
-        view2ToFinal.setEventHandler(null, "doFinaltStateFromDisplayForm2");
+        view2ToFinal.setEventHandler("doFinaltStateFromDisplayForm2");
         viewState2.addEvent(view2ToFinal);
         
         Event view2ToView2 = new Event(Event.INTERNAL_EVENT);
         view2ToView2.setName("DisplayForm2FromDisplayForm2");
         view2ToView2.setNextState(viewState2);
-        view2ToView2.setEventHandler(null, "doDisplayForm2FromDisplayForm2");
-        view2ToView2.setGuardEventHandler(null, "guardMethod");
+        view2ToView2.setEventHandler("doDisplayForm2FromDisplayForm2");
+        view2ToView2.setGuardEventHandler("guardMethod");
         viewState2.addEvent(view2ToView2);
         
         fFlow.addState(initialState);
@@ -314,10 +314,8 @@ public class FlowMapperGetYAMLTest extends TestCase {
         Event viewToAction = new Event(Event.TRANSITION_EVENT);
         viewToAction.setName("Process1FromDisplayForm1");
         viewToAction.setNextState(actionState);
-        viewToAction.setEventHandler("FlowAction", 
-                            "doProcess1FromDisplayForm1");
-        viewToAction.setGuardEventHandler("GuardAction",
-                            "guardMethod");
+        viewToAction.setEventHandler("FlowAction:doProcess1FromDisplayForm1");
+        viewToAction.setGuardEventHandler("GuardAction:guardMethod");
         viewState.addEvent(viewToAction);
         
         fFlow.addState(initialState);
@@ -395,7 +393,7 @@ public class FlowMapperGetYAMLTest extends TestCase {
         Event view1ToAction = new Event(Event.TRANSITION_EVENT);
         view1ToAction.setName("Process1FromDisplayForm1");
         view1ToAction.setNextState(actionState);
-        view1ToAction.setEventHandler(null, "doProcess1FromDisplayForm1");
+        view1ToAction.setEventHandler("doProcess1FromDisplayForm1");
         viewState1.addEvent(view1ToAction);
         
         Event actionToView1 = new Event(Event.TRANSITION_EVENT);
@@ -491,7 +489,7 @@ public class FlowMapperGetYAMLTest extends TestCase {
         Event view1ToAction = new Event(Event.TRANSITION_EVENT);
         view1ToAction.setName("Process1FromDisplayForm1");
         view1ToAction.setNextState(actionState);
-        view1ToAction.setEventHandler(null, "doProcess1FromDisplayForm1");
+        view1ToAction.setEventHandler("doProcess1FromDisplayForm1");
         viewState1.addEvent(view1ToAction);
         
         Event actionToView1 = new Event(Event.TRANSITION_EVENT);

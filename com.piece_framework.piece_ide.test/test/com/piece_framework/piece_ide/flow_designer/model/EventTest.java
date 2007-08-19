@@ -79,12 +79,12 @@ public class EventTest extends TestCase {
         listener.initializePropertyChangeEvent();
         assertNull(listener.getPropertyChangeEvent());
         
-        event.setEventHandler("class1", "method1");
+        event.setEventHandler("class1:method1");
         assertEvent(listener, event);
         listener.initializePropertyChangeEvent();
         assertNull(listener.getPropertyChangeEvent());
         
-        event.setGuardEventHandler("guard_class1", "guard_method1");
+        event.setGuardEventHandler("guard_class1:guard_method1");
         assertEvent(listener, event);
         listener.initializePropertyChangeEvent();
         assertNull(listener.getPropertyChangeEvent());
@@ -153,7 +153,7 @@ public class EventTest extends TestCase {
     public void testGetEventHandlerShouldReturnNull() {
         Event event = new Event(Event.INTERNAL_EVENT);
         
-        event.setEventHandler("", "");
+        event.setEventHandler("");
         assertNull(event.getEventHandler());
     }
     
@@ -166,7 +166,7 @@ public class EventTest extends TestCase {
     public void testGetGuardEventHandlerShouldReturnNull() {
         Event event = new Event(Event.INTERNAL_EVENT);
         
-        event.setGuardEventHandler("", "");
+        event.setGuardEventHandler("");
         assertNull(event.getGuardEventHandler());
     }
 }
