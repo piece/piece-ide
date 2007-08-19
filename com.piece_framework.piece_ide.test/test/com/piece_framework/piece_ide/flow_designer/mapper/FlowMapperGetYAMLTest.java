@@ -4,7 +4,6 @@ package com.piece_framework.piece_ide.flow_designer.mapper;
 import junit.framework.TestCase;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
-import com.piece_framework.piece_ide.flow_designer.model.EventHandler;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
@@ -594,33 +593,27 @@ public class FlowMapperGetYAMLTest extends TestCase {
             sp.append(" ");
         }
         
-        EventHandler activityEventHandler = 
-            state.getEventByName("Activity").getEventHandler();
-        EventHandler entryEventHandler = 
-            state.getEventByName("Entry").getEventHandler();
-        EventHandler exitEventHandler = 
-            state.getEventByName("Exit").getEventHandler();
+        Event activitiyEvent = state.getEventByName("Activity");
+        Event entryEvent = state.getEventByName("Entry");
+        Event exitEvent = state.getEventByName("Exit");
         
-        if (entryEventHandler != null) {
+        if (entryEvent.getEventHandler() != null) {
             yamlBuffer.append(
                     sp + "entry:\n"
                   + sp + "  method: "
-                            + getClassName(entryEventHandler)
-                            + entryEventHandler.getMethodName() + "\n");
+                       + entryEvent.getEventHandlerMethodName() + "\n");
         }
-        if (activityEventHandler != null) {
+        if (activitiyEvent.getEventHandler() != null) {
             yamlBuffer.append(
                     sp + "activity:\n"
                   + sp + "  method: "
-                            + getClassName(activityEventHandler)
-                            + activityEventHandler.getMethodName() + "\n");
+                       + activitiyEvent.getEventHandlerMethodName() + "\n");
         }
-        if (exitEventHandler != null) {
+        if (exitEvent.getEventHandler() != null) {
             yamlBuffer.append(
                     sp + "exit:\n"
                   + sp + "  method: "
-                            + getClassName(exitEventHandler)
-                            + exitEventHandler.getMethodName() + "\n");
+                       + exitEvent.getEventHandlerMethodName() + "\n");
         }
         return yamlBuffer.toString();
     }
@@ -655,52 +648,20 @@ public class FlowMapperGetYAMLTest extends TestCase {
                 yamlBuffer.append(sp + "    nextState: "
                                 + event.getNextState().getName() + "\n");
                 if (event.getEventHandler() != null) {
-                    EventHandler eventHandler = event.getEventHandler();
-                    String methodName = "";
-                    if (eventHandler.getClassName() == null) {
-                        methodName = getClassName(eventHandler)
-                                   + eventHandler.getMethodName();
-                    } else {
-                        methodName = eventHandler.toString();
-                    }
                     yamlBuffer.append(
                             sp + "    action:\n"
                           + sp + "      method: "
-                              + methodName + "\n");
+                              + event.getEventHandlerMethodName() + "\n");
                 }
                 if (event.getGuardEventHandler() != null) {
-                    EventHandler guardEventHandler = 
-                                event.getGuardEventHandler();
-                    String methodName = "";
-                    if (guardEventHandler.getClassName() == null) {
-                        methodName = getClassName(guardEventHandler)
-                                   + guardEventHandler.getMethodName();
-                    } else {
-                        methodName = guardEventHandler.toString();
-                    }
                     yamlBuffer.append(
                             sp + "    guard:\n"
                           + sp + "      method: "
-                              + methodName + "\n");
+                              + event.getGuardEventHandlerMethodName() + "\n");
                 }
             }
         }
         
         return yamlBuffer.toString();
-    }
-    
-    /**
-     * イベントハンドラからクラス名を取得する.
-     * クラス名がない場合は空文字を返す。
-     * 
-     * @param eventHandler イベントハンドラ
-     * @return クラス名
-     */
-    private String getClassName(EventHandler eventHandler)  {
-        String className = "";
-        if (eventHandler.getClassName() != null) {
-            className = eventHandler.getClassName() + ":";
-        }
-        return className;
     }
 }

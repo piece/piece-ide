@@ -116,22 +116,7 @@ public class EventTest extends TestCase {
         assertNull(event.generateEventHandlerMethodName());
     }    
     
-    /**
-     * イベントの変更通知をチェックする.
-     * 
-     * @param listener リスナー
-     * @param event 対象のイベント
-     */
-    private void assertEvent(
-                        TestPropertyChangeListener listener, Event event) {
-        PropertyChangeEvent propertyChangeEvent = 
-                                listener.getPropertyChangeEvent();
-        assertNotNull(propertyChangeEvent);
-        assertEquals("event", propertyChangeEvent.getPropertyName());
-        assertNull(propertyChangeEvent.getOldValue());
-        assertEquals(event, (Event) propertyChangeEvent.getNewValue());
-    }
-    
+
     /**
      * getName/setName メソッドテスト.
      * イベント名に空文字を渡した場合、nullが返されることをテストする。
@@ -146,6 +131,51 @@ public class EventTest extends TestCase {
     
     /**
      * getEventHandler/setEventHandler メソッドテスト.
+     * イベントハンドラに"クラス名:メソッド名"を渡した場合、イベントハ
+     * ンドラが正しく返されることをテストする。
+     * 
+     */
+    public void testGetEventHandlerShouldReturnStringObject() {
+        Event event = new Event(Event.INTERNAL_EVENT);
+        
+        event.setEventHandler("TestClass:TestMethod");
+        assertEquals("TestClass:TestMethod", event.getEventHandler());
+        assertEquals("TestClass", event.getEventHandlerClassName());
+        assertEquals("TestMethod", event.getEventHandlerMethodName());
+    }
+    
+    /**
+     * getEventHandler/setEventHandler メソッドテスト.
+     * イベントハンドラに"クラス名:"を渡した場合、イベントハンドラは
+     * クラス名以外をnullで返すことをテストする。
+     * 
+     */
+    public void testGetEventHandlerShouldReturnNullBecauseOfTheMethodNameIsEmpty() {
+        Event event = new Event(Event.INTERNAL_EVENT);
+        
+        event.setEventHandler("TestClass:");
+        assertNull(event.getEventHandler());
+        assertEquals("TestClass", event.getEventHandlerClassName());
+        assertNull(event.getEventHandlerMethodName());
+    }
+    
+    /**
+     * getEventHandler/setEventHandler メソッドテスト.
+     * イベントハンドラに":メソッド名"を渡した場合、イベントハンドラは
+     * クラス名をnullで返すことをテストする。
+     * 
+     */
+    public void testGetEventHandlerShouldReturnTheMethodNameBecauseOfTheClassNameIsEmpty() {
+        Event event = new Event(Event.INTERNAL_EVENT);
+        
+        event.setEventHandler(":TestMethod");
+        assertEquals("TestMethod", event.getEventHandler());
+        assertNull(null, event.getEventHandlerClassName());
+        assertEquals("TestMethod", event.getEventHandlerMethodName());
+    }
+    
+    /**
+     * getEventHandler/setEventHandler メソッドテスト.
      * イベントハンドラに空文字を渡した場合、イベントハンドラ自身が
      * nullで返されることをテストする。
      * 
@@ -155,6 +185,53 @@ public class EventTest extends TestCase {
         
         event.setEventHandler("");
         assertNull(event.getEventHandler());
+        assertNull(event.getEventHandlerClassName());
+        assertNull(event.getEventHandlerMethodName());
+    }
+    
+    /**
+     * getGuardEventHandler/setGuardEventHandler メソッドテスト.
+     * がーとイベントハンドラに"クラス名:メソッド名"を渡した場合、ガー
+     * ドイベントハンドラが正しく返されることをテストする。
+     * 
+     */
+    public void testGetGuardEventHandlerShouldReturnStringObject() {
+        Event event = new Event(Event.INTERNAL_EVENT);
+        
+        event.setGuardEventHandler("TestClass:TestMethod");
+        assertEquals("TestClass:TestMethod", event.getGuardEventHandler());
+        assertEquals("TestClass", event.getGuardEventHandlerClassName());
+        assertEquals("TestMethod", event.getGuardEventHandlerMethodName());
+    }
+    
+    /**
+     * getGuardEventHandler/setGuardEventHandler メソッドテスト.
+     * ガードイベントハンドラに"クラス名:"を渡した場合、ガードイベントハ
+     * ンドラはクラス名以外をnullで返すことをテストする。
+     * 
+     */
+    public void testGetGuardEventHandlerShouldReturnNullBecauseOfTheMethodNameIsEmpty() {
+        Event event = new Event(Event.INTERNAL_EVENT);
+        
+        event.setGuardEventHandler("TestClass:");
+        assertNull(event.getGuardEventHandler());
+        assertEquals("TestClass", event.getGuardEventHandlerClassName());
+        assertNull(event.getGuardEventHandlerMethodName());
+    }
+    
+    /**
+     * getGuardEventHandler/setEventHandler メソッドテスト.
+     * ガードイベントハンドラに":メソッド名"を渡した場合、ガードイベント
+     * ハンドラはクラス名をnullで返すことをテストする。
+     * 
+     */
+    public void testGetGuardEventHandlerShouldReturnTheMethodNameBecauseOfTheClassNameIsEmpty() {
+        Event event = new Event(Event.INTERNAL_EVENT);
+        
+        event.setGuardEventHandler(":TestMethod");
+        assertEquals("TestMethod", event.getGuardEventHandler());
+        assertNull(null, event.getGuardEventHandlerClassName());
+        assertEquals("TestMethod", event.getGuardEventHandlerMethodName());
     }
     
     /**
@@ -168,5 +245,23 @@ public class EventTest extends TestCase {
         
         event.setGuardEventHandler("");
         assertNull(event.getGuardEventHandler());
+        assertNull(event.getGuardEventHandlerClassName());
+        assertNull(event.getGuardEventHandlerMethodName());
+    }
+    
+    /**
+     * イベントの変更通知をチェックする.
+     * 
+     * @param listener リスナー
+     * @param event 対象のイベント
+     */
+    private void assertEvent(
+                        TestPropertyChangeListener listener, Event event) {
+        PropertyChangeEvent propertyChangeEvent = 
+                                listener.getPropertyChangeEvent();
+        assertNotNull(propertyChangeEvent);
+        assertEquals("event", propertyChangeEvent.getPropertyName());
+        assertNull(propertyChangeEvent.getOldValue());
+        assertEquals(event, (Event) propertyChangeEvent.getNewValue());
     }
 }
