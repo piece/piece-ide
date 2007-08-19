@@ -20,7 +20,6 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  * 
  */
 public class EventTableCellModifier implements ICellModifier {
-
     private GraphicalEditor fEditor;
     private TableViewer fEventTableViewer;
     
@@ -71,34 +70,31 @@ public class EventTableCellModifier implements ICellModifier {
     public Object getValue(Object element, String property) {
         Event event = (Event) element;
         
-        if (property.equals("Name")) {
-            // ビルトインイベントの場合は編集不可
-            if (event.getType() == Event.BUILTIN_EVENT) {
+        if (event.getType() == Event.BUILTIN_EVENT) {
+            if (!property.equals("EventHandler")) {
                 return null;
             }
-            
+        }
+        
+        if (property.equals("Name")) {
             return event.getName();
         } else if (property.equals("EventHandler")) {
             if (event.getEventHandler() != null) {
-                return event.getEventHandler().toString();
+                return event.getEventHandler();
             } else {
-                if (fState.getType() == State.INITIAL_STATE
-                    || fState.getType() == State.FINAL_STATE) {
-                    return event.generateEventHandlerMethodName();
-                } else if (fState.getType() == State.VIEW_STATE
-                            || fState.getType() == State.ACTION_STATE) {
-                    return event.generateEventHandlerMethodName() 
-                            + "On" + fState.getName();
+                boolean isNormalState =
+                            fState.getType() == State.VIEW_STATE
+                            || fState.getType() == State.ACTION_STATE;
+                
+                String eventName = event.generateEventHandlerMethodName();
+                if (isNormalState) {
+                    eventName += "On" + fState.getName();
                 }
+                return eventName;
             }
         } else if (property.equals("GuardEventHandler")) {
-            // ビルトインイベントの場合は編集不可
-            if (event.getType() == Event.BUILTIN_EVENT) {
-                return null;
-            }
-            
             if (event.getGuardEventHandler() != null) {
-                return event.getGuardEventHandler().toString();
+                return event.getGuardEventHandler();
             }
         }
         
