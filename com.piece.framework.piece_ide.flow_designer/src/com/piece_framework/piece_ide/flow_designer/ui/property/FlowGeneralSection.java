@@ -98,35 +98,12 @@ public class FlowGeneralSection extends GeneralPropertySection {
         String attributeName = null;
         
         if (control == fFlowName) {
-            attributeName = "name";
+            attributeName = "Name";
         } else if (control == fActionClassName) {
-            attributeName = "actionClassName";
+            attributeName = "ActionClassName";
         }
         
         return attributeName;
-    }
-
-    /**
-     * コントロールから変更前の属性値を返す.
-     * 
-     * @param control コントロール
-     * @return 変更前の属性値
-     * @see com.piece_framework.piece_ide.flow_designer.ui.property
-     *          .GeneralPropertySection
-     *              #getAttributeOldValue(org.eclipse.swt.widgets.Control)
-     */
-    @Override
-    String getAttributeOldValue(Control control) {
-        String attributeOldValue = null;
-        Flow flow = (Flow) getModel();
-        
-        if (control == fFlowName) {
-            attributeOldValue = flow.getName();
-        } else if (control == fActionClassName) {
-            attributeOldValue = flow.getActionClassName();
-        }
-
-        return attributeOldValue;
     }
 
     /**

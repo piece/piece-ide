@@ -28,12 +28,6 @@ public abstract class GeneralPropertySection extends
         public void changeText(Control control) {
             String attributeName = getAttributeName(control);
             String attributeValue = ((Text) control).getText();
-            String attributeOldValue = getAttributeOldValue(control);
-            
-            if ((attributeValue.equals("") && attributeOldValue == null)
-                || attributeValue.equals(attributeOldValue)) {
-                return;
-            }
             
             executeCommand(getAttributeCommand(attributeName, attributeValue));
             refresh();
@@ -93,13 +87,6 @@ public abstract class GeneralPropertySection extends
      * @return 属性名
      */
     abstract String getAttributeName(Control control);
-    
-    /**
-     * コントロールから変更前の属性値を返す.
-     * @param control コントロール
-     * @return 変更前の属性値
-     */
-    abstract String getAttributeOldValue(Control control);
     
     /**
      * 属性を設定するコマンドを返す.

@@ -1,9 +1,10 @@
 // $Id: SetFlowAttributeCommand.java 180 2007-07-27 00:57:08Z matsufuji $
 package com.piece_framework.piece_ide.flow_designer.command;
 
-import org.eclipse.gef.commands.Command;
+import java.lang.reflect.Method;
 
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
+import com.piece_framework.piece_ide.internal.PieceIDE;
 
 /**
  * フロー属性設定コマンド.
@@ -14,13 +15,7 @@ import com.piece_framework.piece_ide.flow_designer.model.Flow;
  * @since 0.1.0
  *
  */
-public class SetFlowAttributeCommand extends Command {
-
-    private String fAttributeName;
-    private String fAttributeValue;
-    private String fOldValue;
-    
-    private Flow fFlow;
+public class SetFlowAttributeCommand extends AbstractSetAttributeCommand {
 
     /**
      * コンストラクタ.
@@ -34,38 +29,29 @@ public class SetFlowAttributeCommand extends Command {
                 String attributeValue, 
                 Flow flow) {
         super();
-        fAttributeName = attributeName;
-        fAttributeValue = attributeValue;
-        fFlow = flow;
+        setModel(flow);
+        Method setterMethod = createMethod(Flow.class, 
+                                           "set" + attributeName, 
+                                           new Class[]{String.class});
+        setSetterMethod(setterMethod);
+        setAttributeValue(attributeValue);
+        Method getterMethod = createMethod(Flow.class, 
+                                           "get" + attributeName, 
+                                           null);  
+        Object oldValue = (String) executeMethod(getterMethod, flow, null);
+        setOldValue(oldValue);
     }
     
     /**
-     * 属性名に対応する属性値を設定する.
+     * コマンドが実行できるか判断する.
+     * 以下のチェックを行う。<br>
+     * ・旧データ値と同じ場合は実行不可。<br>
      * 
-     * @see org.eclipse.gef.commands.Command#execute()
+     * @return コマンドが実行できる場合はtrueを返す。
+     * @see org.eclipse.gef.commands.Command#canExecute()
      */
     @Override
-    public void execute() {
-        if (fAttributeName.equals("name")) {
-            fOldValue = fFlow.getName();
-            fFlow.setName(fAttributeValue);
-        } else if (fAttributeName.equals("actionClassName")) {
-            fOldValue = fFlow.getActionClassName();
-            fFlow.setActionClassName(fAttributeValue);
-        }
-    }
-
-    /**
-     * 待避してあった前回値を使って、設定を元に戻す.
-     * 
-     * @see org.eclipse.gef.commands.Command#undo()
-     */
-    @Override
-    public void undo() {
-        if (fAttributeName.equals("name")) {
-            fFlow.setName(fOldValue);
-        } else if (fAttributeName.equals("actionClassName")) {
-            fFlow.setActionClassName(fOldValue);
-        }
-    }
+    public boolean canExecute() {
+        return !PieceIDE.compare(getOldValue(), getAttributeValue());
+    }    
 }

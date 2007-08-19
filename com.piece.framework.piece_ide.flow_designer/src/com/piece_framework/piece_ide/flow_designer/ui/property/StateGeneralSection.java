@@ -173,31 +173,6 @@ public class StateGeneralSection extends GeneralPropertySection {
         
         return attributeName;
     }
-
-    /**
-     * コントロールから変更前の属性値を返す.
-     * 
-     * @param control コントロール
-     * @return 変更前の属性値
-     * @see com.piece_framework.piece_ide.flow_designer.ui.property
-     *          .GeneralPropertySection
-     *              #getAttributeOldValue(org.eclipse.swt.widgets.Control)
-     */
-    @Override
-    String getAttributeOldValue(Control control) {
-        String attributeOldValue = null;
-        State state = (State) getModel();
-        
-        if (control == fStateName) {
-            attributeOldValue = state.getName();
-        } else if (control == fSummary) {
-            attributeOldValue = state.getSummary();
-        } else if (control == fViewName) {
-            attributeOldValue = state.getView();
-        }
-        
-        return attributeOldValue;
-    }
     
     /**
      * ステート属性を設定するコマンドを返す.
