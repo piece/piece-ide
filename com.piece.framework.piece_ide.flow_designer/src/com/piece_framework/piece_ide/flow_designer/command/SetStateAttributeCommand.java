@@ -1,7 +1,8 @@
 // $Id: SetStateAttributeCommand.java 211 2007-08-07 01:26:43Z matsufuji $
 package com.piece_framework.piece_ide.flow_designer.command;
 
-import org.eclipse.gef.commands.Command;
+import java.lang.reflect.Method;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
@@ -16,15 +17,14 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  * @since 0.1.0
  *
  */
-public class SetStateAttributeCommand extends Command {
-
+/**
+ * @author matsu
+ *
+ */
+public class SetStateAttributeCommand extends AbstractSetAttributeCommand {
     private String fAttributeName;
-    private String fAttributeValue;
-    private String fOldValue;
-    
     private Flow fFlow;
-    private State fState;
-
+    
     /**
      * コンストラクタ.
      * 
@@ -40,90 +40,38 @@ public class SetStateAttributeCommand extends Command {
                 State state) {
         super();
         fAttributeName = attributeName;
-        fAttributeValue = attributeValue;
         fFlow = flow;
-        fState = state;
+        
+        setModel(state);
+        Method setterMethod = createMethod(State.class, 
+                                           "set" + attributeName, 
+                                           new Class[]{String.class});
+        setSetterMethod(setterMethod);
+        setAttributeValue(attributeValue);
+        Method getterMethod = createMethod(State.class, 
+                                           "get" + attributeName, 
+                                           null);  
+        Object oldValue = (String) executeMethod(getterMethod, state, null);
+        setOldValue(oldValue);
     }
 
     /**
-     * コマンドが実行できるか判断する.
-     * 以下のチェックを行う。<br>
-     * ・旧データ値と同じ場合は実行不可。<br>
-     * ・ステート名の変更時、重複チェックを行い、重複している場合は実行不可。<br>
+     * コマンド実行の可否を決める個別の条件を判断する.
+     * ・ステート名が重複している場合は実行不可とする。<br>
      * 
-     * @return コマンドが実行できるか
-     * @see org.eclipse.gef.commands.Command#canExecute()
+     * @return コマンドが実行できる場合はtrueを返す。
+     * @see com.piece_framework.piece_ide.flow_designer.command
+     *          .AbstractSetAttributeCommand#canExecuteSpecialCase()
      */
     @Override
-    public boolean canExecute() {
-        if (getOldValue() != null && getOldValue().equals(fAttributeValue)) {
-            return false;
-        }
-        
-        if (fAttributeName.equals("name")) {
-            if (!fFlow.checkUsableStateName(fAttributeValue)) {
+    boolean canExecuteSpecialCase() {
+        if (fAttributeName.equals("Name")) {
+            if (!fFlow.checkUsableStateName((String) getAttributeValue())) {
                 MessageDialog.openError(
                         null, "エラー", "ステート名が重複しています。");
                 return false;
             }
         }
         return true;
-    }
-
-    /**
-     * 属性名に対応する属性値を設定する.
-     * 
-     * @see org.eclipse.gef.commands.Command#execute()
-     */
-    @Override
-    public void execute() {
-        fOldValue = getOldValue();
-        setValue(fAttributeValue);
-    }
-
-    /**
-     * 待避してあった前回値を使って、設定を元に戻す.
-     * 
-     * @see org.eclipse.gef.commands.Command#undo()
-     */
-    @Override
-    public void undo() {
-        setValue(fOldValue);
-    }
-    
-    /**
-     * 属性名に該当する現在の属性値を返す.
-     * 
-     * @return 属性値
-     */
-    private String getOldValue() {
-        String oldValue = null;
-        
-        if (fAttributeName.equals("name")) {
-            oldValue = fState.getName();
-        } else if (fAttributeName.equals("summary")) {
-            oldValue = fState.getSummary();
-        } else if (fState.getType() == State.VIEW_STATE
-                    && fAttributeName.equals("view")) {
-            oldValue = fState.getView();            
-        }
-        
-        return oldValue;
-    }
-    
-    /**
-     * 属性値を設定する.
-     * 
-     * @param value 属性値
-     */
-    private void setValue(String value) {
-        if (fAttributeName.equals("name")) {
-            fState.setName(value);
-        } else if (fAttributeName.equals("summary")) {
-            fState.setSummary(value);
-        } else if (fState.getType() == State.VIEW_STATE
-                    && fAttributeName.equals("view")) {
-            fState.setView(value);
-        }
     }
 }

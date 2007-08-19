@@ -4,7 +4,6 @@ package com.piece_framework.piece_ide.flow_designer.command;
 import java.lang.reflect.Method;
 
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
-import com.piece_framework.piece_ide.internal.PieceIDE;
 
 /**
  * フロー属性設定コマンド.
@@ -42,16 +41,16 @@ public class SetFlowAttributeCommand extends AbstractSetAttributeCommand {
         setOldValue(oldValue);
     }
     
+    
     /**
-     * コマンドが実行できるか判断する.
-     * 以下のチェックを行う。<br>
-     * ・旧データ値と同じ場合は実行不可。<br>
+     * コマンド実行の可否を決める個別の条件を判断する.
      * 
      * @return コマンドが実行できる場合はtrueを返す。
-     * @see org.eclipse.gef.commands.Command#canExecute()
+     * @see com.piece_framework.piece_ide.flow_designer.command
+     *          .AbstractSetAttributeCommand#canExecuteSpecialCase()
      */
     @Override
-    public boolean canExecute() {
-        return !PieceIDE.compare(getOldValue(), getAttributeValue());
-    }    
+    boolean canExecuteSpecialCase() {
+        return true;
+    }
 }

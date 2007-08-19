@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import org.eclipse.gef.commands.Command;
 
 import com.piece_framework.piece_ide.flow_designer.model.AbstractModel;
+import com.piece_framework.piece_ide.internal.PieceIDE;
 
 /**
  * 属性設定コマンド抽象クラス.
@@ -16,7 +17,7 @@ import com.piece_framework.piece_ide.flow_designer.model.AbstractModel;
  * @since 0.1.0
  *
  */
-public class AbstractSetAttributeCommand extends Command {
+public abstract class AbstractSetAttributeCommand extends Command {
     private Object fAttributeValue;
     private Object fOldValue;
     
@@ -24,6 +25,30 @@ public class AbstractSetAttributeCommand extends Command {
     
     private AbstractModel fModel;
 
+    /**
+     * コマンドが実行できるか判断する.
+     * 以下のチェックを行う。<br>
+     * ・旧データ値と同じ場合は実行不可。<br>
+     * ・その他の固有の条件に合致しない場合は実行不可。<br>
+     * 
+     * @return コマンドが実行できる場合はtrueを返す。
+     * @see org.eclipse.gef.commands.Command#canExecute()
+     */
+    @Override
+    public boolean canExecute() {
+        if (PieceIDE.compare(getOldValue(), getAttributeValue())) {
+            return false;
+        }
+        return canExecuteSpecialCase();
+    } 
+    
+    /**
+     * コマンド実行の可否を決める個別の条件を判断する.
+     * 
+     * @return コマンドが実行できる場合はtrueを返す。
+     */
+    abstract boolean canExecuteSpecialCase();
+    
     /**
      * 属性名に対応する属性値を設定する.
      * 

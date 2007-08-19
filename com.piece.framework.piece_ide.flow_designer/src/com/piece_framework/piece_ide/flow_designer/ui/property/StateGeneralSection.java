@@ -164,11 +164,11 @@ public class StateGeneralSection extends GeneralPropertySection {
         String attributeName = null;
         
         if (control == fStateName) {
-            attributeName = "name";
+            attributeName = "Name";
         } else if (control == fSummary) {
-            attributeName = "summary";
+            attributeName = "Summary";
         } else if (control == fViewName) {
-            attributeName = "view";
+            attributeName = "View";
         }
         
         return attributeName;
