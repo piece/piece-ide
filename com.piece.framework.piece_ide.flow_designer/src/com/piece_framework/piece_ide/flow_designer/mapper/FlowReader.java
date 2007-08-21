@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.eclipse.core.resources.IFile;
@@ -14,6 +13,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
+import com.piece_framework.piece_ide.internal.PieceIDE;
 
 /**
  * フローリーダー.
@@ -153,9 +153,8 @@ public final class FlowReader {
         }
         
         if (state1.getType() == State.VIEW_STATE) {
-            if (!compareObject(state1.getView(),
-                               state2.getView(), 
-                               null)) {
+            if (!PieceIDE.compare(state1.getView(),
+                                  state2.getView())) {
                 return false;
             }
         }
@@ -185,63 +184,19 @@ public final class FlowReader {
         } catch (NoSuchMethodException nsme) {
         }
         
-        if (!compareObject(event1.getNextState(),
-                           event2.getNextState(), 
-                           getNameMethod)) {
+        if (!PieceIDE.compare(event1.getNextState(),
+                              event2.getNextState(),
+                              getNameMethod)) {
             return false;
         }
-        if (!compareObject(event1.getEventHandler(),
-                           event2.getEventHandler(), null)) {
+        if (!PieceIDE.compare(event1.getEventHandler(), 
+                              event2.getEventHandler())) {
             return false;
         }
-        if (!compareObject(event1.getGuardEventHandler(),
-                           event2.getGuardEventHandler(), null)) {
+        if (!PieceIDE.compare(event1.getGuardEventHandler(), 
+                              event2.getGuardEventHandler())) {
             return false;
         }
         return true;
-    }
-    
-    
-    /**
-     * オブジェクトを比較する.
-     * 最初に指定されたオブジェクト自体のnullチェックを行い、ふたつとも
-     * 有効であれば、メソッド呼び出しを行い戻り値の比較を行う。
-     * 
-     * @param object1 オブジェクト1
-     * @param object2 オブジェクト2
-     * @param method メソッド
-     * @return ふたつのオブジェクトが一致しているか
-     */
-    private static boolean compareObject(
-                                Object object1, 
-                                Object object2, 
-                                Method method) {
-        if (object1 == null && object2 == null) {
-            return true;
-        } else if (object1 == null || object2 == null) {
-            return false;
-        }
-        if (method == null) {
-            return object1.equals(object2);
-        }
-        
-        Object returnValue1 = null;
-        Object returnValue2 = null;
-        try {
-            returnValue1 = method.invoke(object1, (Object[]) null);
-            returnValue2 = method.invoke(object2, (Object[]) null);
-        } catch (IllegalAccessException iae) {
-            iae.printStackTrace();
-            return false;
-        } catch (InvocationTargetException ite) {
-            ite.printStackTrace();
-            return false;
-        }
-        if (returnValue1 == null && returnValue2 == null) {
-            return true;
-        } else if (returnValue1 == null || returnValue2 == null) {
-            return false;
-        }
-        return returnValue1.equals(returnValue2);
     }
 }
