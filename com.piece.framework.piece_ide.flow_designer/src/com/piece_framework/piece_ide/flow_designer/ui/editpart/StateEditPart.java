@@ -73,7 +73,7 @@ public abstract class StateEditPart extends AbstractModelEditPart
             refreshVisuals();
         } else if (event.getPropertyName().equals("State#Event")) {
             refreshSourceConnections();
-        } else if (event.getPropertyName().equals("State#TranstionEvent")) {
+        } else if (event.getPropertyName().equals("State#TransitionEvent")) {
             refreshTargetConnections();
         }
     }
