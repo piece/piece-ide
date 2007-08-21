@@ -44,7 +44,7 @@ public class ViewStateEditPart extends NormalStateEditPart {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("view")) {
+        if (evt.getPropertyName().equals("State#View")) {
             refreshView((ViewStateFigure) getFigure());
         }
         super.propertyChange(evt);
