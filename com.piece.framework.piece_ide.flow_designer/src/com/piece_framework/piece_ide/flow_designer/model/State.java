@@ -152,13 +152,13 @@ public class State extends AbstractModel {
      * @param name ステート名
      */
     public void setName(String name) {
-        String old = fName;
+        String oldValue = fName;
         if (name != null && name.length() > 0) {
             fName = name;
         } else {
             fName = null;
         }
-        firePropertyChange("name", old, fName);
+        firePropertyChange("State#Name", oldValue, fName);
         
         if (getType() == State.ACTION_STATE || getType() == State.VIEW_STATE) {
             for (Event event : fEvents) {
@@ -189,13 +189,13 @@ public class State extends AbstractModel {
      * @param summary 概要
      */
     public void setSummary(String summary) {
-        String old = fSummary;
+        String oldValue = fSummary;
         if (summary != null && summary.length() > 0) {
             fSummary = summary;
         } else {
             fSummary = null;
         }
-        firePropertyChange("summary", old, fSummary);
+        firePropertyChange("State#Summary", oldValue, fSummary);
     }
     
     /**
@@ -219,13 +219,13 @@ public class State extends AbstractModel {
      */
     public void setView(String view) {
         if (fType == VIEW_STATE) {
-            String old = fView;
+            String oldValue = fView;
             if (view != null && view.length() > 0) {
                 fView = view;
             } else {
                 fView = null;
             }
-            firePropertyChange("view", old, fView);
+            firePropertyChange("State#View", oldValue, fView);
         }
     }
 
@@ -284,12 +284,12 @@ public class State extends AbstractModel {
             event.addPropertyChangeListener(listener);
         }
         fEvents.add(event);
-        firePropertyChange("event", null, (Object) fEvents);
+        firePropertyChange("State#Event", null, event);
         
         if (event.getType() == Event.TRANSITION_EVENT 
             && event.getNextState() != null) {
             event.getNextState().firePropertyChange(
-                    "target", null, null);
+                    "State#TransitionEvent", null, event);
         }
     }
     
@@ -310,12 +310,12 @@ public class State extends AbstractModel {
         }
         
         fEvents.remove(event);
-        firePropertyChange("event", null, (Object) fEvents);
+        firePropertyChange("State#Event", event, null);
         
         if (event.getType() == Event.TRANSITION_EVENT
             && event.getNextState() != null) {
             event.getNextState().firePropertyChange(
-                    "target", null, null);
+                    "State#TransitionEvent", event, null);
         }
     }
     
@@ -382,9 +382,9 @@ public class State extends AbstractModel {
      * @param x X座標
      */
     public void setX(int x) {
-        int old = fX;
+        int oldValue = fX;
         fX = x;
-        firePropertyChagen("x", old, fX);
+        firePropertyChagen("State#X", oldValue, fX);
     }
     
     /**
@@ -402,8 +402,8 @@ public class State extends AbstractModel {
      * @param y Y座標
      */
     public void setY(int y) {
-        int old = fY;
+        int oldValue = fY;
         fY = y;
-        firePropertyChagen("y", old, fY);
+        firePropertyChagen("State#Y", oldValue, fY);
     }
 }

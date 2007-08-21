@@ -60,11 +60,13 @@ public class Flow extends AbstractModel {
      * @param name フロー名
      */
     public void setName(String name) {
+        String oldValue = fName;
         if (name != null && name.length() > 0) {
             fName = name;
         } else {
             fName = null;
         }
+        firePropertyChange("Flow#Name", oldValue, fName);
     }
     
     /**
@@ -82,11 +84,13 @@ public class Flow extends AbstractModel {
      * @param actionClassName アクションクラス名
      */
     public void setActionClassName(String actionClassName) {
+        String oldValue = fActionClassName;
         if (actionClassName != null && actionClassName.length() > 0) {
             fActionClassName = actionClassName;
         } else {
             fActionClassName = null;
         }
+        firePropertyChange("Flow#ActionClassName", oldValue, fActionClassName);
     }
 
     /**
@@ -162,7 +166,7 @@ public class Flow extends AbstractModel {
      */
     public void addState(State state) {
         fStates.add(state);
-        firePropertyChange("state", null, null);
+        firePropertyChange("Flow#State", null, state);
     }
 
     /**
@@ -172,7 +176,7 @@ public class Flow extends AbstractModel {
      */
     public void removeState(State state) {
         fStates.remove(state);
-        firePropertyChange("state", null, null);
+        firePropertyChange("Flow#State", state, null);
     }
 
     /**

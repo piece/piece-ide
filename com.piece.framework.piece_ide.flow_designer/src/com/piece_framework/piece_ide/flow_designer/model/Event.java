@@ -177,12 +177,13 @@ public class Event extends AbstractModel implements Serializable {
      * @param name イベント名
      */
     public void setName(String name) {
+        String oldValue = fName;
         if (name != null && name.length() > 0) {
             fName = name;
         } else {
             fName = null;
         }
-        firePropertyChange("event", null, (Object) this);
+        firePropertyChange("Event#Name", oldValue, fName);
     }
 
     /**
@@ -200,8 +201,14 @@ public class Event extends AbstractModel implements Serializable {
      * @param nextState 遷移先ステート
      */
     public void setNextState(State nextState) {
+        if (getType() == Event.BUILTIN_EVENT) {
+            fNextState = null;
+            return;
+        }
+        
+        State oldValue = fNextState;
         fNextState = nextState;
-        firePropertyChange("event", null, (Object) this);
+        firePropertyChange("Event#NextState", oldValue, fNextState);
     }
     
     /**
@@ -263,12 +270,20 @@ public class Event extends AbstractModel implements Serializable {
      * @param classAndMethodName クラス名 + ":" + メソッド名
      */
     public void setEventHandler(String classAndMethodName) {
+        String oldValue = null;
+        if (fEventHandler != null) {
+            oldValue = fEventHandler.toString();
+        }
         if (classAndMethodName != null && classAndMethodName.length() > 0) {
             fEventHandler = new EventHandler(classAndMethodName);
         } else {
             fEventHandler = null;
         }
-        firePropertyChange("event", null, (Object) this);
+        String newValue = null;
+        if (fEventHandler != null) {
+            newValue = fEventHandler.toString();
+        }
+        firePropertyChange("Event#EventHandler", oldValue, newValue);
     }
     
     /**
@@ -316,12 +331,26 @@ public class Event extends AbstractModel implements Serializable {
      * @param classAndMethodName クラス名 + ":" + メソッド名
      */
     public void setGuardEventHandler(String classAndMethodName) {
+        if (getType() == Event.BUILTIN_EVENT) {
+            fGuardEventHandler = null;
+            return;
+        }
+        
+        String oldValue = null;
+        if (fGuardEventHandler != null) {
+            oldValue = fGuardEventHandler.toString();
+        }
         if (classAndMethodName != null && classAndMethodName.length() > 0) {
             fGuardEventHandler = new EventHandler(classAndMethodName);
         } else {
             fGuardEventHandler = null;
         }
-        firePropertyChange("event", null, (Object) this);
+        String newValue = null;
+        if (fGuardEventHandler != null) {
+            newValue = fGuardEventHandler.toString();
+        }
+        
+        firePropertyChange("Event#GuardEventHandler", oldValue, newValue);
     }
     
     /**
