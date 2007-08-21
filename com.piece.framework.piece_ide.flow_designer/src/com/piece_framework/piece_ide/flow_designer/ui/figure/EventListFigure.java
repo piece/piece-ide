@@ -21,6 +21,8 @@ import org.eclipse.swt.graphics.Color;
  */
 public class EventListFigure extends RectangleFigure {
     
+    private static final String MESSAGE_EVENT_NOTING = "イベントはありません。\n";
+    
     private Label fEventListLabel; 
     private List<String>  fEventList;
     
@@ -54,6 +56,7 @@ public class EventListFigure extends RectangleFigure {
         
         fEventListLabel = new Label();
         fEventListLabel.setTextAlignment(Label.LEFT);
+        fEventListLabel.setText(MESSAGE_EVENT_NOTING);
         add(fEventListLabel);
         
         fEventList = new ArrayList<String>();
@@ -85,6 +88,7 @@ public class EventListFigure extends RectangleFigure {
      */
     public void removeAllEvent() {
         fEventList = new ArrayList<String>();
+        fEventListLabel.setText(MESSAGE_EVENT_NOTING);
     }
     
     /**

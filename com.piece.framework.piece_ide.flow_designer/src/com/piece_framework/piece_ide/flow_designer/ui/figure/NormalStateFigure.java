@@ -59,7 +59,6 @@ public abstract class NormalStateFigure extends RoundedRectangle {
                 "ビルトインイベント",
                 new Color(Display.getCurrent(), getBuiltinEventTitleColor()),
                 new Color(Display.getCurrent(), getBuiltinEventListColor()));
-        addBuiltinEvent("イベントはありません。");
         fEventList.add(fBuiltinEventList);
         
         fTransitionEventList = 
@@ -67,7 +66,6 @@ public abstract class NormalStateFigure extends RoundedRectangle {
                 "遷移イベント",
                 new Color(Display.getCurrent(), getTransitionEventTitleColor()),
                 new Color(Display.getCurrent(), getTransitionEventListColor()));
-        addTransitionEvent("イベントはありません。");
         fEventList.add(fTransitionEventList);
         
         fInternalEventList = 
@@ -75,7 +73,6 @@ public abstract class NormalStateFigure extends RoundedRectangle {
                 "内部イベント",
                 new Color(Display.getCurrent(), getInternalEventTitleColor()),
                 new Color(Display.getCurrent(), getInternalEventListColor()));
-        addInternalEvent("イベントはありません。");
         fEventList.add(fInternalEventList);
         
         fVisibleEventList = false;
