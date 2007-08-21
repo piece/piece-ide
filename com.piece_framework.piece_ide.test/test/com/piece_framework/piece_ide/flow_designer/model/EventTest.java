@@ -58,36 +58,103 @@ public class EventTest extends TestCase {
         
         assertEquals(Event.UNKNOWN_EVENT, event.getType());
     }
+
+    /**
+     * setNameメソッドテスト.
+     * イベント名を設定すると登録したリスナーが呼び出されることをテストする。
+     */
+    public void testSetNameShouldInvokeListener() {
+        Event internalEvent = new Event(Event.INTERNAL_EVENT);
+        TestPropertyChangeListener listener = new TestPropertyChangeListener();
+        internalEvent.addPropertyChangeListener(listener);
+        
+        internalEvent.setName("Event1");
+        
+        PropertyChangeEvent event1 = listener.getPropertyChangeEvent();
+        assertEquals("Event#Name", event1.getPropertyName());
+        assertEquals("Event1", event1.getNewValue());
+        assertEquals(null, event1.getOldValue());
+        
+        internalEvent.setName("Event2");
+        
+        PropertyChangeEvent event2 = listener.getPropertyChangeEvent();
+        assertEquals("Event#Name", event2.getPropertyName());
+        assertEquals("Event2", event2.getNewValue());
+        assertEquals("Event1", event2.getOldValue());
+    }
     
     /**
-     * プロパティーを変更するとイベントが通知されることをテストする.
-     * 
+     * setNextStateメソッドテスト.
+     * 次ステートを設定すると登録したリスナーが呼び出されることをテストする。
      */
-    public void testInvokeListener() {
-        Event event = new Event(Event.INTERNAL_EVENT);
-        
+    public void testSetNextStateShouldInvokeListener() {
+        Event internalEvent = new Event(Event.INTERNAL_EVENT);
         TestPropertyChangeListener listener = new TestPropertyChangeListener();
-        event.addPropertyChangeListener(listener);
+        internalEvent.addPropertyChangeListener(listener);
         
-        event.setName("event1");
-        assertEvent(listener, event);
-        listener.initializePropertyChangeEvent();
-        assertNull(listener.getPropertyChangeEvent());
+        State state1 = new State(State.VIEW_STATE);
+        internalEvent.setNextState(state1);
         
-        event.setNextState(new State(State.ACTION_STATE));
-        assertEvent(listener, event);
-        listener.initializePropertyChangeEvent();
-        assertNull(listener.getPropertyChangeEvent());
+        PropertyChangeEvent event1 = listener.getPropertyChangeEvent();
+        assertEquals("Event#NextState", event1.getPropertyName());
+        assertEquals(state1, event1.getNewValue());
+        assertEquals(null, event1.getOldValue());
         
-        event.setEventHandler("class1:method1");
-        assertEvent(listener, event);
-        listener.initializePropertyChangeEvent();
-        assertNull(listener.getPropertyChangeEvent());
+        State state2 = new State(State.ACTION_STATE);
+        internalEvent.setNextState(state2);
         
-        event.setGuardEventHandler("guard_class1:guard_method1");
-        assertEvent(listener, event);
-        listener.initializePropertyChangeEvent();
-        assertNull(listener.getPropertyChangeEvent());
+        PropertyChangeEvent event2 = listener.getPropertyChangeEvent();
+        assertEquals("Event#NextState", event2.getPropertyName());
+        assertEquals(state2, event2.getNewValue());
+        assertEquals(state1, event2.getOldValue());
+    }
+    
+    /**
+     * setEventHandlerメソッドテスト.
+     * イベントハンドラを設定すると登録したリスナーが呼び出されることをテストする。
+     */
+    public void testSetEventHandlerShouldInvokeListener() {
+        Event internalEvent = new Event(Event.INTERNAL_EVENT);
+        TestPropertyChangeListener listener = new TestPropertyChangeListener();
+        internalEvent.addPropertyChangeListener(listener);
+        
+        internalEvent.setEventHandler("TestClass1:TestMethod1");
+        
+        PropertyChangeEvent event1 = listener.getPropertyChangeEvent();
+        assertEquals("Event#EventHandler", event1.getPropertyName());
+        assertEquals("TestClass1:TestMethod1", event1.getNewValue());
+        assertEquals(null, event1.getOldValue());
+        
+        internalEvent.setEventHandler("TestClass2:TestMethod2");
+        
+        PropertyChangeEvent event2 = listener.getPropertyChangeEvent();
+        assertEquals("Event#EventHandler", event2.getPropertyName());
+        assertEquals("TestClass2:TestMethod2", event2.getNewValue());
+        assertEquals("TestClass1:TestMethod1", event2.getOldValue());
+    }
+    
+    /**
+     * setGuardEventHandlerメソッドテスト.
+     * イベントハンドラを設定すると登録したリスナーが呼び出されることをテストする。
+     */
+    public void testSetGuardEventHandlerShouldInvokeListener() {
+        Event internalEvent = new Event(Event.INTERNAL_EVENT);
+        TestPropertyChangeListener listener = new TestPropertyChangeListener();
+        internalEvent.addPropertyChangeListener(listener);
+        
+        internalEvent.setGuardEventHandler("TestClass1:TestMethod1");
+        
+        PropertyChangeEvent event1 = listener.getPropertyChangeEvent();
+        assertEquals("Event#GuardEventHandler", event1.getPropertyName());
+        assertEquals("TestClass1:TestMethod1", event1.getNewValue());
+        assertEquals(null, event1.getOldValue());
+        
+        internalEvent.setGuardEventHandler("TestClass2:TestMethod2");
+        
+        PropertyChangeEvent event2 = listener.getPropertyChangeEvent();
+        assertEquals("Event#GuardEventHandler", event2.getPropertyName());
+        assertEquals("TestClass2:TestMethod2", event2.getNewValue());
+        assertEquals("TestClass1:TestMethod1", event2.getOldValue());
     }
     
     /**
@@ -250,18 +317,24 @@ public class EventTest extends TestCase {
     }
     
     /**
-     * イベントの変更通知をチェックする.
+     * getNextState/setNextState メソッドテスト.
+     * ビルトイベントには次ステートを設定できないことをテストする。
      * 
-     * @param listener リスナー
-     * @param event 対象のイベント
      */
-    private void assertEvent(
-                        TestPropertyChangeListener listener, Event event) {
-        PropertyChangeEvent propertyChangeEvent = 
-                                listener.getPropertyChangeEvent();
-        assertNotNull(propertyChangeEvent);
-        assertEquals("event", propertyChangeEvent.getPropertyName());
-        assertNull(propertyChangeEvent.getOldValue());
-        assertEquals(event, (Event) propertyChangeEvent.getNewValue());
+    public void testGetNextStateShouldReturnNullBecauseOfTheEventIsBuiltin() {
+        Event builtinEvent = new Event(Event.BUILTIN_EVENT);
+        builtinEvent.setNextState(new State(State.VIEW_STATE));
+        assertNull(builtinEvent.getNextState());
+    }
+    
+    /**
+     * getGuardEventHandler/setGuardEventHandler メソッドテスト.
+     * ビルトイベントにはガードイベントハンドラを設定できないことをテストする。
+     * 
+     */
+    public void testGetGuardEventHandlerShouldReturnNullBecauseOfTheEventIsBuiltin() {
+        Event builtinEvent = new Event(Event.BUILTIN_EVENT);
+        builtinEvent.setGuardEventHandler("TestClass:TestMethod");
+        assertNull(builtinEvent.getGuardEventHandler());
     }
 }

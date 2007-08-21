@@ -281,6 +281,58 @@ public class FlowTest extends TestCase {
     }
     
     /**
+     * setNameメソッドテスト.
+     * フロー名をセットすると登録したリスナーが呼び出されることをテスト
+     * する。
+     * 
+     */
+    public void testSetNameShouldInvokeListener() {
+        Flow flow = new Flow(null, null);
+        TestPropertyChangeListener listener = new TestPropertyChangeListener();
+        flow.addPropertyChangeListener(listener);
+        
+        flow.setName("test1");
+        
+        PropertyChangeEvent event1 = listener.getPropertyChangeEvent();
+        assertEquals("Flow#Name", event1.getPropertyName());
+        assertEquals("test1", event1.getNewValue());
+        assertEquals(null, event1.getOldValue());
+        
+        flow.setName("test2");
+        
+        PropertyChangeEvent event2 = listener.getPropertyChangeEvent();
+        assertEquals("Flow#Name", event2.getPropertyName());
+        assertEquals("test2", event2.getNewValue());
+        assertEquals("test1", event2.getOldValue());
+    }
+    
+    /**
+     * setNameメソッドテスト.
+     * アクションクラス名をセットすると登録したリスナーが呼び出されることをテスト
+     * する。
+     * 
+     */
+    public void testSetActionClassNameShouldInvokeListener() {
+        Flow flow = new Flow(null, null);
+        TestPropertyChangeListener listener = new TestPropertyChangeListener();
+        flow.addPropertyChangeListener(listener);
+        
+        flow.setActionClassName("ActionClass1");
+        
+        PropertyChangeEvent event1 = listener.getPropertyChangeEvent();
+        assertEquals("Flow#ActionClassName", event1.getPropertyName());
+        assertEquals("ActionClass1", event1.getNewValue());
+        assertEquals(null, event1.getOldValue());
+        
+        flow.setActionClassName("ActionClass2");
+        
+        PropertyChangeEvent event2 = listener.getPropertyChangeEvent();
+        assertEquals("Flow#ActionClassName", event2.getPropertyName());
+        assertEquals("ActionClass2", event2.getNewValue());
+        assertEquals("ActionClass1", event2.getOldValue());
+    }
+    
+    /**
      * addStateメソッドテスト.
      * ステートを追加すると登録したリスナーが呼び出されることをテストする。
      * 
@@ -294,8 +346,8 @@ public class FlowTest extends TestCase {
         flow.addState(actionState);
         
         PropertyChangeEvent event = listener.getPropertyChangeEvent();
-        assertEquals("state", event.getPropertyName());
-        assertEquals(null, event.getNewValue());
+        assertEquals("Flow#State", event.getPropertyName());
+        assertEquals(actionState, event.getNewValue());
         assertEquals(null, event.getOldValue());
     }
     
@@ -315,9 +367,9 @@ public class FlowTest extends TestCase {
         flow.removeState(actionState);
         
         PropertyChangeEvent event = listener.getPropertyChangeEvent();
-        assertEquals("state", event.getPropertyName());
+        assertEquals("Flow#State", event.getPropertyName());
         assertEquals(null, event.getNewValue());
-        assertEquals(null, event.getOldValue());
+        assertEquals(actionState, event.getOldValue());
     }
     
     /**

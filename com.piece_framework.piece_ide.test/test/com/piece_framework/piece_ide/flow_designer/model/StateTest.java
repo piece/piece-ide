@@ -3,7 +3,6 @@ package com.piece_framework.piece_ide.flow_designer.model;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 import junit.framework.TestCase;
 
@@ -163,17 +162,22 @@ public class StateTest extends TestCase {
      */
     public void testSetName_InvokeListener() {
         State state = new State(State.ACTION_STATE);
-        
         TestPropertyChangeListener listener = new TestPropertyChangeListener();
         state.addPropertyChangeListener(listener);
         
-        state.setName("OldName");
-        state.setName("NewName");
+        state.setName("State1");
         
-        PropertyChangeEvent event = listener.getPropertyChangeEvent();
-        assertEquals("name", event.getPropertyName());
-        assertEquals("NewName", event.getNewValue());
-        assertEquals("OldName", event.getOldValue());
+        PropertyChangeEvent event1 = listener.getPropertyChangeEvent();
+        assertEquals("State#Name", event1.getPropertyName());
+        assertEquals("State1", event1.getNewValue());
+        assertEquals(null, event1.getOldValue());
+        
+        state.setName("State2");
+        
+        PropertyChangeEvent event2 = listener.getPropertyChangeEvent();
+        assertEquals("State#Name", event2.getPropertyName());
+        assertEquals("State2", event2.getNewValue());
+        assertEquals("State1", event2.getOldValue());
     }
     
     /**
@@ -183,17 +187,22 @@ public class StateTest extends TestCase {
      */
     public void testSetSummary_InvokeListener() {
         State state = new State(State.ACTION_STATE);
-        
         TestPropertyChangeListener listener = new TestPropertyChangeListener();
         state.addPropertyChangeListener(listener);
         
-        state.setSummary("OldSummary");
-        state.setSummary("NewSummary");
+        state.setSummary("Summary1");
         
-        PropertyChangeEvent event = listener.getPropertyChangeEvent();
-        assertEquals("summary", event.getPropertyName());
-        assertEquals("NewSummary", event.getNewValue());
-        assertEquals("OldSummary", event.getOldValue());
+        PropertyChangeEvent event1 = listener.getPropertyChangeEvent();
+        assertEquals("State#Summary", event1.getPropertyName());
+        assertEquals("Summary1", event1.getNewValue());
+        assertEquals(null, event1.getOldValue());
+        
+        state.setSummary("Summary2");
+        
+        PropertyChangeEvent event2 = listener.getPropertyChangeEvent();
+        assertEquals("State#Summary", event2.getPropertyName());
+        assertEquals("Summary2", event2.getNewValue());
+        assertEquals("Summary1", event2.getOldValue());
     }
     
     /**
@@ -203,17 +212,22 @@ public class StateTest extends TestCase {
      */
     public void testSetView_InvokeListener() {
         State state = new State(State.VIEW_STATE);
-        
         TestPropertyChangeListener listener = new TestPropertyChangeListener();
         state.addPropertyChangeListener(listener);
         
-        state.setView("OldView");
-        state.setView("NewView");
+        state.setView("View1");
         
-        PropertyChangeEvent event = listener.getPropertyChangeEvent();
-        assertEquals("view", event.getPropertyName());
-        assertEquals("NewView", event.getNewValue());
-        assertEquals("OldView", event.getOldValue());
+        PropertyChangeEvent event1 = listener.getPropertyChangeEvent();
+        assertEquals("State#View", event1.getPropertyName());
+        assertEquals("View1", event1.getNewValue());
+        assertEquals(null, event1.getOldValue());
+        
+        state.setView("View2");
+        
+        PropertyChangeEvent event2 = listener.getPropertyChangeEvent();
+        assertEquals("State#View", event2.getPropertyName());
+        assertEquals("View2", event2.getNewValue());
+        assertEquals("View1", event2.getOldValue());
     }
     
     /**
@@ -238,17 +252,22 @@ public class StateTest extends TestCase {
      */
     public void testSetX_InvokeListener() {
         State state = new State(State.VIEW_STATE);
-        
         TestPropertyChangeListener listener = new TestPropertyChangeListener();
         state.addPropertyChangeListener(listener);
         
         state.setX(1);
+        
+        PropertyChangeEvent event1 = listener.getPropertyChangeEvent();
+        assertEquals("State#X", event1.getPropertyName());
+        assertEquals(1, ((Integer) event1.getNewValue()).intValue());
+        assertEquals(0, ((Integer) event1.getOldValue()).intValue());
+        
         state.setX(2);
         
-        PropertyChangeEvent event = listener.getPropertyChangeEvent();
-        assertEquals("x", event.getPropertyName());
-        assertEquals(2, ((Integer) event.getNewValue()).intValue());
-        assertEquals(1, ((Integer) event.getOldValue()).intValue());
+        PropertyChangeEvent event2 = listener.getPropertyChangeEvent();
+        assertEquals("State#X", event2.getPropertyName());
+        assertEquals(2, ((Integer) event2.getNewValue()).intValue());
+        assertEquals(1, ((Integer) event2.getOldValue()).intValue());
     }
     
     /**
@@ -258,17 +277,22 @@ public class StateTest extends TestCase {
      */
     public void testSetY_InvokeListener() {
         State state = new State(State.VIEW_STATE);
-        
         TestPropertyChangeListener listener = new TestPropertyChangeListener();
         state.addPropertyChangeListener(listener);
         
         state.setY(1);
+        
+        PropertyChangeEvent event1 = listener.getPropertyChangeEvent();
+        assertEquals("State#Y", event1.getPropertyName());
+        assertEquals(1, ((Integer) event1.getNewValue()).intValue());
+        assertEquals(0, ((Integer) event1.getOldValue()).intValue());
+        
         state.setY(2);
         
-        PropertyChangeEvent event = listener.getPropertyChangeEvent();
-        assertEquals("y", event.getPropertyName());
-        assertEquals(2, ((Integer) event.getNewValue()).intValue());
-        assertEquals(1, ((Integer) event.getOldValue()).intValue());
+        PropertyChangeEvent event2 = listener.getPropertyChangeEvent();
+        assertEquals("State#Y", event2.getPropertyName());
+        assertEquals(2, ((Integer) event2.getNewValue()).intValue());
+        assertEquals(1, ((Integer) event2.getOldValue()).intValue());
     }
     
     /**
@@ -355,48 +379,30 @@ public class StateTest extends TestCase {
      */
     public void testAddEventInvokeListener() {
         State state = new State(State.VIEW_STATE);
-        
         TestPropertyChangeListener listener = new TestPropertyChangeListener();
         state.addPropertyChangeListener(listener);
         
         Event internalEvent = new Event(Event.INTERNAL_EVENT);
-        
         state.addEvent(internalEvent);
         
         PropertyChangeEvent event = listener.getPropertyChangeEvent();
-        assertEquals("event", event.getPropertyName());
-        assertTrue(event.getNewValue() instanceof List);
-        assertEquals(4, ((List) event.getNewValue()).size());
+        assertEquals("State#Event", event.getPropertyName());
+        assertEquals(internalEvent, event.getNewValue());
         assertEquals(null, event.getOldValue());
     }
     
     /**
      * addEventメソッドテスト.
-     * 遷移イベントを追加した場合のみ遷移先のステートのリスナーが呼び出される
+     * 遷移イベントを追加した場合、その遷移先のステートのリスナーが呼び出される
      * ことをテストする。
      * 
      */
     public void testAddEvent_IfTransitionEvent_InvokeListenerThatTargetStateHave() {
         State sourceState = new State(State.VIEW_STATE);
-        
         State targetState = new State(State.ACTION_STATE);
         TestPropertyChangeListener targetListener = 
                             new TestPropertyChangeListener();
         targetState.addPropertyChangeListener(targetListener);
-        
-        Event builtinEvent = new Event(Event.BUILTIN_EVENT);
-        builtinEvent.setNextState(targetState);
-        
-        sourceState.addEvent(builtinEvent);
-        
-        assertNull(targetListener.getPropertyChangeEvent());
-        
-        Event internalEvent = new Event(Event.INTERNAL_EVENT);
-        internalEvent.setNextState(targetState);
-        
-        sourceState.addEvent(internalEvent);
-        
-        assertNull(targetListener.getPropertyChangeEvent());
         
         Event transitionEvent = new Event(Event.TRANSITION_EVENT);
         transitionEvent.setNextState(targetState);
@@ -404,8 +410,8 @@ public class StateTest extends TestCase {
         sourceState.addEvent(transitionEvent);
         
         PropertyChangeEvent event = targetListener.getPropertyChangeEvent();
-        assertEquals("target", event.getPropertyName());
-        assertNull(event.getNewValue());
+        assertEquals("State#TransitionEvent", event.getPropertyName());
+        assertEquals(transitionEvent, event.getNewValue());
         assertNull(event.getOldValue());
     }
     
@@ -416,21 +422,16 @@ public class StateTest extends TestCase {
      */
     public void testRemoveEvent_InvokeListener() {
         State state = new State(State.VIEW_STATE);
-        
-        Event internalEvent = new Event(Event.INTERNAL_EVENT);
-        
-        state.addEvent(internalEvent);
-        
         TestPropertyChangeListener listener = new TestPropertyChangeListener();
         state.addPropertyChangeListener(listener);
         
+        Event internalEvent = new Event(Event.INTERNAL_EVENT);
         state.removeEvent(internalEvent);
         
         PropertyChangeEvent event = listener.getPropertyChangeEvent();
-        assertEquals("event", event.getPropertyName());
-        assertTrue(event.getNewValue() instanceof List);
-        assertEquals(3, ((List) event.getNewValue()).size());
-        assertEquals(null, event.getOldValue());
+        assertEquals("State#Event", event.getPropertyName());
+        assertEquals(null, event.getNewValue());
+        assertEquals(internalEvent, event.getOldValue());
     }
     
     /**
@@ -441,42 +442,23 @@ public class StateTest extends TestCase {
      */
     public void testRemoveEvent_IfTransitionEvent_InvokeListenerThatTargetStateHave() {
         State sourceState = new State(State.VIEW_STATE);
-        
         State targetState = new State(State.ACTION_STATE);
-        
-        Event builtinEvent = new Event(Event.BUILTIN_EVENT);
-        builtinEvent.setNextState(targetState);
-        
-        sourceState.addEvent(builtinEvent);
-        
-        Event internalEvent = new Event(Event.INTERNAL_EVENT);
-        internalEvent.setNextState(targetState);
-        
-        sourceState.addEvent(internalEvent);
+        TestPropertyChangeListener targetListener = 
+            new TestPropertyChangeListener();
+        targetState.addPropertyChangeListener(targetListener);
         
         Event transitionEvent = new Event(Event.TRANSITION_EVENT);
         transitionEvent.setNextState(targetState);
         
         sourceState.addEvent(transitionEvent);
-        
-        TestPropertyChangeListener targetListener = 
-            new TestPropertyChangeListener();
-        targetState.addPropertyChangeListener(targetListener);
-        
-        sourceState.removeEvent(builtinEvent);
-        
-        assertNull(targetListener.getPropertyChangeEvent());
-        
-        sourceState.removeEvent(internalEvent);
-        
-        assertNull(targetListener.getPropertyChangeEvent());
-        
         sourceState.removeEvent(transitionEvent);
         
         PropertyChangeEvent event = targetListener.getPropertyChangeEvent();
-        assertEquals("target", event.getPropertyName());
-        assertNull(event.getNewValue());
-        assertNull(event.getOldValue());
+        assertEquals("State#TransitionEvent", event.getPropertyName());
+        assertEquals(null, event.getNewValue());
+        assertEquals(transitionEvent, event.getOldValue());
+        
+        assertEquals(0, transitionEvent.getPropertyChangeListener().length);
     }
     
     /**
