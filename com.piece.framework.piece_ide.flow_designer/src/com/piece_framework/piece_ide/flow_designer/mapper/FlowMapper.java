@@ -136,6 +136,8 @@ public class FlowMapper extends AbstractMapper {
             setTransitionEventMap(initialState, (String) value);
         }
         
+        setBuiltinEventHandler(fYAMLMap, initialState, "Initial");
+
         return initialState;
     }
     
@@ -161,7 +163,9 @@ public class FlowMapper extends AbstractMapper {
             
             State finalState = new State(State.FINAL_STATE);
             finalState.setName(fFlow.generateStateName(State.FINAL_STATE));
-            
+
+            setBuiltinEventHandler(fYAMLMap, finalState, "Final");
+
             Iterator iterator = lastList.iterator();
             while (iterator.hasNext()) {
                 Map lastMap = (Map) iterator.next();
