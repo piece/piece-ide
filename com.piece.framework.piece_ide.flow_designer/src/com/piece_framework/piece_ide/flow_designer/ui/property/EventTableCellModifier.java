@@ -43,7 +43,9 @@ public class EventTableCellModifier implements ICellModifier {
     
     /**
      * 変更できるかどうかを判定する.
-     * プロパティ文字列が null でなれば、変更できると判断する。
+     * 以下の項目は変更不可とする。<br>
+     * ・ビルトインイベントのイベントハンドラ以外<br>
+     * ・イニシャルステートの遷移イベントのすべての項目<br>
      * 
      * @param element モデル
      * @param property プロパティ文字列
@@ -52,14 +54,25 @@ public class EventTableCellModifier implements ICellModifier {
      *          #canModify(java.lang.Object, java.lang.String)
      */
     public boolean canModify(Object element, String property) {
-        if (property != null) {
-            return true;
+        Event event = (Event) element;
+        
+        if (event.getType() == Event.BUILTIN_EVENT) {
+            if (!property.equals("EventHandler")) {
+                return false;
+            }
         }
+        
+        if (fState.getType() == State.INITIAL_STATE
+            && event.getType() == Event.TRANSITION_EVENT) {
+            return false;
+        }
+        
         return false;
     }
 
     /**
      * プロパティ文字列にあったオブジェクトを返す.
+     * 編集不可の場合は
      * 
      * @param element モデル
      * @param property プロパティ文字列
@@ -69,13 +82,7 @@ public class EventTableCellModifier implements ICellModifier {
      */
     public Object getValue(Object element, String property) {
         Event event = (Event) element;
-        
-        if (event.getType() == Event.BUILTIN_EVENT) {
-            if (!property.equals("EventHandler")) {
-                return null;
-            }
-        }
-        
+
         if (property.equals("Name")) {
             return event.getName();
         } else if (property.equals("EventHandler")) {
