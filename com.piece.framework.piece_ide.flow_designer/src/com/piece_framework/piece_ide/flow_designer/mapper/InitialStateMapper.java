@@ -59,7 +59,13 @@ public class InitialStateMapper extends AbstractStateMapper {
         for (Event event : initialState.getEventList()) {
             if (event.getType() == Event.TRANSITION_EVENT) {
                 map.put("firstState", event.getNextState().getName());
-                break;
+            } else if (event.getType() == Event.BUILTIN_EVENT 
+                        && event.getName().equals("Initial")) {
+                addEventHandlerToMap(
+                        event.getEventHandlerClassName(),
+                        event.getEventHandlerMethodName(),
+                        "initial",
+                        map);
             }
         }
         

@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
@@ -55,6 +56,15 @@ public class FinalStateMapper extends AbstractStateMapper {
         }
         
         State finalState = stateList.get(0);
+        Event finalEvent = finalState.getEventByName("Final");
+        if (finalEvent != null) {
+            addEventHandlerToMap(
+                    finalEvent.getEventHandlerClassName(),
+                    finalEvent.getEventHandlerMethodName(),
+                    "final",
+                    map);
+        }
+        
         List<Map> stateListForYaml = new ArrayList<Map>();
         for (State state : getFlow().getStateListToOwnState(finalState)) {
             Map<String, Object> stateMap = new LinkedHashMap<String, Object>();
