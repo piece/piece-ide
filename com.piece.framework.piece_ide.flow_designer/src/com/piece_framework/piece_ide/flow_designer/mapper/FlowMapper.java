@@ -338,10 +338,19 @@ public class FlowMapper extends AbstractMapper {
             return null;
         }
         
-        Object methodValue = 
+        Object className =
+            getValueIgnoreCase(map, "class");
+        Object methodName = 
             getValueIgnoreCase(map, "method");
         
-        return (String) methodValue;
+        String eventHandler = null;
+        if (className != null && methodName != null) {
+            eventHandler = (String) className + ":" + (String) methodName;
+        } else if (className == null && methodName != null) {
+            eventHandler = (String) methodName;
+        }
+        
+        return eventHandler;
     }
     
     /**
