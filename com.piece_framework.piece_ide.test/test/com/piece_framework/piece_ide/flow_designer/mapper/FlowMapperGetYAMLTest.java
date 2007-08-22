@@ -62,19 +62,14 @@ public class FlowMapperGetYAMLTest extends TestCase {
         FlowMapper flowMapper = new FlowMapper();
         String yaml = flowMapper.getYAML(fFlow);
         
-        StringBuffer expectedYAMLBuffer = new StringBuffer();
-        
-        expectedYAMLBuffer.append(
-            "firstState: " + viewState.getName() + "\n");
-        
-        expectedYAMLBuffer.append("\n");
-        
-        expectedYAMLBuffer.append(
-              "lastState:\n"
-            + getYAMLofStateInformation(viewState, 2)
-            + getYAMLofBuiltinEvent(viewState, 2));                
-        
-        assertEquals(expectedYAMLBuffer.toString(), yaml);
+        String expectedYAML =
+              "firstState: DisplayForm1\n"
+            + "\n"
+            + "lastState:\n"
+            + "  name: DisplayForm1\n"
+            + "  view: Form1\n";
+
+        assertEquals(expectedYAML, yaml);
     }
     
     /**
@@ -137,46 +132,31 @@ public class FlowMapperGetYAMLTest extends TestCase {
         FlowMapper flowMapper = new FlowMapper();
         String yaml = flowMapper.getYAML(fFlow);
         
-        StringBuffer expectedYAMLBuffer = new StringBuffer();
-        
-        expectedYAMLBuffer.append(
-            "firstState: " + viewState1.getName() + "\n");
-        
-        expectedYAMLBuffer.append("\n");
-        
-        expectedYAMLBuffer.append(
-                "lastState:\n"
-              + getYAMLofStateInformation(viewState2, 2)
-              + getYAMLofBuiltinEvent(viewState2, 2));                
-        
-        expectedYAMLBuffer.append("\n");
-        
-        expectedYAMLBuffer.append("viewState:\n");
-        String view1YAML = 
-            "  - "
-          + getYAMLofStateInformation(viewState1, 0)
-          + getYAMLofBuiltinEvent(viewState1, 0)
-          + getYAMLofTransitionEvent(viewState1, 0);
-        view1YAML = view1YAML.replace("\n", "\n    ");
-        if (view1YAML.endsWith("    ")) {
-            view1YAML = view1YAML.substring(0, view1YAML.length() - 4);
-        }
-        expectedYAMLBuffer.append(view1YAML);
-        
-        expectedYAMLBuffer.append("\n");
-        expectedYAMLBuffer.append("actionState:\n");
-        String actionYAML = 
-            "  - "
-          + getYAMLofStateInformation(actionState, 0)
-          + getYAMLofBuiltinEvent(actionState, 0)
-          + getYAMLofTransitionEvent(actionState, 0);
-        actionYAML = actionYAML.replace("\n", "\n    ");
-        if (actionYAML.endsWith("    ")) {
-            actionYAML = actionYAML.substring(0, actionYAML.length() - 4);
-        }
-        expectedYAMLBuffer.append(actionYAML);
-        
-        assertEquals(expectedYAMLBuffer.toString(), yaml);
+        String expectedYAML = 
+              "firstState: DisplayForm1\n"
+            + "\n"
+            + "lastState:\n"
+            + "  name: DisplayForm2\n"
+            + "  view: Form2\n"
+            + "\n"
+            + "viewState:\n"
+            + "  - name: DisplayForm1\n"
+            + "    view: Form1\n"
+            + "    transition:\n"
+            + "      - event: Process1FromDisplayForm1\n"
+            + "        nextState: Process1\n"
+            + "        action:\n"
+            + "          method: doProcess1FromDisplayForm1\n"
+            + "\n"
+            + "actionState:\n"
+            + "  - name: Process1\n"
+            + "    transition:\n"
+            + "      - event: DisplayForm2FromProcess1\n"
+            + "        nextState: DisplayForm2\n"
+            + "      - event: DisplayForm1FromProcess1\n"
+            + "        nextState: DisplayForm1\n";
+
+        assertEquals(expectedYAML, yaml);
     }
     
     /**
@@ -233,23 +213,23 @@ public class FlowMapperGetYAMLTest extends TestCase {
         FlowMapper flowMapper = new FlowMapper();
         String yaml = flowMapper.getYAML(fFlow);
         
-        StringBuffer expectedYAMLBuffer = new StringBuffer();
-        
-        expectedYAMLBuffer.append(
-            "firstState: " + viewState1.getName() + "\n");
-        
-        expectedYAMLBuffer.append("\n");
-        
-        String lastStateYAML = getYAMLofStateInformation(viewState1, 4)
-                            + getYAMLofBuiltinEvent(viewState1, 4)
-                            + getYAMLofTransitionEvent(viewState1, 4)
-                            + getYAMLofStateInformation(viewState2, 4)
-                            + getYAMLofBuiltinEvent(viewState2, 4)
-                            + getYAMLofTransitionEvent(viewState2, 4);
-        lastStateYAML = lastStateYAML.replace("    name:", "  - name:");
-        expectedYAMLBuffer.append("lastState:\n" + lastStateYAML);
-        
-        assertEquals(expectedYAMLBuffer.toString(), yaml);
+        String expectedYAML =
+              "firstState: DisplayForm1\n"
+            + "\n"
+            + "lastState:\n"
+            + "  - name: DisplayForm1\n"
+            + "    view: Form1\n"
+            + "  - name: DisplayForm2\n"
+            + "    view: Form2\n"
+            + "    transition:\n"
+            + "      - event: DisplayForm2FromDisplayForm2\n"
+            + "        nextState: DisplayForm2\n"
+            + "        action:\n"
+            + "          method: doDisplayForm2FromDisplayForm2\n"
+            + "        guard:\n"
+            + "          method: guardMethod\n";
+
+        assertEquals(expectedYAML, yaml);
     }
 
     /**
@@ -280,14 +260,12 @@ public class FlowMapperGetYAMLTest extends TestCase {
         FlowMapper flowMapper = new FlowMapper();
         String yaml = flowMapper.getYAML(fFlow);
         
-        StringBuffer expectedYAMLBuffer = new StringBuffer();
-
-        expectedYAMLBuffer.append(
+        String expectedYAML =
               "lastState:\n"
-            + getYAMLofStateInformation(viewState, 2)
-            + getYAMLofBuiltinEvent(viewState, 2));                
+            + "  name: DisplayForm1\n"
+            + "  view: Form1\n";
         
-        assertEquals(expectedYAMLBuffer.toString(), yaml);
+        assertEquals(expectedYAML, yaml);
     }
     
     /**
@@ -324,39 +302,24 @@ public class FlowMapperGetYAMLTest extends TestCase {
         FlowMapper flowMapper = new FlowMapper();
         String yaml = flowMapper.getYAML(fFlow);
         
-        StringBuffer expectedYAMLBuffer = new StringBuffer();
-        
-        expectedYAMLBuffer.append(
-            "firstState: " + viewState.getName() + "\n");
-        
-        expectedYAMLBuffer.append("\n");
-        
-        expectedYAMLBuffer.append("viewState:\n");
-        String viewYAML = 
-            "  - "
-          + getYAMLofStateInformation(viewState, 0)
-          + getYAMLofBuiltinEvent(viewState, 0)
-          + getYAMLofTransitionEvent(viewState, 0);
-        viewYAML = viewYAML.replace("\n", "\n    ");
-        if (viewYAML.endsWith("    ")) {
-            viewYAML = viewYAML.substring(0, viewYAML.length() - 4);
-        }
-        expectedYAMLBuffer.append(viewYAML);
-        
-        expectedYAMLBuffer.append("\n");
-        expectedYAMLBuffer.append("actionState:\n");
-        String actionYAML = 
-            "  - "
-          + getYAMLofStateInformation(actionState, 0)
-          + getYAMLofBuiltinEvent(actionState, 0)
-          + getYAMLofTransitionEvent(actionState, 0);
-        actionYAML = actionYAML.replace("\n", "\n    ");
-        if (actionYAML.endsWith("    ")) {
-            actionYAML = actionYAML.substring(0, actionYAML.length() - 4);
-        }
-        expectedYAMLBuffer.append(actionYAML);
-        
-        assertEquals(expectedYAMLBuffer.toString(), yaml);
+        String expectedYAML =
+              "firstState: DisplayForm1\n"
+            + "\n"
+            + "viewState:\n"
+            + "  - name: DisplayForm1\n"
+            + "    view: Form1\n"
+            + "    transition:\n"
+            + "      - event: Process1FromDisplayForm1\n"
+            + "        nextState: Process1\n"
+            + "        action:\n"
+            + "          method: doProcess1FromDisplayForm1\n"
+            + "        guard:\n"
+            + "          method: guardMethod\n"
+            + "\n"
+            + "actionState:\n"
+            + "  - name: Process1\n";
+
+        assertEquals(expectedYAML, yaml);
     }
     
     /**
@@ -414,46 +377,29 @@ public class FlowMapperGetYAMLTest extends TestCase {
         FlowMapper flowMapper = new FlowMapper();
         String yaml = flowMapper.getYAML(fFlow);
         
-        StringBuffer expectedYAMLBuffer = new StringBuffer();
+        String expectedYAML = 
+              "firstState: DisplayForm1\n"
+            + "\n"
+            + "lastState:\n"
+            + "  name: DisplayForm2\n"
+            + "  view: Form2\n"
+            + "\n"
+            + "viewState:\n"
+            + "  - name: DisplayForm1\n"
+            + "    view: Form1\n"
+            + "    transition:\n"
+            + "      - event: Process1FromDisplayForm1\n"
+            + "        nextState: Process1\n"
+            + "        action:\n"
+            + "          method: doProcess1FromDisplayForm1\n"
+            + "\n"
+            + "actionState:\n"
+            + "  - name: Process1\n"
+            + "    transition:\n"
+            + "      - event: DisplayForm2FromProcess1\n"
+            + "        nextState: DisplayForm2\n";
         
-        expectedYAMLBuffer.append(
-            "firstState: " + viewState1.getName() + "\n");
-        
-        expectedYAMLBuffer.append("\n");
-        
-        expectedYAMLBuffer.append(
-                "lastState:\n"
-              + getYAMLofStateInformation(viewState2, 2)
-              + getYAMLofBuiltinEvent(viewState2, 2));                
-        
-        expectedYAMLBuffer.append("\n");
-        
-        expectedYAMLBuffer.append("viewState:\n");
-        String view1YAML = 
-            "  - "
-          + getYAMLofStateInformation(viewState1, 0)
-          + getYAMLofBuiltinEvent(viewState1, 0)
-          + getYAMLofTransitionEvent(viewState1, 0);
-        view1YAML = view1YAML.replace("\n", "\n    ");
-        if (view1YAML.endsWith("    ")) {
-            view1YAML = view1YAML.substring(0, view1YAML.length() - 4);
-        }
-        expectedYAMLBuffer.append(view1YAML);
-        
-        expectedYAMLBuffer.append("\n");
-        expectedYAMLBuffer.append("actionState:\n");
-        String actionYAML = 
-            "  - "
-          + getYAMLofStateInformation(actionState, 0)
-          + getYAMLofBuiltinEvent(actionState, 0)
-          + getYAMLofTransitionEvent(actionState, 0);
-        actionYAML = actionYAML.replace("\n", "\n    ");
-        if (actionYAML.endsWith("    ")) {
-            actionYAML = actionYAML.substring(0, actionYAML.length() - 4);
-        }
-        expectedYAMLBuffer.append(actionYAML);
-        
-        assertEquals(expectedYAMLBuffer.toString(), yaml);
+        assertEquals(expectedYAML, yaml);
     }
     
     /**
@@ -511,157 +457,28 @@ public class FlowMapperGetYAMLTest extends TestCase {
         FlowMapper flowMapper = new FlowMapper();
         String yaml = flowMapper.getYAML(fFlow);
         
-        StringBuffer expectedYAMLBuffer = new StringBuffer();
+        String expectedYAML = 
+              "firstState: DisplayForm1\n"
+            + "\n"
+            + "lastState:\n"
+            + "  name: DisplayForm2\n"
+            + "  view: Form2\n"
+            + "\n"
+            + "viewState:\n"
+            + "  - name: DisplayForm1\n"
+            + "    view: Form1\n"
+            + "    transition:\n"
+            + "      - event: Process1FromDisplayForm1\n"
+            + "        nextState: Process1\n"
+            + "        action:\n"
+            + "          method: doProcess1FromDisplayForm1\n"
+            + "\n"
+            + "actionState:\n"
+            + "  - name: Process1\n"
+            + "    transition:\n"
+            + "      - event: DisplayForm2FromProcess1\n"
+            + "        nextState: DisplayForm2\n";
         
-        expectedYAMLBuffer.append(
-            "firstState: " + viewState1.getName() + "\n");
-        
-        expectedYAMLBuffer.append("\n");
-        
-        expectedYAMLBuffer.append(
-                "lastState:\n"
-              + getYAMLofStateInformation(viewState2, 2)
-              + getYAMLofBuiltinEvent(viewState2, 2));                
-        
-        expectedYAMLBuffer.append("\n");
-        
-        expectedYAMLBuffer.append("viewState:\n");
-        String view1YAML = 
-            "  - "
-          + getYAMLofStateInformation(viewState1, 0)
-          + getYAMLofBuiltinEvent(viewState1, 0)
-          + getYAMLofTransitionEvent(viewState1, 0);
-        view1YAML = view1YAML.replace("\n", "\n    ");
-        if (view1YAML.endsWith("    ")) {
-            view1YAML = view1YAML.substring(0, view1YAML.length() - 4);
-        }
-        expectedYAMLBuffer.append(view1YAML);
-        
-        expectedYAMLBuffer.append("\n");
-        expectedYAMLBuffer.append("actionState:\n");
-        String actionYAML = 
-            "  - "
-          + getYAMLofStateInformation(actionState, 0)
-          + getYAMLofBuiltinEvent(actionState, 0)
-          + getYAMLofTransitionEvent(actionState, 0);
-        actionYAML = actionYAML.replace("\n", "\n    ");
-        if (actionYAML.endsWith("    ")) {
-            actionYAML = actionYAML.substring(0, actionYAML.length() - 4);
-        }
-        expectedYAMLBuffer.append(actionYAML);
-        
-        assertEquals(expectedYAMLBuffer.toString(), yaml);
-    }
-    
-    /**
-     * ステート名・ビュー名のYAMLを返す.
-     * 
-     * @param state ステート
-     * @param space スペース数
-     * @return ステート名・ビュー名のYAML
-     */
-    private String getYAMLofStateInformation(State state, int space) {
-        StringBuffer yamlBuffer = new StringBuffer();
-        
-        StringBuffer sp = new StringBuffer();
-        for (int i = 1; i <= space; i++) {
-            sp.append(" ");
-        }
-        
-        yamlBuffer.append(
-                sp + "name: " + state.getName() + "\n");
-        if (state.getType() == State.VIEW_STATE) {
-            yamlBuffer.append(
-                    sp + "view: " + state.getView() + "\n");
-        }
-        
-        return yamlBuffer.toString();
-    }
-    
-    /**
-     * ビルトインイベント部分のYAMLを返す.
-     * 
-     * @param state ステート
-     * @param space スペース数
-     * @return ビルトインイベント部分のYAML
-     */
-    private String getYAMLofBuiltinEvent(State state, int space) {
-        StringBuffer yamlBuffer = new StringBuffer();
-        
-        StringBuffer sp = new StringBuffer();
-        for (int i = 1; i <= space; i++) {
-            sp.append(" ");
-        }
-        
-        Event activitiyEvent = state.getEventByName("Activity");
-        Event entryEvent = state.getEventByName("Entry");
-        Event exitEvent = state.getEventByName("Exit");
-        
-        if (entryEvent.getEventHandler() != null) {
-            yamlBuffer.append(
-                    sp + "entry:\n"
-                  + sp + "  method: "
-                       + entryEvent.getEventHandlerMethodName() + "\n");
-        }
-        if (activitiyEvent.getEventHandler() != null) {
-            yamlBuffer.append(
-                    sp + "activity:\n"
-                  + sp + "  method: "
-                       + activitiyEvent.getEventHandlerMethodName() + "\n");
-        }
-        if (exitEvent.getEventHandler() != null) {
-            yamlBuffer.append(
-                    sp + "exit:\n"
-                  + sp + "  method: "
-                       + exitEvent.getEventHandlerMethodName() + "\n");
-        }
-        return yamlBuffer.toString();
-    }
-    
-    /**
-     * 遷移イベント・内部イベント部分のYAMLを返す.
-     * 
-     * @param state ステート
-     * @param space スペース数
-     * @return 遷移イベント・内部イベント部分のYAML
-     */
-    private String getYAMLofTransitionEvent(State state, int space) {
-        StringBuffer yamlBuffer = new StringBuffer();
-        
-        StringBuffer sp = new StringBuffer();
-        for (int i = 1; i <= space; i++) {
-            sp.append(" ");
-        }
-        
-        for (Event event : state.getEventList()) {
-            if (event.getType() == Event.TRANSITION_EVENT
-                || event.getType() == Event.INTERNAL_EVENT) {
-                if (event.getNextState().getType() == State.FINAL_STATE) {
-                    continue;
-                }
-                
-                if (yamlBuffer.toString().length() == 0) {
-                    yamlBuffer.append(sp + "transition:\n");
-                }
-                yamlBuffer.append(sp + "  - event: "
-                                + event.getName() + "\n");
-                yamlBuffer.append(sp + "    nextState: "
-                                + event.getNextState().getName() + "\n");
-                if (event.getEventHandler() != null) {
-                    yamlBuffer.append(
-                            sp + "    action:\n"
-                          + sp + "      method: "
-                              + event.getEventHandlerMethodName() + "\n");
-                }
-                if (event.getGuardEventHandler() != null) {
-                    yamlBuffer.append(
-                            sp + "    guard:\n"
-                          + sp + "      method: "
-                              + event.getGuardEventHandlerMethodName() + "\n");
-                }
-            }
-        }
-        
-        return yamlBuffer.toString();
+        assertEquals(expectedYAML, yaml);
     }
 }
