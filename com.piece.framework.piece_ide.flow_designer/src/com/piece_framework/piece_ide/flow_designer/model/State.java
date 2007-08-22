@@ -322,7 +322,7 @@ public class State extends AbstractModel {
     /**
      * イベント名を生成する.
      * イベント名は、以下の規則で生成される。<br>
-     * "go" + 遷移先ステート名 + "From" + 遷移元ステート名 
+     * 遷移先ステート名 + "From" + 遷移元ステート名 
      * 
      * @param nextStateName 遷移先ステート名
      * @return イベント名
@@ -330,6 +330,9 @@ public class State extends AbstractModel {
     public String generateEventName(String nextStateName) {
         if (nextStateName == null) {
             return null;
+        }
+        if (getType() == State.INITIAL_STATE) {
+            return "(FirstState)";
         }
         if (getName() == null) {
             return null;
