@@ -43,51 +43,22 @@ public final class FlowReader {
      * @param yamlFile YAMLファイル(.flowファイル)
      * @return Flowオブジェクト
      * @throws CoreException コア例外
-     * @throws IOException I/O例外
-     * @throws ClassNotFoundException クラス未発見例外
      */
-    public static Flow read(IFile yamlFile) 
-                    throws CoreException, IOException, ClassNotFoundException {
+    public static Flow read(IFile yamlFile) throws CoreException {
         Flow yamlFlow = null;
         Flow serializeFlow = null;
         
-        BufferedInputStream bufferedIn = null;
-        try {
-            bufferedIn = new BufferedInputStream(yamlFile.getContents());
-            StringBuffer yamlBuffer = new StringBuffer();
-            int read = 0;
-            while ((read = bufferedIn.read()) != -1) {
-                yamlBuffer.append((char) read);
-            }
-            FlowMapper flowMapper = new FlowMapper();
-            yamlFlow = flowMapper.getFlow(yamlBuffer.toString());
-        } catch (FileNotFoundException fnfe) {
-            fnfe.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
+        yamlFlow = getFlowFromYAMLFile(yamlFile);
         if (yamlFlow == null) {
             MessageDialog.openError(
                     null, 
                     "エラー", 
                     "フローを読み込めませんでした。\n"
                         + "YAML フォーマットが不正な可能性があります。");
+            return null;
         }
         
-        IFile serializeFlowFile = 
-                FlowSerializeUtility.getFlowSeirializeFile(yamlFile); 
-        if (serializeFlowFile != null) {
-            if (serializeFlowFile.exists()) {
-                ObjectInputStream in = 
-                    new ObjectInputStream(serializeFlowFile.getContents());
-                try {
-                    serializeFlow = (Flow) in.readObject();
-                } catch (ClassNotFoundException cnfe) {
-                    cnfe.printStackTrace();
-                }
-                in.close();
-            }
-        }
+        serializeFlow = getFlowFromSeirializeFile(yamlFile);
         
         Flow returnFlow = yamlFlow;
         if (compareFlow(yamlFlow, serializeFlow)) {
@@ -135,6 +106,79 @@ public final class FlowReader {
         }
         
         return true;
+    }
+
+
+    /**
+     * YAMLファイルからFlowオブジェクトを取得する.
+     * 
+     * @param yamlFile YAMLファイル
+     * @return Flowオブジェクト
+     * @throws CoreException コア例外
+     */
+    private static Flow getFlowFromYAMLFile(IFile yamlFile) 
+                                throws CoreException {
+        Flow yamlFlow = null;
+        BufferedInputStream bufferedIn = null;
+        
+        try {
+            bufferedIn = new BufferedInputStream(yamlFile.getContents());
+            StringBuffer yamlBuffer = new StringBuffer();
+            int read = 0;
+            while ((read = bufferedIn.read()) != -1) {
+                yamlBuffer.append((char) read);
+            }
+            FlowMapper flowMapper = new FlowMapper();
+            yamlFlow = flowMapper.getFlow(yamlBuffer.toString());
+        } catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            try {
+                bufferedIn.close();
+            } catch (IOException ioe) {
+            }
+        }
+        
+        return yamlFlow;
+    }
+    
+    /**
+     * シリアライズファイルからFlowオブジェクトを取得する.
+     * シリアライズファイルのパスはYAMLファイルのパスを元に導出される
+     * ので、YAMLファイルを引数として受け取る。
+     * 
+     * @param yamlFile YAMLファイル
+     * @return Flowオブジェクト
+     * @throws CoreException コア例外
+     */
+    private static Flow getFlowFromSeirializeFile(IFile yamlFile) 
+                            throws CoreException {
+        Flow serializeFlow = null;
+        IFile serializeFlowFile = 
+                FlowSerializeUtility.getFlowSeirializeFile(yamlFile); 
+        
+        if (serializeFlowFile != null) {
+            if (serializeFlowFile.exists()) {
+                ObjectInputStream in = null;
+                try {
+                    in = new ObjectInputStream(serializeFlowFile.getContents());
+                    serializeFlow = (Flow) in.readObject();
+                } catch (ClassNotFoundException cnfe) {
+                    cnfe.printStackTrace();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                } finally {
+                    try {
+                        in.close();
+                    } catch (IOException ioe) {
+                    }
+                }
+            }
+        }
+        
+        return serializeFlow;
     }
     
     /**

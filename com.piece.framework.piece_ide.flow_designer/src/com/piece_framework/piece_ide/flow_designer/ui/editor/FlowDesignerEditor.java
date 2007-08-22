@@ -1,7 +1,6 @@
 // $Id: FlowDesignerEditor.java 270 2007-08-16 06:33:23Z matsufuji $
 package com.piece_framework.piece_ide.flow_designer.ui.editor;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.util.EventObject;
 
@@ -108,19 +107,6 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         } catch (CoreException ce) {
             // TODO: オブジェクト読み込み時の例外処理
             ce.printStackTrace();
-            
-        } catch (EOFException eofe) {
-            // TODO: オブジェクト読み込み時の例外処理
-            eofe.printStackTrace();
-            
-        } catch (IOException ioe) {
-            // TODO: オブジェクト読み込み時の例外処理
-            ioe.printStackTrace();
-            
-        } catch (ClassNotFoundException cnfe) {
-            // TODO: オブジェクト読み込み時の例外処理
-            cnfe.printStackTrace();
-            
         }
         
         if (needInit) {
