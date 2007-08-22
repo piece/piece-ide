@@ -1,6 +1,7 @@
 package com.piece_framework.piece_ide.flow_designer.mapper;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -120,23 +121,33 @@ public final class FlowReader {
                                 throws CoreException {
         Flow yamlFlow = null;
         BufferedInputStream bufferedIn = null;
-        
+        ByteArrayOutputStream byteOut = null;
         try {
             bufferedIn = new BufferedInputStream(yamlFile.getContents());
-            StringBuffer yamlBuffer = new StringBuffer();
+            byteOut = new ByteArrayOutputStream();
             int read = 0;
             while ((read = bufferedIn.read()) != -1) {
-                yamlBuffer.append((char) read);
+                byteOut.write(read);
             }
+            
             FlowMapper flowMapper = new FlowMapper();
-            yamlFlow = flowMapper.getFlow(yamlBuffer.toString());
+            yamlFlow = flowMapper.getFlow(byteOut.toString("UTF-8"));
+            
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } finally {
             try {
-                bufferedIn.close();
+                if (bufferedIn != null) {
+                    bufferedIn.close();
+                }
+            } catch (IOException ioe) {
+            }
+            try {
+                if (byteOut != null) {
+                    byteOut.close();
+                }
             } catch (IOException ioe) {
             }
         }

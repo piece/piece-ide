@@ -73,6 +73,8 @@ public class FlowMapper extends AbstractMapper {
      * @return YAML
      */
     public String getYAML(Flow flow) {        
+        //Yaml.config.setEncoding("UTF-8");
+        
         StringBuffer yamlBuffer = new StringBuffer();
         yamlBuffer.append(createStateMapper(State.INITIAL_STATE).getYAML(flow));
         yamlBuffer.append(createStateMapper(State.FINAL_STATE).getYAML(flow));

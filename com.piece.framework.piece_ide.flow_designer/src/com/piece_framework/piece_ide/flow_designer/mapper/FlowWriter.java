@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.UnsupportedEncodingException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
@@ -64,11 +65,15 @@ public final class FlowWriter {
                      throws CoreException {
         FlowMapper mapper = new FlowMapper();
         String yamlString = mapper.getYAML(flow);
-        yamlFile.setContents(
-                new ByteArrayInputStream(yamlString.getBytes()), 
-                true,
-                false,
-                monitor);
+        try {
+            yamlFile.setContents(
+                    new ByteArrayInputStream(yamlString.getBytes("UTF-8")), 
+                    true,
+                    false,
+                    monitor);
+        } catch (UnsupportedEncodingException uee) {
+            uee.printStackTrace();
+        }
     }
     
     /**
