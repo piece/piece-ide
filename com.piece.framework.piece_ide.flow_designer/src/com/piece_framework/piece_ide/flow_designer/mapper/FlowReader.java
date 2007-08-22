@@ -51,11 +51,29 @@ public final class FlowReader {
         
         yamlFlow = getFlowFromYAMLFile(yamlFile);
         if (yamlFlow == null) {
-            MessageDialog.openError(
-                    null, 
-                    "エラー", 
-                    "フローを読み込めませんでした。\n"
-                        + "YAML フォーマットが不正な可能性があります。");
+            boolean dataExists = false;
+            BufferedInputStream bufferedIn = null; 
+            try {
+                bufferedIn = new BufferedInputStream(yamlFile.getContents());
+                if (bufferedIn.read() != -1) {
+                    dataExists = true;
+                }
+                
+            } catch (IOException ioe) {
+            } finally {
+                try {
+                    bufferedIn.close();
+                } catch (IOException ioe) {
+                }
+            }
+            
+            if (dataExists) {
+                MessageDialog.openError(
+                        null, 
+                        "エラー", 
+                        "フローを読み込めませんでした。\n"
+                            + "YAML フォーマットが不正な可能性があります。");
+            }
             return null;
         }
         

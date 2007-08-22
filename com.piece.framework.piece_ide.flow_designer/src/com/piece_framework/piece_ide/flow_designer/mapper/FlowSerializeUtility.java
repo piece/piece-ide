@@ -40,27 +40,15 @@ public final class FlowSerializeUtility {
             return null;
         }
         
-        IFolder flowFolder = yamlFile.getProject().getFolder(
-                new Path(FLOW_PATH));
-        if (!flowFolder.exists()) {
-            flowFolder.create(true, true, null);
+        IFile serializeFile = yamlFile.getProject().getFile(
+                                new Path(FLOW_PATH
+                                         + yamlFile.getFullPath().toString()
+                                         + FLOW_SERIALIZE_EXT));
+        if (!serializeFile.exists()) {
+            createFolder(serializeFile);
         }
         
-        String[] folders = yamlFile.getFullPath().toString().split("/");
-        StringBuffer serializeFolderName = new StringBuffer();
-        serializeFolderName.append(FLOW_PATH);
-        for (int i = 0; i < folders.length - 1; i++) {
-            serializeFolderName.append("/" + folders[i]);
-            IFolder folder = yamlFile.getProject().getFolder(
-                                new Path(serializeFolderName.toString()));
-            if (!folder.exists()) {
-                folder.create(true, true, null);
-            }
-        }
-        
-        return yamlFile.getProject().getFile(
-                    new Path(serializeFolderName.toString() + "/" 
-                             + yamlFile.getName() + FLOW_SERIALIZE_EXT));
+        return serializeFile;
     }
     
     /**
@@ -77,5 +65,30 @@ public final class FlowSerializeUtility {
         return yamlFile.getProject().getFile(
                 ".settings/flow" 
                 + yamlFile.getFullPath().toString() + FLOW_SERIALIZE_EXT);
+    }
+    
+    /**
+     * 指定されたファイルに到達するためのフォルダーを作成する.
+     * 
+     * @param file ファイル
+     * @throws CoreException コア例外
+     */
+    private static void createFolder(IFile file) throws CoreException {
+        String[] folders = file.getFullPath().toString().split("/");
+        StringBuffer folderPath = new StringBuffer();
+        
+        // 最初の2要素には空文字、プロジェクト名が入るので2からはじめる
+        int startIndex = 2;
+        // 最後の要素にはファイル名が入っているので除く
+        int endIndex = folders.length - 1;
+        
+        for (int i = startIndex; i < endIndex; i++) {
+            folderPath.append("/" + folders[i]);
+            IFolder folder = file.getProject().getFolder(
+                                new Path(folderPath.toString()));
+            if (!folder.exists()) {
+                folder.create(true, true, null);
+            }
+        }
     }
 }
