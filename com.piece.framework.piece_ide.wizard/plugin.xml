@@ -6,7 +6,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <category
-            name="Piece"
+            name="Piece Framework"
             id="com.piece_framework.piece_ide">
       </category>
 

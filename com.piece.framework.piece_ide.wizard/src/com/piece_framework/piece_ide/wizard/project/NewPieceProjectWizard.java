@@ -80,6 +80,7 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
                                 "NewPieceProjectWizard.PageTitle"));
         this.fPage1.setDescription(Messages.getString(
                                 "NewPieceProjectWizard.PageDescription"));
+        fPage1.setInitialProjectName("MyApp");
         
         addPage(this.fPage1);
     }
