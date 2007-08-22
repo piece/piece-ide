@@ -93,7 +93,7 @@ public class FlowMapperGetFlowTest extends TestCase {
                 null, 
                 null);
         assertEvent(initialState, 
-                "DisplayForm1FromInitialState", 
+                "(FirstState)", 
                 Event.TRANSITION_EVENT,
                 viewState, 
                 null, 
@@ -216,7 +216,7 @@ public class FlowMapperGetFlowTest extends TestCase {
                 null, 
                 null);
         assertEvent(initialState, 
-                "DisplayForm1FromInitialState", 
+                "(FirstState)", 
                 Event.TRANSITION_EVENT,
                 viewState1, 
                 null, 
@@ -334,7 +334,7 @@ public class FlowMapperGetFlowTest extends TestCase {
                 null, 
                 null);
         assertEvent(initialState, 
-                "DisplayForm1FromInitialState", 
+                "(FirstState)", 
                 Event.TRANSITION_EVENT,
                 viewState1, 
                 null, 
@@ -529,7 +529,7 @@ public class FlowMapperGetFlowTest extends TestCase {
                 null, 
                 null);
         assertEvent(initialState, 
-                "DisplayForm1FromInitialState", 
+                "(FirstState)", 
                 Event.TRANSITION_EVENT,
                 viewState1, 
                 null, 
@@ -802,7 +802,7 @@ public class FlowMapperGetFlowTest extends TestCase {
                 null, 
                 null);
         assertEvent(initialState, 
-                "DisplayForm1FromInitialState", 
+                "(FirstState)", 
                 Event.TRANSITION_EVENT,
                 viewState1, 
                 null, 
@@ -968,7 +968,7 @@ public class FlowMapperGetFlowTest extends TestCase {
                 "InitialClass:InitialMethod", 
                 null);
         assertEvent(initialState, 
-                "DisplayForm1FromInitialState", 
+                "(FirstState)", 
                 Event.TRANSITION_EVENT,
                 viewState, 
                 null, 

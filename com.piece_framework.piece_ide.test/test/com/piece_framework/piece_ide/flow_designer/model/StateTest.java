@@ -510,6 +510,17 @@ public class StateTest extends TestCase {
     }
     
     /**
+     * generateEventNameメソッドテスト.
+     * イニシャルステートの遷移イベント名がnullになることをテストする。
+     * 
+     */
+    public void testGenerateEventNameShouldReturnTheInitialEvent() {
+        State state = new State(State.INITIAL_STATE);
+        
+        assertEquals("(FirstState)", state.generateEventName("FirstState"));
+    }
+    
+    /**
      * checkUsableEventNameメソッドテスト.
      * ステートに追加されていないイベント名を指定した場合はtrueが
      * 返されることをテストする。
