@@ -44,11 +44,14 @@ public class FlowMapperGetFlowTest extends TestCase {
                       + "  name: DisplayForm1\n"
                       + "  view: Form1\n"
                       + "  entry:\n"
-                      + "    method: ActionClass:doEntryOnDisplayForm1\n"
+                      + "    class: ActionClass\n"
+                      + "    method: doEntryOnDisplayForm1\n"
                       + "  activity:\n"
-                      + "    method: ActionClass:doActivityOnDisplayForm1\n"
+                      + "    class: ActionClass\n"
+                      + "    method: doActivityOnDisplayForm1\n"
                       + "  exit:\n"
-                      + "    method: ActionClass:doExitOnDisplayForm1\n";
+                      + "    class: ActionClass\n"
+                      + "    method: doExitOnDisplayForm1\n";
     
         FlowMapper flowMapper = new FlowMapper();
         Flow flow = flowMapper.getFlow(yamlString);
@@ -154,7 +157,8 @@ public class FlowMapperGetFlowTest extends TestCase {
                 + "      - event: Process1FromDisplayForm1\n"
                 + "        nextState: Process1\n"
                 + "        action:\n"
-                + "          method: ActionClass:doProcess1FromDisplayForm1\n"
+                + "          class: ActionClass\n"
+                + "          method: doProcess1FromDisplayForm1\n"
                 + "\n"
                 + "actionState:\n"
                 + "  - name: Process1\n"
@@ -282,9 +286,11 @@ public class FlowMapperGetFlowTest extends TestCase {
             + "      - event: DisplayForm2FromDisplayForm2\n"
             + "        nextState: DisplayForm2\n"
             + "        action:\n"
-            + "          method: ActionClass:doDisplayForm2FromDisplayForm2\n"
+            + "          class: ActionClass\n"
+            + "          method: doDisplayForm2FromDisplayForm2\n"
             + "        guard:\n"
-            + "          method: ActionClass:guardMethod\n";
+            + "          class: ActionClass\n"
+            + "          method: guardMethod\n";
 
         FlowMapper flowMapper = new FlowMapper();
         Flow flow = flowMapper.getFlow(yamlString);
@@ -452,28 +458,35 @@ public class FlowMapperGetFlowTest extends TestCase {
             + "  - name: DisplayForm1\n"
             + "    view: Form1\n"
             + "    entry:\n"
-            + "      method: ActionClass:doEntryOnDisplayForm1\n"
+            + "      class: ActionClass\n"
+            + "      method: doEntryOnDisplayForm1\n"
             + "    activity:\n"
-            + "      method: ActionClass:doActivityOnDisplayForm1\n"
+            + "      class: ActionClass\n"
+            + "      method: doActivityOnDisplayForm1\n"
             + "    exit:\n"
-            + "      method: ActionClass:doExitOnDisplayForm1\n"
+            + "      class: ActionClass\n"
+            + "      method: doExitOnDisplayForm1\n"
             + "    transition:\n"
             + "      - event: Process1FromDisplayForm1\n"
             + "        nextState: Process1\n"
             + "        action:\n"
-            + "          method: FlowAction:doProcess1FromDisplayForm1\n"
+            + "          class: FlowAction\n"
+            + "          method: doProcess1FromDisplayForm1\n"
             + "        guard:\n"
-            + "          method: GuardAction:guardMethod\n"
+            + "          class: GuardAction\n"
+            + "          method: guardMethod\n"
             + "\n"
             + "actionState:\n"
             + "  - name: Process1\n"
             + "    entry:\n"
-            + "      method: ActionClass:doEntryOnProcess1\n"
+            + "      class: ActionClass\n"
+            + "      method: doEntryOnProcess1\n"
             + "    activity:\n"
-            + "      method: ActionClass:doActivityOnProcess1\n"
+            + "      class: ActionClass\n"
+            + "      method: doActivityOnProcess1\n"
             + "    exit:\n"
-            + "      method: ActionClass:doExitOnProcess1\n";
-
+            + "      class: ActionClass\n"
+            + "      method: doExitOnProcess1\n";
         
         FlowMapper flowMapper = new FlowMapper();
         Flow flow = flowMapper.getFlow(yamlString);
@@ -590,7 +603,8 @@ public class FlowMapperGetFlowTest extends TestCase {
                 + "      - event: Process1FromDisplayForm1\n"
                 + "        nextState: Process1xx\n"
                 + "        action:\n"
-                + "          method: ActionClass:doProcess1FromDisplayForm1\n"
+                + "          class: ActionClass\n"
+                + "          method: doProcess1FromDisplayForm1\n"
                 + "\n"
                 + "actionState:\n"
                 + "  - name: Process1\n"
@@ -692,7 +706,8 @@ public class FlowMapperGetFlowTest extends TestCase {
                 + "- event: Process1FromDisplayForm1\n"
                 + "nextState: Process1xx\n"
                 + "action:\n"
-                + "method: ActionClass:doProcess1FromDisplayForm1\n"
+                + "class: ActionClass\n"
+                + "method: doProcess1FromDisplayForm1\n"
                 + "\n"
                 + "actionState:\n"
                 + "- name: Process1\n"
@@ -729,7 +744,8 @@ public class FlowMapperGetFlowTest extends TestCase {
                 + "      - event: Process1FromDisplayForm1\n"
                 + "        nextState: Process1\n"
                 + "        action:\n"
-                + "          method: ActionClass:doProcess1FromDisplayForm1\n"
+                + "          class: ActionClass\n"
+                + "          method: doProcess1FromDisplayForm1\n"
                 + "\n"
                 + "actionStateXX:\n"
                 + "  - name: Process1\n"
@@ -834,7 +850,8 @@ public class FlowMapperGetFlowTest extends TestCase {
                 + "      - event: Process1FromDisplayForm1\n"
                 + "        nextState: Process1xx\n"
                 + "        action:\n"
-                + "          method: ActionClass:doProcess1FromDisplayForm1\n"
+                + "          class: ActionClass\n"
+                + "          method: doProcess1FromDisplayForm1\n"
                 + "\n"
                 + "actionState:\n"
                 + "  - name: Process1\n"
@@ -942,7 +959,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         } else {
             assertNotNull(event.getEventHandler());
             assertEquals(expectedEventHandler, 
-                         event.getEventHandler().toString());
+                         event.getEventHandler());
         }
         
         if (expectedGuardEventHandler == null) {
@@ -950,7 +967,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         } else {
             assertNotNull(event.getGuardEventHandler());
             assertEquals(expectedGuardEventHandler, 
-                         event.getGuardEventHandler().toString());
+                         event.getGuardEventHandler());
         }
     }
 }
