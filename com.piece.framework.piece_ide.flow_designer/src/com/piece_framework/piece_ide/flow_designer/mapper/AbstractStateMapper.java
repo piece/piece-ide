@@ -110,19 +110,25 @@ public abstract class AbstractStateMapper extends AbstractMapper {
             if (event.getType() != Event.BUILTIN_EVENT) {
                 continue;
             }
-            if (event.getEventHandler() == null) {
-                continue;
-            }
-            
-            Map<String, Object> eventMap = new LinkedHashMap<String, Object>();
-            eventMap.put("method", event.getEventHandlerMethodName());
             
             if (event.getName().equals("Activity")) {
-                map.put("activity", eventMap);
+                addEventHandlerToMap(
+                        event.getEventHandlerClassName(),
+                        event.getEventHandlerMethodName(),
+                        "activity",
+                        map);
             } else if (event.getName().equals("Entry")) {
-                map.put("entry", eventMap);
+                addEventHandlerToMap(
+                        event.getEventHandlerClassName(),
+                        event.getEventHandlerMethodName(),
+                        "entry",
+                        map);                
             } else if (event.getName().equals("Exit")) {
-                map.put("exit", eventMap);
+                addEventHandlerToMap(
+                        event.getEventHandlerClassName(),
+                        event.getEventHandlerMethodName(),
+                        "exit",
+                        map);
             }
         }
     }
@@ -150,9 +156,15 @@ public abstract class AbstractStateMapper extends AbstractMapper {
             eventMap.put("nextState", event.getNextState().getName());
             
             addEventHandlerToMap(
-                    event.getEventHandlerMethodName(), "action", eventMap);
+                    event.getEventHandlerClassName(),
+                    event.getEventHandlerMethodName(), 
+                    "action", 
+                    eventMap);
             addEventHandlerToMap(
-                    event.getGuardEventHandlerMethodName(), "guard", eventMap);
+                    event.getGuardEventHandlerClassName(),
+                    event.getGuardEventHandlerMethodName(), 
+                    "guard", 
+                    eventMap);
             
             eventList.add(eventMap);
         }
@@ -164,11 +176,13 @@ public abstract class AbstractStateMapper extends AbstractMapper {
     /**
      * イベントハンドラをMapオブジェクトに追加する.
      * 
+     * @param eventHandlerClassName イベントハンドラクラス名
      * @param eventHandlerMethodName イベントハンドラメソッド名
      * @param key キー
      * @param map Mapオブジェクト
      */
     protected void addEventHandlerToMap(
+                        String eventHandlerClassName,
                         String eventHandlerMethodName, 
                         String key, 
                         Map<String, Object> map) {
@@ -178,6 +192,9 @@ public abstract class AbstractStateMapper extends AbstractMapper {
         
         Map<String, Object> eventHandlerMap = 
                     new LinkedHashMap<String, Object>();
+        if (eventHandlerClassName != null) {
+            eventHandlerMap.put("class", eventHandlerClassName);
+        }
         eventHandlerMap.put("method", eventHandlerMethodName);
         map.put(key, eventHandlerMap);
     }
