@@ -312,8 +312,10 @@ public class FlowMapperGetYAMLTest extends TestCase {
             + "      - event: Process1FromDisplayForm1\n"
             + "        nextState: Process1\n"
             + "        action:\n"
+            + "          class: FlowAction\n"
             + "          method: doProcess1FromDisplayForm1\n"
             + "        guard:\n"
+            + "          class: GuardAction\n"
             + "          method: guardMethod\n"
             + "\n"
             + "actionState:\n"
@@ -406,7 +408,7 @@ public class FlowMapperGetYAMLTest extends TestCase {
      * getYAML メソッドテスト.
      * フローにアクションクラスが指定されていないかつイベントハンドラ
      * にもアクションクラスが指定されていない場合、メソッドのみが返さ
-     * れることをチェックする。
+     * れることをテストする。
      * 
      */
     public void testGetYAMLShouldReturnTheYAMLWhichTheEventHandlerHasMethodOnly() {
@@ -481,4 +483,160 @@ public class FlowMapperGetYAMLTest extends TestCase {
         
         assertEquals(expectedYAML, yaml);
     }
+    
+    /**
+     * getYAML メソッドテスト.
+     * ビルトインイベントが正しく出力されることをテストする。
+     * 
+     */
+    public void testGetYAMLShouldReturnTheYAMLWhichHasTheStateWithBuildinEvent() {
+        State initialState = new State(State.INITIAL_STATE);
+        State viewState1 = new State(State.VIEW_STATE);
+        
+        viewState1.setName("DisplayForm1");
+        viewState1.setView("Form1");
+        
+        State actionState = new State(State.ACTION_STATE);
+        actionState.setName("Process1");
+
+        State viewState2 = new State(State.VIEW_STATE);
+        viewState2.setName("DisplayForm2");
+        viewState2.setView("Form2");
+        
+        State finalState = new State(State.FINAL_STATE);
+        finalState.setName("FinalState");
+        
+        Event initialToView = new Event(Event.TRANSITION_EVENT);
+        initialToView.setName("DisplayForm1FromInitialState");
+        initialToView.setNextState(viewState1);
+        initialState.addEvent(initialToView);
+        
+        viewState1.getEventByName("Activity").setEventHandler("ActivityMethod");
+        viewState1.getEventByName("Entry").setEventHandler("EntryMethod");
+        viewState1.getEventByName("Exit").setEventHandler("ExitMethod");
+        Event view1ToAction = new Event(Event.TRANSITION_EVENT);
+        view1ToAction.setName("Process1FromDisplayForm1");
+        view1ToAction.setNextState(actionState);
+        view1ToAction.setEventHandler("doProcess1FromDisplayForm1");
+        viewState1.addEvent(view1ToAction);
+        
+        actionState.getEventByName("Activity").setEventHandler(
+                                        "ActivityClass:ActivityMethod");
+        actionState.getEventByName("Entry").setEventHandler(
+                                        "EntryClass:EntryMethod");
+        actionState.getEventByName("Exit").setEventHandler(
+                                        "ExitClass:ExitMethod");
+        Event actionToView1 = new Event(Event.TRANSITION_EVENT);
+        actionToView1.setName("DisplayForm2FromProcess1");
+        actionToView1.setNextState(viewState2);
+        actionState.addEvent(actionToView1);
+        
+        Event view2ToFinal = new Event(Event.TRANSITION_EVENT);
+        view2ToFinal.setName("FinalStateFromDisplayForm2");
+        view2ToFinal.setNextState(finalState);
+        viewState2.addEvent(view2ToFinal);
+        
+        fFlow = new Flow(null, null);
+        fFlow.addState(finalState);
+        fFlow.addState(viewState2);
+        fFlow.addState(actionState);
+        fFlow.addState(viewState1);
+        fFlow.addState(initialState);
+        
+        FlowMapper flowMapper = new FlowMapper();
+        String yaml = flowMapper.getYAML(fFlow);
+        
+        String expectedYAML = 
+              "firstState: DisplayForm1\n"
+            + "\n"
+            + "lastState:\n"
+            + "  name: DisplayForm2\n"
+            + "  view: Form2\n"
+            + "\n"
+            + "viewState:\n"
+            + "  - name: DisplayForm1\n"
+            + "    view: Form1\n"
+            + "    entry:\n"
+            + "      method: EntryMethod\n"
+            + "    activity:\n"
+            + "      method: ActivityMethod\n"
+            + "    exit:\n"
+            + "      method: ExitMethod\n"
+            + "    transition:\n"
+            + "      - event: Process1FromDisplayForm1\n"
+            + "        nextState: Process1\n"
+            + "        action:\n"
+            + "          method: doProcess1FromDisplayForm1\n"
+            + "\n"
+            + "actionState:\n"
+            + "  - name: Process1\n"
+            + "    entry:\n"
+            + "      class: EntryClass\n"
+            + "      method: EntryMethod\n"
+            + "    activity:\n"
+            + "      class: ActivityClass\n"
+            + "      method: ActivityMethod\n"
+            + "    exit:\n"
+            + "      class: ExitClass\n"
+            + "      method: ExitMethod\n"
+            + "    transition:\n"
+            + "      - event: DisplayForm2FromProcess1\n"
+            + "        nextState: DisplayForm2\n";
+        
+        assertEquals(expectedYAML, yaml);
+    }
+    
+    /**
+     * getYAML メソッドテスト.
+     * イニシャルステートとファイナルステートにそれぞれInitialイベント、
+     * Finalイベントを持つ場合、トップレベルにinitial/final要素が出力
+     * されることをテストする。 
+     * 
+     */
+//    public void testGetYAMLShouldReturnTheYAMLWhichHasInitialAndFinal() {
+//        State initialState = new State(State.INITIAL_STATE);
+//        
+//        State viewState = new State(State.VIEW_STATE);
+//        viewState.setName("DisplayForm1");
+//        viewState.setView("Form1");
+//        
+//        State finalState = new State(State.FINAL_STATE);
+//        finalState.setName("FinalState");
+//        
+//        Event initialEvent = initialState.getEventByName("Initial");
+//        initialEvent.setEventHandler("InitialClass:InitialMethod");
+//        
+//        Event initialToView = new Event(Event.TRANSITION_EVENT);
+//        initialToView.setNextState(viewState);
+//        initialState.addEvent(initialToView);
+//        
+//        Event viewToFinal = new Event(Event.TRANSITION_EVENT);
+//        viewToFinal.setNextState(finalState);
+//        viewState.addEvent(viewToFinal);
+//        
+//        Event finalEvent = finalState.getEventByName("Final");
+//        finalEvent.setEventHandler("FinalClass:FinalMethod");
+//        
+//        fFlow.addState(initialState);
+//        fFlow.addState(viewState);
+//        fFlow.addState(finalState);
+//        
+//        FlowMapper flowMapper = new FlowMapper();
+//        String yaml = flowMapper.getYAML(fFlow);
+//        
+//        String expectedYAML =
+//              "initial:\n"
+//            + "  class: InitialClass\n"
+//            + "  method: InitialMethod\n"
+//            + "firstState: DisplayForm1\n"
+//            + "\n"
+//            + "final:\n"
+//            + "  class: FinalClass\n"
+//            + "  method: FinalMethod\n"
+//            + "lastState:\n"
+//            + "  name: DisplayForm1\n"
+//            + "  view: Form1\n";
+//
+//        assertEquals(expectedYAML, yaml);
+//    }
 }
