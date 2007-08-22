@@ -593,50 +593,50 @@ public class FlowMapperGetYAMLTest extends TestCase {
      * されることをテストする。 
      * 
      */
-//    public void testGetYAMLShouldReturnTheYAMLWhichHasInitialAndFinal() {
-//        State initialState = new State(State.INITIAL_STATE);
-//        
-//        State viewState = new State(State.VIEW_STATE);
-//        viewState.setName("DisplayForm1");
-//        viewState.setView("Form1");
-//        
-//        State finalState = new State(State.FINAL_STATE);
-//        finalState.setName("FinalState");
-//        
-//        Event initialEvent = initialState.getEventByName("Initial");
-//        initialEvent.setEventHandler("InitialClass:InitialMethod");
-//        
-//        Event initialToView = new Event(Event.TRANSITION_EVENT);
-//        initialToView.setNextState(viewState);
-//        initialState.addEvent(initialToView);
-//        
-//        Event viewToFinal = new Event(Event.TRANSITION_EVENT);
-//        viewToFinal.setNextState(finalState);
-//        viewState.addEvent(viewToFinal);
-//        
-//        Event finalEvent = finalState.getEventByName("Final");
-//        finalEvent.setEventHandler("FinalClass:FinalMethod");
-//        
-//        fFlow.addState(initialState);
-//        fFlow.addState(viewState);
-//        fFlow.addState(finalState);
-//        
-//        FlowMapper flowMapper = new FlowMapper();
-//        String yaml = flowMapper.getYAML(fFlow);
-//        
-//        String expectedYAML =
-//              "initial:\n"
-//            + "  class: InitialClass\n"
-//            + "  method: InitialMethod\n"
-//            + "firstState: DisplayForm1\n"
-//            + "\n"
-//            + "final:\n"
-//            + "  class: FinalClass\n"
-//            + "  method: FinalMethod\n"
-//            + "lastState:\n"
-//            + "  name: DisplayForm1\n"
-//            + "  view: Form1\n";
-//
-//        assertEquals(expectedYAML, yaml);
-//    }
+    public void testGetYAMLShouldReturnTheYAMLWhichHasInitialAndFinal() {
+        State initialState = new State(State.INITIAL_STATE);
+        
+        State viewState = new State(State.VIEW_STATE);
+        viewState.setName("DisplayForm1");
+        viewState.setView("Form1");
+        
+        State finalState = new State(State.FINAL_STATE);
+        finalState.setName("FinalState");
+        
+        Event initialEvent = initialState.getEventByName("Initial");
+        initialEvent.setEventHandler("InitialClass:InitialMethod");
+        
+        Event initialToView = new Event(Event.TRANSITION_EVENT);
+        initialToView.setNextState(viewState);
+        initialState.addEvent(initialToView);
+        
+        Event viewToFinal = new Event(Event.TRANSITION_EVENT);
+        viewToFinal.setNextState(finalState);
+        viewState.addEvent(viewToFinal);
+        
+        Event finalEvent = finalState.getEventByName("Final");
+        finalEvent.setEventHandler("FinalClass:FinalMethod");
+        
+        fFlow.addState(initialState);
+        fFlow.addState(viewState);
+        fFlow.addState(finalState);
+        
+        FlowMapper flowMapper = new FlowMapper();
+        String yaml = flowMapper.getYAML(fFlow);
+        
+        String expectedYAML =
+              "initial:\n"
+            + "  class: InitialClass\n"
+            + "  method: InitialMethod\n"
+            + "firstState: DisplayForm1\n"
+            + "\n"
+            + "final:\n"
+            + "  class: FinalClass\n"
+            + "  method: FinalMethod\n"
+            + "lastState:\n"
+            + "  name: DisplayForm1\n"
+            + "  view: Form1\n";
+
+        assertEquals(expectedYAML, yaml);
+    }
 }
