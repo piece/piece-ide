@@ -901,6 +901,115 @@ public class FlowMapperGetFlowTest extends TestCase {
     }
     
     /**
+     * getFlow メソッドテスト.
+     * initial, final要素を持つYAMLからフローを取得できることをテストする。
+     *
+     */
+    public void testGetFlowShouldReturnTheFlowWithInitialEventAndFinalEvent() {
+        String yamlString = 
+                        "initial:\n"
+                      + "  class: InitialClass\n"
+                      + "  method: InitialMethod\n"
+                      + "firstState: DisplayForm1\n"
+                      + "\n"
+                      + "final:\n"
+                      + "  class: FinalClass\n"
+                      + "  method: FinalMethod\n"
+                      + "lastState:\n"
+                      + "  name: DisplayForm1\n"
+                      + "  view: Form1\n"
+                      + "  entry:\n"
+                      + "    class: ActionClass\n"
+                      + "    method: doEntryOnDisplayForm1\n"
+                      + "  activity:\n"
+                      + "    class: ActionClass\n"
+                      + "    method: doActivityOnDisplayForm1\n"
+                      + "  exit:\n"
+                      + "    class: ActionClass\n"
+                      + "    method: doExitOnDisplayForm1\n";
+    
+        FlowMapper flowMapper = new FlowMapper();
+        Flow flow = flowMapper.getFlow(yamlString);
+        
+        assertNotNull(flow);
+        assertEquals(3, flow.getStateList().size());
+        
+        State initialState = null;
+        State viewState = null;
+        State finalState = null;
+        
+        for (State state : flow.getStateList()) {
+            if (state.getType() == State.INITIAL_STATE) {
+                initialState = state;
+            } else if (state.getType() == State.FINAL_STATE) {
+                finalState = state;
+            } else if (state.getType() == State.VIEW_STATE) {
+                viewState = state;
+            } else {
+                fail();
+            }   
+        }
+        
+        // ステートのアサーション
+        assertNotNull(initialState);
+        
+        assertNotNull(viewState);
+        assertEquals("DisplayForm1", viewState.getName());
+        assertEquals("Form1", viewState.getView());
+        
+        assertNotNull(finalState);
+        
+        // イベントのアサーション
+        assertEquals(2, initialState.getEventList().size());
+        assertEvent(initialState, 
+                "Initial", 
+                Event.BUILTIN_EVENT,
+                null, 
+                "InitialClass:InitialMethod", 
+                null);
+        assertEvent(initialState, 
+                "DisplayForm1FromInitialState", 
+                Event.TRANSITION_EVENT,
+                viewState, 
+                null, 
+                null);
+
+        assertEquals(4, viewState.getEventList().size());
+        assertEvent(viewState, 
+                "Activity", 
+                Event.BUILTIN_EVENT,
+                null, 
+                "ActionClass:doActivityOnDisplayForm1", 
+                null);
+        assertEvent(viewState, 
+                "Entry", 
+                Event.BUILTIN_EVENT,
+                null, 
+                "ActionClass:doEntryOnDisplayForm1", 
+                null);
+        assertEvent(viewState, 
+                "Exit", 
+                Event.BUILTIN_EVENT,
+                null, 
+                "ActionClass:doExitOnDisplayForm1", 
+                null);
+        assertEvent(viewState, 
+                "FinalStateFromDisplayForm1", 
+                Event.TRANSITION_EVENT,
+                finalState, 
+                null, 
+                null);
+
+        assertEquals(1, finalState.getEventList().size());
+        assertEvent(finalState, 
+                "Final", 
+                Event.BUILTIN_EVENT,
+                null, 
+                "FinalClass:FinalMethod", 
+                null);
+    }
+    
+    /**
      * ノーマルステート(ビューステート、アクションステート)のビルトイン
      * イベントのアサーションを行う.
      * 以下の内容を表明する。<br>
