@@ -4,6 +4,7 @@ package com.piece_framework.piece_ide.flow_designer.command;
 import org.eclipse.gef.commands.Command;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
+import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
@@ -15,7 +16,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  *
  */
 public class CreateConnectionCommand extends Command {
-
+    private Flow fFlow;
     private State fState;
     private State fNextState;
     private Event fEvent;
@@ -30,6 +31,15 @@ public class CreateConnectionCommand extends Command {
         fEvent = event;
     }
 
+    /**
+     * フローをセットする.
+     * 
+     * @param flow フロー
+     */
+    public void setFlow(Flow flow) {
+        fFlow = flow;
+    }
+    
     /**
      * 遷移元ステートをセットする.
      * 
@@ -54,6 +64,7 @@ public class CreateConnectionCommand extends Command {
      * でなければ、コマンドを実行できるものとする。<br>
      * ・イニシャルステートからはひとつだけ遷移できるものとする。<br>
      * ・イニシャルステートへの遷移はできない。<br>
+     * ・ファイナルステートへの遷移はひとつだけ遷移できるものとする。<br>
      * ・ファイナルステートからの遷移はできない。<br>
      * 
      * @return コマンドを実行できるか
@@ -63,13 +74,16 @@ public class CreateConnectionCommand extends Command {
     public boolean canExecute() {
         boolean executable = true;
         
-        if (fState == null || fNextState == null 
+        if (fFlow == null || fState == null || fNextState == null 
             || fState.equals(fNextState)) {
             executable = false;
         } else if (fState.getType() == State.INITIAL_STATE
                     && fState.getTransitionEventList().size() > 0) {
             executable = false;
         } else if (fNextState.getType() == State.INITIAL_STATE) {
+            executable = false;
+        } else if (fNextState.getType() == State.FINAL_STATE
+                    && fFlow.getStateListToOwnState(fNextState).size() > 0) {
             executable = false;
         } else if (fState.getType() == State.FINAL_STATE) {
             executable = false;

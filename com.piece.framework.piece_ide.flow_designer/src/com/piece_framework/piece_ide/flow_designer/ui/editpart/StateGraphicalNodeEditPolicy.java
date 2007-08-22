@@ -8,6 +8,7 @@ import org.eclipse.gef.requests.ReconnectRequest;
 
 import com.piece_framework.piece_ide.flow_designer.command.CreateConnectionCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
+import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
@@ -62,8 +63,10 @@ public class StateGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
                             CreateConnectionRequest request) {
         Event event = (Event) request.getNewObject();
         State state = (State) request.getTargetEditPart().getModel();
+        Flow flow = (Flow) request.getTargetEditPart().getParent().getModel();
         CreateConnectionCommand command = 
             new CreateConnectionCommand(event);
+        command.setFlow(flow);
         command.setState(state);
         request.setStartCommand(command);
         
