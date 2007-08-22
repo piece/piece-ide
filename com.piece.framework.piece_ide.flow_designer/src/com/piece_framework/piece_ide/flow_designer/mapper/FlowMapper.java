@@ -73,8 +73,6 @@ public class FlowMapper extends AbstractMapper {
      * @return YAML
      */
     public String getYAML(Flow flow) {        
-        //Yaml.config.setEncoding("UTF-8");
-        
         StringBuffer yamlBuffer = new StringBuffer();
         yamlBuffer.append(createStateMapper(State.INITIAL_STATE).getYAML(flow));
         yamlBuffer.append(createStateMapper(State.FINAL_STATE).getYAML(flow));
@@ -135,7 +133,13 @@ public class FlowMapper extends AbstractMapper {
         
         Object value = getValueIgnoreCase(fYAMLMap, "firstState");
         if (value != null && value instanceof String) {
-            setTransitionEventMap(initialState, (String) value);
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("event", initialState.generateEventName((String) value));
+            map.put("nextState", (String) value);
+            
+            List<Object> list = new ArrayList<Object>();
+            list.add(map);
+            fTransitionMap.put(initialState, list);
         }
         
         setBuiltinEventHandler(fYAMLMap, initialState, "Initial");
