@@ -9,7 +9,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
@@ -55,6 +54,7 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
 
     /**
      * コンストラクタ.
+     * 
      */
     public NewPieceProjectWizard() {
         super();
@@ -65,6 +65,7 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
 
     /**
      * 初期処理.
+     * 
      * @param workbench ワークベンチ
      * @param selection 選択した構成
      */
@@ -73,20 +74,22 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
     
     /**
      * ページ追加.
+     * 
      */
     public void addPages() {
-        this.fPage1 = new NewPieceProjectWizardPage("page1"); //$NON-NLS-1$
-        this.fPage1.setTitle(Messages.getString(
+        fPage1 = new NewPieceProjectWizardPage("page1"); //$NON-NLS-1$
+        fPage1.setTitle(Messages.getString(
                                 "NewPieceProjectWizard.PageTitle"));
-        this.fPage1.setDescription(Messages.getString(
+        fPage1.setDescription(Messages.getString(
                                 "NewPieceProjectWizard.PageDescription"));
         fPage1.setInitialProjectName("MyApp");
         
-        addPage(this.fPage1);
+        addPage(fPage1);
     }
     
     /**
      * 完了ボタンクリック時処理.
+     * 
      * @return 処理結果
      */
     public boolean performFinish() {
@@ -112,7 +115,8 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
                            new File(FileLocator.toFileURL(pluginURL).getPath());
     
             //初期ファイル作成
-            createInitFile(newProjectHandle, pluginFolder, "");
+            createResource(newProjectHandle, pluginFolder, "");
+            
         } catch (IOException e1) {
             // TODO 自動生成された catch ブロック
             e1.printStackTrace();
@@ -131,6 +135,7 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
 
     /**
      * 完了ボタンクリック時処理.
+     * 
      * @param newProjectHandle 新規プロジェクトハンドラ
      * @return プロジェクトディスクリプション
      */
@@ -149,6 +154,7 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
         
     /**
      * プロジェクト作成処理.
+     * 
      * @param description 　
      * @param projectHandle プロジェクトハンドラ
      * @param monitor プログレスモニター 
@@ -174,30 +180,33 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
 
     /**
      * 新規プロジェクト作成起動時処理.
+     * 
      * @param op ワークスペースオペレーション
      * @param newProjectHandle 新規プロジェクトハンドラ
      * @throws InterruptedException インターセプト例外
      * @throws InvocationTargetException 例外
      */
-    private void runProjectCreationOperation(WorkspaceModifyOperation op,
-            IProject newProjectHandle)
-        throws InvocationTargetException, InterruptedException {
+    private void runProjectCreationOperation(
+                        WorkspaceModifyOperation op,
+                        IProject newProjectHandle)
+                    throws InvocationTargetException, InterruptedException {
         getContainer().run(false, true, op);
     }
     
     /**
      * 初期ファイル作成処理.
+     * 
      * @param project 新規プロジェクト
      * @param pluginFile プラグイン側のファイル群
      * @param path プロジェクト側のファイルパス
      * @throws CoreException コア例外
      * @throws FileNotFoundException  ファイル検索エラー
      */
-    private static void createInitFile(IProject project,
-                                             File pluginFile,
-                                             String path)
-    throws CoreException, FileNotFoundException {
-
+    private void createResource(
+                            IProject project,
+                            File pluginFile,
+                            String path)
+                    throws CoreException, FileNotFoundException {
         String[] pluginFiles = pluginFile.list();
         
         if (pluginFiles.length == 0) {
@@ -212,20 +221,15 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
             File pluginChildFile =
                          new File(pluginFile, pluginFiles[i]);
 
-            IFolder newProjectFolder =
-                         project.getFolder(path + "/" + pluginFiles[i]);
-            
             if (pluginChildFile.isDirectory()) {
-                //フォルダ作成
-                newProjectFolder.create(false, true, null);
-                
-                //再帰呼出し
-                createInitFile(project, pluginChildFile,
-                                  path + "/" + pluginChildFile.getName());
+                project.getFolder(path + "/" + pluginFiles[i])
+                            .create(false, true, null);
+                createResource(project,
+                               pluginChildFile,
+                               path + "/" + pluginChildFile.getName());
             } else {
-                //ファイル作成
-                IFile projectFile =
-                               project.getFile(path + "/" + pluginFiles[i]);
+                IFile projectFile = project.getFile(
+                                        path + "/" + pluginFiles[i]);
                 projectFile.create(
                            new FileInputStream(pluginChildFile), true, null);
             }

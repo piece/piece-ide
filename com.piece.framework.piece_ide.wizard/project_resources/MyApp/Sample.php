@@ -1,7 +1,7 @@
 <?php
 
 /**
- * NtApp Sample.
+ * MyApp Sample.
  *
  * @package    MyApp
  * @copyright  xxxx <xxxx@example.com>
