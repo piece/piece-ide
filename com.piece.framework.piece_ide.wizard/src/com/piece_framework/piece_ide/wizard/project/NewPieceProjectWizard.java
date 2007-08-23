@@ -1,6 +1,9 @@
 // $Id: NewPieceProjectWizard.java 9 2007-03-14 16:31:24Z sugimoto $
 package com.piece_framework.piece_ide.wizard.project;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -44,14 +47,16 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
     private NewPieceProjectWizardPage fPage1;
     
     /** 作業量. */
-    public static final int WORK_TASK = 2000;
+    private static final int WORK_TASK = 2000;
     
     /** サブ作業量. */
-    public static final int SUB_WORK_TASK = 1000;
+    private static final int SUB_WORK_TASK = 1000;
 
     /** 初期設定ファイル格納ディレクトリ名. */
-    public static final String PROJECT_RESOURCES = "project_resources";
+    private static final String PROJECT_RESOURCES = "project_resources";
 
+    private static final String DEFAULT_PROJECT_NAME = "MyApp";
+    
     /**
      * コンストラクタ.
      * 
@@ -82,7 +87,7 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
                                 "NewPieceProjectWizard.PageTitle"));
         fPage1.setDescription(Messages.getString(
                                 "NewPieceProjectWizard.PageDescription"));
-        fPage1.setInitialProjectName("MyApp");
+        fPage1.setInitialProjectName(DEFAULT_PROJECT_NAME);
         
         addPage(fPage1);
     }
@@ -109,12 +114,9 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
             URL pluginURL =
               Platform.getBundle(
                           WizardPlugin.PLUGIN_ID).getEntry(PROJECT_RESOURCES);
-            
-            //プラグイン側からスキーマフォルダ内のファイル群を取得
             File pluginFolder =
                            new File(FileLocator.toFileURL(pluginURL).getPath());
     
-            //初期ファイル作成
             createResource(newProjectHandle, pluginFolder, "");
             
         } catch (IOException e1) {
@@ -203,36 +205,119 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
      * @throws FileNotFoundException  ファイル検索エラー
      */
     private void createResource(
-                            IProject project,
-                            File pluginFile,
-                            String path)
-                    throws CoreException, FileNotFoundException {
+                                IProject project,
+                                File pluginFile,
+                                String path)
+                        throws CoreException, FileNotFoundException {
         String[] pluginFiles = pluginFile.list();
-        
-        if (pluginFiles.length == 0) {
-            return;
-        }
-        
+            
         for (int i = 0; i < pluginFiles.length; i++) {
             if (pluginFiles[i].equals(".svn")) {
                 continue;
             }
             
             File pluginChildFile =
-                         new File(pluginFile, pluginFiles[i]);
-
+                     new File(pluginFile, pluginFiles[i]);
+            String resourceName = 
+                    (path + "/" + pluginFiles[i]).replace(
+                            DEFAULT_PROJECT_NAME, project.getName());
+            
             if (pluginChildFile.isDirectory()) {
-                project.getFolder(path + "/" + pluginFiles[i])
-                            .create(false, true, null);
+                project.getFolder(resourceName).create(false, true, null);
                 createResource(project,
                                pluginChildFile,
                                path + "/" + pluginChildFile.getName());
             } else {
-                IFile projectFile = project.getFile(
-                                        path + "/" + pluginFiles[i]);
+                IFile projectFile = project.getFile(resourceName);
                 projectFile.create(
                            new FileInputStream(pluginChildFile), true, null);
+                if (checkExtension(projectFile)) {
+                    replaceProjectName(projectFile);
+                }
             }
+        }
+    }
+    
+    /**
+     * 拡張子のチェックを行う.
+     * 拡張子が以下のものに該当するかをチェックする。<br>
+     * ・php<br>
+     * ・yaml<br>
+     * ・flow<br>
+     * ・html<br>
+     * ・css<br>
+     * ・js<br>
+     * 
+     * @param file チェック対象ファイル
+     * @return 該当する場合はtrueを返す。
+     */
+    private boolean checkExtension(IFile file) {
+        final String[] replaceExtensions = 
+                                {
+                                    "php", 
+                                    "yaml", 
+                                    "flow", 
+                                    "html", 
+                                    "css", 
+                                    "js"
+                                };
+        for (int i = 0; i < replaceExtensions.length; i++) {
+            if (replaceExtensions[i].equals(file.getFileExtension())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * ファイルコンテンツ内に含まれているDEFAULT_PROJECT_NAMEの値を
+     * プロジェクト名に置換する.
+     * パフォーマンスを考慮して、置換前後の文字列が同じ場合は処理を
+     * 行わない。
+     * 
+     * @param file ファイル
+     * @throws CoreException コア例外
+     */
+    private void replaceProjectName(IFile file) throws CoreException {
+        BufferedInputStream bufferedIn = null;
+        ByteArrayOutputStream byteOut = null;
+        ByteArrayInputStream byteIn = null;
+        
+        try {
+            bufferedIn = new BufferedInputStream(file.getContents());
+            byteOut = new ByteArrayOutputStream();
+            int read = 0;
+            while ((read = bufferedIn.read()) != -1) {
+                byteOut.write(read);
+            }
+            
+            String replaceData = byteOut.toString().replace(
+                                        DEFAULT_PROJECT_NAME, 
+                                        file.getProject().getName());
+            if (!replaceData.equals(byteOut.toString())) {
+                byteIn = new ByteArrayInputStream(replaceData.getBytes());
+            }
+        } catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            try {
+                if (bufferedIn != null) {
+                    bufferedIn.close();
+                }
+            } catch (IOException ioe) {
+            }
+            try {
+                if (byteOut != null) {
+                    byteOut.close();
+                }
+            } catch (IOException ioe) {
+            }
+        }
+        
+        if (byteIn != null) {
+            file.setContents(byteIn, true, false, null);
         }
     }
 }
