@@ -38,19 +38,19 @@
       type: configuration
       value:
         - name: RegistrationWithNonExclusiveMode
-          file: ../webapp/config/flows/Registration.yaml
+          file: ../webapp/config/flows/Registration.flow
           isExclusive: false
         - name: RegistrationWithExclusiveMode
-          file: ../webapp/config/flows/Registration.yaml
+          file: ../webapp/config/flows/Registration.flow
           isExclusive: true
         - name: RegistrationWithExclusiveModeAndAHAH
-          file: ../webapp/config/flows/Registration.yaml
+          file: ../webapp/config/flows/Registration.flow
           isExclusive: true
         - name: Authentication
-          file: ../webapp/config/flows/Authentication.yaml
+          file: ../webapp/config/flows/Authentication.flow
           isExclusive: true
         - name: ProtectedResource
-          file: ../webapp/config/flows/ProtectedResource.yaml
+          file: ../webapp/config/flows/ProtectedResource.flow
           isExclusive: false
 
 - name: Dispatcher_Simple
