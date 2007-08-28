@@ -4,8 +4,7 @@
  * MyApp Sample.
  *
  * @package    MyApp
- * @copyright  xxxx <xxxx@example.com>
- * @license    
+ * @copyright  <YEAR>,<OWNER>
  * @version    SVN: $Id$
  * @since      File available since Release 1.0.0
  */
@@ -16,9 +15,8 @@
  * MyApp Sample.
  *
  * @package    MyApp
- * @copyright  xxxx <xxxx@example.com>
- * @license    
- * @version    Release: 1.0.0
+ * @copyright  <YEAR>,<OWNER>
+ * @version    Release: @package_version@
  * @since      Class available since Release 1.0.0
  */
 class MyApp_Sample
