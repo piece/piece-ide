@@ -19,7 +19,7 @@ import org.eclipse.swt.graphics.Color;
  * @since 0.1.0
  *
  */
-public class EventListFigure extends RectangleFigure {
+public class EventListFigure extends GradientRectangleFigure {
     
     private static final String MESSAGE_EVENT_NOTING = "イベントはありません。\n";
     
@@ -32,14 +32,18 @@ public class EventListFigure extends RectangleFigure {
      * @param eventTitle イベントタイトル
      * @param titleColor タイトル背景色
      * @param listColor 一覧背景色
+     * @param outlineColor アウトライン色
      */
     public EventListFigure(String eventTitle, 
                             Color titleColor, 
-                            Color listColor) {
+                            Color listColor,
+                            Color outlineColor) {
         setBackgroundColor(listColor);
         
+        setOutlineColor(outlineColor);
+        
         setLayoutManager(new ToolbarLayout(ToolbarLayout.VERTICAL));
-        setBorder(new LineBorder());
+        setBorder(new LineBorder(outlineColor));
         
         RectangleFigure back = new RectangleFigure();
         back.setBorder(new LineBorder(listColor));

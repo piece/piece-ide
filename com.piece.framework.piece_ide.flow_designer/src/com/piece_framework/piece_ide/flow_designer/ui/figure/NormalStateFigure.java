@@ -5,7 +5,6 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.draw2d.RectangleFigure;
-import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Dimension;
@@ -22,8 +21,28 @@ import org.eclipse.swt.widgets.Display;
  * @since 0.1.0
  *
  */
-public abstract class NormalStateFigure extends RoundedRectangle {
+public abstract class NormalStateFigure extends GradientRoundedRectangle {
+    private static final RGB EVENT_BUILTIN_TITLE_COLOR = 
+                                            new RGB(192, 212, 205);
+    private static final RGB EVENT_BUILTIN_LIST_COLOR = 
+                                            new RGB(210, 237, 221);
+    private static final RGB EVENT_BUILTIN_LIST_OUTLINE_COLOR = 
+                                            new RGB(121, 181, 160);
 
+    private static final RGB EVENT_TRANSITION_TITLE_COLOR = 
+                                            new RGB(209, 211, 141);
+    private static final RGB EVENT_TRANSITION_LIST_COLOR = 
+                                            new RGB(238, 240, 180);
+    private static final RGB EVENT_TRANSITION_LIST_OUTLINE_COLOR = 
+                                            new RGB(212, 190, 44);
+    
+    private static final RGB EVENT_INTERNAL_TITLE_COLOR = 
+                                            new RGB(233, 178, 152);
+    private static final RGB EVENT_INTERNAL_LIST_COLOR = 
+                                            new RGB(239, 218, 188);
+    private static final RGB EVENT_INTERNAL_LIST_OUTLINE_COLOR = 
+                                            new RGB(240, 170, 138);
+    
     private Label fNameLabel;
     
     private RectangleFigure fEventList;
@@ -43,6 +62,9 @@ public abstract class NormalStateFigure extends RoundedRectangle {
         Color bg = new Color(Display.getCurrent(), getStateColor());
         setBackgroundColor(bg);
         
+        Color outline = new Color(Display.getCurrent(), getStateOutlineColor());
+        setOutlineColor(outline);
+        
         setLayoutManager(new XYLayout());
         setBorder(new MarginBorder(getMargin()));
         
@@ -57,22 +79,28 @@ public abstract class NormalStateFigure extends RoundedRectangle {
         fBuiltinEventList = 
             new EventListFigure(
                 "ビルトインイベント",
-                new Color(Display.getCurrent(), getBuiltinEventTitleColor()),
-                new Color(Display.getCurrent(), getBuiltinEventListColor()));
+                new Color(Display.getCurrent(), EVENT_BUILTIN_TITLE_COLOR),
+                new Color(Display.getCurrent(), EVENT_BUILTIN_LIST_COLOR),
+                new Color(Display.getCurrent(), 
+                        EVENT_BUILTIN_LIST_OUTLINE_COLOR));
         fEventList.add(fBuiltinEventList);
         
         fTransitionEventList = 
             new EventListFigure(
                 "遷移イベント",
-                new Color(Display.getCurrent(), getTransitionEventTitleColor()),
-                new Color(Display.getCurrent(), getTransitionEventListColor()));
+                new Color(Display.getCurrent(), EVENT_TRANSITION_TITLE_COLOR),
+                new Color(Display.getCurrent(), EVENT_TRANSITION_LIST_COLOR),
+                new Color(Display.getCurrent(), 
+                        EVENT_TRANSITION_LIST_OUTLINE_COLOR));
         fEventList.add(fTransitionEventList);
         
         fInternalEventList = 
             new EventListFigure(
                 "内部イベント",
-                new Color(Display.getCurrent(), getInternalEventTitleColor()),
-                new Color(Display.getCurrent(), getInternalEventListColor()));
+                new Color(Display.getCurrent(), EVENT_INTERNAL_TITLE_COLOR),
+                new Color(Display.getCurrent(), EVENT_INTERNAL_LIST_COLOR),
+                new Color(Display.getCurrent(), 
+                        EVENT_INTERNAL_LIST_OUTLINE_COLOR));
         fEventList.add(fInternalEventList);
         
         fVisibleEventList = false;
@@ -86,47 +114,12 @@ public abstract class NormalStateFigure extends RoundedRectangle {
     abstract RGB getStateColor();
     
     /**
-     * ビルトインイベントのタイトル色を返す.
-     * 
-     * @return ビルトインイベントのタイトル色
+     * ステートのアウトライン色を返す.
+     *
+     * @return ステートのアウトライン色
      */
-    abstract RGB getBuiltinEventTitleColor();
-    
-    /**
-     * ビルトインイベントのリスト色を返す.
-     * 
-     * @return ビルトインイベントのリスト色
-     */
-    abstract RGB getBuiltinEventListColor();
-    
-    /**
-     * 遷移イベントのタイトル色を返す.
-     * 
-     * @return 遷移イベントのタイトル色
-     */
-    abstract RGB getTransitionEventTitleColor();
-    
-    /**
-     * 遷移イベントのリスト色を返す.
-     * 
-     * @return 遷移イベントのリスト色
-     */
-    abstract RGB getTransitionEventListColor();
-    
-    /**
-     * 内部イベントのタイトル色を返す.
-     * 
-     * @return 内部イベントのタイトル色
-     */
-    abstract RGB getInternalEventTitleColor();
-    
-    /**
-     * 内部イベントのリスト色を返す.
-     * 
-     * @return 内部イベントのリスト色
-     */
-    abstract RGB getInternalEventListColor();
-    
+    abstract RGB getStateOutlineColor();
+
     /**
      * 子フィギュアのサイズを調整する.
      * 

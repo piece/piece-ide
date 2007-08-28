@@ -22,9 +22,9 @@ public class TransitionFigure extends PolylineConnection {
     /** ラベル. */
     private Label fNameLabel;
 
-    private static final int SCALE_X = 10;
+    private static final int SCALE_X = 5;
 
-    private static final int SCALE_Y = 5;
+    private static final int SCALE_Y = 3;
 
     private static final int UDISTANCE = 10;
 

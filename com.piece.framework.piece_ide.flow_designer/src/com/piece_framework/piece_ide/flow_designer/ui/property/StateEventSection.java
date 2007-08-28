@@ -59,9 +59,9 @@ public class StateEventSection extends FlowDesignerPropertySection {
     private static final int EVENT_HANDLER_COLUMN_WIDTH = 150;
     private static final int GUARD_COLUMN_WIDTH = 150;
     
-    private static final RGB EVENT_BUILTIN_COLOR = new RGB(156, 207, 255);
-    private static final RGB EVENT_TRANSITION_COLOR = new RGB(206, 255, 206);
-    private static final RGB EVENT_INTERNAL_COLOR = new RGB(255, 154, 206);
+    private static final RGB EVENT_BUILTIN_COLOR = new RGB(210, 237, 221);
+    private static final RGB EVENT_TRANSITION_COLOR = new RGB(238, 240, 180);
+    private static final RGB EVENT_INTERNAL_COLOR = new RGB(239, 218, 188);
     
     private CLabel fStateNameLabel;
     private Button fCreateInternalEvent;
