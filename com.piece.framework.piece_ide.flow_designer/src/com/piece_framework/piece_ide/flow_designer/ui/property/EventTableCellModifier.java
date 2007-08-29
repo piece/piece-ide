@@ -67,7 +67,7 @@ public class EventTableCellModifier implements ICellModifier {
             return false;
         }
         
-        return false;
+        return true;
     }
 
     /**
