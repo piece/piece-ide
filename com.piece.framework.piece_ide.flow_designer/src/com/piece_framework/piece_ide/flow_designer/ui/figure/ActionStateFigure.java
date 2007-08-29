@@ -13,8 +13,8 @@ import org.eclipse.swt.graphics.RGB;
  */
 public class ActionStateFigure extends NormalStateFigure {
 
-    private static final RGB STATE_COLOR = new RGB(225, 221, 170);
-    private static final RGB STATE_OUTLINE_COLOR = new RGB(174, 161, 90);
+    private static final RGB STATE_COLOR = new RGB(204, 204, 204);
+    private static final RGB STATE_OUTLINE_COLOR = new RGB(153, 153, 153);
     
     /**
      * ステート色を返す.
