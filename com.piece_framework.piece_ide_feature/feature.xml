@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.piece_framework.piece_ide_feature"
+      label="Piece_IDE Feature"
+      version="0.1.0"
+      provider-name="Piece Project">
+
+   <description url="http://www.example.com/description">
+      [ここにフィーチャーの説明を入力してください。]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [ここに Copyright の説明を入力してください。]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [ここにライセンスの説明を入力してください。]
+   </license>
+
+   <plugin
+         id="com.piece_framework.piece_ide.flow_designer"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.piece_framework.piece_ide.wizard"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.piece_framework.yaml_editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
