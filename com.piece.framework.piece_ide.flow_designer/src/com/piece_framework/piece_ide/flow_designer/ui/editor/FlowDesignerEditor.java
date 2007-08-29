@@ -250,7 +250,6 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
      *          .ITabbedPropertySheetPageContributor#getContributorId()
      */
     public String getContributorId() {
-        System.out.println(getSite().getId());
         return getSite().getId();
     }
 }
