@@ -14,3 +14,18 @@ Require-Bundle: org.eclipse.core.runtime,
 Eclipse-LazyStart: true
 Bundle-ClassPath: .,
  lib/jyaml-1.2.jar
+Export-Package: META-INF,
+ com.piece_framework.piece_ide.flow_designer.command,
+ com.piece_framework.piece_ide.flow_designer.mapper,
+ com.piece_framework.piece_ide.flow_designer.model,
+ com.piece_framework.piece_ide.flow_designer.plugin,
+ com.piece_framework.piece_ide.flow_designer.ui.editor,
+ com.piece_framework.piece_ide.flow_designer.ui.editpart,
+ com.piece_framework.piece_ide.flow_designer.ui.figure,
+ com.piece_framework.piece_ide.flow_designer.ui.property,
+ com.piece_framework.piece_ide.internal;x-internal:=true,
+ org.ho.util,
+ org.ho.yaml,
+ org.ho.yaml.exception,
+ org.ho.yaml.wrapper,
+ yaml.parser
