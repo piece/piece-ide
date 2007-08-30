@@ -7,6 +7,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
+import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 
 /**
  * イベント属性設定コマンド.
@@ -40,12 +41,12 @@ public class SetEventAttributeCommand extends AbstractSetAttributeCommand {
         
         setModel(event);
         Method setterMethod = createMethod(Event.class, 
-                                           "set" + attributeName, 
+                                           "set" + attributeName,  
                                            new Class[]{String.class});
         setSetterMethod(setterMethod);
         setAttributeValue(attributeValue);
         Method getterMethod = createMethod(Event.class, 
-                                           "get" + attributeName, 
+                                           "get" + attributeName,  
                                            null);  
         Object oldValue = (String) executeMethod(getterMethod, event, null);
         setOldValue(oldValue);
@@ -63,15 +64,19 @@ public class SetEventAttributeCommand extends AbstractSetAttributeCommand {
     boolean canExecuteSpecialCase() {
         Event event = (Event) getModel();
         if (event.getType() == Event.BUILTIN_EVENT) {
-            if (fAttributeName.equals("Name") 
-                || fAttributeName.equals("GuardEventHandler")) {
+            if (fAttributeName.equals("Name")  
+                || fAttributeName.equals("GuardEventHandler")) { 
                 return false;
             }
         }
-        if (fAttributeName.equals("Name")) {
+        if (fAttributeName.equals("Name")) { 
             if (!fState.checkUsableEventName((String) getAttributeValue())) {
                 MessageDialog.openError(
-                        null, "エラー", "イベント名が重複しています。");
+                        null, 
+                        Messages.getString(
+                            "SetEventAttributeCommand.EventNameErrorTitle"), 
+                        Messages.getString(
+                            "SetEventAttributeCommand.EventNameError"));  
                 return false;
             }
         }

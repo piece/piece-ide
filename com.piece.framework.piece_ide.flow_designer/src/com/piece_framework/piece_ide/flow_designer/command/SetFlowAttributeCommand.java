@@ -30,12 +30,12 @@ public class SetFlowAttributeCommand extends AbstractSetAttributeCommand {
         super();
         setModel(flow);
         Method setterMethod = createMethod(Flow.class, 
-                                           "set" + attributeName, 
+                                           "set" + attributeName,  //$NON-NLS-1$
                                            new Class[]{String.class});
         setSetterMethod(setterMethod);
         setAttributeValue(attributeValue);
         Method getterMethod = createMethod(Flow.class, 
-                                           "get" + attributeName, 
+                                           "get" + attributeName,  //$NON-NLS-1$
                                            null);  
         Object oldValue = (String) executeMethod(getterMethod, flow, null);
         setOldValue(oldValue);

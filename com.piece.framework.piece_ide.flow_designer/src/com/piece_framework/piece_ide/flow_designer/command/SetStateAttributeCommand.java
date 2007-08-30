@@ -7,6 +7,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
+import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 
 /**
  * ステート属性設定コマンド.
@@ -68,7 +69,11 @@ public class SetStateAttributeCommand extends AbstractSetAttributeCommand {
         if (fAttributeName.equals("Name")) {
             if (!fFlow.checkUsableStateName((String) getAttributeValue())) {
                 MessageDialog.openError(
-                        null, "エラー", "ステート名が重複しています。");
+                        null, 
+                        Messages.getString(
+                            "SetStateAttributeCommand.StateNameErrorTitle"),
+                        Messages.getString(
+                             "SetStateAttributeCommand.StateNameError"));
                 return false;
             }
         }
