@@ -32,6 +32,7 @@ import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.model.StateFactory;
 import com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin;
+import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 import com.piece_framework.piece_ide.flow_designer.ui.editpart.FlowDesignerEditFactory;
 
 //import piece_ide.flow_designer.ui.editpart.FlowDesignerEditFactory;
@@ -117,7 +118,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
                 String fileName = getPartName();
                 
                 flowName = fileName.substring(0, fileName.indexOf('.'));
-                actionClassName = flowName + "Action";  //$NON-NLS-1$
+                actionClassName = flowName + "Action";  
             }
             
             fFlow = new Flow(flowName, actionClassName);
@@ -188,39 +189,53 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
     protected PaletteRoot getPaletteRoot() {
         PaletteRoot root = new PaletteRoot();
         
-        PaletteGroup group = new PaletteGroup("選択ツール"); //$NON-NLS-1$
+        PaletteGroup group = new PaletteGroup(
+                Messages.getString(
+                        "FlowDesignerEditor.PalleteGroup")); //$NON-NLS-1$
         group.add(new PanningSelectionToolEntry());
         group.add(new MarqueeToolEntry());
         root.add(group);
         
-        PaletteDrawer drawer = new PaletteDrawer("ステート"); //$NON-NLS-1$
+        PaletteDrawer drawer = new PaletteDrawer(
+                Messages.getString(
+                    "FlowDesignerEditor.PalletteDrawerState")); //$NON-NLS-1$
         drawer.add(new CreationToolEntry(
-            "ビューステート",  //$NON-NLS-1$
-            "ビューステートを作成", //$NON-NLS-1$
+            Messages.getString(
+                "FlowDesignerEditor.PalleteViewState"),  //$NON-NLS-1$
+            Messages.getString(
+                "FlowDesignerEditor.PalleteViewStateComment"), //$NON-NLS-1$
             new StateFactory(State.VIEW_STATE),
-            FlowDesignerPlugin.getImageDescriptor("icons/ViewState.gif"), //$NON-NLS-1$
-            FlowDesignerPlugin.getImageDescriptor("icons/ViewState.gif"))); //$NON-NLS-1$
+            FlowDesignerPlugin.getImageDescriptor("icons/ViewState.gif"), 
+            FlowDesignerPlugin.getImageDescriptor("icons/ViewState.gif"))); 
         drawer.add(new CreationToolEntry(
-            "アクションステート",  //$NON-NLS-1$
-            "アクションステートを作成", //$NON-NLS-1$
+            Messages.getString(
+                "FlowDesignerEditor.PalleteActionState"),  //$NON-NLS-1$
+            Messages.getString(
+                "FlowDesignerEditor.PalleteActionStateComment"), //$NON-NLS-1$
             new StateFactory(State.ACTION_STATE),
-            FlowDesignerPlugin.getImageDescriptor("icons/ActionState.gif"), //$NON-NLS-1$
-            FlowDesignerPlugin.getImageDescriptor("icons/ActionState.gif"))); //$NON-NLS-1$
+            FlowDesignerPlugin.getImageDescriptor("icons/ActionState.gif"), 
+            FlowDesignerPlugin.getImageDescriptor("icons/ActionState.gif"))); 
         drawer.add(new CreationToolEntry(
-            "ファイナルステート",  //$NON-NLS-1$
-            "ファイナルステートを作成", //$NON-NLS-1$
+            Messages.getString(
+                "FlowDesignerEditor.PalleteFinalState"),  //$NON-NLS-1$
+            Messages.getString(
+                "FlowDesignerEditor.PalleteFinalStateComment"), //$NON-NLS-1$
             new StateFactory(State.FINAL_STATE),
-            FlowDesignerPlugin.getImageDescriptor("icons/FinalState.gif"), //$NON-NLS-1$
-            FlowDesignerPlugin.getImageDescriptor("icons/FinalState.gif"))); //$NON-NLS-1$
+            FlowDesignerPlugin.getImageDescriptor("icons/FinalState.gif"), 
+            FlowDesignerPlugin.getImageDescriptor("icons/FinalState.gif"))); 
         root.add(drawer);
         
-        drawer = new PaletteDrawer("コネクタ"); //$NON-NLS-1$
+        drawer = new PaletteDrawer(
+            Messages.getString(
+                "FlowDesignerEditor.PalletteDrawerTransition")); //$NON-NLS-1$
         drawer.add(new ConnectionCreationToolEntry(
-            Messages.getString("FlowDesignerEditor.ToolTransition"),  //$NON-NLS-1$
-            Messages.getString("FlowDesignerEditor.ToolTransitionComment"), //$NON-NLS-1$
+            Messages.getString(
+                "FlowDesignerEditor.PalletteTransition"),  //$NON-NLS-1$
+            Messages.getString(
+                "FlowDesignerEditor.PalleteTransitionComment"), //$NON-NLS-1$
             new EventFactory(Event.TRANSITION_EVENT),
-            FlowDesignerPlugin.getImageDescriptor("icons/Transition.gif"), //$NON-NLS-1$
-            FlowDesignerPlugin.getImageDescriptor("icons/Transition.gif"))); //$NON-NLS-1$
+            FlowDesignerPlugin.getImageDescriptor("icons/Transition.gif"), 
+            FlowDesignerPlugin.getImageDescriptor("icons/Transition.gif"))); 
         root.add(drawer);
         
         return root;
