@@ -37,6 +37,7 @@ import com.piece_framework.piece_ide.flow_designer.command.CreateEventCommand;
 import com.piece_framework.piece_ide.flow_designer.command.DeleteEventCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.State;
+import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 
 /**
  * ステート・プロパティシートのイベントセクション.
@@ -147,7 +148,8 @@ public class StateEventSection extends FlowDesignerPropertySection {
     private void createStateNameLabel(Composite composite) {
         FormData data;
         fStateNameLabel = 
-            getWidgetFactory().createCLabel(composite, "ステート名：");
+            getWidgetFactory().createCLabel(composite, 
+                    Messages.getString("StateEventSection.StateName"));
         data = new FormData();
         data.left = new FormAttachment(0, 0);
         data.right = new FormAttachment(LABEL_POSITION_PERCENT, 0);
@@ -164,7 +166,9 @@ public class StateEventSection extends FlowDesignerPropertySection {
         FormData data;
         fDeleteInternalEvent =
             getWidgetFactory().createButton(
-                    composite, "内部イベント削除", SWT.PUSH);
+                composite, 
+                Messages.getString("StateEventSection.DeleteInternalEvent"), 
+                SWT.PUSH);
         data = new FormData();
         data.right = new FormAttachment(BUTTON_POSITION_PERCENT, 0);
         data.top = new FormAttachment(0, 0);
@@ -173,7 +177,9 @@ public class StateEventSection extends FlowDesignerPropertySection {
         
         fCreateInternalEvent =
             getWidgetFactory().createButton(
-                    composite, "内部イベント作成", SWT.PUSH);
+                composite,
+                Messages.getString("StateEventSection.CreateInternalEvent"), 
+                SWT.PUSH);
         data = new FormData();
         data.right = new FormAttachment(fDeleteInternalEvent, 0);
         data.top = new FormAttachment(0, 0);
@@ -211,13 +217,21 @@ public class StateEventSection extends FlowDesignerPropertySection {
         eventTable.setLinesVisible(true);
         
         createEventTableColumn(
-                eventTable, "イベント名", EVENT_COLUMN_WIDTH);
+                eventTable, 
+                Messages.getString("StateEventSection.EventName"), 
+                EVENT_COLUMN_WIDTH);
         createEventTableColumn(
-                eventTable, "遷移先ステート名", NEXT_STATE_COLUMN_WIDTH);
+                eventTable, 
+                Messages.getString("StateEventSection.TransitionStateName"), 
+                NEXT_STATE_COLUMN_WIDTH);
         createEventTableColumn(
-                eventTable, "イベントハンドラ", EVENT_HANDLER_COLUMN_WIDTH);
+                eventTable, 
+                Messages.getString("StateEventSection.EventHandler"), 
+                EVENT_HANDLER_COLUMN_WIDTH);
         createEventTableColumn(
-                eventTable, "ガード", GUARD_COLUMN_WIDTH);
+                eventTable, 
+                Messages.getString("StateEventSection.Guard"), 
+                GUARD_COLUMN_WIDTH);
         
         eventTable.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent selectionEvent) {
@@ -287,7 +301,8 @@ public class StateEventSection extends FlowDesignerPropertySection {
         State state = (State) getModel();
         
         if (state != null) {
-            fStateNameLabel.setText("ステート名：");
+            fStateNameLabel.setText(
+                    Messages.getString("StateEventSection.StateName"));
             if (state.getName() != null) {
                 fStateNameLabel.setText(
                         fStateNameLabel.getText() + state.getName());

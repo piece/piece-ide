@@ -5,6 +5,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 
+import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 import com.piece_framework.piece_ide.flow_designer
             .ui.editpart.ActionStateEditPart;
 import com.piece_framework.piece_ide.flow_designer
@@ -47,24 +48,30 @@ public class FlowElementLabelProvider extends LabelProvider {
         String text = null;
         
         if (elements == null || elements.equals(StructuredSelection.EMPTY)) {
-            return "フロー";
+            return Messages.getString("FlowElementLabelProvider.Flow");
         }
         
         Object object = getSelectionObject(elements);
         
         if (object != null) {
             if (object instanceof ActionStateEditPart) {
-                text = "アクションステート";
+                text = 
+                    Messages.getString("FlowElementLabelProvider.ActionState");
             } else if (object instanceof ViewStateEditPart) {
-                text = "ビューステート";
+                text = 
+                    Messages.getString("FlowElementLabelProvider.ViewState");
             } else if (object instanceof InitialStateEditPart) {
-                text = "イニシャルステート";
+                text = 
+                    Messages.getString("FlowElementLabelProvider.InitialState");
             } else if (object instanceof FinalStateEditPart) {
-                text = "ファイナルステート";
+                text = 
+                    Messages.getString("FlowElementLabelProvider.FinalState");
             } else if (object instanceof FlowEditPart) {
-                text = "フロー";
+                text = 
+                    Messages.getString("FlowElementLabelProvider.Flow");
             } else {
-                text = "不明";
+                text = 
+                    Messages.getString("FlowElementLabelProvider.Unknown");
             }
         }
         

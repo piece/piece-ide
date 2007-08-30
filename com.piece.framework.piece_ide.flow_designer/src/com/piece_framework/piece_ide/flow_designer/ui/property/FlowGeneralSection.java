@@ -10,6 +10,7 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import com.piece_framework.piece_ide.flow_designer.command.SetFlowAttributeCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
+import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 
 /**
  * フロー・プロパティシートの一般セクション.
@@ -46,11 +47,13 @@ public class FlowGeneralSection extends GeneralPropertySection {
             getWidgetFactory().createFlatFormComposite(parent);
 
         fFlowNameLabel = 
-            getWidgetFactory().createCLabel(composite, "フロー名：");
+            getWidgetFactory().createCLabel(composite, 
+                    Messages.getString("FlowGeneralSection.FlowName"));
         fFlowName = getWidgetFactory().createText(composite, "");
         
         fActionClassNameLabel = 
-            getWidgetFactory().createCLabel(composite, "アクションクラス：");
+            getWidgetFactory().createCLabel(composite, 
+                    Messages.getString("FlowGeneralSection.ActionClass"));
         fActionClassName = getWidgetFactory().createText(composite, "");
         
         arrangeGroup(

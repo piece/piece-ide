@@ -15,6 +15,7 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import com.piece_framework.piece_ide.flow_designer.command.SetStateAttributeCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
+import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 
 /**
  * ステート・プロパティシートの一般セクション.
@@ -53,13 +54,16 @@ public class StateGeneralSection extends GeneralPropertySection {
             getWidgetFactory().createFlatFormComposite(parent);
         
         fStateNameLabel = 
-            getWidgetFactory().createCLabel(composite, "ステート名：");
+            getWidgetFactory().createCLabel(composite, 
+                    Messages.getString("StateGeneralSection.StateName"));
         fStateName = getWidgetFactory().createText(composite, "");
         fSummaryLabel = 
-            getWidgetFactory().createCLabel(composite, "概要：");
+            getWidgetFactory().createCLabel(composite, 
+                    Messages.getString("StateGeneralSection.Summary"));
         fSummary = getWidgetFactory().createText(composite, "");
         fViewNameLabel = 
-            getWidgetFactory().createCLabel(composite, "ビュー名：");
+            getWidgetFactory().createCLabel(composite, 
+                    Messages.getString("StateGeneralSection.ViewName"));
         fViewName = getWidgetFactory().createText(composite, "");
         
         arrangeGroup(
