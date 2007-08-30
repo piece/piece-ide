@@ -9,9 +9,8 @@ Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
- org.eclipse.ui.ide,
- org.eclipse.gef,
- org.eclipse.ui.views,
- org.eclipse.ui.views.properties.tabbed
+ org.eclipse.ui.ide
 Eclipse-LazyStart: true
 Bundle-ClassPath: .
+Export-Package: com.piece_framework.piece_ide.wizard.plugin,
+ com.piece_framework.piece_ide.wizard.project
