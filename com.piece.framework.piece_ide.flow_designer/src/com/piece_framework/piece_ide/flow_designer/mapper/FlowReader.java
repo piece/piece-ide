@@ -14,6 +14,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
+import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 import com.piece_framework.piece_ide.internal.PieceIDE;
 
 /**
@@ -70,9 +71,8 @@ public final class FlowReader {
             if (dataExists) {
                 MessageDialog.openError(
                         null, 
-                        "エラー", 
-                        "フローを読み込めませんでした。\n"
-                            + "YAML フォーマットが不正な可能性があります。");
+                        Messages.getString("FlowReader.ReadErrorTitle"),
+                        Messages.getString("FlowReader.ReadError"));
             }
             return null;
         }
