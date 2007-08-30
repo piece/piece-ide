@@ -11,6 +11,8 @@ import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.swt.graphics.Color;
 
+import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
+
 /**
  * イベントリスト・フィギュアー.
  * 
@@ -21,7 +23,8 @@ import org.eclipse.swt.graphics.Color;
  */
 public class EventListFigure extends GradientRectangleFigure {
     
-    private static final String MESSAGE_EVENT_NOTING = "イベントはありません。\n";
+    private static final String MESSAGE_EVENT_NOTING = 
+            Messages.getString("EventListFigure.NothingEvent");
     
     private Label fEventListLabel; 
     private List<String>  fEventList;

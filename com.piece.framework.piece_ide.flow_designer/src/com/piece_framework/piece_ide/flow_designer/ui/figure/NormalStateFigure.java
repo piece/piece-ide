@@ -13,6 +13,8 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
+import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
+
 /**
  * ノーマルステート・抽象フィギュアー.
  * 
@@ -78,7 +80,7 @@ public abstract class NormalStateFigure extends GradientRoundedRectangle {
         
         fBuiltinEventList = 
             new EventListFigure(
-                "ビルトインイベント",
+                Messages.getString("NormalStateFigure.BuiltinEvent"),
                 new Color(Display.getCurrent(), EVENT_BUILTIN_TITLE_COLOR),
                 new Color(Display.getCurrent(), EVENT_BUILTIN_LIST_COLOR),
                 new Color(Display.getCurrent(), 
@@ -87,7 +89,7 @@ public abstract class NormalStateFigure extends GradientRoundedRectangle {
         
         fTransitionEventList = 
             new EventListFigure(
-                "遷移イベント",
+                Messages.getString("NormalStateFigure.TransitionEvent"),
                 new Color(Display.getCurrent(), EVENT_TRANSITION_TITLE_COLOR),
                 new Color(Display.getCurrent(), EVENT_TRANSITION_LIST_COLOR),
                 new Color(Display.getCurrent(), 
@@ -96,7 +98,7 @@ public abstract class NormalStateFigure extends GradientRoundedRectangle {
         
         fInternalEventList = 
             new EventListFigure(
-                "内部イベント",
+                Messages.getString("NormalStateFigure.InternalEvent"),
                 new Color(Display.getCurrent(), EVENT_INTERNAL_TITLE_COLOR),
                 new Color(Display.getCurrent(), EVENT_INTERNAL_LIST_COLOR),
                 new Color(Display.getCurrent(), 
