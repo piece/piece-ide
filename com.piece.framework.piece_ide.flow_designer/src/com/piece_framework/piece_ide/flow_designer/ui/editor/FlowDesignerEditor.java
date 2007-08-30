@@ -191,35 +191,35 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         
         PaletteGroup group = new PaletteGroup(
                 Messages.getString(
-                        "FlowDesignerEditor.PalleteGroup")); //$NON-NLS-1$
+                        "FlowDesignerEditor.PalleteGroup"));
         group.add(new PanningSelectionToolEntry());
         group.add(new MarqueeToolEntry());
         root.add(group);
         
         PaletteDrawer drawer = new PaletteDrawer(
                 Messages.getString(
-                    "FlowDesignerEditor.PalletteDrawerState")); //$NON-NLS-1$
+                    "FlowDesignerEditor.PalletteDrawerState"));
         drawer.add(new CreationToolEntry(
             Messages.getString(
-                "FlowDesignerEditor.PalleteViewState"),  //$NON-NLS-1$
+                "FlowDesignerEditor.PalleteViewState"),
             Messages.getString(
-                "FlowDesignerEditor.PalleteViewStateComment"), //$NON-NLS-1$
+                "FlowDesignerEditor.PalleteViewStateComment"),
             new StateFactory(State.VIEW_STATE),
             FlowDesignerPlugin.getImageDescriptor("icons/ViewState.gif"), 
             FlowDesignerPlugin.getImageDescriptor("icons/ViewState.gif"))); 
         drawer.add(new CreationToolEntry(
             Messages.getString(
-                "FlowDesignerEditor.PalleteActionState"),  //$NON-NLS-1$
+                "FlowDesignerEditor.PalleteActionState"),
             Messages.getString(
-                "FlowDesignerEditor.PalleteActionStateComment"), //$NON-NLS-1$
+                "FlowDesignerEditor.PalleteActionStateComment"),
             new StateFactory(State.ACTION_STATE),
             FlowDesignerPlugin.getImageDescriptor("icons/ActionState.gif"), 
             FlowDesignerPlugin.getImageDescriptor("icons/ActionState.gif"))); 
         drawer.add(new CreationToolEntry(
             Messages.getString(
-                "FlowDesignerEditor.PalleteFinalState"),  //$NON-NLS-1$
+                "FlowDesignerEditor.PalleteFinalState"),
             Messages.getString(
-                "FlowDesignerEditor.PalleteFinalStateComment"), //$NON-NLS-1$
+                "FlowDesignerEditor.PalleteFinalStateComment"),
             new StateFactory(State.FINAL_STATE),
             FlowDesignerPlugin.getImageDescriptor("icons/FinalState.gif"), 
             FlowDesignerPlugin.getImageDescriptor("icons/FinalState.gif"))); 
@@ -227,12 +227,12 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         
         drawer = new PaletteDrawer(
             Messages.getString(
-                "FlowDesignerEditor.PalletteDrawerTransition")); //$NON-NLS-1$
+                "FlowDesignerEditor.PalletteDrawerTransition"));
         drawer.add(new ConnectionCreationToolEntry(
             Messages.getString(
-                "FlowDesignerEditor.PalletteTransition"),  //$NON-NLS-1$
+                "FlowDesignerEditor.PalletteTransition"),
             Messages.getString(
-                "FlowDesignerEditor.PalleteTransitionComment"), //$NON-NLS-1$
+                "FlowDesignerEditor.PalleteTransitionComment"),
             new EventFactory(Event.TRANSITION_EVENT),
             FlowDesignerPlugin.getImageDescriptor("icons/Transition.gif"), 
             FlowDesignerPlugin.getImageDescriptor("icons/Transition.gif"))); 
