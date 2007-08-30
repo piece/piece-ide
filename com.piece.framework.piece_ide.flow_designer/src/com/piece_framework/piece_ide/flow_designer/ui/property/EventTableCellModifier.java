@@ -92,9 +92,9 @@ public class EventTableCellModifier implements ICellModifier {
                 boolean isNormalState =
                             fState.getType() == State.VIEW_STATE
                             || fState.getType() == State.ACTION_STATE;
-                
+                boolean isBuildinEvent = event.getType() == Event.BUILTIN_EVENT;
                 String eventName = event.generateEventHandlerMethodName();
-                if (isNormalState) {
+                if (isNormalState && isBuildinEvent) {
                     eventName += "On" + fState.getName();
                 }
                 return eventName;
