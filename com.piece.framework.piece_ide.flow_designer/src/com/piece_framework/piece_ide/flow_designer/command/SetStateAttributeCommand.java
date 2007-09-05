@@ -18,10 +18,6 @@ import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
  * @since 0.1.0
  *
  */
-/**
- * @author matsu
- *
- */
 public class SetStateAttributeCommand extends AbstractSetAttributeCommand {
     private String fAttributeName;
     private Flow fFlow;
