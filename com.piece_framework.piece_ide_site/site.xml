@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
 <site>
    <description url="http://eclipse.piece-framework.com/piece-ide/">
       Piece_IDEの更新サイト
    </description>
-   <feature url="features/com.piece_framework.piece_ide_feature_0.1.0.jar" id="com.piece_framework.piece_ide_feature" version="0.1.0"/>
+   <feature url="features/com.piece_framework.piece_ide_feature_0.1.0.jar" id="com.piece_framework.piece_ide_feature" version="0.1.0">
+      <category name="Piece_IDE"/>
+   </feature>
+   <category-def name="Piece_IDE" label="Piece_IDE"/>
 </site>
