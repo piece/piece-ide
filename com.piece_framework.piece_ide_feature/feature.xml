@@ -7,7 +7,8 @@
       image="piece_ide.jpg">
 
    <description url="http://piece-framework.com/">
-      [ここにフィーチャーの説明を入力してください。]
+      Piece_IDEは、Eclipse上でPiece Frameworkを利用したWebアプリケーションを開発するための統合開発環境です。
+Piece_IDEには現在のところ、フローをグラフィカルに作成できるフローデザイナーとプロジェクトの雛形を作成するプロジェクト生成ウィザードのふたつの機能があります。
    </description>
 
    <copyright url="http://piece-framework.com/">
