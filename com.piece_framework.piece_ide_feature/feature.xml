@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id$ -->
 <feature
       id="com.piece_framework.piece_ide_feature"
       label="Piece_IDE Feature"
@@ -9,8 +8,12 @@
       image="piece_ide_120.jpg">
 
    <description url="http://piece-framework.com/">
-      Piece_IDEは、Eclipse上でPiece Frameworkを利用したWebアプリケーションを開発するための統合開発環境です。
-Piece_IDEには現在のところ、フローをグラフィカルに作成できるフローデザイナーとプロジェクトの雛形を作成するプロジェクト生成ウィザードのふたつの機能があります。
+      Piece_IDE is a Piece Framework IDE built on Eclipse.
+Currently, Piece_IDE has provide two features. Flow Designer
+allows developers to create/edit page flows by using a graphical
+interface. Project Generation Wizard generates the appropriate
+directory structure and files to get started fast with Web application
+development with Piece_Unity.
    </description>
 
    <copyright url="http://piece-framework.com/">
