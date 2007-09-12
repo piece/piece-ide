@@ -9,11 +9,7 @@
 
    <description url="http://piece-framework.com/">
       Piece_IDE is a Piece Framework IDE built on Eclipse.
-Currently, Piece_IDE has provide two features. Flow Designer
-allows developers to create/edit page flows by using a graphical
-interface. Project Generation Wizard generates the appropriate
-directory structure and files to get started fast with Web application
-development with Piece_Unity.
+Currently, Piece_IDE has provided two features. Flow Designer allows developers to create/edit page flows by using a graphical interface. Project Generation Wizard generates the appropriate directory structure and files to get started fast with Web application development with Piece_Unity.
    </description>
 
    <copyright url="http://piece-framework.com/">
