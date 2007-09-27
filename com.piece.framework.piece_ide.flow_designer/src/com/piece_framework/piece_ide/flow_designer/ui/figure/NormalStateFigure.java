@@ -132,12 +132,16 @@ public abstract class NormalStateFigure extends GradientRoundedRectangle {
     public void paint(Graphics graphics) {
         super.paint(graphics);
         
-        fitNameLabel();
+        //fitNameLabel();
+        setFigureHorizontalCenter(fNameLabel, -1);
         
         if (isVisibleEventList()) {
             Dimension nameLabelSize = fNameLabel.getSize();
-            
-            fitEventList(nameLabelSize.height + getMargin());
+//            Rectangle eventListBounds = fEventList.getBounds();
+//            eventListBounds.y = nameLabelSize.height + getMargin();
+//            fEventList.setBounds(eventListBounds);
+            setFigureHorizontalCenter(fEventList, nameLabelSize.height + getMargin());
+            //fitEventList(nameLabelSize.height + getMargin());
         }
     }
     
@@ -180,7 +184,8 @@ public abstract class NormalStateFigure extends GradientRoundedRectangle {
      * @param y Y位置
      */
     protected void fitEventList(int y) {
-        Dimension stateSize = getSize();
+        //Dimension stateSize = getSize();
+        Dimension stateSize = getSizeWithoutShadow();
         Dimension eventListSize = fEventList.getSize();
         
         Rectangle constraint = new Rectangle(
