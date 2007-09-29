@@ -2,12 +2,14 @@
 package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
 import org.eclipse.draw2d.Graphics;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
@@ -23,7 +25,7 @@ import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
  * @since 0.1.0
  *
  */
-public abstract class NormalStateFigure extends GradientRoundedRectangle {
+public abstract class NormalStateFigure extends GradientRoundedRectangleWithShadow {
     private static final RGB EVENT_BUILTIN_TITLE_COLOR = 
                                             new RGB(192, 212, 205);
     private static final RGB EVENT_BUILTIN_LIST_COLOR = 
@@ -133,14 +135,14 @@ public abstract class NormalStateFigure extends GradientRoundedRectangle {
         super.paint(graphics);
         
         //fitNameLabel();
-        setFigureHorizontalCenter(fNameLabel, -1);
+        setFigureHorizontalCenter(fNameLabel, null);
         
         if (isVisibleEventList()) {
-            Dimension nameLabelSize = fNameLabel.getSize();
+//            Dimension nameLabelSize = fNameLabel.getSize();
 //            Rectangle eventListBounds = fEventList.getBounds();
 //            eventListBounds.y = nameLabelSize.height + getMargin();
 //            fEventList.setBounds(eventListBounds);
-            setFigureHorizontalCenter(fEventList, nameLabelSize.height + getMargin());
+            setFigureHorizontalCenter(fEventList, fNameLabel);
             //fitEventList(nameLabelSize.height + getMargin());
         }
     }
@@ -162,37 +164,31 @@ public abstract class NormalStateFigure extends GradientRoundedRectangle {
     protected RectangleFigure getEventList() {
         return fEventList;
     }
-    
-    /**
-     * ステート名ラベルのサイズ・位置をステートに合わせる.
-     * 
-     */
-    protected void fitNameLabel() {
-        Dimension stateSize = getSize();
-        Dimension nameLabelSize = getNameLabel().getSize();
+
+    public void setFigureHorizontalCenter(IFigure figure, IFigure upperFigure) {
+        Dimension size = getSize();
+        int shadowWidth = getShadowWidth();
+        Insets insets = getBorder().getInsets(this);
         
-        Rectangle constraint = new Rectangle(
-            (int) ((stateSize.width - nameLabelSize.width) / 2)
-                        - getMargin(), -1, 
-            -1, -1);
-        setConstraint(getNameLabel(), constraint);
-    }
-    
-    /**
-     * イベントリスト・フィギュアーのサイズ・位置をステートに合わせる.
-     * 
-     * @param y Y位置
-     */
-    protected void fitEventList(int y) {
-        //Dimension stateSize = getSize();
-        Dimension stateSize = getSizeWithoutShadow();
-        Dimension eventListSize = fEventList.getSize();
+        Rectangle figureBounds = figure.getBounds();
         
-        Rectangle constraint = new Rectangle(
-            (int) ((stateSize.width - eventListSize.width) / 2)
-                        - getMargin(), y, 
-            -1, -1);
-        setConstraint(fEventList, constraint);
+        int x = (int) ((size.width 
+                         - 2 * insets.left 
+                         - getLineWidth() 
+                         - shadowWidth 
+                         - figureBounds.width) / 2);
+        if (x < 0) {
+            x = 0;
+        }
+        
+        int y = -1;
+        if (upperFigure != null) {
+            Rectangle upperFigureBounds = upperFigure.getBounds();
+            y = (upperFigureBounds.y - getBounds().y) + upperFigureBounds.height; // + insets.top;
+        }
+        
+        Rectangle constraint = new Rectangle(x, y, -1, -1);
+        setConstraint(figure, constraint);
     }
     
     /**

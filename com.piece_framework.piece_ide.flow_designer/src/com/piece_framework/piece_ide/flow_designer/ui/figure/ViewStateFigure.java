@@ -45,16 +45,19 @@ public class ViewStateFigure extends NormalStateFigure {
     public void paint(Graphics graphics) {
         super.paint(graphics);
         
-        fitNameLabel();
-        fitViewLabel();
+        setFigureHorizontalCenter(getNameLabel(), null);
+        setFigureHorizontalCenter(fViewLabel, getNameLabel());
+//        fitNameLabel();
+//        fitViewLabel();
         
         if (isVisibleEventList()) {
-            Dimension nameLabelSize = getNameLabel().getSize();
-            Dimension viewLabelSize = fViewLabel.getSize();
-            
-            fitEventList(nameLabelSize.height
-                         + viewLabelSize.height
-                         + getMargin());
+            setFigureHorizontalCenter(getEventList(), fViewLabel);
+//            Dimension nameLabelSize = getNameLabel().getSize();
+//            Dimension viewLabelSize = fViewLabel.getSize();
+//            
+//            fitEventList(nameLabelSize.height
+//                         + viewLabelSize.height
+//                         + getMargin());
         }
     }
     
