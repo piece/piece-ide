@@ -1,7 +1,10 @@
 // $Id: ActionStateFigure.java 114 2007-07-08 03:25:46Z matsufuji $
 package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
+
+import com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin;
 
 /**
  * アクションステート・フィギュアー.
@@ -15,6 +18,8 @@ public class ActionStateFigure extends NormalStateFigure {
 
     private static final RGB STATE_COLOR = new RGB(204, 204, 204);
     private static final RGB STATE_OUTLINE_COLOR = new RGB(153, 153, 153);
+    
+    private static final String ICON = "icons/ActionState.gif";
     
     /**
      * ステート色を返す.
@@ -38,5 +43,17 @@ public class ActionStateFigure extends NormalStateFigure {
     @Override
     RGB getStateOutlineColor() {
         return STATE_OUTLINE_COLOR;
+    }
+    
+    /**
+     * ステートのアイコンを返す.
+     * 
+     * @return ステートのアイコンイメージ
+     * @see com.piece_framework.piece_ide.flow_designer.ui.figure
+     *          .NormalStateFigure#getIcon()
+     */
+    @Override
+    Image getIcon() {
+        return FlowDesignerPlugin.getImageDescriptor(ICON).createImage();
     }
 }

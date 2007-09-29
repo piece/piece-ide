@@ -3,7 +3,10 @@ package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.Label;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
+
+import com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin;
 
 /**
  * ビューステート・フィギュアー.
@@ -20,6 +23,8 @@ public class ViewStateFigure extends NormalStateFigure {
     private static final RGB STATE_COLOR = new RGB(225, 221, 170);
     private static final RGB STATE_OUTLINE_COLOR = new RGB(174, 161, 90);
 
+    private static final String ICON = "icons/ViewState.gif";
+    
     /**
      * コンストラクタ.
      * ステートに描画するフィギュアーを作成する。
@@ -86,5 +91,17 @@ public class ViewStateFigure extends NormalStateFigure {
     @Override
     RGB getStateOutlineColor() {
         return STATE_OUTLINE_COLOR;
+    }
+
+    /**
+     * ステートのアイコンを返す.
+     * 
+     * @return ステートのアイコンイメージ
+     * @see com.piece_framework.piece_ide.flow_designer.ui.figure
+     *          .NormalStateFigure#getIcon()
+     */
+    @Override
+    Image getIcon() {
+        return FlowDesignerPlugin.getImageDescriptor(ICON).createImage();
     }
 }

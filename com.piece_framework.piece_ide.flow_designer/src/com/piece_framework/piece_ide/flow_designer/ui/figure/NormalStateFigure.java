@@ -12,6 +12,7 @@ import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
@@ -75,6 +76,7 @@ public abstract class NormalStateFigure
         
         fNameLabel = new Label();
         fNameLabel.setTextAlignment(Label.CENTER);
+        fNameLabel.setIcon(getIcon());
         add(fNameLabel);
         
         fEventList = new RectangleFigure();
@@ -125,6 +127,13 @@ public abstract class NormalStateFigure
      */
     abstract RGB getStateOutlineColor();
 
+    /**
+     * ステートのアイコンを返す.
+     * 
+     * @return ステートのアイコンイメージ
+     */
+    abstract Image getIcon();
+    
     /**
      * 子フィギュアのサイズを調整する.
      * 
