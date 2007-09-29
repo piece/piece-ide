@@ -97,6 +97,14 @@ public class GradientRoundedRectangle extends RoundedRectangle {
         }
     }
     
+    /**
+     * フィギュアーの実描画領域を矩形で返す.
+     * 実描画領域の左上はフィギュアー自身の位置から、境界線幅
+     * を足したもの、大きさはフィギュアー自身の大きさから境界
+     * 線の幅を引いたもとになる。
+     * 
+     * @return フィギュアーの実描画領域の矩形
+     */
     protected Rectangle getShapeRectangle() {
         Rectangle shapeRectangle = Rectangle.SINGLETON;
         Rectangle bounds = getBounds();

@@ -3,8 +3,6 @@ package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.RGB;
 
 /**
@@ -47,35 +45,10 @@ public class ViewStateFigure extends NormalStateFigure {
         
         setFigureHorizontalCenter(getNameLabel(), null);
         setFigureHorizontalCenter(fViewLabel, getNameLabel());
-//        fitNameLabel();
-//        fitViewLabel();
         
         if (isVisibleEventList()) {
             setFigureHorizontalCenter(getEventList(), fViewLabel);
-//            Dimension nameLabelSize = getNameLabel().getSize();
-//            Dimension viewLabelSize = fViewLabel.getSize();
-//            
-//            fitEventList(nameLabelSize.height
-//                         + viewLabelSize.height
-//                         + getMargin());
         }
-    }
-    
-    /**
-     * ビューラベルのサイズ・位置をステートに合わせる.
-     * 
-     */
-    private void fitViewLabel() {
-        Dimension stateSize = getSize();
-        Dimension nameLabelSize = getNameLabel().getSize();
-        Dimension viewLabelSize = fViewLabel.getSize();
-        
-        Rectangle constraint = new Rectangle(
-                (int) ((stateSize.width - viewLabelSize.width) / 2)
-                            - getMargin(), 
-                nameLabelSize.height, 
-                -1, -1);
-        setConstraint(fViewLabel, constraint);
     }
     
     /**

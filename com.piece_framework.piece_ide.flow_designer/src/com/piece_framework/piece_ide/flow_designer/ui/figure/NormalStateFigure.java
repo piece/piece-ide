@@ -25,7 +25,8 @@ import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
  * @since 0.1.0
  *
  */
-public abstract class NormalStateFigure extends GradientRoundedRectangleWithShadow {
+public abstract class NormalStateFigure 
+                    extends GradientRoundedRectangleWithShadow {
     private static final RGB EVENT_BUILTIN_TITLE_COLOR = 
                                             new RGB(192, 212, 205);
     private static final RGB EVENT_BUILTIN_LIST_COLOR = 
@@ -70,7 +71,7 @@ public abstract class NormalStateFigure extends GradientRoundedRectangleWithShad
         setOutlineColor(outline);
         
         setLayoutManager(new XYLayout());
-        setBorder(new MarginBorder(getMargin()));
+        setBorder(new MarginBorder(MARGIN));
         
         fNameLabel = new Label();
         fNameLabel.setTextAlignment(Label.CENTER);
@@ -134,16 +135,10 @@ public abstract class NormalStateFigure extends GradientRoundedRectangleWithShad
     public void paint(Graphics graphics) {
         super.paint(graphics);
         
-        //fitNameLabel();
         setFigureHorizontalCenter(fNameLabel, null);
         
         if (isVisibleEventList()) {
-//            Dimension nameLabelSize = fNameLabel.getSize();
-//            Rectangle eventListBounds = fEventList.getBounds();
-//            eventListBounds.y = nameLabelSize.height + getMargin();
-//            fEventList.setBounds(eventListBounds);
             setFigureHorizontalCenter(fEventList, fNameLabel);
-            //fitEventList(nameLabelSize.height + getMargin());
         }
     }
     
@@ -165,6 +160,12 @@ public abstract class NormalStateFigure extends GradientRoundedRectangleWithShad
         return fEventList;
     }
 
+    /**
+     * 子フィギュアーを水平方向の中心に配置する.
+     * 
+     * @param figure 水平方向の中心に配置するフィギュアー
+     * @param upperFigure 配置されるフィギュアーの上のフィギュアー
+     */
     public void setFigureHorizontalCenter(IFigure figure, IFigure upperFigure) {
         Dimension size = getSize();
         int shadowWidth = getShadowWidth();
@@ -184,20 +185,12 @@ public abstract class NormalStateFigure extends GradientRoundedRectangleWithShad
         int y = -1;
         if (upperFigure != null) {
             Rectangle upperFigureBounds = upperFigure.getBounds();
-            y = (upperFigureBounds.y - getBounds().y) + upperFigureBounds.height; // + insets.top;
+            y = (upperFigureBounds.y - getBounds().y) 
+                + upperFigureBounds.height;
         }
         
         Rectangle constraint = new Rectangle(x, y, -1, -1);
         setConstraint(figure, constraint);
-    }
-    
-    /**
-     * フィギュアー間のマージンを返す.
-     * 
-     * @return マージン
-     */
-    protected int getMargin() {
-        return MARGIN;
     }
     
     /**

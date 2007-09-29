@@ -5,13 +5,19 @@ import java.util.List;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
-import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
 
+/**
+ * 角丸矩形グラデーションフィギュアー(影付き).
+ * 
+ * @author MATSUFUJI Hideharu
+ * @version 0.1.0
+ * @since 0.1.0
+ *
+ */
 public class GradientRoundedRectangleWithShadow extends
         GradientRoundedRectangle {
     private static final int DEFAULT_SHADOW_WIDTH = 3;
@@ -79,10 +85,20 @@ public class GradientRoundedRectangleWithShadow extends
         super.paint(graphics);
     }
     
+    /**
+     * 影の幅を返す.
+     * 
+     * @return 影の幅
+     */
     public int getShadowWidth() {
         return fShadowWidth;
     }
     
+    /**
+     * 影の幅を設定する.
+     * 
+     * @param shadowWidth 影の幅
+     */
     public void setShadowWidth(int shadowWidth) {
         fShadowWidth = shadowWidth;
     }
@@ -107,6 +123,14 @@ public class GradientRoundedRectangleWithShadow extends
         super.fillShape(graphics);
     }
 
+    /**
+     * フィギュアーの実描画領域を矩形で返す.
+     * 実際の描画領域の大きさから影の幅を引いたものを返す.
+     * 
+     * @return フィギュアーの実描画領域の矩形
+     * @see com.piece_framework.piece_ide.flow_designer.ui.figure
+     *          .GradientRoundedRectangle#getShapeRectangle()
+     */
     protected Rectangle getShapeRectangle() {
         Rectangle shapeRectangle = super.getShapeRectangle();
         shapeRectangle.width -= fShadowWidth;
@@ -115,6 +139,13 @@ public class GradientRoundedRectangleWithShadow extends
         return shapeRectangle;
     }
 
+    /**
+     * 影部分を矩形で返す.
+     * 影は本体のフィギュアーと同じ形(角丸矩形)で、影の幅分ずらし
+     * たものになる。
+     * 
+     * @return 影部分の矩形
+     */
     protected Rectangle getShadowRectangle() {
         Rectangle shadowRectangle = Rectangle.SINGLETON;
         Rectangle bounds = getBounds();
