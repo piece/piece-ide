@@ -1,4 +1,4 @@
-// $Id: NewPieceProjectWizardPage.java 9 2007-03-14 16:31:24Z sugimoto $
+// $Id$
 package com.piece_framework.piece_ide.wizard.project;
 
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;

@@ -1,4 +1,4 @@
-// $Id: PieceIDEPlugin.java 47 2007-06-16 01:32:10Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.wizard.plugin;
 
 import org.eclipse.jface.resource.ImageDescriptor;
