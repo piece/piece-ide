@@ -1,4 +1,4 @@
-// $Id: MoveStateCommand.java 23 2007-05-23 14:39:53Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.command;
 
 import org.eclipse.gef.commands.Command;

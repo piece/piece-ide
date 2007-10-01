@@ -1,4 +1,4 @@
-// $Id: AbstractModelEditPart.java 100 2007-07-02 01:01:15Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 
 import java.beans.PropertyChangeListener;

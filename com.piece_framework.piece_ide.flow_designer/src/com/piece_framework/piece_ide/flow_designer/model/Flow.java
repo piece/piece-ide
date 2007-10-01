@@ -1,4 +1,4 @@
-// $Id: Flow.java 237 2007-08-12 15:42:35Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.model;
 
 import java.util.ArrayList;

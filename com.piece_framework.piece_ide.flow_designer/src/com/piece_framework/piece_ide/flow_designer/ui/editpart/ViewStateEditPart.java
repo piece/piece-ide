@@ -1,4 +1,4 @@
-// $Id: ViewStateEditPart.java 116 2007-07-10 01:01:55Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 
 import java.beans.PropertyChangeEvent;

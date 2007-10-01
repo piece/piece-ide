@@ -1,4 +1,4 @@
-// $Id: FinalStateEditPart.java 111 2007-07-08 01:40:46Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 
 

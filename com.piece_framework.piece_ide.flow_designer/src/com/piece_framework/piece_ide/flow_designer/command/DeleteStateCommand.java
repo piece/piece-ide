@@ -1,4 +1,4 @@
-// $Id: DeleteStateCommand.java 163 2007-07-23 01:14:17Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.command;
 
 import java.util.ArrayList;

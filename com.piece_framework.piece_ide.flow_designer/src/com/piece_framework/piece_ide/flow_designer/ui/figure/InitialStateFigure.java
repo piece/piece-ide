@@ -1,4 +1,4 @@
-// $Id: InitialStateFigure.java 115 2007-07-09 11:21:17Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
 import org.eclipse.swt.graphics.Image;

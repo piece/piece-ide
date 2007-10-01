@@ -1,4 +1,4 @@
-// $Id: ActionStateFigure.java 114 2007-07-08 03:25:46Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
 import org.eclipse.swt.graphics.Image;

@@ -1,4 +1,4 @@
-// $Id: FlowEditPart.java 168 2007-07-25 01:34:30Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 
 import java.beans.PropertyChangeEvent;

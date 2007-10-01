@@ -1,4 +1,4 @@
-// $Id: FlowLayoutEditPolicy.java 139 2007-07-13 01:11:44Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 
 import org.eclipse.draw2d.geometry.Point;

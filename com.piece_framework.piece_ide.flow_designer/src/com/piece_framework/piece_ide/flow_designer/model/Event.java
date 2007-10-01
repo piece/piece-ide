@@ -1,4 +1,4 @@
-// $Id: Event.java 165 2007-07-23 02:06:53Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.model;
 
 import java.io.Serializable;

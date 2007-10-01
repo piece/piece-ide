@@ -1,4 +1,4 @@
-// $Id: FlowDesignerActionBarContributor.java 99 2007-07-02 00:43:49Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.editor;
 
 import org.eclipse.gef.ui.actions.ActionBarContributor;

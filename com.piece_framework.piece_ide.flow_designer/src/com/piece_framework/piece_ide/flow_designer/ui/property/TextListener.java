@@ -1,4 +1,4 @@
-// $Id: TextListener.java 210 2007-08-07 01:23:52Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.property;
 
 import org.eclipse.swt.SWT;

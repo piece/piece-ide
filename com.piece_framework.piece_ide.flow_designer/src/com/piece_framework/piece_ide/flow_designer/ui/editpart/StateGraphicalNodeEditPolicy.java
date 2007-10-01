@@ -1,4 +1,4 @@
-// $Id: StateGraphicalNodeEditPolicy.java 146 2007-07-13 23:58:05Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 
 import org.eclipse.gef.commands.Command;

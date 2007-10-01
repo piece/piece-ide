@@ -1,4 +1,4 @@
-// $Id: StateFactory.java 160 2007-07-22 02:49:42Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.model;
 
 import org.eclipse.gef.requests.CreationFactory;

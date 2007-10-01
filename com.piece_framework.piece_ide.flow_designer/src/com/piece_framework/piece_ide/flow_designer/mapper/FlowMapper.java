@@ -1,4 +1,4 @@
-// $Id: FlowMapper.java 272 2007-08-16 07:32:41Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.mapper;
 
 import java.util.ArrayList;

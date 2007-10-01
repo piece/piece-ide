@@ -1,4 +1,4 @@
-// $Id: GeneralPropertySection.java 211 2007-08-07 01:26:43Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.property;
 
 import org.eclipse.gef.commands.Command;

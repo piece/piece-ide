@@ -1,4 +1,4 @@
-// $Id: TransitionEditPart.java 52 2007-06-17 14:52:21Z sugimoto $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 
 import java.beans.PropertyChangeEvent;

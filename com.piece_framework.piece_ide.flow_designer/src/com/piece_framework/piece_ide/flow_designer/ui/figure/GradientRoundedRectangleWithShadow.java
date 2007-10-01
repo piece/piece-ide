@@ -1,3 +1,4 @@
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.figure;
 
 import java.util.List;

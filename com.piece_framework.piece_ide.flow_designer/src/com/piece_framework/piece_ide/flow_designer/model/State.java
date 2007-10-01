@@ -1,4 +1,4 @@
-// $Id: State.java 229 2007-08-12 00:35:01Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.model;
 
 import java.beans.PropertyChangeListener;

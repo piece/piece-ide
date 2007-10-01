@@ -1,4 +1,4 @@
-// $Id: FlowDesignerEditor.java 270 2007-08-16 06:33:23Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.editor;
 
 import java.io.IOException;

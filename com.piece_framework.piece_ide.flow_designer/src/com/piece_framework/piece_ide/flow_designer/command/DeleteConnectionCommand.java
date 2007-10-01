@@ -1,4 +1,4 @@
-// $Id: DeleteConnectionCommand.java 180 2007-07-27 00:57:08Z matsufuji $
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.command;
 
 import org.eclipse.gef.commands.Command;
