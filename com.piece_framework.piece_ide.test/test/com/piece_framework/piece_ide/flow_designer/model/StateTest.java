@@ -521,6 +521,18 @@ public class StateTest extends TestCase {
     }
     
     /**
+     * generateEventNameメソッドテスト.
+     * 内部イベントのイベント名をOn + ステート名になることをテストする。
+     * 
+     */
+    public void testGenerateEventNameShouldReturnTheInternalEventName() {
+        State state = new State(State.VIEW_STATE);
+        state.setName("DisplayForm");
+        
+        assertEquals("OnDisplayForm", state.generateEventName(state.getName()));
+    }
+    
+    /**
      * checkUsableEventNameメソッドテスト.
      * ステートに追加されていないイベント名を指定した場合はtrueが
      * 返されることをテストする。
