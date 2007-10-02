@@ -37,7 +37,8 @@ public class PieceIDETest extends TestCase {
         }
 
         /**
-         * 値がnullの場合はnullを、nullでない場合は親クラスのtoStringメソッドを実行する.
+         * 値がnullの場合はnullを、nullでない場合は親クラスの
+         * toStringメソッドを実行する.
          * 
          * @return 文字列
          * @see java.lang.Object#toString()
@@ -108,7 +109,8 @@ public class PieceIDETest extends TestCase {
     
     /**
      * compareメソッドテスト.
-     * 比較対象のオブジェクトの片方がnullでもう片方が空文字の場合にtrueが返されることをテストする。
+     * 比較対象のオブジェクトの片方がnullでもう片方が空文字の場合にtrueが返されること
+     * をテストする。
      * 
      */
     public void testCompareShouldReturnTrueBecauseOfTheParametersAreNullObjectAndEmptyStringObject() {
