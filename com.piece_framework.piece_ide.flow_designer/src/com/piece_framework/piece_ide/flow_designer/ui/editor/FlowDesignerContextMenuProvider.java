@@ -49,5 +49,8 @@ public class FlowDesignerContextMenuProvider extends ContextMenuProvider {
                            fRegistry.getAction(ActionFactory.REDO.getId()));
         menu.appendToGroup(GEFActionConstants.GROUP_EDIT, 
                            fRegistry.getAction(ActionFactory.DELETE.getId()));
+        
+        menu.appendToGroup(GEFActionConstants.GROUP_REST, 
+                           fRegistry.getAction(UpdateStateAction.UPDATE_STATE));
     }
 }

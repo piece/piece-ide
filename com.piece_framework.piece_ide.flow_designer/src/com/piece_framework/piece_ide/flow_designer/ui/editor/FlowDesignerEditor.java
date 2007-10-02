@@ -16,7 +16,9 @@ import org.eclipse.gef.palette.PaletteDrawer;
 import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.PanningSelectionToolEntry;
+import org.eclipse.gef.ui.actions.ActionRegistry;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
@@ -81,6 +83,22 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
             = new FlowDesignerContextMenuProvider(viewer, getActionRegistry());
         viewer.setContextMenu(menuProvider);
         getSite().registerContextMenu(menuProvider, viewer);
+    }
+
+    /**
+     * アクションを生成する.
+     * 
+     * @see org.eclipse.gef.ui.parts.GraphicalEditor#createActions()
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    protected void createActions() {
+        super.createActions();
+        ActionRegistry registry = getActionRegistry();
+        
+        IAction updateStateAction = new UpdateStateAction(this);
+        registry.registerAction(updateStateAction);
+        getSelectionActions().add(updateStateAction.getId());
     }
 
     /**
@@ -253,6 +271,8 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
     public Object getAdapter(Class type) {
         if (type == IPropertySheetPage.class) {
             return new TabbedPropertySheetPage(this);
+        } else if (type == Flow.class) {
+            return fFlow;
         }
         return super.getAdapter(type);
     }
