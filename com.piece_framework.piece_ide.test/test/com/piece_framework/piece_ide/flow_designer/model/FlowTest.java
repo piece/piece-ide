@@ -9,8 +9,8 @@ import junit.framework.TestCase;
 
 
 /**
- * ƒtƒ[ƒeƒXƒgƒNƒ‰ƒX.
- * ƒeƒXƒg‘ÎÛFcom.piece_framework.piece_ide.flow_designer.model.flow
+ * ãƒ•ãƒ­ãƒ¼ãƒ†ã‚¹ãƒˆã‚¯ãƒ©ã‚¹.
+ * ãƒ†ã‚¹ãƒˆå¯¾è±¡ï¼šcom.piece_framework.piece_ide.flow_designer.model.flow
  * 
  * @author MATSUFUJI Hideharu
  * @version 0.1.0
@@ -20,8 +20,8 @@ import junit.framework.TestCase;
 public class FlowTest extends TestCase {
     
     /**
-     * setActionNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒAƒNƒVƒ‡ƒ“ƒNƒ‰ƒX–¼‚ğw’è‚µ‚½ê‡‚Í‚»‚Ì’l‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * setActionNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¯ãƒ©ã‚¹åã‚’æŒ‡å®šã—ãŸå ´åˆã¯ãã®å€¤ãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testSetActionName_ReturnActionName() {
@@ -30,9 +30,9 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * setActionNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒAƒNƒVƒ‡ƒ“ƒNƒ‰ƒX–¼‚ğw’è‚µ‚È‚©‚Á‚½ê‡‚Íƒtƒ[–¼{"Action"‚ª
-     * •Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * setActionNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¯ãƒ©ã‚¹åã‚’æŒ‡å®šã—ãªã‹ã£ãŸå ´åˆã¯ãƒ•ãƒ­ãƒ¼åï¼‹"Action"ãŒ
+     * è¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testSetActionName_ReturnFlowNamePlusAction() {
@@ -41,9 +41,9 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * setActionNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒtƒ[–¼AƒAƒNƒVƒ‡ƒ“ƒNƒ‰ƒX–¼‹¤‚Énull‚Ìê‡‚Ínull‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğ
-     * ƒeƒXƒg‚·‚éB
+     * setActionNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ•ãƒ­ãƒ¼åã€ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¯ãƒ©ã‚¹åå…±ã«nullã®å ´åˆã¯nullãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’
+     * ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      */
     public void testSetActionName_ReturnNull() {
         Flow flow = new Flow(null, null);
@@ -51,8 +51,8 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * getStateListToOwnStateƒƒ\ƒbƒhƒeƒXƒg.
-     * w’è‚µ‚½ƒXƒe[ƒg‚Ö‘JˆÚ‚·‚éƒXƒe[ƒg‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getStateListToOwnStateãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æŒ‡å®šã—ãŸã‚¹ãƒ†ãƒ¼ãƒˆã¸é·ç§»ã™ã‚‹ã‚¹ãƒ†ãƒ¼ãƒˆãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetStateListToOwnState_ReturnTheStateListToOwnState() {
@@ -75,9 +75,9 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * getStateListToOwnStateƒƒ\ƒbƒhƒeƒXƒg.
-     * w’è‚µ‚½ƒXƒe[ƒg‚É‘JˆÚ‚·‚éƒXƒe[ƒg‚ª‚È‚¢ê‡A‹ó‚ÌƒŠƒXƒg‚ª•Ô‚³‚ê‚é
-     * ‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getStateListToOwnStateãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æŒ‡å®šã—ãŸã‚¹ãƒ†ãƒ¼ãƒˆã«é·ç§»ã™ã‚‹ã‚¹ãƒ†ãƒ¼ãƒˆãŒãªã„å ´åˆã€ç©ºã®ãƒªã‚¹ãƒˆãŒè¿”ã•ã‚Œã‚‹
+     * ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetStateListToOwnState_ReturnEmptyList() {
@@ -95,9 +95,9 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * getStateListToOwnStateƒƒ\ƒbƒhƒeƒXƒg.
-     * w’è‚µ‚½ƒXƒe[ƒg‚ªnull‚Ìê‡A‹ó‚ÌƒŠƒXƒg‚ª•Ô‚³‚ê‚é
-     * ‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getStateListToOwnStateãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æŒ‡å®šã—ãŸã‚¹ãƒ†ãƒ¼ãƒˆãŒnullã®å ´åˆã€ç©ºã®ãƒªã‚¹ãƒˆãŒè¿”ã•ã‚Œã‚‹
+     * ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetStateListToOwnState_ReturnEmptyListParameterNull() {
@@ -115,8 +115,8 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * getTransitionEventListToOwnStateƒƒ\ƒbƒhƒeƒXƒg.
-     * w’è‚µ‚½ƒXƒe[ƒg‚É‘JˆÚ‚·‚é‘JˆÚƒCƒxƒ“ƒg‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getTransitionEventListToOwnStateãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æŒ‡å®šã—ãŸã‚¹ãƒ†ãƒ¼ãƒˆã«é·ç§»ã™ã‚‹é·ç§»ã‚¤ãƒ™ãƒ³ãƒˆãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetTransitionEventListToOwnState_ReturnTheEventListToOwnState() {
@@ -140,9 +140,9 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * getTransitionEventListToOwnStateƒƒ\ƒbƒhƒeƒXƒg.
-     * w’è‚µ‚½ƒXƒe[ƒg‚É‘JˆÚ‚·‚é‘JˆÚƒCƒxƒ“ƒg‚ª‚È‚¢ê‡A‹ó‚ÌƒŠƒXƒg‚ª•Ô‚³‚ê‚é
-     * ‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getTransitionEventListToOwnStateãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æŒ‡å®šã—ãŸã‚¹ãƒ†ãƒ¼ãƒˆã«é·ç§»ã™ã‚‹é·ç§»ã‚¤ãƒ™ãƒ³ãƒˆãŒãªã„å ´åˆã€ç©ºã®ãƒªã‚¹ãƒˆãŒè¿”ã•ã‚Œã‚‹
+     * ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetTransitionEventListToOwnState_ReturnEmptyList() {
@@ -161,8 +161,8 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * generateStateNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒCƒjƒVƒƒƒ‹ƒXƒe[ƒg‚ÌƒXƒe[ƒg–¼‚ª¶¬‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * generateStateNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¤ãƒ‹ã‚·ãƒ£ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¹ãƒ†ãƒ¼ãƒˆåãŒç”Ÿæˆã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGenerateStateName_ReturnInitialStateName() {
@@ -172,8 +172,8 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * generateStateNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒtƒ@ƒCƒiƒ‹ƒXƒe[ƒg‚ÌƒXƒe[ƒg–¼‚ª¶¬‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * generateStateNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ•ã‚¡ã‚¤ãƒŠãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¹ãƒ†ãƒ¼ãƒˆåãŒç”Ÿæˆã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGenerateStateName_ReturnFinalStateName() {
@@ -182,9 +182,9 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * generateStateNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒAƒNƒVƒ‡ƒ“ƒe[ƒg‚ÌƒXƒe[ƒg–¼‚ª¶¬‚³‚ê‚é‚½‚Ñ‚ÉŒã‚ë‚Ì˜A”Ô‚ª
-     * ƒCƒ“ƒNƒŠƒƒ“ƒg‚³‚ê‚½ƒXƒe[ƒg–¼‚ª¶¬‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * generateStateNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒ†ãƒ¼ãƒˆã®ã‚¹ãƒ†ãƒ¼ãƒˆåãŒç”Ÿæˆã•ã‚Œã‚‹ãŸã³ã«å¾Œã‚ã®é€£ç•ªãŒ
+     * ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã•ã‚ŒãŸã‚¹ãƒ†ãƒ¼ãƒˆåãŒç”Ÿæˆã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGenerateStateName_ReturnActionStateName() {
@@ -195,9 +195,9 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * generateStateNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒrƒ…[ƒe[ƒg‚ÌƒXƒe[ƒg–¼‚ª¶¬‚³‚ê‚é‚½‚Ñ‚ÉŒã‚ë‚Ì˜A”Ô‚ª
-     * ƒCƒ“ƒNƒŠƒƒ“ƒg‚³‚ê‚½ƒXƒe[ƒg–¼‚ª¶¬‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * generateStateNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ“ãƒ¥ãƒ¼ãƒ†ãƒ¼ãƒˆã®ã‚¹ãƒ†ãƒ¼ãƒˆåãŒç”Ÿæˆã•ã‚Œã‚‹ãŸã³ã«å¾Œã‚ã®é€£ç•ªãŒ
+     * ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã•ã‚ŒãŸã‚¹ãƒ†ãƒ¼ãƒˆåãŒç”Ÿæˆã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGenerateStateName_ReturnViewStateName() {
@@ -208,10 +208,10 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * generateStateNameƒƒ\ƒbƒhƒeƒXƒg.
-     * Ÿ‚É¶¬‚³‚ê‚éƒAƒNƒVƒ‡ƒ“ƒe[ƒg‚ÌƒXƒe[ƒg–¼‚ğ‚ÂƒXƒe[ƒg‚ªŠù‚É
-     * ƒtƒ[‚É‚ ‚éê‡A˜A”Ô‚ªƒCƒ“ƒNƒŠƒƒ“ƒg‚³‚ê‚½ƒXƒe[ƒg–¼‚ª¶¬‚³
-     * ‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * generateStateNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æ¬¡ã«ç”Ÿæˆã•ã‚Œã‚‹ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒ†ãƒ¼ãƒˆã®ã‚¹ãƒ†ãƒ¼ãƒˆåã‚’æŒã¤ã‚¹ãƒ†ãƒ¼ãƒˆãŒæ—¢ã«
+     * ãƒ•ãƒ­ãƒ¼ã«ã‚ã‚‹å ´åˆã€é€£ç•ªãŒã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã•ã‚ŒãŸã‚¹ãƒ†ãƒ¼ãƒˆåãŒç”Ÿæˆã•
+     * ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGenerateStateName_ReturnUsableActionStateName() {
@@ -224,10 +224,10 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * generateStateNameƒƒ\ƒbƒhƒeƒXƒg.
-     * Ÿ‚É¶¬‚³‚ê‚éƒrƒ…[ƒe[ƒg‚ÌƒXƒe[ƒg–¼‚ğ‚ÂƒXƒe[ƒg‚ªŠù‚É
-     * ƒtƒ[‚É‚ ‚éê‡A˜A”Ô‚ªƒCƒ“ƒNƒŠƒƒ“ƒg‚³‚ê‚½ƒXƒe[ƒg–¼‚ª¶
-     * ¬‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * generateStateNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æ¬¡ã«ç”Ÿæˆã•ã‚Œã‚‹ãƒ“ãƒ¥ãƒ¼ãƒ†ãƒ¼ãƒˆã®ã‚¹ãƒ†ãƒ¼ãƒˆåã‚’æŒã¤ã‚¹ãƒ†ãƒ¼ãƒˆãŒæ—¢ã«
+     * ãƒ•ãƒ­ãƒ¼ã«ã‚ã‚‹å ´åˆã€é€£ç•ªãŒã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã•ã‚ŒãŸã‚¹ãƒ†ãƒ¼ãƒˆåãŒç”Ÿ
+     * æˆã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGenerateStateName_ReturnUsableViewStateName() {
@@ -240,9 +240,9 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * checkUsableStateNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒtƒ[‚É’Ç‰Á‚³‚ê‚Ä‚¢‚È‚¢ƒXƒe[ƒg–¼‚ğw’è‚µ‚½ê‡‚Ítrue‚ª
-     * •Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * checkUsableStateNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ•ãƒ­ãƒ¼ã«è¿½åŠ ã•ã‚Œã¦ã„ãªã„ã‚¹ãƒ†ãƒ¼ãƒˆåã‚’æŒ‡å®šã—ãŸå ´åˆã¯trueãŒ
+     * è¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCheckUsableStateName_CheckUsableStateName() {
@@ -255,9 +255,9 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * checkUsableStateNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒtƒ[‚É’Ç‰Á‚³‚ê‚Ä‚¢‚éƒXƒe[ƒg–¼‚ğw’è‚µ‚½ê‡‚Ífalse‚ª
-     * •Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * checkUsableStateNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ•ãƒ­ãƒ¼ã«è¿½åŠ ã•ã‚Œã¦ã„ã‚‹ã‚¹ãƒ†ãƒ¼ãƒˆåã‚’æŒ‡å®šã—ãŸå ´åˆã¯falseãŒ
+     * è¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCheckUsableStateName_CheckUnusableStateName() {
@@ -270,8 +270,8 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * checkUsableStateNameƒƒ\ƒbƒhƒeƒXƒg.
-     * w’è‚³‚ê‚½ƒXƒe[ƒg–¼‚ªnull‚Ìê‡‚Ífalse‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * checkUsableStateNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æŒ‡å®šã•ã‚ŒãŸã‚¹ãƒ†ãƒ¼ãƒˆåãŒnullã®å ´åˆã¯falseãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCheckUsableStateName_CheckNull() {
@@ -281,9 +281,9 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * setNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒtƒ[–¼‚ğƒZƒbƒg‚·‚é‚Æ“o˜^‚µ‚½ƒŠƒXƒi[‚ªŒÄ‚Ño‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg
-     * ‚·‚éB
+     * setNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ•ãƒ­ãƒ¼åã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã¨ç™»éŒ²ã—ãŸãƒªã‚¹ãƒŠãƒ¼ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆ
+     * ã™ã‚‹ã€‚
      * 
      */
     public void testSetNameShouldInvokeListener() {
@@ -307,9 +307,9 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * setNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒAƒNƒVƒ‡ƒ“ƒNƒ‰ƒX–¼‚ğƒZƒbƒg‚·‚é‚Æ“o˜^‚µ‚½ƒŠƒXƒi[‚ªŒÄ‚Ño‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg
-     * ‚·‚éB
+     * setNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¯ãƒ©ã‚¹åã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã¨ç™»éŒ²ã—ãŸãƒªã‚¹ãƒŠãƒ¼ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆ
+     * ã™ã‚‹ã€‚
      * 
      */
     public void testSetActionClassNameShouldInvokeListener() {
@@ -333,8 +333,8 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * addStateƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒXƒe[ƒg‚ğ’Ç‰Á‚·‚é‚Æ“o˜^‚µ‚½ƒŠƒXƒi[‚ªŒÄ‚Ño‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * addStateãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¿½åŠ ã™ã‚‹ã¨ç™»éŒ²ã—ãŸãƒªã‚¹ãƒŠãƒ¼ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testAddState_InvokeListener() {
@@ -352,8 +352,8 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * removeStateƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒXƒe[ƒg‚ğíœ‚·‚é‚Æ“o˜^‚µ‚½ƒŠƒXƒi[‚ªŒÄ‚Ño‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * removeStateãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å‰Šé™¤ã™ã‚‹ã¨ç™»éŒ²ã—ãŸãƒªã‚¹ãƒŠãƒ¼ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testRemoveState_InvokeListener() {
@@ -373,9 +373,9 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * getPropertyChangeListƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒŠƒXƒi[‚ª“o˜^‚³‚ê‚Ä‚¢‚È‚¢ê‡‚ÍƒTƒCƒY0‚Ì”z—ñ‚ª•Ô‚³‚ê‚é
-     * ‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getPropertyChangeListãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒªã‚¹ãƒŠãƒ¼ãŒç™»éŒ²ã•ã‚Œã¦ã„ãªã„å ´åˆã¯ã‚µã‚¤ã‚º0ã®é…åˆ—ãŒè¿”ã•ã‚Œã‚‹
+     * ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      */
     public void testGetPropertyChangeListener_ReturnEmptyArray() {
         State state = new State(State.ACTION_STATE);
@@ -388,8 +388,8 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * getStateByNameƒƒ\ƒbƒhƒeƒXƒg.
-     * w’è‚³‚ê‚½ƒXƒe[ƒg–¼‚ÌƒXƒe[ƒg‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getStateByNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æŒ‡å®šã•ã‚ŒãŸã‚¹ãƒ†ãƒ¼ãƒˆåã®ã‚¹ãƒ†ãƒ¼ãƒˆãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetStateByNameShouldReturnTheState() {
@@ -411,8 +411,8 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * getStateByNameƒƒ\ƒbƒhƒeƒXƒg.
-     * w’è‚³‚ê‚½ƒXƒe[ƒg–¼‚ª‚È‚¢ê‡‚Ìnull‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getStateByNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æŒ‡å®šã•ã‚ŒãŸã‚¹ãƒ†ãƒ¼ãƒˆåãŒãªã„å ´åˆã®nullãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetStateByNameShouldReturnNullBecauseOfTheStateNotFound() {
@@ -428,8 +428,8 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * getStateByNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒXƒe[ƒg–¼‚Énull‚ğ“n‚µ‚½ê‡Anull‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getStateByNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¹ãƒ†ãƒ¼ãƒˆåã«nullã‚’æ¸¡ã—ãŸå ´åˆã€nullãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetStateByNameShouldReturnNullBecauseOfStateNameIsNull() {
@@ -445,8 +445,8 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * getName/setName ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒtƒ[–¼‚É‹ó•¶š‚ğ“n‚µ‚½ê‡Anull‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getName/setName ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ•ãƒ­ãƒ¼åã«ç©ºæ–‡å­—ã‚’æ¸¡ã—ãŸå ´åˆã€nullãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetNameShouldReturnNull() {
@@ -457,8 +457,8 @@ public class FlowTest extends TestCase {
     }
     
     /**
-     * getActionClassName/setActionClassName ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒAƒNƒVƒ‡ƒ“ƒNƒ‰ƒX–¼‚É‹ó•¶š‚ğ“n‚µ‚½ê‡Anull‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getActionClassName/setActionClassName ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¯ãƒ©ã‚¹åã«ç©ºæ–‡å­—ã‚’æ¸¡ã—ãŸå ´åˆã€nullãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetActionClassNameShouldReturnNull() {

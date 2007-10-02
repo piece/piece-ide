@@ -7,8 +7,8 @@ import java.beans.PropertyChangeListener;
 import junit.framework.TestCase;
 
 /**
- * ƒXƒe[ƒgƒeƒXƒgƒNƒ‰ƒX.
- * ƒeƒXƒg‘ÎÛFcom.piece_framework.piece_ide.flow_designer.model.state
+ * ã‚¹ãƒ†ãƒ¼ãƒˆãƒ†ã‚¹ãƒˆã‚¯ãƒ©ã‚¹.
+ * ãƒ†ã‚¹ãƒˆå¯¾è±¡ï¼šcom.piece_framework.piece_ide.flow_designer.model.state
  * 
  * @author MATSUFUJI Hideharu
  * @version 0.1.0
@@ -18,9 +18,9 @@ import junit.framework.TestCase;
 public class StateTest extends TestCase {
   
     /**
-     * ƒRƒ“ƒXƒgƒ‰ƒNƒ^ƒeƒXƒg.
-     * ƒCƒjƒVƒƒƒ‹ƒXƒe[ƒg‚ğ¶¬‚·‚é‚ÆA©“®“I‚ÉInitialƒCƒxƒ“ƒg‚ª
-     * ¶¬‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ†ã‚¹ãƒˆ.
+     * ã‚¤ãƒ‹ã‚·ãƒ£ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ç”Ÿæˆã™ã‚‹ã¨ã€è‡ªå‹•çš„ã«Initialã‚¤ãƒ™ãƒ³ãƒˆãŒ
+     * ç”Ÿæˆã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCreateInitialState_CheckBuiltinEvent() {
@@ -37,9 +37,9 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * ƒRƒ“ƒXƒgƒ‰ƒNƒ^ƒeƒXƒg.
-     * ƒrƒ…[ƒXƒe[ƒg‚ğ¶¬‚·‚é‚ÆA©“®“I‚ÉEntry,Exit,ActivityƒCƒxƒ“ƒg‚ª
-     * ¶¬‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ†ã‚¹ãƒˆ.
+     * ãƒ“ãƒ¥ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ç”Ÿæˆã™ã‚‹ã¨ã€è‡ªå‹•çš„ã«Entry,Exit,Activityã‚¤ãƒ™ãƒ³ãƒˆãŒ
+     * ç”Ÿæˆã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCreateViewState_CheckBuiltinEvent() {
@@ -61,9 +61,9 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * ƒRƒ“ƒXƒgƒ‰ƒNƒ^ƒeƒXƒg.
-     * ƒAƒNƒVƒ‡ƒ“ƒe[ƒg‚ğ¶¬‚·‚é‚ÆA©“®“I‚ÉEntry,Exit,ActivityƒCƒxƒ“ƒg‚ª
-     * ¶¬‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ†ã‚¹ãƒˆ.
+     * ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒ†ãƒ¼ãƒˆã‚’ç”Ÿæˆã™ã‚‹ã¨ã€è‡ªå‹•çš„ã«Entry,Exit,Activityã‚¤ãƒ™ãƒ³ãƒˆãŒ
+     * ç”Ÿæˆã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCreateActionState_CheckBuiltinEvent() {
@@ -85,9 +85,9 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * ƒRƒ“ƒXƒgƒ‰ƒNƒ^ƒeƒXƒg.
-     * ƒtƒ@ƒCƒiƒ‹ƒXƒe[ƒg‚ğ¶¬‚·‚é‚ÆA©“®“I‚ÉFinalƒCƒxƒ“ƒg‚ª
-     * ¶¬‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ†ã‚¹ãƒˆ.
+     * ãƒ•ã‚¡ã‚¤ãƒŠãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ç”Ÿæˆã™ã‚‹ã¨ã€è‡ªå‹•çš„ã«Finalã‚¤ãƒ™ãƒ³ãƒˆãŒ
+     * ç”Ÿæˆã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCreateFinalState_CheckBuiltinEvent() {
@@ -104,9 +104,9 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * ƒRƒ“ƒXƒgƒ‰ƒNƒ^ƒeƒXƒg.
-     * •s³‚ÈƒXƒe[ƒgƒ^ƒCƒv‚ğ“n‚·‚ÆAƒXƒe[ƒgƒ^ƒCƒv‚ª•s–¾‚ÌƒXƒe[ƒg‚ª
-     * ¶¬‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ†ã‚¹ãƒˆ.
+     * ä¸æ­£ãªã‚¹ãƒ†ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—ã‚’æ¸¡ã™ã¨ã€ã‚¹ãƒ†ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—ãŒä¸æ˜ã®ã‚¹ãƒ†ãƒ¼ãƒˆãŒ
+     * ç”Ÿæˆã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testUnknownState_TypeIsUnknown() {
@@ -116,9 +116,9 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * addPropertyChangeListenerƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒXƒe[ƒg‚ÉƒŠƒXƒi[‚ğ“o˜^‚·‚é‚ÆAƒXƒe[ƒg‚ª•Û‚µ‚Ä‚¢‚é
-     * ƒCƒxƒ“ƒg‚É‚àƒŠƒXƒi[‚ª“o˜^‚³‚ê‚éB
+     * addPropertyChangeListenerãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¹ãƒ†ãƒ¼ãƒˆã«ãƒªã‚¹ãƒŠãƒ¼ã‚’ç™»éŒ²ã™ã‚‹ã¨ã€ã‚¹ãƒ†ãƒ¼ãƒˆãŒä¿æŒã—ã¦ã„ã‚‹
+     * ã‚¤ãƒ™ãƒ³ãƒˆã«ã‚‚ãƒªã‚¹ãƒŠãƒ¼ãŒç™»éŒ²ã•ã‚Œã‚‹ã€‚
      * 
      */
     public void testAddPropertyChangeListener_AddEvents() {
@@ -136,9 +136,9 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * removePropertyChangeListenerƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒXƒe[ƒg‚©‚çƒŠƒXƒi[‚ğíœ‚·‚é‚ÆAƒXƒe[ƒg‚ª•Û‚µ‚Ä‚¢‚é
-     * ƒCƒxƒ“ƒg‚©‚ç‚àƒŠƒXƒi[‚ªíœ‚³‚ê‚éB
+     * removePropertyChangeListenerãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¹ãƒ†ãƒ¼ãƒˆã‹ã‚‰ãƒªã‚¹ãƒŠãƒ¼ã‚’å‰Šé™¤ã™ã‚‹ã¨ã€ã‚¹ãƒ†ãƒ¼ãƒˆãŒä¿æŒã—ã¦ã„ã‚‹
+     * ã‚¤ãƒ™ãƒ³ãƒˆã‹ã‚‰ã‚‚ãƒªã‚¹ãƒŠãƒ¼ãŒå‰Šé™¤ã•ã‚Œã‚‹ã€‚
      * 
      */
     public void testRemovePropertyChangeListener_AddEvents() {
@@ -156,8 +156,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * setNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒXƒe[ƒg–¼‚ğİ’è‚·‚é‚Æ“o˜^‚µ‚½ƒŠƒXƒi[‚ªŒÄ‚Ño‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * setNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¹ãƒ†ãƒ¼ãƒˆåã‚’è¨­å®šã™ã‚‹ã¨ç™»éŒ²ã—ãŸãƒªã‚¹ãƒŠãƒ¼ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testSetName_InvokeListener() {
@@ -181,8 +181,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * setSummaryƒƒ\ƒbƒhƒeƒXƒg.
-     * ŠT—v‚ğİ’è‚·‚é‚Æ“o˜^‚µ‚½ƒŠƒXƒi[‚ªŒÄ‚Ño‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * setSummaryãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æ¦‚è¦ã‚’è¨­å®šã™ã‚‹ã¨ç™»éŒ²ã—ãŸãƒªã‚¹ãƒŠãƒ¼ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testSetSummary_InvokeListener() {
@@ -206,8 +206,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * setViewƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒrƒ…[–¼‚ğİ’è‚·‚é‚Æ“o˜^‚µ‚½ƒŠƒXƒi[‚ªŒÄ‚Ño‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * setViewãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ“ãƒ¥ãƒ¼åã‚’è¨­å®šã™ã‚‹ã¨ç™»éŒ²ã—ãŸãƒªã‚¹ãƒŠãƒ¼ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testSetView_InvokeListener() {
@@ -231,8 +231,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * getViewƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒrƒ…[ƒXƒe[ƒg‚Å‚È‚¢ê‡AgetViewƒƒ\ƒbƒh‚Ínull‚ğ•Ô‚·‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getViewãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ“ãƒ¥ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã§ãªã„å ´åˆã€getViewãƒ¡ã‚½ãƒƒãƒ‰ã¯nullã‚’è¿”ã™ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetView_ReturnNull() {
@@ -246,8 +246,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * setXƒƒ\ƒbƒhƒeƒXƒg.
-     * XÀ•W‚ğİ’è‚·‚é‚Æ“o˜^‚µ‚½ƒŠƒXƒi[‚ªŒÄ‚Ño‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * setXãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * Xåº§æ¨™ã‚’è¨­å®šã™ã‚‹ã¨ç™»éŒ²ã—ãŸãƒªã‚¹ãƒŠãƒ¼ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testSetX_InvokeListener() {
@@ -271,8 +271,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * setYƒƒ\ƒbƒhƒeƒXƒg.
-     * YÀ•W‚ğİ’è‚·‚é‚Æ“o˜^‚µ‚½ƒŠƒXƒi[‚ªŒÄ‚Ño‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * setYãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * Yåº§æ¨™ã‚’è¨­å®šã™ã‚‹ã¨ç™»éŒ²ã—ãŸãƒªã‚¹ãƒŠãƒ¼ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testSetY_InvokeListener() {
@@ -296,8 +296,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * getEventByNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒCƒxƒ“ƒg–¼‚©‚çƒCƒxƒ“ƒg‚ğæ“¾‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getEventByNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¤ãƒ™ãƒ³ãƒˆåã‹ã‚‰ã‚¤ãƒ™ãƒ³ãƒˆã‚’å–å¾—ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetEventByName_ReturnEvent() {
@@ -309,8 +309,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * getEventByNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ‘¶İ‚µ‚È‚¢ƒCƒxƒ“ƒg–¼‚ğw’è‚·‚é‚Ænull‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getEventByNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * å­˜åœ¨ã—ãªã„ã‚¤ãƒ™ãƒ³ãƒˆåã‚’æŒ‡å®šã™ã‚‹ã¨nullãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetEventByName_ReturnNull() {
@@ -321,8 +321,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * getEventByNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒCƒxƒ“ƒg–¼‚Énull‚ğw’è‚µ‚½ê‡Anull‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getEventByNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¤ãƒ™ãƒ³ãƒˆåã«nullã‚’æŒ‡å®šã—ãŸå ´åˆã€nullãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetEventByName_ReturnNullParameterNull() {
@@ -333,8 +333,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * getTransitionEventListƒƒ\ƒbƒhƒeƒXƒg.
-     * ‘JˆÚƒCƒxƒ“ƒg‚ğ•Ô‚·‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getTransitionEventListãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * é·ç§»ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¿”ã™ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetTransitionEventList_ReturnTheTransitionEventList() {
@@ -362,8 +362,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * getTransitionEventListƒƒ\ƒbƒhƒeƒXƒg.
-     * ‘JˆÚƒCƒxƒ“ƒg‚ª‚È‚¢ê‡‚Í‹ó‚ÌƒŠƒXƒg‚ğ•Ô‚·‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getTransitionEventListãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * é·ç§»ã‚¤ãƒ™ãƒ³ãƒˆãŒãªã„å ´åˆã¯ç©ºã®ãƒªã‚¹ãƒˆã‚’è¿”ã™ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetTransitionEventList_ReturnEmptyList() {
@@ -373,8 +373,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * addEventƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒCƒxƒ“ƒg‚ğ’Ç‰Á‚·‚é‚Æ“o˜^‚µ‚½ƒŠƒXƒi[‚ªŒÄ‚Ño‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * addEventãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¿½åŠ ã™ã‚‹ã¨ç™»éŒ²ã—ãŸãƒªã‚¹ãƒŠãƒ¼ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testAddEventInvokeListener() {
@@ -392,9 +392,9 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * addEventƒƒ\ƒbƒhƒeƒXƒg.
-     * ‘JˆÚƒCƒxƒ“ƒg‚ğ’Ç‰Á‚µ‚½ê‡A‚»‚Ì‘JˆÚæ‚ÌƒXƒe[ƒg‚ÌƒŠƒXƒi[‚ªŒÄ‚Ño‚³‚ê‚é
-     * ‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * addEventãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * é·ç§»ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¿½åŠ ã—ãŸå ´åˆã€ãã®é·ç§»å…ˆã®ã‚¹ãƒ†ãƒ¼ãƒˆã®ãƒªã‚¹ãƒŠãƒ¼ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹
+     * ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testAddEvent_IfTransitionEvent_InvokeListenerThatTargetStateHave() {
@@ -416,8 +416,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * removeEventƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒCƒxƒ“ƒg‚ğíœ‚·‚é‚Æ“o˜^‚µ‚½ƒŠƒXƒi[‚ªŒÄ‚Ño‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * removeEventãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‰Šé™¤ã™ã‚‹ã¨ç™»éŒ²ã—ãŸãƒªã‚¹ãƒŠãƒ¼ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testRemoveEvent_InvokeListener() {
@@ -435,9 +435,9 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * removeEventƒƒ\ƒbƒhƒeƒXƒg.
-     * ‘JˆÚƒCƒxƒ“ƒg‚ğíœ‚µ‚½ê‡‚Ì‚İ‘JˆÚæ‚ÌƒXƒe[ƒg‚ÌƒŠƒXƒi[‚ªŒÄ‚Ño‚³‚ê‚é
-     * ‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * removeEventãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * é·ç§»ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‰Šé™¤ã—ãŸå ´åˆã®ã¿é·ç§»å…ˆã®ã‚¹ãƒ†ãƒ¼ãƒˆã®ãƒªã‚¹ãƒŠãƒ¼ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹
+     * ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testRemoveEvent_IfTransitionEvent_InvokeListenerThatTargetStateHave() {
@@ -462,9 +462,9 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * generateEventNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒCƒxƒ“ƒg–¼‚ğ¶¬‚·‚é‚Æ‘JˆÚæƒXƒe[ƒg+"From"+‘JˆÚŒ³ƒXƒe[ƒg‚ª
-     * •Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * generateEventNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¤ãƒ™ãƒ³ãƒˆåã‚’ç”Ÿæˆã™ã‚‹ã¨é·ç§»å…ˆã‚¹ãƒ†ãƒ¼ãƒˆ+"From"+é·ç§»å…ƒã‚¹ãƒ†ãƒ¼ãƒˆãŒ
+     * è¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGenerateEventName_ReturnEventName() {
@@ -477,9 +477,9 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * generateEventNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ¶¬‚³‚ê‚éƒCƒxƒ“ƒg–¼‚ªŠù‚ÉƒXƒe[ƒg‚É‚ ‚éê‡A˜A”Ô‚ªƒCƒ“ƒNƒŠ
-     * ƒƒ“ƒg‚³‚ê‚½ƒCƒxƒ“ƒg–¼‚ª¶¬‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * generateEventNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ç”Ÿæˆã•ã‚Œã‚‹ã‚¤ãƒ™ãƒ³ãƒˆåãŒæ—¢ã«ã‚¹ãƒ†ãƒ¼ãƒˆã«ã‚ã‚‹å ´åˆã€é€£ç•ªãŒã‚¤ãƒ³ã‚¯ãƒª
+     * ãƒ¡ãƒ³ãƒˆã•ã‚ŒãŸã‚¤ãƒ™ãƒ³ãƒˆåãŒç”Ÿæˆã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGenerateEventName_ReturnUsableEventName() {
@@ -495,9 +495,9 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * generateEventNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒXƒe[ƒg–¼‚ªnull‚Ìê‡AŸƒXƒe[ƒg–¼‚ªnull‚Ìê‡‚Í
-     * ¶¬‚³‚ê‚éƒXƒe[ƒg–¼‚ªnull‚Å‚ ‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * generateEventNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¹ãƒ†ãƒ¼ãƒˆåãŒnullã®å ´åˆã€æ¬¡ã‚¹ãƒ†ãƒ¼ãƒˆåãŒnullã®å ´åˆã¯
+     * ç”Ÿæˆã•ã‚Œã‚‹ã‚¹ãƒ†ãƒ¼ãƒˆåãŒnullã§ã‚ã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGenerateEventName_ReturnNull() {
@@ -510,8 +510,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * generateEventNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒCƒjƒVƒƒƒ‹ƒXƒe[ƒg‚Ì‘JˆÚƒCƒxƒ“ƒg–¼‚ªnull‚É‚È‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * generateEventNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¤ãƒ‹ã‚·ãƒ£ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆã®é·ç§»ã‚¤ãƒ™ãƒ³ãƒˆåãŒnullã«ãªã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGenerateEventNameShouldReturnTheInitialEvent() {
@@ -521,8 +521,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * generateEventNameƒƒ\ƒbƒhƒeƒXƒg.
-     * “à•”ƒCƒxƒ“ƒg‚ÌƒCƒxƒ“ƒg–¼‚ğOn + ƒXƒe[ƒg–¼‚É‚È‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * generateEventNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * å†…éƒ¨ã‚¤ãƒ™ãƒ³ãƒˆã®ã‚¤ãƒ™ãƒ³ãƒˆåã‚’On + ã‚¹ãƒ†ãƒ¼ãƒˆåã«ãªã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGenerateEventNameShouldReturnTheInternalEventName() {
@@ -533,9 +533,9 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * checkUsableEventNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒXƒe[ƒg‚É’Ç‰Á‚³‚ê‚Ä‚¢‚È‚¢ƒCƒxƒ“ƒg–¼‚ğw’è‚µ‚½ê‡‚Ítrue‚ª
-     * •Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * checkUsableEventNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¹ãƒ†ãƒ¼ãƒˆã«è¿½åŠ ã•ã‚Œã¦ã„ãªã„ã‚¤ãƒ™ãƒ³ãƒˆåã‚’æŒ‡å®šã—ãŸå ´åˆã¯trueãŒ
+     * è¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCheckUsableEventName_CheckUsableEventName() {
@@ -548,9 +548,9 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * checkUsableEventNameƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒXƒe[ƒg‚É’Ç‰Á‚³‚ê‚Ä‚¢‚éƒCƒxƒ“ƒg–¼‚ğw’è‚µ‚½ê‡‚Ífalse‚ª
-     * •Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * checkUsableEventNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¹ãƒ†ãƒ¼ãƒˆã«è¿½åŠ ã•ã‚Œã¦ã„ã‚‹ã‚¤ãƒ™ãƒ³ãƒˆåã‚’æŒ‡å®šã—ãŸå ´åˆã¯falseãŒ
+     * è¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCheckUsableEventName_CheckUnusableEventName() {
@@ -563,8 +563,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * checkUsableEventNameƒƒ\ƒbƒhƒeƒXƒg.
-     * w’è‚³‚ê‚½ƒCƒxƒ“ƒg–¼‚ªnull‚Ìê‡‚Ífalse‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * checkUsableEventNameãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æŒ‡å®šã•ã‚ŒãŸã‚¤ãƒ™ãƒ³ãƒˆåãŒnullã®å ´åˆã¯falseãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCheckUsableEventName_CheckNull() {
@@ -574,8 +574,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * getName/setName ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒXƒe[ƒg–¼‚É‹ó•¶š‚ğ“n‚µ‚½ê‡Anull‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getName/setName ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¹ãƒ†ãƒ¼ãƒˆåã«ç©ºæ–‡å­—ã‚’æ¸¡ã—ãŸå ´åˆã€nullãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetNameShouldReturnNull() {
@@ -586,8 +586,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * getSummary/setSummary ƒƒ\ƒbƒhƒeƒXƒg.
-     * ŠT—v‚É‹ó•¶š‚ğ“n‚µ‚½ê‡Anull‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getSummary/setSummary ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æ¦‚è¦ã«ç©ºæ–‡å­—ã‚’æ¸¡ã—ãŸå ´åˆã€nullãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetSummaryShouldReturnNull() {
@@ -598,8 +598,8 @@ public class StateTest extends TestCase {
     }
     
     /**
-     * getView/setView ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒrƒ…[–¼‚É‹ó•¶š‚ğ“n‚µ‚½ê‡Anull‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getView/setView ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ“ãƒ¥ãƒ¼åã«ç©ºæ–‡å­—ã‚’æ¸¡ã—ãŸå ´åˆã€nullãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetViewShouldReturnNull() {

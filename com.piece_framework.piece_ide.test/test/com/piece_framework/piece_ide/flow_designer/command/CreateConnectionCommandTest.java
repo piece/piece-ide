@@ -8,8 +8,8 @@ import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
- * ‘JˆÚì¬ƒRƒ}ƒ“ƒhƒeƒXƒg.
- * ƒeƒXƒg‘ÎÛFcom.piece_framework.piece_ide.flow_designer.command
+ * é·ç§»ä½œæˆã‚³ãƒãƒ³ãƒ‰ãƒ†ã‚¹ãƒˆ.
+ * ãƒ†ã‚¹ãƒˆå¯¾è±¡ï¼šcom.piece_framework.piece_ide.flow_designer.command
  *                  .CreateConnectionCommand
  * 
  * @author MATSUFUJI Hideharu
@@ -20,8 +20,8 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 public class CreateConnectionCommandTest extends TestCase {
     
     /**
-     * ƒRƒ}ƒ“ƒh‚ğÀs‚·‚é‚±‚Æ‚ÅAƒrƒ…[ƒXƒe[ƒg‚©‚çƒAƒNƒVƒ‡ƒ“ƒXƒe[ƒg
-     * ‚Ö‚Ì‘JˆÚ‚ªì¬‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚é.
+     * ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè¡Œã™ã‚‹ã“ã¨ã§ã€ãƒ“ãƒ¥ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‹ã‚‰ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆ
+     * ã¸ã®é·ç§»ãŒä½œæˆã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹.
      *
      */
     public void testTheCommandShouldConnectFromViewStateToActionState() {

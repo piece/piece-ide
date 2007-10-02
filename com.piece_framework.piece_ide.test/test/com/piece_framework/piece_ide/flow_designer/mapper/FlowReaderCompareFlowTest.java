@@ -8,8 +8,8 @@ import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
- * ÉtÉçÅ[ÉäÅ[É_Å[ÉtÉçÅ[î‰ärÉeÉXÉg.
- * ÉeÉXÉgëŒè€ÅFcom.piece_framework.piece_ide.flow_designer.mapper.FlowReader
+ * „Éï„É≠„Éº„É™„Éº„ÉÄ„Éº„Éï„É≠„ÉºÊØîËºÉ„ÉÜ„Çπ„Éà.
+ * „ÉÜ„Çπ„ÉàÂØæË±°Ôºöcom.piece_framework.piece_ide.flow_designer.mapper.FlowReader
  * 
  * @author MATSUFUJI Hideharu
  * @version 0.1.0
@@ -22,9 +22,9 @@ public class FlowReaderCompareFlowTest extends TestCase {
     private Flow fFlow2;
     
     /**
-     * ÉeÉXÉgÉÅÉ\ÉbÉhé¿çsëOèàóù.
+     * „ÉÜ„Çπ„Éà„É°„ÇΩ„ÉÉ„ÉâÂÆüË°åÂâçÂá¶ÁêÜ.
      * 
-     * @exception Exception àÍî ó·äO
+     * @exception Exception ‰∏ÄËà¨‰æãÂ§ñ
      * @see junit.framework.TestCase#setUp()
      */
     @Override
@@ -37,8 +37,8 @@ public class FlowReaderCompareFlowTest extends TestCase {
     }
     
     /**
-     * compareFlowÉÅÉ\ÉbÉhÉeÉXÉg.
-     * Ç”ÇΩÇ¬ÇÃÉtÉçÅ[Ç™äÆëSÇ…àÍívÇ∑ÇÈèÍçáÇÕtrueÇï‘Ç∑Ç±Ç∆ÇÉeÉXÉgÇ∑ÇÈÅB
+     * compareFlow„É°„ÇΩ„ÉÉ„Éâ„ÉÜ„Çπ„Éà.
+     * „Åµ„Åü„Å§„ÅÆ„Éï„É≠„Éº„ÅåÂÆåÂÖ®„Å´‰∏ÄËá¥„Åô„ÇãÂ†¥Âêà„ÅØtrue„ÇíËøî„Åô„Åì„Å®„Çí„ÉÜ„Çπ„Éà„Åô„Çã„ÄÇ
      * 
      */
     public void testComapreFlowShouldReturnTrueBecauseOfTheSameFlow() {
@@ -46,9 +46,9 @@ public class FlowReaderCompareFlowTest extends TestCase {
     }
     
     /**
-     * compareFlowÉÅÉ\ÉbÉhÉeÉXÉg.
-     * Ç”ÇΩÇ¬ÇÃÉtÉçÅ[Ç™éùÇ¬ÉXÉeÅ[ÉgÇÃXYç¿ïWÇÃÇ›Ç™àŸÇ»ÇÈèÍçáÇÕtrueÇï‘Ç∑
-     * Ç±Ç∆ÇÉeÉXÉgÇ∑ÇÈÅB
+     * compareFlow„É°„ÇΩ„ÉÉ„Éâ„ÉÜ„Çπ„Éà.
+     * „Åµ„Åü„Å§„ÅÆ„Éï„É≠„Éº„ÅåÊåÅ„Å§„Çπ„ÉÜ„Éº„Éà„ÅÆXYÂ∫ßÊ®ô„ÅÆ„Åø„ÅåÁï∞„Å™„ÇãÂ†¥Âêà„ÅØtrue„ÇíËøî„Åô
+     * „Åì„Å®„Çí„ÉÜ„Çπ„Éà„Åô„Çã„ÄÇ
      * 
      */
     public void testComapreFlowShouldReturnTrueBecauseOfFlowTheSameExcludingCoordinates() {
@@ -59,9 +59,9 @@ public class FlowReaderCompareFlowTest extends TestCase {
     }
     
     /**
-     * compareFlowÉÅÉ\ÉbÉhÉeÉXÉg.
-     * Ç”ÇΩÇ¬ÇÃÉtÉçÅ[Ç™éùÇ¬ÉXÉeÅ[ÉgÇÃÉTÉ}ÉäÅ[ÇÃÇ›Ç™àŸÇ»ÇÈèÍçáÇÕtrueÇï‘Ç∑
-     * Ç±Ç∆ÇÉeÉXÉgÇ∑ÇÈÅB
+     * compareFlow„É°„ÇΩ„ÉÉ„Éâ„ÉÜ„Çπ„Éà.
+     * „Åµ„Åü„Å§„ÅÆ„Éï„É≠„Éº„ÅåÊåÅ„Å§„Çπ„ÉÜ„Éº„Éà„ÅÆ„Çµ„Éû„É™„Éº„ÅÆ„Åø„ÅåÁï∞„Å™„ÇãÂ†¥Âêà„ÅØtrue„ÇíËøî„Åô
+     * „Åì„Å®„Çí„ÉÜ„Çπ„Éà„Åô„Çã„ÄÇ
      * 
      */
     public void testComapreFlowShouldReturnTrueBecauseOfFlowTheSameExcludingSummary() {
@@ -72,9 +72,9 @@ public class FlowReaderCompareFlowTest extends TestCase {
     }
     
     /**
-     * compareFlowÉÅÉ\ÉbÉhÉeÉXÉg.
-     * Ç”ÇΩÇ¬ÇÃÉtÉçÅ[Ç™éùÇ¬ÉXÉeÅ[ÉgÇÃÉXÉeÅ[ÉgñºÇ™àŸÇ»ÇÈèÍçáÇÕfalseÇï‘Ç∑
-     * Ç±Ç∆ÇÉeÉXÉgÇ∑ÇÈÅB
+     * compareFlow„É°„ÇΩ„ÉÉ„Éâ„ÉÜ„Çπ„Éà.
+     * „Åµ„Åü„Å§„ÅÆ„Éï„É≠„Éº„ÅåÊåÅ„Å§„Çπ„ÉÜ„Éº„Éà„ÅÆ„Çπ„ÉÜ„Éº„ÉàÂêç„ÅåÁï∞„Å™„ÇãÂ†¥Âêà„ÅØfalse„ÇíËøî„Åô
+     * „Åì„Å®„Çí„ÉÜ„Çπ„Éà„Åô„Çã„ÄÇ
      * 
      */
     public void testComapreFlowShouldReturnFalseBecauseOfTheStateNameIsDifferent() {
@@ -83,9 +83,9 @@ public class FlowReaderCompareFlowTest extends TestCase {
     }
     
     /**
-     * compareFlowÉÅÉ\ÉbÉhÉeÉXÉg.
-     * Ç”ÇΩÇ¬ÇÃÉtÉçÅ[Ç™éùÇ¬ÉrÉÖÅ[ÉXÉeÅ[ÉgÇÃÉrÉÖÅ[ñºÇ™àŸÇ»ÇÈèÍçáÇÕfalseÇï‘Ç∑
-     * Ç±Ç∆ÇÉeÉXÉgÇ∑ÇÈÅB
+     * compareFlow„É°„ÇΩ„ÉÉ„Éâ„ÉÜ„Çπ„Éà.
+     * „Åµ„Åü„Å§„ÅÆ„Éï„É≠„Éº„ÅåÊåÅ„Å§„Éì„É•„Éº„Çπ„ÉÜ„Éº„Éà„ÅÆ„Éì„É•„ÉºÂêç„ÅåÁï∞„Å™„ÇãÂ†¥Âêà„ÅØfalse„ÇíËøî„Åô
+     * „Åì„Å®„Çí„ÉÜ„Çπ„Éà„Åô„Çã„ÄÇ
      * 
      */
     public void testComapreFlowShouldReturnFalseBecauseOfTheViewNameIsDifferent() {
@@ -98,9 +98,9 @@ public class FlowReaderCompareFlowTest extends TestCase {
     }
     
     /**
-     * compareFlowÉÅÉ\ÉbÉhÉeÉXÉg.
-     * Ç”ÇΩÇ¬ÇÃÉtÉçÅ[Ç™éùÇ¬ÉXÉeÅ[ÉgÇÃÉCÉxÉìÉgÇÃÉCÉxÉìÉgñºÇ™àŸÇ»ÇÈèÍçáÇÕfalse
-     * Çï‘Ç∑Ç±Ç∆ÇÉeÉXÉgÇ∑ÇÈÅB
+     * compareFlow„É°„ÇΩ„ÉÉ„Éâ„ÉÜ„Çπ„Éà.
+     * „Åµ„Åü„Å§„ÅÆ„Éï„É≠„Éº„ÅåÊåÅ„Å§„Çπ„ÉÜ„Éº„Éà„ÅÆ„Ç§„Éô„É≥„Éà„ÅÆ„Ç§„Éô„É≥„ÉàÂêç„ÅåÁï∞„Å™„ÇãÂ†¥Âêà„ÅØfalse
+     * „ÇíËøî„Åô„Åì„Å®„Çí„ÉÜ„Çπ„Éà„Åô„Çã„ÄÇ
      * 
      */
     public void testComapreFlowShouldReturnFalseBecauseOfTheEventNameIsDifferent() {
@@ -110,9 +110,9 @@ public class FlowReaderCompareFlowTest extends TestCase {
     }
     
     /**
-     * compareFlowÉÅÉ\ÉbÉhÉeÉXÉg.
-     * Ç”ÇΩÇ¬ÇÃÉtÉçÅ[Ç™éùÇ¬ÉXÉeÅ[ÉgÇÃÉCÉxÉìÉgÇÃéüÉXÉeÅ[ÉgÇ™àŸÇ»ÇÈèÍçáÇÕfalse
-     * Çï‘Ç∑Ç±Ç∆ÇÉeÉXÉgÇ∑ÇÈÅB
+     * compareFlow„É°„ÇΩ„ÉÉ„Éâ„ÉÜ„Çπ„Éà.
+     * „Åµ„Åü„Å§„ÅÆ„Éï„É≠„Éº„ÅåÊåÅ„Å§„Çπ„ÉÜ„Éº„Éà„ÅÆ„Ç§„Éô„É≥„Éà„ÅÆÊ¨°„Çπ„ÉÜ„Éº„Éà„ÅåÁï∞„Å™„ÇãÂ†¥Âêà„ÅØfalse
+     * „ÇíËøî„Åô„Åì„Å®„Çí„ÉÜ„Çπ„Éà„Åô„Çã„ÄÇ
      * 
      */
     public void testComapreFlowShouldReturnFalseBecauseOfTheNextStateIsDifferent() {
@@ -123,9 +123,9 @@ public class FlowReaderCompareFlowTest extends TestCase {
     }
     
     /**
-     * compareFlowÉÅÉ\ÉbÉhÉeÉXÉg.
-     * Ç”ÇΩÇ¬ÇÃÉtÉçÅ[Ç™éùÇ¬ÉXÉeÅ[ÉgÇÃÉCÉxÉìÉgÇÃÉCÉxÉìÉgÉnÉìÉhÉâÇ™àŸÇ»ÇÈèÍçáÇÕ
-     * falseÇï‘Ç∑Ç±Ç∆ÇÉeÉXÉgÇ∑ÇÈÅB
+     * compareFlow„É°„ÇΩ„ÉÉ„Éâ„ÉÜ„Çπ„Éà.
+     * „Åµ„Åü„Å§„ÅÆ„Éï„É≠„Éº„ÅåÊåÅ„Å§„Çπ„ÉÜ„Éº„Éà„ÅÆ„Ç§„Éô„É≥„Éà„ÅÆ„Ç§„Éô„É≥„Éà„Éè„É≥„Éâ„É©„ÅåÁï∞„Å™„ÇãÂ†¥Âêà„ÅØ
+     * false„ÇíËøî„Åô„Åì„Å®„Çí„ÉÜ„Çπ„Éà„Åô„Çã„ÄÇ
      * 
      */
     public void testComapreFlowShouldReturnFalseBecauseOfTheEventHandlerIsDifferent() {
@@ -135,9 +135,9 @@ public class FlowReaderCompareFlowTest extends TestCase {
     }
     
     /**
-     * compareFlowÉÅÉ\ÉbÉhÉeÉXÉg.
-     * Ç”ÇΩÇ¬ÇÃÉtÉçÅ[Ç™éùÇ¬ÉXÉeÅ[ÉgÇÃÉCÉxÉìÉgÇÃÉKÅ[ÉhÉCÉxÉìÉgÉnÉìÉhÉâÇ™àŸÇ»ÇÈèÍçáÇÕ
-     * falseÇï‘Ç∑Ç±Ç∆ÇÉeÉXÉgÇ∑ÇÈÅB
+     * compareFlow„É°„ÇΩ„ÉÉ„Éâ„ÉÜ„Çπ„Éà.
+     * „Åµ„Åü„Å§„ÅÆ„Éï„É≠„Éº„ÅåÊåÅ„Å§„Çπ„ÉÜ„Éº„Éà„ÅÆ„Ç§„Éô„É≥„Éà„ÅÆ„Ç¨„Éº„Éâ„Ç§„Éô„É≥„Éà„Éè„É≥„Éâ„É©„ÅåÁï∞„Å™„ÇãÂ†¥Âêà„ÅØ
+     * false„ÇíËøî„Åô„Åì„Å®„Çí„ÉÜ„Çπ„Éà„Åô„Çã„ÄÇ
      * 
      */
     public void testComapreFlowShouldReturnFalseBecauseOfTheGuardIsDifferent() {
@@ -148,8 +148,8 @@ public class FlowReaderCompareFlowTest extends TestCase {
     }
     
     /**
-     * compareFlowÉÅÉ\ÉbÉhÉeÉXÉg.
-     * ÉtÉçÅ[Ç™nullÇÃèÍçáÇÕfalseÇï‘Ç∑Ç±Ç∆ÇÉeÉXÉgÇ∑ÇÈÅB
+     * compareFlow„É°„ÇΩ„ÉÉ„Éâ„ÉÜ„Çπ„Éà.
+     * „Éï„É≠„Éº„Åånull„ÅÆÂ†¥Âêà„ÅØfalse„ÇíËøî„Åô„Åì„Å®„Çí„ÉÜ„Çπ„Éà„Åô„Çã„ÄÇ
      * 
      */
     public void testComapreFlowShouldReturnFalseBecauseOfTheFlowIsNull() {
@@ -158,12 +158,12 @@ public class FlowReaderCompareFlowTest extends TestCase {
     }
     
     /**
-     * * à»â∫ÇÃÉtÉçÅ[ÇçÏê¨Ç∑ÇÈ.
+     * * ‰ª•‰∏ã„ÅÆ„Éï„É≠„Éº„Çí‰ΩúÊàê„Åô„Çã.
      * [Initial]-->[View]-->[Action]-->[View]-->[Final]<br>
      *               /|         |
      *                -----------
      * 
-     * @param flow ÉtÉçÅ[
+     * @param flow „Éï„É≠„Éº
      */
     private void setState(Flow flow) {
         State initialState = new State(State.INITIAL_STATE);

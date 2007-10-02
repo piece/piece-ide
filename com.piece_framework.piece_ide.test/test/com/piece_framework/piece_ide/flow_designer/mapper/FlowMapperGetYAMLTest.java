@@ -8,8 +8,8 @@ import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
- * ƒtƒ[ƒ}ƒbƒp[YAMLæ“¾ƒeƒXƒg.
- * ƒeƒXƒg‘ÎÛFcom.piece_framework.piece_ide.flow_designer.mapper.FlowMapper
+ * ãƒ•ãƒ­ãƒ¼ãƒãƒƒãƒ‘ãƒ¼YAMLå–å¾—ãƒ†ã‚¹ãƒˆ.
+ * ãƒ†ã‚¹ãƒˆå¯¾è±¡ï¼šcom.piece_framework.piece_ide.flow_designer.mapper.FlowMapper
  * 
  * @author MATSUFUJI Hideharu
  * @version 0.1.0
@@ -21,9 +21,9 @@ public class FlowMapperGetYAMLTest extends TestCase {
     private Flow fFlow;
     
     /**
-     * ƒeƒXƒgƒƒ\ƒbƒhÀs‘Oˆ—.
+     * ãƒ†ã‚¹ãƒˆãƒ¡ã‚½ãƒƒãƒ‰å®Ÿè¡Œå‰å‡¦ç†.
      * 
-     * @exception Exception ˆê”Ê—áŠO
+     * @exception Exception ä¸€èˆ¬ä¾‹å¤–
      * @see junit.framework.TestCase#setUp()
      */
     @Override
@@ -32,8 +32,8 @@ public class FlowMapperGetYAMLTest extends TestCase {
     }
 
     /**
-     * getYAML ƒƒ\ƒbƒhƒeƒXƒg.
-     * ˆÈ‰º‚Ìƒtƒ[‚ğYAML‚Éo—Í‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB<br>
+     * getYAML ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ä»¥ä¸‹ã®ãƒ•ãƒ­ãƒ¼ã‚’YAMLã«å‡ºåŠ›ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚<br>
      * [Initial]-->[View]-->[Final]
      *
      */
@@ -73,8 +73,8 @@ public class FlowMapperGetYAMLTest extends TestCase {
     }
     
     /**
-     * getYAML ƒƒ\ƒbƒhƒeƒXƒg.
-     * ˆÈ‰º‚Ìƒtƒ[‚ğYAML‚Éo—Í‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB<br>
+     * getYAML ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ä»¥ä¸‹ã®ãƒ•ãƒ­ãƒ¼ã‚’YAMLã«å‡ºåŠ›ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚<br>
      * [Initial]-->[View]-->[Action]-->[View]-->[Final]
      *               /|         |
      *                -----------
@@ -160,9 +160,9 @@ public class FlowMapperGetYAMLTest extends TestCase {
     }
     
     /**
-     * getYAML ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒtƒ@ƒCƒiƒ‹ƒXƒe[ƒg‚Ö‚Ì‘JˆÚ‚ª‚Ó‚½‚Â‚ ‚éƒtƒ[‚ğYAML‚É
-     * o—Í‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB<br>
+     * getYAML ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ•ã‚¡ã‚¤ãƒŠãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆã¸ã®é·ç§»ãŒãµãŸã¤ã‚ã‚‹ãƒ•ãƒ­ãƒ¼ã‚’YAMLã«
+     * å‡ºåŠ›ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚<br>
      * [Initial]-->[View]-->[Final]
      *                         /|
      *             [View]--------
@@ -233,9 +233,9 @@ public class FlowMapperGetYAMLTest extends TestCase {
     }
 
     /**
-     * getYAML ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒCƒjƒVƒƒƒ‹ƒXƒe[ƒg‚©‚ç‚Ì‘JˆÚ‚ª‚È‚¢ƒtƒ[‚ğYAML‚É
-     * o—Í‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB<br>
+     * getYAML ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¤ãƒ‹ã‚·ãƒ£ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆã‹ã‚‰ã®é·ç§»ãŒãªã„ãƒ•ãƒ­ãƒ¼ã‚’YAMLã«
+     * å‡ºåŠ›ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚<br>
      * [Initial]   [View]-->[Final]
      *
      */
@@ -269,8 +269,8 @@ public class FlowMapperGetYAMLTest extends TestCase {
     }
     
     /**
-     * getYAML ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒtƒ@ƒCƒiƒ‹ƒXƒe[ƒg‚ª‚È‚¢ƒtƒ[‚ğYAML‚Éo—Í‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB<br>
+     * getYAML ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ•ã‚¡ã‚¤ãƒŠãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆãŒãªã„ãƒ•ãƒ­ãƒ¼ã‚’YAMLã«å‡ºåŠ›ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚<br>
      * [Initial]-->[View]-->[Action]
      *
      */
@@ -325,10 +325,10 @@ public class FlowMapperGetYAMLTest extends TestCase {
     }
     
     /**
-     * getYAML ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒXƒe[ƒg‚Ì“o˜^‡˜‚ªƒCƒjƒVƒƒƒ‹Aƒrƒ…[EƒAƒNƒVƒ‡ƒ“Aƒtƒ@ƒCƒiƒ‹‚Ì
-     * ‡”Ô‚É“o˜^‚³‚ê‚Ä‚¢‚È‚¢‚Ìƒtƒ[‚ğYAML‚Éo—Í‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·
-     * ‚éB<br>
+     * getYAML ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¹ãƒ†ãƒ¼ãƒˆã®ç™»éŒ²é †åºãŒã‚¤ãƒ‹ã‚·ãƒ£ãƒ«ã€ãƒ“ãƒ¥ãƒ¼ãƒ»ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã€ãƒ•ã‚¡ã‚¤ãƒŠãƒ«ã®
+     * é †ç•ªã«ç™»éŒ²ã•ã‚Œã¦ã„ãªã„ã®ãƒ•ãƒ­ãƒ¼ã‚’YAMLã«å‡ºåŠ›ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™
+     * ã‚‹ã€‚<br>
      * [Initial]-->[View]-->[Action]-->[View]-->[Final]
      *
      */
@@ -405,10 +405,10 @@ public class FlowMapperGetYAMLTest extends TestCase {
     }
     
     /**
-     * getYAML ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒtƒ[‚ÉƒAƒNƒVƒ‡ƒ“ƒNƒ‰ƒX‚ªw’è‚³‚ê‚Ä‚¢‚È‚¢‚©‚ÂƒCƒxƒ“ƒgƒnƒ“ƒhƒ‰
-     * ‚É‚àƒAƒNƒVƒ‡ƒ“ƒNƒ‰ƒX‚ªw’è‚³‚ê‚Ä‚¢‚È‚¢ê‡Aƒƒ\ƒbƒh‚Ì‚İ‚ª•Ô‚³
-     * ‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getYAML ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ•ãƒ­ãƒ¼ã«ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¯ãƒ©ã‚¹ãŒæŒ‡å®šã•ã‚Œã¦ã„ãªã„ã‹ã¤ã‚¤ãƒ™ãƒ³ãƒˆãƒãƒ³ãƒ‰ãƒ©
+     * ã«ã‚‚ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¯ãƒ©ã‚¹ãŒæŒ‡å®šã•ã‚Œã¦ã„ãªã„å ´åˆã€ãƒ¡ã‚½ãƒƒãƒ‰ã®ã¿ãŒè¿”ã•
+     * ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetYAMLShouldReturnTheYAMLWhichTheEventHandlerHasMethodOnly() {
@@ -485,8 +485,8 @@ public class FlowMapperGetYAMLTest extends TestCase {
     }
     
     /**
-     * getYAML ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒrƒ‹ƒgƒCƒ“ƒCƒxƒ“ƒg‚ª³‚µ‚­o—Í‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getYAML ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ“ãƒ«ãƒˆã‚¤ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆãŒæ­£ã—ãå‡ºåŠ›ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testGetYAMLShouldReturnTheYAMLWhichHasTheStateWithBuildinEvent() {
@@ -587,10 +587,10 @@ public class FlowMapperGetYAMLTest extends TestCase {
     }
     
     /**
-     * getYAML ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒCƒjƒVƒƒƒ‹ƒXƒe[ƒg‚Æƒtƒ@ƒCƒiƒ‹ƒXƒe[ƒg‚É‚»‚ê‚¼‚êInitialƒCƒxƒ“ƒgA
-     * FinalƒCƒxƒ“ƒg‚ğ‚Âê‡AƒgƒbƒvƒŒƒxƒ‹‚Éinitial/final—v‘f‚ªo—Í
-     * ‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB 
+     * getYAML ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¤ãƒ‹ã‚·ãƒ£ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆã¨ãƒ•ã‚¡ã‚¤ãƒŠãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆã«ãã‚Œãã‚ŒInitialã‚¤ãƒ™ãƒ³ãƒˆã€
+     * Finalã‚¤ãƒ™ãƒ³ãƒˆã‚’æŒã¤å ´åˆã€ãƒˆãƒƒãƒ—ãƒ¬ãƒ™ãƒ«ã«initial/finalè¦ç´ ãŒå‡ºåŠ›
+     * ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚ 
      * 
      */
     public void testGetYAMLShouldReturnTheYAMLWhichHasInitialAndFinal() {

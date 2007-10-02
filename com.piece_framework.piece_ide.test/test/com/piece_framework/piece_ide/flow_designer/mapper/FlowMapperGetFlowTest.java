@@ -11,8 +11,8 @@ import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
- * ƒtƒ[ƒ}ƒbƒp[ ƒtƒ[ƒ‚ƒfƒ‹æ“¾ƒeƒXƒg.
- * ƒeƒXƒg‘ÎÛFcom.piece_framework.piece_ide.flow_designer.mapper.FlowMapper
+ * ãƒ•ãƒ­ãƒ¼ãƒãƒƒãƒ‘ãƒ¼ ãƒ•ãƒ­ãƒ¼ãƒ¢ãƒ‡ãƒ«å–å¾—ãƒ†ã‚¹ãƒˆ.
+ * ãƒ†ã‚¹ãƒˆå¯¾è±¡ï¼šcom.piece_framework.piece_ide.flow_designer.mapper.FlowMapper
  * 
  * @author MATSUFUJI Hideharu
  * @version 0.1.0
@@ -22,9 +22,9 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 public class FlowMapperGetFlowTest extends TestCase {
 
     /**
-     * ƒeƒXƒgƒƒ\ƒbƒhÀs‘Oˆ—.
+     * ãƒ†ã‚¹ãƒˆãƒ¡ã‚½ãƒƒãƒ‰å®Ÿè¡Œå‰å‡¦ç†.
      * 
-     * @exception Exception ˆê”Ê—áŠO
+     * @exception Exception ä¸€èˆ¬ä¾‹å¤–
      * @see junit.framework.TestCase#setUp()
      */
     @Override
@@ -32,8 +32,8 @@ public class FlowMapperGetFlowTest extends TestCase {
     }
     
     /**
-     * getFlow ƒƒ\ƒbƒhƒeƒXƒg.
-     * YAML‚©‚çˆÈ‰º‚Ìƒtƒ[‚ğæ“¾‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB<br>
+     * getFlow ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * YAMLã‹ã‚‰ä»¥ä¸‹ã®ãƒ•ãƒ­ãƒ¼ã‚’å–å¾—ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚<br>
      * [Initial]-->[View]-->[Final]
      *
      */
@@ -76,7 +76,7 @@ public class FlowMapperGetFlowTest extends TestCase {
             }   
         }
         
-        // ƒXƒe[ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertNotNull(initialState);
         
         assertNotNull(viewState);
@@ -85,7 +85,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         
         assertNotNull(finalState);
         
-        // ƒCƒxƒ“ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¤ãƒ™ãƒ³ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertEquals(2, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
@@ -136,8 +136,8 @@ public class FlowMapperGetFlowTest extends TestCase {
     }
     
     /**
-     * getFlow ƒƒ\ƒbƒhƒeƒXƒg.
-     * YAML‚©‚çˆÈ‰º‚Ìƒtƒ[‚ğæ“¾‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB<br>
+     * getFlow ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * YAMLã‹ã‚‰ä»¥ä¸‹ã®ãƒ•ãƒ­ãƒ¼ã‚’å–å¾—ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚<br>
      * [Initial]-->[View]-->[Action]-->[View]-->[Final]
      *               /|         |
      *                -----------
@@ -194,7 +194,7 @@ public class FlowMapperGetFlowTest extends TestCase {
             }
         }
 
-        // ƒXƒe[ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertNotNull(initialState);
         
         assertEquals(2, viewStateList.size());
@@ -208,7 +208,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         
         assertNotNull(finalState);
         
-        // ƒCƒxƒ“ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¤ãƒ™ãƒ³ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertEquals(2, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
@@ -266,9 +266,9 @@ public class FlowMapperGetFlowTest extends TestCase {
     }
     
     /**
-     * getFlow ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒtƒ@ƒCƒiƒ‹ƒXƒe[ƒg‚Ö‚Ì‘JˆÚ‚ª‚Ó‚½‚Â‚ ‚éYAML‚©‚çƒtƒ[
-     * ‚ğæ“¾‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB<br>
+     * getFlow ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ•ã‚¡ã‚¤ãƒŠãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆã¸ã®é·ç§»ãŒãµãŸã¤ã‚ã‚‹YAMLã‹ã‚‰ãƒ•ãƒ­ãƒ¼
+     * ã‚’å–å¾—ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚<br>
      * [Initial]-->[View]-->[Final]
      *                         /|
      *             [View]--------
@@ -315,7 +315,7 @@ public class FlowMapperGetFlowTest extends TestCase {
             }
         }
         
-        // ƒXƒe[ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertNotNull(initialState);
         
         assertEquals(2, viewStateList.size());
@@ -326,7 +326,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         
         assertNotNull(finalState);
         
-        // ƒCƒxƒ“ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¤ãƒ™ãƒ³ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertEquals(2, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
@@ -375,9 +375,9 @@ public class FlowMapperGetFlowTest extends TestCase {
     }
     
     /**
-     * getFlow ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒCƒjƒVƒƒƒ‹ƒXƒe[ƒg‚©‚ç‚Ì‘JˆÚ‚ª‚È‚¢YAML‚©‚ç‚ğƒtƒ[‚ğæ
-     * “¾‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB<br>
+     * getFlow ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¤ãƒ‹ã‚·ãƒ£ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆã‹ã‚‰ã®é·ç§»ãŒãªã„YAMLã‹ã‚‰ã‚’ãƒ•ãƒ­ãƒ¼ã‚’å–
+     * å¾—ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚<br>
      * [Initial]   [View]-->[Final]
      *
      */
@@ -409,7 +409,7 @@ public class FlowMapperGetFlowTest extends TestCase {
             }
         }
         
-        // ƒXƒe[ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertNotNull(initialState);
         
         assertEquals(1, viewStateList.size());
@@ -418,7 +418,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         
         assertNotNull(finalState);
         
-        // ƒCƒxƒ“ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¤ãƒ™ãƒ³ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertEquals(1, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
@@ -445,9 +445,9 @@ public class FlowMapperGetFlowTest extends TestCase {
                 null);
     }
     /**
-     * getFlow ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒtƒ@ƒCƒiƒ‹ƒXƒe[ƒg‚ª‚È‚¢YAML‚©‚çƒtƒ[‚ªæ“¾‚Å‚«‚é‚±‚Æ‚ğ
-     * ƒeƒXƒg‚·‚éB<br>
+     * getFlow ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ•ã‚¡ã‚¤ãƒŠãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆãŒãªã„YAMLã‹ã‚‰ãƒ•ãƒ­ãƒ¼ãŒå–å¾—ã§ãã‚‹ã“ã¨ã‚’
+     * ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚<br>
      * [Initial]-->[View]-->[Action]
      *
      */
@@ -511,7 +511,7 @@ public class FlowMapperGetFlowTest extends TestCase {
             }
         }
 
-        // ƒXƒe[ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertNotNull(initialState);
         
         assertEquals(1, viewStateList.size());
@@ -521,7 +521,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         assertEquals(1, actionStateList.size());
         State actionState = flow.getStateByName("Process1");
         
-        // ƒCƒxƒ“ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¤ãƒ™ãƒ³ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertEquals(2, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
@@ -584,9 +584,9 @@ public class FlowMapperGetFlowTest extends TestCase {
     }
     
     /**
-     * getFlow ƒƒ\ƒbƒhƒeƒXƒg.
-     * ‘JˆÚæ‚ÌƒXƒe[ƒg–¼‚Ì’Ô‚è‚ªŠÔˆá‚Á‚Ä‚¢‚éYAML‚©‚çƒtƒ[‚ªæ“¾‚Å‚«‚é‚±‚Æ‚ğ
-     * ƒeƒXƒg‚·‚éB<br>
+     * getFlow ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * é·ç§»å…ˆã®ã‚¹ãƒ†ãƒ¼ãƒˆåã®ç¶´ã‚ŠãŒé–“é•ã£ã¦ã„ã‚‹YAMLã‹ã‚‰ãƒ•ãƒ­ãƒ¼ãŒå–å¾—ã§ãã‚‹ã“ã¨ã‚’
+     * ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚<br>
      *
      */
     public void testGetFlowShouldReturn_NothingNextState_Flow() {
@@ -640,7 +640,7 @@ public class FlowMapperGetFlowTest extends TestCase {
             }
         }
         
-        // ƒXƒe[ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertNotNull(initialState);
         
         assertEquals(2, viewStateList.size());
@@ -654,7 +654,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         
         assertNotNull(finalState);
         
-        // ƒCƒxƒ“ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¤ãƒ™ãƒ³ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertEquals(1, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
@@ -688,8 +688,8 @@ public class FlowMapperGetFlowTest extends TestCase {
     }
     
     /**
-     * getFlow ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒCƒ“ƒfƒ“ƒg‚ªˆÙí‚ÈYAML‚©‚çƒtƒ[‚ªæ“¾‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB<br>
+     * getFlow ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆãŒç•°å¸¸ãªYAMLã‹ã‚‰ãƒ•ãƒ­ãƒ¼ãŒå–å¾—ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚<br>
      *
      */
     public void testGetFlowShouldReturn_Null() {
@@ -725,9 +725,9 @@ public class FlowMapperGetFlowTest extends TestCase {
     }
 
     /**
-     * getFlow ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒgƒbƒvƒŒƒxƒ‹‚ÌƒL[‚É•s³‚È’l‚ªŠÜ‚Ü‚ê‚Ä‚¢‚éYAML‚©‚çƒtƒ[‚ª
-     * æ“¾‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB<br>
+     * getFlow ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒˆãƒƒãƒ—ãƒ¬ãƒ™ãƒ«ã®ã‚­ãƒ¼ã«ä¸æ­£ãªå€¤ãŒå«ã¾ã‚Œã¦ã„ã‚‹YAMLã‹ã‚‰ãƒ•ãƒ­ãƒ¼ãŒ
+     * å–å¾—ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚<br>
      *
      */
     public void testGetFlowShouldReturn_NothingAction_Flow() {
@@ -781,7 +781,7 @@ public class FlowMapperGetFlowTest extends TestCase {
             }
         }
 
-        // ƒXƒe[ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertNotNull(initialState);
         
         assertEquals(2, viewStateList.size());
@@ -794,7 +794,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         
         assertNotNull(finalState);
         
-        // ƒCƒxƒ“ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¤ãƒ™ãƒ³ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertEquals(2, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
@@ -831,9 +831,9 @@ public class FlowMapperGetFlowTest extends TestCase {
     }
     
     /**
-     * getFlow ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒrƒ…[–¼‚ª‚È‚¢ƒrƒ…[ƒXƒe[ƒg‚Ì‚ ‚éYAML‚©‚çƒrƒ…[EƒAƒNƒVƒ‡ƒ“‚Ì
-     * ‹æ•Ê‚ª³‚µ‚­s‚í‚ê‚½ƒtƒ[‚ªæ“¾‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB<br>
+     * getFlow ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ“ãƒ¥ãƒ¼åãŒãªã„ãƒ“ãƒ¥ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚ã‚‹YAMLã‹ã‚‰ãƒ“ãƒ¥ãƒ¼ãƒ»ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã®
+     * åŒºåˆ¥ãŒæ­£ã—ãè¡Œã‚ã‚ŒãŸãƒ•ãƒ­ãƒ¼ãŒå–å¾—ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚<br>
      *
      */
     public void testGetFlowShouldReturn_NothingView_Flow() {
@@ -887,7 +887,7 @@ public class FlowMapperGetFlowTest extends TestCase {
             }
         }
         
-        // ƒXƒe[ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertNotNull(initialState);
         
         assertEquals(2, viewStateList.size());
@@ -902,8 +902,8 @@ public class FlowMapperGetFlowTest extends TestCase {
     }
     
     /**
-     * getFlow ƒƒ\ƒbƒhƒeƒXƒg.
-     * initial, final—v‘f‚ğ‚ÂYAML‚©‚çƒtƒ[‚ğæ“¾‚Å‚«‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * getFlow ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * initial, finalè¦ç´ ã‚’æŒã¤YAMLã‹ã‚‰ãƒ•ãƒ­ãƒ¼ã‚’å–å¾—ã§ãã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      *
      */
     public void testGetFlowShouldReturnTheFlowWithInitialEventAndFinalEvent() {
@@ -951,7 +951,7 @@ public class FlowMapperGetFlowTest extends TestCase {
             }   
         }
         
-        // ƒXƒe[ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertNotNull(initialState);
         
         assertNotNull(viewState);
@@ -960,7 +960,7 @@ public class FlowMapperGetFlowTest extends TestCase {
         
         assertNotNull(finalState);
         
-        // ƒCƒxƒ“ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“
+        // ã‚¤ãƒ™ãƒ³ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³
         assertEquals(2, initialState.getEventList().size());
         assertEvent(initialState, 
                 "Initial", 
@@ -1011,13 +1011,13 @@ public class FlowMapperGetFlowTest extends TestCase {
     }
     
     /**
-     * ƒm[ƒ}ƒ‹ƒXƒe[ƒg(ƒrƒ…[ƒXƒe[ƒgAƒAƒNƒVƒ‡ƒ“ƒXƒe[ƒg)‚Ìƒrƒ‹ƒgƒCƒ“
-     * ƒCƒxƒ“ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“‚ğs‚¤.
-     * ˆÈ‰º‚Ì“à—e‚ğ•\–¾‚·‚éB<br>
-     * Eƒrƒ‹ƒgƒCƒ“ƒCƒxƒ“ƒg©‘Ì‚Í null ‚Å‚Í‚È‚¢B<br>
-     * EƒCƒxƒ“ƒgƒnƒ“ƒhƒ‰‚Í null ‚Å‚ ‚éB<br>
+     * ãƒãƒ¼ãƒãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆ(ãƒ“ãƒ¥ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã€ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆ)ã®ãƒ“ãƒ«ãƒˆã‚¤ãƒ³
+     * ã‚¤ãƒ™ãƒ³ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³ã‚’è¡Œã†.
+     * ä»¥ä¸‹ã®å†…å®¹ã‚’è¡¨æ˜ã™ã‚‹ã€‚<br>
+     * ãƒ»ãƒ“ãƒ«ãƒˆã‚¤ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆè‡ªä½“ã¯ null ã§ã¯ãªã„ã€‚<br>
+     * ãƒ»ã‚¤ãƒ™ãƒ³ãƒˆãƒãƒ³ãƒ‰ãƒ©ã¯ null ã§ã‚ã‚‹ã€‚<br>
      * 
-     * @param state ƒm[ƒ}ƒ‹ƒXƒe[ƒg(ƒrƒ…[ƒXƒe[ƒgAƒAƒNƒVƒ‡ƒ“ƒXƒe[ƒg)
+     * @param state ãƒãƒ¼ãƒãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆ(ãƒ“ãƒ¥ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã€ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆ)
      */
     private void assertNullNormalStateBiuldinEvent(State state) {
         assertEvent(state, 
@@ -1041,14 +1041,14 @@ public class FlowMapperGetFlowTest extends TestCase {
     }
     
     /**
-     * ƒCƒxƒ“ƒg‚ÌƒAƒT[ƒVƒ‡ƒ“‚ğs‚¤.
+     * ã‚¤ãƒ™ãƒ³ãƒˆã®ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³ã‚’è¡Œã†.
      * 
-     * @param state ‘ÎÛƒXƒe[ƒg
-     * @param eventName ƒCƒxƒ“ƒg–¼
-     * @param expectedEventType ƒCƒxƒ“ƒgƒ^ƒCƒv
-     * @param expectedNextState —\Šú‚µ‚Ä‚¢‚éŸƒXƒe[ƒg
-     * @param expectedEventHandler —\Šú‚µ‚Ä‚¢‚éƒCƒxƒ“ƒgƒnƒ“ƒhƒ‰
-     * @param expectedGuardEventHandler —\Šú‚µ‚Ä‚¢‚éƒK[ƒh
+     * @param state å¯¾è±¡ã‚¹ãƒ†ãƒ¼ãƒˆ
+     * @param eventName ã‚¤ãƒ™ãƒ³ãƒˆå
+     * @param expectedEventType ã‚¤ãƒ™ãƒ³ãƒˆã‚¿ã‚¤ãƒ—
+     * @param expectedNextState äºˆæœŸã—ã¦ã„ã‚‹æ¬¡ã‚¹ãƒ†ãƒ¼ãƒˆ
+     * @param expectedEventHandler äºˆæœŸã—ã¦ã„ã‚‹ã‚¤ãƒ™ãƒ³ãƒˆãƒãƒ³ãƒ‰ãƒ©
+     * @param expectedGuardEventHandler äºˆæœŸã—ã¦ã„ã‚‹ã‚¬ãƒ¼ãƒ‰
      */
     private void assertEvent(
             State state, 

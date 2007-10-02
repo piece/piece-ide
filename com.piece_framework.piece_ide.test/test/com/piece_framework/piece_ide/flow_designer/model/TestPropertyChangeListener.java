@@ -5,7 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
- * ƒeƒXƒg—p‚ÌƒŠƒXƒi[.
+ * ãƒ†ã‚¹ãƒˆç”¨ã®ãƒªã‚¹ãƒŠãƒ¼.
  * 
  * @author MATSUFUJI Hideharu
  * @version 0.1.0
@@ -16,9 +16,9 @@ public class TestPropertyChangeListener implements PropertyChangeListener {
     private PropertyChangeEvent fEvent;
     
     /**
-     * ƒvƒƒpƒeƒB[•ÏXƒCƒxƒ“ƒg‚ğˆ—‚·‚é.
+     * ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ãƒ¼å¤‰æ›´ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‡¦ç†ã™ã‚‹.
      * 
-     * @param event ƒvƒƒpƒeƒB[•ÏXƒCƒxƒ“ƒg
+     * @param event ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ãƒ¼å¤‰æ›´ã‚¤ãƒ™ãƒ³ãƒˆ
      * @see java.beans.PropertyChangeListener
      *          #propertyChange(java.beans.PropertyChangeEvent)
      */
@@ -27,16 +27,16 @@ public class TestPropertyChangeListener implements PropertyChangeListener {
     }
     
     /**
-     * ƒvƒƒpƒeƒB[•ÏXƒCƒxƒ“ƒg‚ğ•Ô‚·.
+     * ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ãƒ¼å¤‰æ›´ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¿”ã™.
      * 
-     * @return ƒvƒƒpƒeƒB[•ÏXƒCƒxƒ“ƒg
+     * @return ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ãƒ¼å¤‰æ›´ã‚¤ãƒ™ãƒ³ãƒˆ
      */
     public PropertyChangeEvent getPropertyChangeEvent() {
         return fEvent;
     }
     
     /**
-     * ƒvƒƒpƒeƒB[•ÏXƒCƒxƒ“ƒg‚ğ‰Šú‰»‚·‚é.
+     * ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ãƒ¼å¤‰æ›´ã‚¤ãƒ™ãƒ³ãƒˆã‚’åˆæœŸåŒ–ã™ã‚‹.
      * 
      */
     public void initializePropertyChangeEvent() {

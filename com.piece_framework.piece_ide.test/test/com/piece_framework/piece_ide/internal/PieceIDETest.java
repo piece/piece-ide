@@ -6,8 +6,8 @@ import java.lang.reflect.Method;
 import junit.framework.TestCase;
 
 /**
- * PieceIDEƒ†[ƒeƒBƒŠƒeƒBƒeƒXƒgƒNƒ‰ƒX.
- * ƒeƒXƒg‘ÎÛFcom.piece_framework.piece_ide.internal.PieceIDE
+ * PieceIDEãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ãƒ†ã‚¹ãƒˆã‚¯ãƒ©ã‚¹.
+ * ãƒ†ã‚¹ãƒˆå¯¾è±¡ï¼šcom.piece_framework.piece_ide.internal.PieceIDE
  * 
  * @author MATSUFUJI Hideharu
  * @version 0.1.0
@@ -17,7 +17,7 @@ import junit.framework.TestCase;
 public class PieceIDETest extends TestCase {
 
     /**
-     * ƒƒ\ƒbƒhÀsƒeƒXƒg—pƒNƒ‰ƒX.
+     * ãƒ¡ã‚½ãƒƒãƒ‰å®Ÿè¡Œãƒ†ã‚¹ãƒˆç”¨ã‚¯ãƒ©ã‚¹.
      * 
      * @author MATSUFUJI Hideharu
      * @version 0.1.0
@@ -28,18 +28,18 @@ public class PieceIDETest extends TestCase {
         private String fValue;
         
         /**
-         * ƒRƒ“ƒXƒgƒ‰ƒNƒ^.
+         * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿.
          * 
-         * @param value ’l
+         * @param value å€¤
          */
         public MethodTest(String value) {
             fValue = value;
         }
 
         /**
-         * ’l‚ªnull‚Ìê‡‚Ínull‚ğAnull‚Å‚È‚¢ê‡‚ÍeƒNƒ‰ƒX‚ÌtoStringƒƒ\ƒbƒh‚ğÀs‚·‚é.
+         * å€¤ãŒnullã®å ´åˆã¯nullã‚’ã€nullã§ãªã„å ´åˆã¯è¦ªã‚¯ãƒ©ã‚¹ã®toStringãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè¡Œã™ã‚‹.
          * 
-         * @return •¶š—ñ
+         * @return æ–‡å­—åˆ—
          * @see java.lang.Object#toString()
          */
         @Override
@@ -51,9 +51,9 @@ public class PieceIDETest extends TestCase {
         }
         
         /**
-         * ’l‚ğ•Ô‚·.
+         * å€¤ã‚’è¿”ã™.
          * 
-         * @return ’l
+         * @return å€¤
          */
         public String getValue() {
             return fValue;
@@ -61,8 +61,8 @@ public class PieceIDETest extends TestCase {
     }
     
     /**
-     * compareƒƒ\ƒbƒhƒeƒXƒg.
-     * “¯‚¶•¶š—ñ‚ğ“n‚µ‚½ê‡‚Étrue‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * compareãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * åŒã˜æ–‡å­—åˆ—ã‚’æ¸¡ã—ãŸå ´åˆã«trueãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testComapreShouldReturnTrueBecauseOfTheParametersAreSameStringObjects() {
@@ -72,8 +72,8 @@ public class PieceIDETest extends TestCase {
     }
     
     /**
-     * compareƒƒ\ƒbƒhƒeƒXƒg.
-     * ˆÙ‚È‚é•¶š—ñ‚ğ“n‚µ‚½ê‡‚Éfalse‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * compareãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ç•°ãªã‚‹æ–‡å­—åˆ—ã‚’æ¸¡ã—ãŸå ´åˆã«falseãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCompareShouldReturnFalseBecauseOfTheParametersAreDifferentStringObjects() {
@@ -83,8 +83,8 @@ public class PieceIDETest extends TestCase {
     }
     
     /**
-     * compareƒƒ\ƒbƒhƒeƒXƒg.
-     * ”äŠr‘ÎÛ‚ÌƒIƒuƒWƒFƒNƒg‚Ì—¼•û‚Énull‚ğ“n‚µ‚½ê‡‚Étrue‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * compareãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æ¯”è¼ƒå¯¾è±¡ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä¸¡æ–¹ã«nullã‚’æ¸¡ã—ãŸå ´åˆã«trueãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCompareShouldReturnTrueBecauseOfTheParametersAreNullObjects() {
@@ -92,8 +92,8 @@ public class PieceIDETest extends TestCase {
     }
     
     /**
-     * compareƒƒ\ƒbƒhƒeƒXƒg.
-     * ”äŠr‘ÎÛ‚ÌƒIƒuƒWƒFƒNƒg‚Ì•Ğ•û‚Ì‚İnull‚Ìê‡‚Éfalse‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * compareãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æ¯”è¼ƒå¯¾è±¡ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç‰‡æ–¹ã®ã¿nullã®å ´åˆã«falseãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCompareShouldReturnFalseBecauseOfTheParametersAreNullObjectAndNotNullObject() {
@@ -107,8 +107,8 @@ public class PieceIDETest extends TestCase {
     }
     
     /**
-     * compareƒƒ\ƒbƒhƒeƒXƒg.
-     * ”äŠr‘ÎÛ‚ÌƒIƒuƒWƒFƒNƒg‚Ì•Ğ•û‚ªnull‚Å‚à‚¤•Ğ•û‚ª‹ó•¶š‚Ìê‡‚Étrue‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * compareãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æ¯”è¼ƒå¯¾è±¡ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç‰‡æ–¹ãŒnullã§ã‚‚ã†ç‰‡æ–¹ãŒç©ºæ–‡å­—ã®å ´åˆã«trueãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCompareShouldReturnTrueBecauseOfTheParametersAreNullObjectAndEmptyStringObject() {
@@ -122,8 +122,8 @@ public class PieceIDETest extends TestCase {
     }
     
     /**
-     * compare(ƒƒ\ƒbƒhÀs)ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒƒ\ƒbƒh‚ÌÀsŒ‹‰Ê‚ª“¯‚¶ê‡‚Éfalse‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * compare(ãƒ¡ã‚½ãƒƒãƒ‰å®Ÿè¡Œ)ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ¡ã‚½ãƒƒãƒ‰ã®å®Ÿè¡ŒçµæœãŒåŒã˜å ´åˆã«falseãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testComapreWithMethodShouldReturnTrueBecauseOfTheMethodValuesAreSame() {
@@ -135,8 +135,8 @@ public class PieceIDETest extends TestCase {
     }
     
     /**
-     * compare(ƒƒ\ƒbƒhÀs)ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒƒ\ƒbƒh‚ÌÀsŒ‹‰Ê‚ªˆÙ‚È‚éê‡‚Éfalse‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * compare(ãƒ¡ã‚½ãƒƒãƒ‰å®Ÿè¡Œ)ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ¡ã‚½ãƒƒãƒ‰ã®å®Ÿè¡ŒçµæœãŒç•°ãªã‚‹å ´åˆã«falseãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testComapreWithMethodShouldReturnFalseBecauseOfTheMethodValuesAreDifferent() {
@@ -148,8 +148,8 @@ public class PieceIDETest extends TestCase {
     }
     
     /**
-     * compare(ƒƒ\ƒbƒhÀs)ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒƒ\ƒbƒh‚ÌÀsŒ‹‰Ê‚Ì—¼•û‚ªnull‚Ìê‡‚Étrue‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * compare(ãƒ¡ã‚½ãƒƒãƒ‰å®Ÿè¡Œ)ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ¡ã‚½ãƒƒãƒ‰ã®å®Ÿè¡Œçµæœã®ä¸¡æ–¹ãŒnullã®å ´åˆã«trueãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testComapreWithMethodShouldReturnTrueBecauseOfTheMethodValuesAreNull() {
@@ -161,8 +161,8 @@ public class PieceIDETest extends TestCase {
     }
     
     /**
-     * compare(ƒƒ\ƒbƒhÀs)ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒƒ\ƒbƒh‚ÌÀsŒ‹‰Ê‚Ì•Ğ•û‚Ì‚İnull‚Ìê‡‚Éfalse‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * compare(ãƒ¡ã‚½ãƒƒãƒ‰å®Ÿè¡Œ)ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ¡ã‚½ãƒƒãƒ‰ã®å®Ÿè¡Œçµæœã®ç‰‡æ–¹ã®ã¿nullã®å ´åˆã«falseãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testComapreWithMethodShouldReturnFalseBecauseOfTheMethodValuesAreNullAndNotNull() {
@@ -178,9 +178,9 @@ public class PieceIDETest extends TestCase {
     }
     
     /**
-     * compare(ƒƒ\ƒbƒhÀs)ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒƒ\ƒbƒh‚ÌÀsŒ‹‰Ê‚Ì•Ğ•û‚ªnull‚Å‚à‚¤•Ğ•û‚ª‹ó•¶š‚Ìê‡‚Étrue‚ª•Ô‚³‚ê‚é
-     * ‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * compare(ãƒ¡ã‚½ãƒƒãƒ‰å®Ÿè¡Œ)ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ¡ã‚½ãƒƒãƒ‰ã®å®Ÿè¡Œçµæœã®ç‰‡æ–¹ãŒnullã§ã‚‚ã†ç‰‡æ–¹ãŒç©ºæ–‡å­—ã®å ´åˆã«trueãŒè¿”ã•ã‚Œã‚‹
+     * ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testComapreWithMethodShouldReturnTrueBecauseOfTheMethodValuesAreNullObjectAndEmptyStringObject() {
@@ -196,9 +196,9 @@ public class PieceIDETest extends TestCase {
     }
     
     /**
-     * compare(ƒƒ\ƒbƒhÀs)ƒƒ\ƒbƒhƒeƒXƒg.
-     * ”äŠr‘ÎÛ‚ÌƒIƒuƒWƒFƒNƒg‚ª—¼•ûnull‚Åƒƒ\ƒbƒh‚ğ“n‚µ‚½ê‡‚Étrue‚ª•Ô‚³‚ê‚é
-     * ‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * compare(ãƒ¡ã‚½ãƒƒãƒ‰å®Ÿè¡Œ)ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æ¯”è¼ƒå¯¾è±¡ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒä¸¡æ–¹nullã§ãƒ¡ã‚½ãƒƒãƒ‰ã‚’æ¸¡ã—ãŸå ´åˆã«trueãŒè¿”ã•ã‚Œã‚‹
+     * ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCompareWithMethodShouldReturnTrueBecauseOfTheParametersAreNullObjects() {
@@ -208,9 +208,9 @@ public class PieceIDETest extends TestCase {
     }
     
     /**
-     * compare(ƒƒ\ƒbƒhÀs)ƒƒ\ƒbƒhƒeƒXƒg.
-     * ”äŠr‘ÎÛ‚ÌƒIƒuƒWƒFƒNƒg‚Ì•Ğ•û‚Ì‚İnull‚Åƒƒ\ƒbƒh‚ğ“n‚µ‚½ê‡‚Étrue‚ª•Ô‚³‚ê
-     * ‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * compare(ãƒ¡ã‚½ãƒƒãƒ‰å®Ÿè¡Œ)ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æ¯”è¼ƒå¯¾è±¡ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç‰‡æ–¹ã®ã¿nullã§ãƒ¡ã‚½ãƒƒãƒ‰ã‚’æ¸¡ã—ãŸå ´åˆã«trueãŒè¿”ã•ã‚Œ
+     * ã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCompareWithMethodShouldReturnTrueBecauseOfTheParametersAreNullObjectsAndNotNull() {
@@ -223,9 +223,9 @@ public class PieceIDETest extends TestCase {
     }
     
     /**
-     * compare(ƒƒ\ƒbƒhÀs)ƒƒ\ƒbƒhƒeƒXƒg.
-     * ”äŠr‘ÎÛ‚ÌƒIƒuƒWƒFƒNƒg‚Ì•Ğ•û‚ªnull‚Å‚à‚¤•Ğ•û‚ª‹ó•¶š‚Åƒƒ\ƒbƒh‚ğ“n‚µ‚½ê‡
-     * ‚Étrue‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * compare(ãƒ¡ã‚½ãƒƒãƒ‰å®Ÿè¡Œ)ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * æ¯”è¼ƒå¯¾è±¡ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç‰‡æ–¹ãŒnullã§ã‚‚ã†ç‰‡æ–¹ãŒç©ºæ–‡å­—ã§ãƒ¡ã‚½ãƒƒãƒ‰ã‚’æ¸¡ã—ãŸå ´åˆ
+     * ã«trueãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testCompareWithMethodShouldReturnTrueBecauseOfTheParametersAreNullObjectAndEmptyStringObject() {
@@ -238,10 +238,10 @@ public class PieceIDETest extends TestCase {
     }
 
     /**
-     * compare(ƒƒ\ƒbƒhÀs)ƒƒ\ƒbƒhƒeƒXƒg.
-     * ƒƒ\ƒbƒhƒIƒuƒWƒFƒNƒg‚Énull‚ğ“n‚µ‚½ê‡‚ÍƒIƒuƒWƒFƒNƒg‚Ì‚İ‚Ìcompare
-     * ‚Æ“¯‚¶“®‚«‚ğ‚·‚éB
-     * “¯‚¶•¶š—ñ‚ğ“n‚µ‚½ê‡‚Étrue‚ª•Ô‚³‚ê‚é‚±‚Æ‚ğƒeƒXƒg‚·‚éB
+     * compare(ãƒ¡ã‚½ãƒƒãƒ‰å®Ÿè¡Œ)ãƒ¡ã‚½ãƒƒãƒ‰ãƒ†ã‚¹ãƒˆ.
+     * ãƒ¡ã‚½ãƒƒãƒ‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«nullã‚’æ¸¡ã—ãŸå ´åˆã¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã¿ã®compare
+     * ã¨åŒã˜å‹•ãã‚’ã™ã‚‹ã€‚
+     * åŒã˜æ–‡å­—åˆ—ã‚’æ¸¡ã—ãŸå ´åˆã«trueãŒè¿”ã•ã‚Œã‚‹ã“ã¨ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
      * 
      */
     public void testComapreWithMethodShouldReturnTrueBecauseOfTheMethodParameterIsNullAndTheParametersAreSameStringObjects() {
@@ -251,11 +251,11 @@ public class PieceIDETest extends TestCase {
     }
     
     /**
-     * ƒƒ\ƒbƒhƒIƒuƒWƒFƒNƒg‚ğì¬‚·‚é.
+     * ãƒ¡ã‚½ãƒƒãƒ‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆã™ã‚‹.
      * 
-     * @param klass ƒNƒ‰ƒX
-     * @param methodName ƒƒ\ƒbƒh–¼
-     * @return ƒƒ\ƒbƒhƒIƒuƒWƒFƒNƒg
+     * @param klass ã‚¯ãƒ©ã‚¹
+     * @param methodName ãƒ¡ã‚½ãƒƒãƒ‰å
+     * @return ãƒ¡ã‚½ãƒƒãƒ‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      */
     private Method createMethod(Class klass, String methodName) {
         Method method = null;
