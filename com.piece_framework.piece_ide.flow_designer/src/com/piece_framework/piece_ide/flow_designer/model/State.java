@@ -159,19 +159,6 @@ public class State extends AbstractModel {
             fName = null;
         }
         firePropertyChange("State#Name", oldValue, fName);
-        
-        if (getType() == State.ACTION_STATE || getType() == State.VIEW_STATE) {
-            for (Event event : fEvents) {
-                if (event.getType() == Event.BUILTIN_EVENT) {
-                    String methodName = event.getEventHandlerMethodName();
-                    if (methodName != null
-                        && methodName.indexOf(fName) == -1) {
-                        event.setEventHandler(
-                                event.getEventHandler() + "On" + fName);
-                    }
-                }
-            }
-        }
     }
 
     /**

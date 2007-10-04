@@ -5,11 +5,11 @@ import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.ui.actions.EditorPartAction;
 import org.eclipse.ui.IEditorPart;
 
-import com.piece_framework.piece_ide.flow_designer.command.UpdateStateCommand;
+import com.piece_framework.piece_ide.flow_designer.command.AdjustEventCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 
 /**
- * ステート更新アクション.
+ * イベント調整アクション.
  * イベント名・イベントハンドラ名をステート名に合わせて一括更新するアクション。
  * 
  * @author MATSUFUJI Hideharu
@@ -17,7 +17,7 @@ import com.piece_framework.piece_ide.flow_designer.model.Flow;
  * @since 0.2.0
  *
  */
-public class UpdateStateAction extends EditorPartAction {
+public class AdjustEventAction extends EditorPartAction {
     /** ステート更新アクションID. */
     public static final String UPDATE_STATE = "UpdateState";
     
@@ -26,11 +26,11 @@ public class UpdateStateAction extends EditorPartAction {
      * 
      * @param editor エディター
      */
-    public UpdateStateAction(IEditorPart editor) {
+    public AdjustEventAction(IEditorPart editor) {
         super(editor);
         
         setId(UPDATE_STATE);
-        setText("ステート更新");
+        setText("イベントの調整");     // Adjust events
     }
     
     /**
@@ -62,7 +62,7 @@ public class UpdateStateAction extends EditorPartAction {
             (CommandStack) getEditorPart().getAdapter(CommandStack.class);
         
         if (commandStack != null) {
-            UpdateStateCommand command = new UpdateStateCommand(flow);
+            AdjustEventCommand command = new AdjustEventCommand(flow);
             commandStack.execute(command);
         }
     }
