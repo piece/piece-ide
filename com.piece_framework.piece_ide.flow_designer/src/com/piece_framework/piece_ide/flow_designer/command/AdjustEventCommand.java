@@ -67,54 +67,12 @@ public class AdjustEventCommand extends Command {
         }
         
         for (State state : fFlow.getStateList()) {
-            List<Event> currentEventList = new ArrayList<Event>();
-            for (Event event : state.getEventList()) {
-                currentEventList.add(event);
-            }
-            
-            for (Event event : currentEventList) {
-                state.removeEvent(event);
-
-                Event newEvent = new Event(event.getType());
-                if (event.getType() == Event.BUILTIN_EVENT) {
-                    newEvent.setName(event.getName());
-                } else {
-                    newEvent.setName(
-                        state.generateEventName(
-                                event.getNextState().getName()));
-                    newEvent.setNextState(event.getNextState());
-                }
-                
-                if (event.getEventHandler() != null) {
-                    boolean isNormalState =
-                                state.getType() == State.VIEW_STATE
-                                || state.getType() == State.ACTION_STATE;
-                    boolean isBuildinEvent = 
-                                event.getType() == Event.BUILTIN_EVENT;
-
-                    String className = event.getEventHandlerClassName();
-                    String methodName = null;
-                    if (isNormalState && isBuildinEvent) {
-                        methodName = newEvent.generateEventHandlerMethodName() 
-                                     + "On" + state.getName();
-                    } else {
-                        methodName = newEvent.generateEventHandlerMethodName();
-                    }
-                    if (className != null) {
-                        newEvent.setEventHandler(className + ":" + methodName);
-                    } else {
-                        newEvent.setEventHandler(methodName);
-                    }
-                }
-                newEvent.setGuardEventHandler(event.getGuardEventHandler());
-                
-                fEventMap.put(newEvent, event);
-                
-                state.addEvent(newEvent);
+            for (Event event : getCurrentEventList(state)) {
+                replaceEvent(state, event);
             }
         }
     }
-    
+
     /**
      * Mapオブジェクトの保持された旧イベントに差し替える.
      * 
@@ -123,17 +81,109 @@ public class AdjustEventCommand extends Command {
     @Override
     public void undo() {
         for (State state : fFlow.getStateList()) {
-            List<Event> currentEventList = new ArrayList<Event>();
-            for (Event event : state.getEventList()) {
-                currentEventList.add(event);
-            }
-            
-            for (Event event : currentEventList) {
+            for (Event event : getCurrentEventList(state)) {
                 Event oldEvent = fEventMap.get(event);
                 
                 state.removeEvent(event);
                 state.addEvent(oldEvent);
             }
         }
+    }
+
+    /**
+     * ステートが保持するイベントリストを新しいリストとして返す.
+     * 
+     * @param state ステート
+     * @return イベントリスト
+     */
+    private List<Event> getCurrentEventList(State state) {
+        List<Event> currentEventList = new ArrayList<Event>();
+        for (Event event : state.getEventList()) {
+            currentEventList.add(event);
+        }
+        return currentEventList;
+    }
+    
+    /**
+     * 新しいイベントを作成し、既存のイベントと差し替える.
+     * イベント名生成に影響しないようにするために、必ず先に既存の
+     * イベントを削除する。
+     * 
+     * @param state ステート
+     * @param event 既存のイベント
+     */
+    private void replaceEvent(State state, Event event) {
+        state.removeEvent(event);
+
+        Event newEvent = new Event(event.getType());
+        newEvent.setName(getEventName(state, event));
+        newEvent.setNextState(event.getNextState());
+        newEvent.setEventHandler(getEventHandler(state, event, newEvent));
+        newEvent.setGuardEventHandler(event.getGuardEventHandler());
+        
+        state.addEvent(newEvent);
+        
+        fEventMap.put(newEvent, event);
+    }
+    
+    /**
+     * イベント名を返す.
+     * ビルトインイベントの場合はそのまま、それ以外の場合は新たに生成
+     * したイベント名を返す.
+     * 
+     * @param state ステート
+     * @param event 既存のイベント
+     * @return イベント名
+     */
+    public String getEventName(State state, Event event) {
+        String eventName = null;
+        if (event.getType() == Event.BUILTIN_EVENT) {
+            eventName = event.getName();
+        } else {
+            eventName = state.generateEventName(
+                            event.getNextState().getName());
+        }
+        return eventName;
+    }
+    
+    /**
+     * イベントハンドラ名を返す.
+     * ノーマルステートのビルトインイベントの場合は末尾に "On" + ステート名を
+     * をセットする。
+     * 
+     * @param state ステート名
+     * @param currentEvent 既存のステート名
+     * @param newEvent 新たしいステート名
+     * @return イベントハンドラ名
+     */
+    public String getEventHandler(
+                        State state, 
+                        Event currentEvent, 
+                        Event newEvent) {
+        if (currentEvent.getEventHandler() == null) {
+            return null;
+        }
+        
+        String eventHandler = null;
+        boolean isNormalState =
+                    state.getType() == State.VIEW_STATE
+                    || state.getType() == State.ACTION_STATE;
+        boolean isBuildinEvent = 
+                    currentEvent.getType() == Event.BUILTIN_EVENT;
+
+        String className = currentEvent.getEventHandlerClassName();
+        String methodName = null;
+        if (isNormalState && isBuildinEvent) {
+            methodName = newEvent.generateEventHandlerMethodName() 
+                         + "On" + state.getName();
+        } else {
+            methodName = newEvent.generateEventHandlerMethodName();
+        }
+        if (className != null) {
+            eventHandler = className + ":" + methodName;
+        } else {
+            eventHandler = methodName;
+        }
+        return eventHandler;
     }
 }
