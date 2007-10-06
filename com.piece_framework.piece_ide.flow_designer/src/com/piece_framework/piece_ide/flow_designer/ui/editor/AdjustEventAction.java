@@ -7,6 +7,7 @@ import org.eclipse.ui.IEditorPart;
 
 import com.piece_framework.piece_ide.flow_designer.command.AdjustEventCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
+import com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin;
 
 /**
  * イベント調整アクション.
@@ -18,8 +19,8 @@ import com.piece_framework.piece_ide.flow_designer.model.Flow;
  *
  */
 public class AdjustEventAction extends EditorPartAction {
-    /** ステート更新アクションID. */
-    public static final String UPDATE_STATE = "UpdateState";
+    /** イベント調整アクションID. */
+    public static final String ADJUST_EVENTS = "AdjustEvents";
     
     /**
      * コンストラクタ.
@@ -29,8 +30,10 @@ public class AdjustEventAction extends EditorPartAction {
     public AdjustEventAction(IEditorPart editor) {
         super(editor);
         
-        setId(UPDATE_STATE);
-        setText("イベントの調整");     // Adjust events
+        setId(ADJUST_EVENTS);
+        setText("イベントの調整");
+        setImageDescriptor(FlowDesignerPlugin.getImageDescriptor(
+                                    "icons/AdjustEvents.gif"));
     }
     
     /**
