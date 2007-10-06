@@ -1,8 +1,5 @@
 package com.piece_framework.piece_ide.flow_designer.command;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import junit.framework.TestCase;
 
 import com.piece_framework.piece_ide.flow_designer.model.Event;
@@ -32,6 +29,15 @@ public class AdjustEventCommandTest extends TestCase {
     private Event fViewToView;
     private Event fActionToFinal;
     
+    /**
+     * フローを生成する.
+     * 生成するフローは下記のとおり。
+     * [Initial]-->[View]-->[Action]-->[Final]
+     *              |_|
+     * 
+     * @exception Exception 一般例外
+     * @see junit.framework.TestCase#setUp()
+     */
     @Override
     protected void setUp() throws Exception {
         fFlow = new Flow(null, null);
@@ -99,9 +105,6 @@ public class AdjustEventCommandTest extends TestCase {
     /**
      * コマンドを実行することで、ステート名に合わせてイベント名・
      * イベントハンドラ名が更新されることをテストする.
-     * フローは下記のとおり。
-     * [Initial]-->[View]-->[Action]-->[Final]
-     *              |_|
      * 
      */
     public void testTheCommandShouldAdjustTheEventAndEventHandlerName() {
@@ -183,6 +186,12 @@ public class AdjustEventCommandTest extends TestCase {
         }
     }
     
+    /**
+     * 遷移イベント・内部イベントをチェックする.
+     * 
+     * @param viewStateName ビューステート名
+     * @param actionStateName アクションステート名
+     */
     private void assertTranstionAndInternalEvent(
                         String viewStateName, 
                         String actionStateName) {
@@ -201,6 +210,12 @@ public class AdjustEventCommandTest extends TestCase {
                             fActionToFinal.getEventHandler());
     }
     
+    /**
+     * ビルトインイベントをチェックする.
+     * 
+     * @param viewStateName ビューステート名
+     * @param actionStateName アクションステート名
+     */
     private void assertBuildinEvent(
                         String viewStateName, 
                         String actionStateName) {
@@ -229,6 +244,10 @@ public class AdjustEventCommandTest extends TestCase {
                 fFinalState.getEventByName("Final").getEventHandler());
     }
     
+    /**
+     * 遷移イベント・内部イベントを再取得する.
+     * 
+     */
     private void refreshEvent() {
         for (Event event : fInitialState.getEventList()) {
             if (event.getType() == Event.TRANSITION_EVENT) {
