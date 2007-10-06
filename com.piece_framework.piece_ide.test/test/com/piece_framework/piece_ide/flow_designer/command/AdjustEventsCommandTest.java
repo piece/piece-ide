@@ -9,14 +9,14 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 /**
  * イベント調整コマンドテスト.
  * テスト対象：com.piece_framework.piece_ide.flow_designer.command
- *                  .StateUpdateCommand
+ *                  .AdjustEventsCommand
  * 
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.2.0
  *
  */
-public class AdjustEventCommandTest extends TestCase {
+public class AdjustEventsCommandTest extends TestCase {
     private Flow fFlow;
     
     private State fInitialState;
@@ -111,7 +111,7 @@ public class AdjustEventCommandTest extends TestCase {
         fViewState.setName("DisplayForm1");
         fActionState.setName("Process1");
         
-        AdjustEventCommand command = new AdjustEventCommand(fFlow);
+        AdjustEventsCommand command = new AdjustEventsCommand(fFlow);
         command.execute();
         
         refreshEvent();
@@ -130,7 +130,7 @@ public class AdjustEventCommandTest extends TestCase {
     public void testTheCommandShouldNotAdjustTheStateThatHasNotBeenChanged() {
         fActionState.setName("Process1");
         
-        AdjustEventCommand command = new AdjustEventCommand(fFlow);
+        AdjustEventsCommand command = new AdjustEventsCommand(fFlow);
         command.execute();
         
         refreshEvent();
@@ -152,7 +152,7 @@ public class AdjustEventCommandTest extends TestCase {
         fViewState.setName("DisplayForm1");
         fActionState.setName("Process1");
         
-        AdjustEventCommand command = new AdjustEventCommand(fFlow);
+        AdjustEventsCommand command = new AdjustEventsCommand(fFlow);
         command.execute();
         
         refreshEvent();
@@ -177,7 +177,7 @@ public class AdjustEventCommandTest extends TestCase {
      * 
      */
     public void testTheCommandShouldNotThrowAnException() {
-        AdjustEventCommand command = new AdjustEventCommand(null);
+        AdjustEventsCommand command = new AdjustEventsCommand(null);
         
         try {
             command.execute();
