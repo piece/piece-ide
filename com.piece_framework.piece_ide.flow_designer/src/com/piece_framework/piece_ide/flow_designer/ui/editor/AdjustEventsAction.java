@@ -5,7 +5,7 @@ import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.ui.actions.EditorPartAction;
 import org.eclipse.ui.IEditorPart;
 
-import com.piece_framework.piece_ide.flow_designer.command.AdjustEventCommand;
+import com.piece_framework.piece_ide.flow_designer.command.AdjustEventsCommand;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin;
 
@@ -18,7 +18,7 @@ import com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin;
  * @since 0.2.0
  *
  */
-public class AdjustEventAction extends EditorPartAction {
+public class AdjustEventsAction extends EditorPartAction {
     /** イベント調整アクションID. */
     public static final String ADJUST_EVENTS = "AdjustEvents";
     
@@ -27,7 +27,7 @@ public class AdjustEventAction extends EditorPartAction {
      * 
      * @param editor エディター
      */
-    public AdjustEventAction(IEditorPart editor) {
+    public AdjustEventsAction(IEditorPart editor) {
         super(editor);
         
         setId(ADJUST_EVENTS);
@@ -65,7 +65,7 @@ public class AdjustEventAction extends EditorPartAction {
             (CommandStack) getEditorPart().getAdapter(CommandStack.class);
         
         if (commandStack != null) {
-            AdjustEventCommand command = new AdjustEventCommand(flow);
+            AdjustEventsCommand command = new AdjustEventsCommand(flow);
             commandStack.execute(command);
         }
     }

@@ -21,7 +21,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  * @since 0.2.0
  *
  */
-public class AdjustEventCommand extends Command {
+public class AdjustEventsCommand extends Command {
     private Flow fFlow;
     private Map<Event, Event> fEventMap;
     
@@ -30,7 +30,7 @@ public class AdjustEventCommand extends Command {
      * 
      * @param flow フロー
      */
-    public AdjustEventCommand(Flow flow) {
+    public AdjustEventsCommand(Flow flow) {
         fFlow = flow;
         fEventMap = new HashMap<Event, Event>();
     }
