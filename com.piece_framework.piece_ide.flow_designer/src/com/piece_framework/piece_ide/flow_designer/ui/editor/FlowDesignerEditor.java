@@ -8,6 +8,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gef.DefaultEditDomain;
+import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.palette.ConnectionCreationToolEntry;
 import org.eclipse.gef.palette.CreationToolEntry;
@@ -19,8 +20,11 @@ import org.eclipse.gef.palette.PanningSelectionToolEntry;
 import org.eclipse.gef.ui.actions.ActionRegistry;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -61,7 +65,25 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
      * 
      */
     public FlowDesignerEditor() {
-        DefaultEditDomain domain = new DefaultEditDomain(this);
+        DefaultEditDomain domain = new DefaultEditDomain(this) {
+            private boolean fIsShowPropertySheet = false;
+            
+            @Override
+            public void focusGained(FocusEvent event, EditPartViewer viewer) {
+                super.focusGained(event, viewer);
+                
+                if (!fIsShowPropertySheet) {
+                    try {
+                        PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                            .getActivePage().showView(
+                                    "org.eclipse.ui.views.PropertySheet");
+                        fIsShowPropertySheet = true;
+                    } catch (PartInitException pie) {
+                        pie.printStackTrace();
+                    }
+                }
+            }
+        };
         setEditDomain(domain);
     }
     
