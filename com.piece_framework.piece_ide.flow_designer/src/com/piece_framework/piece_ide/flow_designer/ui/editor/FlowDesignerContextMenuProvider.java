@@ -51,6 +51,8 @@ public class FlowDesignerContextMenuProvider extends ContextMenuProvider {
                            fRegistry.getAction(ActionFactory.DELETE.getId()));
         
         menu.appendToGroup(GEFActionConstants.GROUP_REST, 
-                       fRegistry.getAction(AdjustEventsAction.ADJUST_EVENTS));
+            fRegistry.getAction(AdjustEventsAction.ADJUST_EVENTS));
+        menu.appendToGroup(GEFActionConstants.GROUP_REST, 
+            fRegistry.getAction(ShowPropertySheetAction.SHOW_PROPERTY_SHEET));
     }
 }

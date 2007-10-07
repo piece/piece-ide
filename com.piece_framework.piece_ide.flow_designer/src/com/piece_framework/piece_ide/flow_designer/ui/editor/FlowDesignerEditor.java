@@ -118,9 +118,13 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         super.createActions();
         ActionRegistry registry = getActionRegistry();
         
-        IAction updateStateAction = new AdjustEventsAction(this);
-        registry.registerAction(updateStateAction);
-        getSelectionActions().add(updateStateAction.getId());
+        IAction adjustEventAction = new AdjustEventsAction(this);
+        registry.registerAction(adjustEventAction);
+        getSelectionActions().add(adjustEventAction.getId());
+        
+        IAction showPropertyAction = new ShowPropertySheetAction(this);
+        registry.registerAction(showPropertyAction);
+        getSelectionActions().add(showPropertyAction.getId());
     }
 
     /**
