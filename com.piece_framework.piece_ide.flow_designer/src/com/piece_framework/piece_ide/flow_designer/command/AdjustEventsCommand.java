@@ -11,6 +11,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import com.piece_framework.piece_ide.flow_designer.model.Event;
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 import com.piece_framework.piece_ide.flow_designer.model.State;
+import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 
 /**
  * イベント調整コマンド.
@@ -45,9 +46,9 @@ public class AdjustEventsCommand extends Command {
     @Override
     public boolean canExecute() {
         return MessageDialog.openQuestion(
-                null, "イベントの調整",  // Adjust events
-                "イベント名・イベントハンドラ名をステート名に合わせて更新します。\n"
-                + "よろしいですか？");
+                null, 
+                Messages.getString("AdjustEvents.Label"), //$NON-NLS-1$
+                Messages.getString("AdjustEvents.Message")); //$NON-NLS-1$
     }
 
     /**
@@ -175,12 +176,12 @@ public class AdjustEventsCommand extends Command {
         String methodName = null;
         if (isNormalState && isBuildinEvent) {
             methodName = newEvent.generateEventHandlerMethodName() 
-                         + "On" + state.getName();
+                         + "On" + state.getName(); //$NON-NLS-1$
         } else {
             methodName = newEvent.generateEventHandlerMethodName();
         }
         if (className != null) {
-            eventHandler = className + ":" + methodName;
+            eventHandler = className + ":" + methodName; //$NON-NLS-1$
         } else {
             eventHandler = methodName;
         }

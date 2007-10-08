@@ -6,6 +6,8 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
+import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
+
 /**
  * プロパティーシート表示アクション.
  * プロパティーシートを表示するアクション。
@@ -17,7 +19,8 @@ import org.eclipse.ui.PlatformUI;
  */
 public class ShowPropertySheetAction extends EditorPartAction {
     /** プロパティーシート表示アクションID. */
-    public static final String SHOW_PROPERTY_SHEET = "ShowPropertySheet";
+    public static final String SHOW_PROPERTY_SHEET = 
+                                    "ShowPropertySheet"; //$NON-NLS-1$
     
     /**
      * コンストラクタ.
@@ -28,7 +31,7 @@ public class ShowPropertySheetAction extends EditorPartAction {
         super(editor);
         
         setId(SHOW_PROPERTY_SHEET);
-        setText("プロパティー");
+        setText(Messages.getString("ShowPropertySheet.Label")); //$NON-NLS-1$
     }
     
     /**
@@ -53,7 +56,7 @@ public class ShowPropertySheetAction extends EditorPartAction {
         try {
             PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage().showView(
-                        "org.eclipse.ui.views.PropertySheet");
+                        "org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
         } catch (PartInitException pie) {
             pie.printStackTrace();
         }

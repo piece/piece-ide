@@ -218,7 +218,7 @@ public class FlowMapper extends AbstractMapper {
      */
     private void addNormalStateList() {
         String[] stateNameList = {"viewState",      //$NON-NLS-1$ 
-                                  "actionState"};   //$NON-NLS-2$
+                                  "actionState"};   //$NON-NLS-1$
         for (String stateName : stateNameList) {
             Object value = getValueIgnoreCase(fYAMLMap, stateName);
             if (value == null || !(value instanceof List)) {
