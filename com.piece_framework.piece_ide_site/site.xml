@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
    <description url="http://eclipse.piece-framework.com/piece-ide/">
-      Piece_IDE Remote Site
+      %Site.UpdateSite.Description
    </description>
    <feature url="features/com.piece_framework.piece_ide_feature_0.1.0.jar" id="com.piece_framework.piece_ide_feature" version="0.1.0">
-      <category name="Piece_IDE"/>
+      <category name="%Site.Category.Name"/>
    </feature>
-   <category-def name="Piece_IDE" label="Piece_IDE"/>
+   <category-def name="%Site.Category.Name" label="%Site.Category.Label"/>
 </site>
