@@ -98,9 +98,9 @@ public class NormalStateMapper extends AbstractStateMapper {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         if (stateListForYAML.size() > 0) {
             if (fStateType == State.VIEW_STATE) {
-                map.put("viewState", stateListForYAML);
+                map.put("viewState", stateListForYAML); //$NON-NLS-1$
             } else if (fStateType == State.ACTION_STATE) {
-                map.put("actionState", stateListForYAML);
+                map.put("actionState", stateListForYAML); //$NON-NLS-1$
             }
         }
         

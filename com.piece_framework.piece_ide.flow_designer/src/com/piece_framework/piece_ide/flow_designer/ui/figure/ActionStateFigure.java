@@ -19,7 +19,7 @@ public class ActionStateFigure extends NormalStateFigure {
     private static final RGB STATE_COLOR = new RGB(204, 204, 204);
     private static final RGB STATE_OUTLINE_COLOR = new RGB(153, 153, 153);
     
-    private static final String ICON = "icons/ActionState.gif";
+    private static final String ICON = "icons/ActionState.gif"; //$NON-NLS-1$
     
     /**
      * ステート色を返す.

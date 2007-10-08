@@ -67,13 +67,15 @@ public abstract class StateEditPart extends AbstractModelEditPart
      *          #propertyChange(java.beans.PropertyChangeEvent)
      */
     public void propertyChange(PropertyChangeEvent event) {
-        if (event.getPropertyName().equals("State#X")) {
+        if (event.getPropertyName().equals("State#X")) { //$NON-NLS-1$
             refreshVisuals();
-        } else if (event.getPropertyName().equals("State#Y")) {
+        } else if (event.getPropertyName().equals("State#Y")) { //$NON-NLS-1$
             refreshVisuals();
-        } else if (event.getPropertyName().equals("State#Event")) {
+        } else if (event.getPropertyName().equals(
+                        "State#Event")) { //$NON-NLS-1$
             refreshSourceConnections();
-        } else if (event.getPropertyName().equals("State#TransitionEvent")) {
+        } else if (event.getPropertyName().equals(
+                        "State#TransitionEvent")) { //$NON-NLS-1$
             refreshTargetConnections();
         }
     }

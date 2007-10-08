@@ -57,7 +57,7 @@ public class EventTableCellModifier implements ICellModifier {
         Event event = (Event) element;
         
         if (event.getType() == Event.BUILTIN_EVENT) {
-            if (!property.equals("EventHandler")) {
+            if (!property.equals("EventHandler")) { //$NON-NLS-1$
                 return false;
             }
         }
@@ -83,9 +83,9 @@ public class EventTableCellModifier implements ICellModifier {
     public Object getValue(Object element, String property) {
         Event event = (Event) element;
 
-        if (property.equals("Name")) {
+        if (property.equals("Name")) { //$NON-NLS-1$
             return event.getName();
-        } else if (property.equals("EventHandler")) {
+        } else if (property.equals("EventHandler")) { //$NON-NLS-1$
             if (event.getEventHandler() != null) {
                 return event.getEventHandler();
             } else {
@@ -95,17 +95,17 @@ public class EventTableCellModifier implements ICellModifier {
                 boolean isBuildinEvent = event.getType() == Event.BUILTIN_EVENT;
                 String eventName = event.generateEventHandlerMethodName();
                 if (isNormalState && isBuildinEvent) {
-                    eventName += "On" + fState.getName();
+                    eventName += "On" + fState.getName(); //$NON-NLS-1$
                 }
                 return eventName;
             }
-        } else if (property.equals("GuardEventHandler")) {
+        } else if (property.equals("GuardEventHandler")) { //$NON-NLS-1$
             if (event.getGuardEventHandler() != null) {
                 return event.getGuardEventHandler();
             }
         }
         
-        return "";
+        return ""; //$NON-NLS-1$
     }
 
     /**

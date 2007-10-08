@@ -40,14 +40,16 @@ public class SetEventAttributeCommand extends AbstractSetAttributeCommand {
         fState = state;
         
         setModel(event);
-        Method setterMethod = createMethod(Event.class, 
-                                           "set" + attributeName,  
-                                           new Class[]{String.class});
+        Method setterMethod = createMethod(
+                                Event.class, 
+                                "set" + attributeName,   //$NON-NLS-1$
+                                new Class[]{String.class});
         setSetterMethod(setterMethod);
         setAttributeValue(attributeValue);
-        Method getterMethod = createMethod(Event.class, 
-                                           "get" + attributeName,  
-                                           null);  
+        Method getterMethod = createMethod(
+                                Event.class, 
+                                "get" + attributeName,   //$NON-NLS-1$
+                                null);  
         Object oldValue = (String) executeMethod(getterMethod, event, null);
         setOldValue(oldValue);
     }
@@ -64,19 +66,21 @@ public class SetEventAttributeCommand extends AbstractSetAttributeCommand {
     boolean canExecuteSpecialCase() {
         Event event = (Event) getModel();
         if (event.getType() == Event.BUILTIN_EVENT) {
-            if (fAttributeName.equals("Name")  
-                || fAttributeName.equals("GuardEventHandler")) { 
+            if (fAttributeName.equals("Name")   //$NON-NLS-1$
+                || fAttributeName.equals("GuardEventHandler")) {  //$NON-NLS-1$
                 return false;
             }
         }
-        if (fAttributeName.equals("Name")) { 
+        if (fAttributeName.equals("Name")) {  //$NON-NLS-1$
             if (!fState.checkUsableEventName((String) getAttributeValue())) {
                 MessageDialog.openError(
                         null, 
                         Messages.getString(
-                            "SetEventAttributeCommand.EventNameErrorTitle"), 
+                            "SetEventAttributeCommand"      //$NON-NLS-1$
+                                + ".EventNameErrorTitle"),  //$NON-NLS-1$
                         Messages.getString(
-                            "SetEventAttributeCommand.EventNameError"));  
+                            "SetEventAttributeCommand"      //$NON-NLS-1$
+                                + ".EventNameError"));      //$NON-NLS-1$
                 return false;
             }
         }

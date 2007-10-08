@@ -24,6 +24,6 @@ public class FinalStateFigure extends SpecialStateFigure {
     @Override
     Image getFigureImage() {
         return FlowDesignerPlugin.getImageDescriptor(
-                        "icons/FinalStateLarge.gif").createImage();
+                    "icons/FinalStateLarge.gif").createImage(); //$NON-NLS-1$
     }
 }

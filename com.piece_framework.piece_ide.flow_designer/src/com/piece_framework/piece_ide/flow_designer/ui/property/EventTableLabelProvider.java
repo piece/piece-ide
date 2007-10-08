@@ -75,6 +75,6 @@ public class EventTableLabelProvider extends LabelProvider implements
                 break;
         }
         
-        return "";
+        return ""; //$NON-NLS-1$
     }
 }

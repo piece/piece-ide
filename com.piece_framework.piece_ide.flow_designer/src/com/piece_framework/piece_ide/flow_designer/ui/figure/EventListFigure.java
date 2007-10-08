@@ -24,7 +24,7 @@ import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 public class EventListFigure extends GradientRectangleFigure {
     
     private static final String MESSAGE_EVENT_NOTING = 
-            Messages.getString("EventListFigure.NothingEvent");
+            Messages.getString("EventListFigure.NothingEvent"); //$NON-NLS-1$
     
     private Label fEventListLabel; 
     private List<String>  fEventList;
@@ -108,7 +108,7 @@ public class EventListFigure extends GradientRectangleFigure {
         Iterator<String> ite = fEventList.iterator();
         while (ite.hasNext()) {
             sb.append(ite.next());
-            sb.append("\n");
+            sb.append("\n"); //$NON-NLS-1$
         }
         fEventListLabel.setText(sb.toString());
         repaint();

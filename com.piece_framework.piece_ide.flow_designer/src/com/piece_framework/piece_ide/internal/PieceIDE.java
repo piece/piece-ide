@@ -104,7 +104,8 @@ public final class PieceIDE {
                 notNullObject = object2;
             }
             
-            return notNullObject instanceof String && notNullObject.equals("");
+            return notNullObject 
+                    instanceof String && notNullObject.equals(""); //$NON-NLS-1$
         }
         return false;
     }

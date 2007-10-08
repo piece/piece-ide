@@ -23,7 +23,7 @@ public class ViewStateFigure extends NormalStateFigure {
     private static final RGB STATE_COLOR = new RGB(225, 221, 170);
     private static final RGB STATE_OUTLINE_COLOR = new RGB(174, 161, 90);
 
-    private static final String ICON = "icons/ViewState.gif";
+    private static final String ICON = "icons/ViewState.gif"; //$NON-NLS-1$
     
     /**
      * コンストラクタ.
@@ -63,9 +63,9 @@ public class ViewStateFigure extends NormalStateFigure {
      */
     public void setView(String view) {
         if (view != null && view.length() > 0) {
-            fViewLabel.setText("[" + view + "]");
+            fViewLabel.setText("[" + view + "]"); //$NON-NLS-1$ //$NON-NLS-2$
         } else {
-            fViewLabel.setText("");
+            fViewLabel.setText(""); //$NON-NLS-1$
         }
     }
 

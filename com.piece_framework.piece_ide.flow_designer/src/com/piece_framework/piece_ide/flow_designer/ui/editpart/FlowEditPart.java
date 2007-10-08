@@ -68,7 +68,7 @@ public class FlowEditPart extends AbstractModelEditPart {
      *          #propertyChange(java.beans.PropertyChangeEvent)
      */
     public void propertyChange(PropertyChangeEvent event) {
-        if (event.getPropertyName().equals("Flow#State")) {
+        if (event.getPropertyName().equals("Flow#State")) { //$NON-NLS-1$
             refreshChildren();
         }
     }

@@ -24,6 +24,6 @@ public class InitialStateFigure extends SpecialStateFigure {
     @Override
     Image getFigureImage() {
         return FlowDesignerPlugin.getImageDescriptor(
-                        "icons/InitialStateLarge.gif").createImage();
+                    "icons/InitialStateLarge.gif").createImage(); //$NON-NLS-1$
     }
 }

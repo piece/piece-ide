@@ -15,9 +15,9 @@ import org.eclipse.core.runtime.Path;
  */
 public final class FlowSerializeUtility {
     
-    private static final String FLOW_PATH = ".settings/flow";
+    private static final String FLOW_PATH = ".settings/flow"; //$NON-NLS-1$
     
-    private static final String FLOW_SERIALIZE_EXT = "_obj";
+    private static final String FLOW_SERIALIZE_EXT = "_obj"; //$NON-NLS-1$
     
     /**
      * コンストラクタ.
@@ -63,7 +63,7 @@ public final class FlowSerializeUtility {
         }
         
         return yamlFile.getProject().getFile(
-                ".settings/flow" 
+                ".settings/flow"  //$NON-NLS-1$
                 + yamlFile.getFullPath().toString() + FLOW_SERIALIZE_EXT);
     }
     
@@ -74,7 +74,8 @@ public final class FlowSerializeUtility {
      * @throws CoreException コア例外
      */
     private static void createFolder(IFile file) throws CoreException {
-        String[] folders = file.getFullPath().toString().split("/");
+        String[] folders = 
+            file.getFullPath().toString().split("/"); //$NON-NLS-1$
         StringBuffer folderPath = new StringBuffer();
         
         // 最初の2要素には空文字、プロジェクト名が入るので2からはじめる
@@ -83,7 +84,7 @@ public final class FlowSerializeUtility {
         int endIndex = folders.length - 1;
         
         for (int i = startIndex; i < endIndex; i++) {
-            folderPath.append("/" + folders[i]);
+            folderPath.append("/" + folders[i]); //$NON-NLS-1$
             IFolder folder = file.getProject().getFolder(
                                 new Path(folderPath.toString()));
             if (!folder.exists()) {

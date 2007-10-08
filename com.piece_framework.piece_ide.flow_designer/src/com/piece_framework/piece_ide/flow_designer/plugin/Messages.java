@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  */
 public final class Messages {
     private static final String BUNDLE_NAME =
-        "com.piece_framework.piece_ide."  
+        "com.piece_framework.piece_ide."   //$NON-NLS-1$
         + "flow_designer.plugin.messages"; //$NON-NLS-1$
 
     private static final ResourceBundle RESOURCE_BUNDLE = 

@@ -66,14 +66,14 @@ public class State extends AbstractModel {
      */
     private void createBuiltinEventByStateType() {
         if (fType == INITIAL_STATE) {
-            fEvents.add(createBuiltinEvent("Initial"));
+            fEvents.add(createBuiltinEvent("Initial")); //$NON-NLS-1$
         } else if (fType == ACTION_STATE
                     || fType == VIEW_STATE) {
-            fEvents.add(createBuiltinEvent("Entry"));
-            fEvents.add(createBuiltinEvent("Activity"));
-            fEvents.add(createBuiltinEvent("Exit"));
+            fEvents.add(createBuiltinEvent("Entry")); //$NON-NLS-1$
+            fEvents.add(createBuiltinEvent("Activity")); //$NON-NLS-1$
+            fEvents.add(createBuiltinEvent("Exit")); //$NON-NLS-1$
         } else if (fType == FINAL_STATE) {
-            fEvents.add(createBuiltinEvent("Final"));
+            fEvents.add(createBuiltinEvent("Final")); //$NON-NLS-1$
         }
     }
     
@@ -158,7 +158,7 @@ public class State extends AbstractModel {
         } else {
             fName = null;
         }
-        firePropertyChange("State#Name", oldValue, fName);
+        firePropertyChange("State#Name", oldValue, fName); //$NON-NLS-1$
     }
 
     /**
@@ -182,7 +182,7 @@ public class State extends AbstractModel {
         } else {
             fSummary = null;
         }
-        firePropertyChange("State#Summary", oldValue, fSummary);
+        firePropertyChange("State#Summary", oldValue, fSummary); //$NON-NLS-1$
     }
     
     /**
@@ -212,7 +212,7 @@ public class State extends AbstractModel {
             } else {
                 fView = null;
             }
-            firePropertyChange("State#View", oldValue, fView);
+            firePropertyChange("State#View", oldValue, fView); //$NON-NLS-1$
         }
     }
 
@@ -271,12 +271,12 @@ public class State extends AbstractModel {
             event.addPropertyChangeListener(listener);
         }
         fEvents.add(event);
-        firePropertyChange("State#Event", null, event);
+        firePropertyChange("State#Event", null, event); //$NON-NLS-1$
         
         if (event.getType() == Event.TRANSITION_EVENT 
             && event.getNextState() != null) {
             event.getNextState().firePropertyChange(
-                    "State#TransitionEvent", null, event);
+                    "State#TransitionEvent", null, event); //$NON-NLS-1$
         }
     }
     
@@ -297,12 +297,12 @@ public class State extends AbstractModel {
         }
         
         fEvents.remove(event);
-        firePropertyChange("State#Event", event, null);
+        firePropertyChange("State#Event", event, null); //$NON-NLS-1$
         
         if (event.getType() == Event.TRANSITION_EVENT
             && event.getNextState() != null) {
             event.getNextState().firePropertyChange(
-                    "State#TransitionEvent", event, null);
+                    "State#TransitionEvent", event, null); //$NON-NLS-1$
         }
     }
     
@@ -322,16 +322,16 @@ public class State extends AbstractModel {
             return null;
         }
         if (getType() == State.INITIAL_STATE) {
-            return "(FirstState)";
+            return "(FirstState)"; //$NON-NLS-1$
         }
         if (getName() == null) {
             return null;
         }
         String baseEventName = null;
         if (!nextStateName.equals(getName())) {
-            baseEventName = nextStateName + "From" + getName();
+            baseEventName = nextStateName + "From" + getName(); //$NON-NLS-1$
         } else {
-            baseEventName = "On" + getName();
+            baseEventName = "On" + getName(); //$NON-NLS-1$
         }
         String eventName = baseEventName;
         int eventSequenceNo = 2;
@@ -381,7 +381,7 @@ public class State extends AbstractModel {
     public void setX(int x) {
         int oldValue = fX;
         fX = x;
-        firePropertyChagen("State#X", oldValue, fX);
+        firePropertyChagen("State#X", oldValue, fX); //$NON-NLS-1$
     }
     
     /**
@@ -401,6 +401,6 @@ public class State extends AbstractModel {
     public void setY(int y) {
         int oldValue = fY;
         fY = y;
-        firePropertyChagen("State#Y", oldValue, fY);
+        firePropertyChagen("State#Y", oldValue, fY); //$NON-NLS-1$
     }
 }

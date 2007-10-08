@@ -131,18 +131,19 @@ public class FlowMapper extends AbstractMapper {
         State initialState = new State(State.INITIAL_STATE);
         initialState.setName(fFlow.generateStateName(State.INITIAL_STATE));
         
-        Object value = getValueIgnoreCase(fYAMLMap, "firstState");
+        Object value = getValueIgnoreCase(fYAMLMap, "firstState"); //$NON-NLS-1$
         if (value != null && value instanceof String) {
             Map<String, String> map = new HashMap<String, String>();
-            map.put("event", initialState.generateEventName((String) value));
-            map.put("nextState", (String) value);
+            map.put("event",    //$NON-NLS-1$
+                    initialState.generateEventName((String) value));
+            map.put("nextState", (String) value); //$NON-NLS-1$
             
             List<Object> list = new ArrayList<Object>();
             list.add(map);
             fTransitionMap.put(initialState, list);
         }
         
-        setBuiltinEventHandler(fYAMLMap, initialState, "Initial");
+        setBuiltinEventHandler(fYAMLMap, initialState, "Initial"); //$NON-NLS-1$
 
         return initialState;
     }
@@ -153,7 +154,7 @@ public class FlowMapper extends AbstractMapper {
      * @return ファイナルステート
      */
     private State createFinalState() {
-        Object value = getValueIgnoreCase(fYAMLMap, "lastState");
+        Object value = getValueIgnoreCase(fYAMLMap, "lastState"); //$NON-NLS-1$
         
         if (value != null 
             && (value instanceof Map || value instanceof List)) {
@@ -170,7 +171,7 @@ public class FlowMapper extends AbstractMapper {
             State finalState = new State(State.FINAL_STATE);
             finalState.setName(fFlow.generateStateName(State.FINAL_STATE));
 
-            setBuiltinEventHandler(fYAMLMap, finalState, "Final");
+            setBuiltinEventHandler(fYAMLMap, finalState, "Final"); //$NON-NLS-1$
 
             Iterator iterator = lastList.iterator();
             while (iterator.hasNext()) {
@@ -195,9 +196,9 @@ public class FlowMapper extends AbstractMapper {
      */
     private void setTransitionEventMap(State state, String nextStateName) {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("event", 
-                nextStateName + "From" + state.getName());
-        map.put("nextState", nextStateName);
+        map.put("event",  //$NON-NLS-1$
+                nextStateName + "From" + state.getName()); //$NON-NLS-1$
+        map.put("nextState", nextStateName); //$NON-NLS-1$
         
         List<Object> list = new ArrayList<Object>();
         if (fTransitionMap.get(state) != null) {
@@ -216,7 +217,8 @@ public class FlowMapper extends AbstractMapper {
      * 
      */
     private void addNormalStateList() {
-        String[] stateNameList = {"viewState", "actionState"};
+        String[] stateNameList = {"viewState",      //$NON-NLS-1$ 
+                                  "actionState"};   //$NON-NLS-2$
         for (String stateName : stateNameList) {
             Object value = getValueIgnoreCase(fYAMLMap, stateName);
             if (value == null || !(value instanceof List)) {
@@ -246,22 +248,22 @@ public class FlowMapper extends AbstractMapper {
      */
     private State createNormalState(Map stateMap) {
         State state = null;
-        Object view = getValueIgnoreCase(stateMap, "view");
-        if (stateMap.containsKey("view")) {
+        Object view = getValueIgnoreCase(stateMap, "view"); //$NON-NLS-1$
+        if (stateMap.containsKey("view")) { //$NON-NLS-1$
             state = new State(State.VIEW_STATE);
             state.setView((String) view);
         } else {
             state = new State(State.ACTION_STATE);
         }
         state.setName(
-                (String) getValueIgnoreCase(stateMap, "name"));
+                (String) getValueIgnoreCase(stateMap, "name")); //$NON-NLS-1$
         
-        setBuiltinEventHandler(stateMap, state, "Activity");
-        setBuiltinEventHandler(stateMap, state, "Entry");
-        setBuiltinEventHandler(stateMap, state, "Exit");
+        setBuiltinEventHandler(stateMap, state, "Activity"); //$NON-NLS-1$
+        setBuiltinEventHandler(stateMap, state, "Entry"); //$NON-NLS-1$
+        setBuiltinEventHandler(stateMap, state, "Exit"); //$NON-NLS-1$
 
         Object transitionValue = 
-            getValueIgnoreCase(stateMap, "transition");
+            getValueIgnoreCase(stateMap, "transition"); //$NON-NLS-1$
         if (transitionValue != null
             && transitionValue instanceof List) {
             fTransitionMap.put(state, (List) transitionValue);
@@ -289,7 +291,8 @@ public class FlowMapper extends AbstractMapper {
                 }
                 
                 State nextState = fFlow.getStateByName(
-                        (String) getValueIgnoreCase((Map) map, "nextState"));
+                        (String) getValueIgnoreCase((Map) map, 
+                                    "nextState")); //$NON-NLS-1$
                 if (nextState != null) {
                     Event event = null;
                     if (nextState != state) {
@@ -298,14 +301,17 @@ public class FlowMapper extends AbstractMapper {
                         event = new Event(Event.INTERNAL_EVENT);
                     }
                     event.setName(
-                        (String) getValueIgnoreCase((Map) map, "event"));
+                        (String) getValueIgnoreCase((Map) map, 
+                                    "event")); //$NON-NLS-1$
                     
                     event.setEventHandler(
                         getEventHandler(
-                                (Map) getValueIgnoreCase((Map) map, "action")));
+                                (Map) getValueIgnoreCase((Map) map, 
+                                        "action"))); //$NON-NLS-1$
                     event.setGuardEventHandler(
                             getEventHandler(
-                                (Map) getValueIgnoreCase((Map) map, "guard")));
+                                (Map) getValueIgnoreCase((Map) map, 
+                                        "guard"))); //$NON-NLS-1$
                     
                     event.setNextState(nextState);
                     state.addEvent(event);
@@ -349,13 +355,14 @@ public class FlowMapper extends AbstractMapper {
         }
         
         Object className =
-            getValueIgnoreCase(map, "class");
+            getValueIgnoreCase(map, "class"); //$NON-NLS-1$
         Object methodName = 
-            getValueIgnoreCase(map, "method");
+            getValueIgnoreCase(map, "method"); //$NON-NLS-1$
         
         String eventHandler = null;
         if (className != null && methodName != null) {
-            eventHandler = (String) className + ":" + (String) methodName;
+            eventHandler = 
+                (String) className + ":" + (String) methodName; //$NON-NLS-1$
         } else if (className == null && methodName != null) {
             eventHandler = (String) methodName;
         }

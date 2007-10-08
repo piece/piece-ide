@@ -56,7 +56,7 @@ public class Event extends AbstractModel implements Serializable {
             if (classAndMethodName == null) {
                 return;
             }
-            String[] arrayValue = classAndMethodName.split(":");
+            String[] arrayValue = classAndMethodName.split(":"); //$NON-NLS-1$
             
             String className = null;
             String methodName = null;
@@ -65,7 +65,7 @@ public class Event extends AbstractModel implements Serializable {
                 className = arrayValue[0];
                 methodName = arrayValue[1];
             } else if (arrayValue.length == 1) {
-                if (classAndMethodName.endsWith(":")) {
+                if (classAndMethodName.endsWith(":")) { //$NON-NLS-1$
                     className = arrayValue[0];
                 } else {
                     methodName = arrayValue[0];
@@ -133,7 +133,7 @@ public class Event extends AbstractModel implements Serializable {
             
             if (className != null && className.length() > 0 
                 && methodName != null && methodName.length() > 0) {
-                return className + ":" + methodName;
+                return className + ":" + methodName; //$NON-NLS-1$
             } else if (methodName != null && methodName.length() > 0) {
                 return methodName;
             }
@@ -183,7 +183,7 @@ public class Event extends AbstractModel implements Serializable {
         } else {
             fName = null;
         }
-        firePropertyChange("Event#Name", oldValue, fName);
+        firePropertyChange("Event#Name", oldValue, fName); //$NON-NLS-1$
     }
 
     /**
@@ -208,7 +208,8 @@ public class Event extends AbstractModel implements Serializable {
         
         State oldValue = fNextState;
         fNextState = nextState;
-        firePropertyChange("Event#NextState", oldValue, fNextState);
+        firePropertyChange(
+            "Event#NextState", oldValue, fNextState); //$NON-NLS-1$
     }
     
     /**
@@ -283,7 +284,8 @@ public class Event extends AbstractModel implements Serializable {
         if (fEventHandler != null) {
             newValue = fEventHandler.toString();
         }
-        firePropertyChange("Event#EventHandler", oldValue, newValue);
+        firePropertyChange(
+            "Event#EventHandler", oldValue, newValue); //$NON-NLS-1$
     }
     
     /**
@@ -350,7 +352,8 @@ public class Event extends AbstractModel implements Serializable {
             newValue = fGuardEventHandler.toString();
         }
         
-        firePropertyChange("Event#GuardEventHandler", oldValue, newValue);
+        firePropertyChange(
+            "Event#GuardEventHandler", oldValue, newValue); //$NON-NLS-1$
     }
     
     /**
@@ -364,6 +367,6 @@ public class Event extends AbstractModel implements Serializable {
         if (getName() == null) {
             return null;
         }
-        return "do" + getName();
+        return "do" + getName(); //$NON-NLS-1$
     }
 }

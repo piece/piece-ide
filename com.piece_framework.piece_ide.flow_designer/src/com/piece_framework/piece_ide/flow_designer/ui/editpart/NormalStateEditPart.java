@@ -73,9 +73,10 @@ public abstract class NormalStateEditPart extends StateEditPart {
      */
     @Override
     public void propertyChange(PropertyChangeEvent event) {
-        if (event.getPropertyName().equals("State#Name")) {
+        if (event.getPropertyName().equals("State#Name")) { //$NON-NLS-1$
             refreshName((NormalStateFigure) getFigure());
-        } else if (event.getPropertyName().equals("State#Event")) {
+        } else if (event.getPropertyName().equals(
+                        "State#Event")) { //$NON-NLS-1$
             refreshEvent((NormalStateFigure) getFigure());
         }
         super.propertyChange(event);

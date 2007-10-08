@@ -71,8 +71,10 @@ public final class FlowReader {
             if (dataExists) {
                 MessageDialog.openError(
                         null, 
-                        Messages.getString("FlowReader.ReadErrorTitle"),
-                        Messages.getString("FlowReader.ReadError"));
+                        Messages.getString(
+                            "FlowReader.ReadErrorTitle"), //$NON-NLS-1$
+                        Messages.getString(
+                            "FlowReader.ReadError")); //$NON-NLS-1$
             }
             return null;
         }
@@ -91,7 +93,8 @@ public final class FlowReader {
                 returnFlow.setName(flowName);
             }
             if (returnFlow.getActionClassName() == null) {
-                returnFlow.setActionClassName(flowName + "Action");
+                returnFlow.setActionClassName(
+                        flowName + "Action"); //$NON-NLS-1$
             }
         }
         
@@ -149,7 +152,8 @@ public final class FlowReader {
             }
             
             FlowMapper flowMapper = new FlowMapper();
-            yamlFlow = flowMapper.getFlow(byteOut.toString("UTF-8"));
+            yamlFlow = 
+                flowMapper.getFlow(byteOut.toString("UTF-8")); //$NON-NLS-1$
             
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
@@ -253,7 +257,7 @@ public final class FlowReader {
         Method getNameMethod = null;
         try {
             getNameMethod = 
-                State.class.getMethod("getName", (Class[]) null);
+                State.class.getMethod("getName", (Class[]) null); //$NON-NLS-1$
         } catch (NoSuchMethodException nsme) {
         }
         

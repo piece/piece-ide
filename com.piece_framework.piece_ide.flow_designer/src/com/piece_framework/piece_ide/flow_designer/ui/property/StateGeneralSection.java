@@ -55,16 +55,19 @@ public class StateGeneralSection extends GeneralPropertySection {
         
         fStateNameLabel = 
             getWidgetFactory().createCLabel(composite, 
-                    Messages.getString("StateGeneralSection.StateName"));
-        fStateName = getWidgetFactory().createText(composite, "");
+                Messages.getString(
+                    "StateGeneralSection.StateName")); //$NON-NLS-1$
+        fStateName = getWidgetFactory().createText(composite, ""); //$NON-NLS-1$
         fSummaryLabel = 
             getWidgetFactory().createCLabel(composite, 
-                    Messages.getString("StateGeneralSection.Summary"));
-        fSummary = getWidgetFactory().createText(composite, "");
+                Messages.getString(
+                    "StateGeneralSection.Summary")); //$NON-NLS-1$
+        fSummary = getWidgetFactory().createText(composite, ""); //$NON-NLS-1$
         fViewNameLabel = 
             getWidgetFactory().createCLabel(composite, 
-                    Messages.getString("StateGeneralSection.ViewName"));
-        fViewName = getWidgetFactory().createText(composite, "");
+                Messages.getString(
+                    "StateGeneralSection.ViewName")); //$NON-NLS-1$
+        fViewName = getWidgetFactory().createText(composite, ""); //$NON-NLS-1$
         
         arrangeGroup(
                 new CLabel[] {fStateNameLabel, fSummaryLabel, fViewNameLabel},
@@ -131,9 +134,9 @@ public class StateGeneralSection extends GeneralPropertySection {
     @Override
     public void refresh() {
         State state = (State) getModel();
-        fStateName.setText("");
-        fSummary.setText("");
-        fViewName.setText("");
+        fStateName.setText(""); //$NON-NLS-1$
+        fSummary.setText(""); //$NON-NLS-1$
+        fViewName.setText(""); //$NON-NLS-1$
         
         if (state != null) {
             if (state.getType() == State.ACTION_STATE
@@ -168,11 +171,11 @@ public class StateGeneralSection extends GeneralPropertySection {
         String attributeName = null;
         
         if (control == fStateName) {
-            attributeName = "Name";
+            attributeName = "Name"; //$NON-NLS-1$
         } else if (control == fSummary) {
-            attributeName = "Summary";
+            attributeName = "Summary"; //$NON-NLS-1$
         } else if (control == fViewName) {
-            attributeName = "View";
+            attributeName = "View"; //$NON-NLS-1$
         }
         
         return attributeName;

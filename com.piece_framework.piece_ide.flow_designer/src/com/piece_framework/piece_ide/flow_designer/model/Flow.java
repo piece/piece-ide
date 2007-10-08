@@ -37,7 +37,7 @@ public class Flow extends AbstractModel {
         setName(name);
         setActionClassName(actionClassName);
         if (getActionClassName() == null && getName() != null) {
-            setActionClassName(getName() + "Action");
+            setActionClassName(getName() + "Action"); //$NON-NLS-1$
         }
         
         fActionStateSequenceNo = 1;
@@ -66,7 +66,7 @@ public class Flow extends AbstractModel {
         } else {
             fName = null;
         }
-        firePropertyChange("Flow#Name", oldValue, fName);
+        firePropertyChange("Flow#Name", oldValue, fName); //$NON-NLS-1$
     }
     
     /**
@@ -90,7 +90,8 @@ public class Flow extends AbstractModel {
         } else {
             fActionClassName = null;
         }
-        firePropertyChange("Flow#ActionClassName", oldValue, fActionClassName);
+        firePropertyChange(
+            "Flow#ActionClassName", oldValue, fActionClassName); //$NON-NLS-1$
     }
 
     /**
@@ -166,7 +167,7 @@ public class Flow extends AbstractModel {
      */
     public void addState(State state) {
         fStates.add(state);
-        firePropertyChange("Flow#State", null, state);
+        firePropertyChange("Flow#State", null, state); //$NON-NLS-1$
     }
 
     /**
@@ -176,7 +177,7 @@ public class Flow extends AbstractModel {
      */
     public void removeState(State state) {
         fStates.remove(state);
-        firePropertyChange("Flow#State", state, null);
+        firePropertyChange("Flow#State", state, null); //$NON-NLS-1$
     }
 
     /**
@@ -198,15 +199,15 @@ public class Flow extends AbstractModel {
         String stateName = null;
         while (!checkUsableStateName(stateName)) {
             if (stateType == State.INITIAL_STATE) {
-                stateName = "InitialState";
+                stateName = "InitialState"; //$NON-NLS-1$
             } else if (stateType == State.VIEW_STATE) {
-                stateName = "DisplayForm" + fViewStateSequenceNo;
+                stateName = "DisplayForm" + fViewStateSequenceNo; //$NON-NLS-1$
                 fViewStateSequenceNo++;
             } else if (stateType == State.ACTION_STATE) {
-                stateName = "Process" + fActionStateSequenceNo;
+                stateName = "Process" + fActionStateSequenceNo; //$NON-NLS-1$
                 fActionStateSequenceNo++;
             } else if (stateType == State.FINAL_STATE) {
-                stateName = "FinalState";
+                stateName = "FinalState"; //$NON-NLS-1$
             }
         }
         return stateName;

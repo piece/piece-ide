@@ -48,7 +48,8 @@ public class FlowElementLabelProvider extends LabelProvider {
         String text = null;
         
         if (elements == null || elements.equals(StructuredSelection.EMPTY)) {
-            return Messages.getString("FlowElementLabelProvider.Flow");
+            return Messages.getString(
+                    "FlowElementLabelProvider.Flow"); //$NON-NLS-1$
         }
         
         Object object = getSelectionObject(elements);
@@ -56,22 +57,28 @@ public class FlowElementLabelProvider extends LabelProvider {
         if (object != null) {
             if (object instanceof ActionStateEditPart) {
                 text = 
-                    Messages.getString("FlowElementLabelProvider.ActionState");
+                    Messages.getString(
+                        "FlowElementLabelProvider.ActionState"); //$NON-NLS-1$
             } else if (object instanceof ViewStateEditPart) {
                 text = 
-                    Messages.getString("FlowElementLabelProvider.ViewState");
+                    Messages.getString(
+                        "FlowElementLabelProvider.ViewState"); //$NON-NLS-1$
             } else if (object instanceof InitialStateEditPart) {
                 text = 
-                    Messages.getString("FlowElementLabelProvider.InitialState");
+                    Messages.getString(
+                        "FlowElementLabelProvider.InitialState"); //$NON-NLS-1$
             } else if (object instanceof FinalStateEditPart) {
                 text = 
-                    Messages.getString("FlowElementLabelProvider.FinalState");
+                    Messages.getString(
+                        "FlowElementLabelProvider.FinalState"); //$NON-NLS-1$
             } else if (object instanceof FlowEditPart) {
                 text = 
-                    Messages.getString("FlowElementLabelProvider.Flow");
+                    Messages.getString(
+                        "FlowElementLabelProvider.Flow"); //$NON-NLS-1$
             } else {
                 text = 
-                    Messages.getString("FlowElementLabelProvider.Unknown");
+                    Messages.getString(
+                        "FlowElementLabelProvider.Unknown"); //$NON-NLS-1$
             }
         }
         

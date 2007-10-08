@@ -85,7 +85,8 @@ public abstract class NormalStateFigure
         
         fBuiltinEventList = 
             new EventListFigure(
-                Messages.getString("NormalStateFigure.BuiltinEvent"),
+                Messages.getString(
+                        "NormalStateFigure.BuiltinEvent"), //$NON-NLS-1$
                 new Color(Display.getCurrent(), EVENT_BUILTIN_TITLE_COLOR),
                 new Color(Display.getCurrent(), EVENT_BUILTIN_LIST_COLOR),
                 new Color(Display.getCurrent(), 
@@ -94,7 +95,8 @@ public abstract class NormalStateFigure
         
         fTransitionEventList = 
             new EventListFigure(
-                Messages.getString("NormalStateFigure.TransitionEvent"),
+                Messages.getString(
+                        "NormalStateFigure.TransitionEvent"), //$NON-NLS-1$
                 new Color(Display.getCurrent(), EVENT_TRANSITION_TITLE_COLOR),
                 new Color(Display.getCurrent(), EVENT_TRANSITION_LIST_COLOR),
                 new Color(Display.getCurrent(), 
@@ -103,7 +105,8 @@ public abstract class NormalStateFigure
         
         fInternalEventList = 
             new EventListFigure(
-                Messages.getString("NormalStateFigure.InternalEvent"),
+                Messages.getString(
+                        "NormalStateFigure.InternalEvent"), //$NON-NLS-1$
                 new Color(Display.getCurrent(), EVENT_INTERNAL_TITLE_COLOR),
                 new Color(Display.getCurrent(), EVENT_INTERNAL_LIST_COLOR),
                 new Color(Display.getCurrent(), 

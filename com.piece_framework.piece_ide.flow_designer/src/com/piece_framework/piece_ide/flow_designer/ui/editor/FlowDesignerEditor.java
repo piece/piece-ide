@@ -23,6 +23,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
@@ -74,9 +75,11 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
                 
                 if (!fIsShowPropertySheet) {
                     try {
-                        PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                            .getActivePage().showView(
-                                    "org.eclipse.ui.views.PropertySheet");
+                        IWorkbenchPage workbenchPage = 
+                            PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                                .getActivePage();
+                        workbenchPage.showView(
+                            "org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
                         fIsShowPropertySheet = true;
                     } catch (PartInitException pie) {
                         pie.printStackTrace();
@@ -113,7 +116,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
      * @see org.eclipse.gef.ui.parts.GraphicalEditor#createActions()
      */
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") //$NON-NLS-1$
     protected void createActions() {
         super.createActions();
         ActionRegistry registry = getActionRegistry();
@@ -162,7 +165,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
                 String fileName = getPartName();
                 
                 flowName = fileName.substring(0, fileName.indexOf('.'));
-                actionClassName = flowName + "Action";  
+                actionClassName = flowName + "Action";   //$NON-NLS-1$
             }
             
             fFlow = new Flow(flowName, actionClassName);
@@ -235,51 +238,59 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         
         PaletteGroup group = new PaletteGroup(
                 Messages.getString(
-                        "FlowDesignerEditor.PalleteGroup"));
+                        "FlowDesignerEditor.PalleteGroup")); //$NON-NLS-1$
         group.add(new PanningSelectionToolEntry());
         group.add(new MarqueeToolEntry());
         root.add(group);
         
         PaletteDrawer drawer = new PaletteDrawer(
                 Messages.getString(
-                    "FlowDesignerEditor.PalletteDrawerState"));
+                    "FlowDesignerEditor.PalletteDrawerState")); //$NON-NLS-1$
         drawer.add(new CreationToolEntry(
             Messages.getString(
-                "FlowDesignerEditor.PalleteViewState"),
+                "FlowDesignerEditor.PalleteViewState"), //$NON-NLS-1$
             Messages.getString(
-                "FlowDesignerEditor.PalleteViewStateComment"),
+                "FlowDesignerEditor.PalleteViewStateComment"), //$NON-NLS-1$
             new StateFactory(State.VIEW_STATE),
-            FlowDesignerPlugin.getImageDescriptor("icons/ViewState.gif"), 
-            FlowDesignerPlugin.getImageDescriptor("icons/ViewState.gif"))); 
+            FlowDesignerPlugin.getImageDescriptor(
+                    "icons/ViewState.gif"),  //$NON-NLS-1$
+            FlowDesignerPlugin.getImageDescriptor(
+                    "icons/ViewState.gif")));  //$NON-NLS-1$
         drawer.add(new CreationToolEntry(
             Messages.getString(
-                "FlowDesignerEditor.PalleteActionState"),
+                "FlowDesignerEditor.PalleteActionState"), //$NON-NLS-1$
             Messages.getString(
-                "FlowDesignerEditor.PalleteActionStateComment"),
+                "FlowDesignerEditor.PalleteActionStateComment"), //$NON-NLS-1$
             new StateFactory(State.ACTION_STATE),
-            FlowDesignerPlugin.getImageDescriptor("icons/ActionState.gif"), 
-            FlowDesignerPlugin.getImageDescriptor("icons/ActionState.gif"))); 
+            FlowDesignerPlugin.getImageDescriptor(
+                    "icons/ActionState.gif"),  //$NON-NLS-1$
+            FlowDesignerPlugin.getImageDescriptor(
+                    "icons/ActionState.gif")));  //$NON-NLS-1$
         drawer.add(new CreationToolEntry(
             Messages.getString(
-                "FlowDesignerEditor.PalleteFinalState"),
+                "FlowDesignerEditor.PalleteFinalState"), //$NON-NLS-1$
             Messages.getString(
-                "FlowDesignerEditor.PalleteFinalStateComment"),
+                "FlowDesignerEditor.PalleteFinalStateComment"), //$NON-NLS-1$
             new StateFactory(State.FINAL_STATE),
-            FlowDesignerPlugin.getImageDescriptor("icons/FinalState.gif"), 
-            FlowDesignerPlugin.getImageDescriptor("icons/FinalState.gif"))); 
+            FlowDesignerPlugin.getImageDescriptor(
+                    "icons/FinalState.gif"),  //$NON-NLS-1$
+            FlowDesignerPlugin.getImageDescriptor(
+                    "icons/FinalState.gif")));  //$NON-NLS-1$
         root.add(drawer);
         
         drawer = new PaletteDrawer(
             Messages.getString(
-                "FlowDesignerEditor.PalletteDrawerTransition"));
+                "FlowDesignerEditor.PalletteDrawerTransition")); //$NON-NLS-1$
         drawer.add(new ConnectionCreationToolEntry(
             Messages.getString(
-                "FlowDesignerEditor.PalletteTransition"),
+                "FlowDesignerEditor.PalletteTransition"), //$NON-NLS-1$
             Messages.getString(
-                "FlowDesignerEditor.PalleteTransitionComment"),
+                "FlowDesignerEditor.PalleteTransitionComment"), //$NON-NLS-1$
             new EventFactory(Event.TRANSITION_EVENT),
-            FlowDesignerPlugin.getImageDescriptor("icons/Transition.gif"), 
-            FlowDesignerPlugin.getImageDescriptor("icons/Transition.gif"))); 
+            FlowDesignerPlugin.getImageDescriptor(
+                    "icons/Transition.gif"),  //$NON-NLS-1$
+            FlowDesignerPlugin.getImageDescriptor(
+                    "icons/Transition.gif")));  //$NON-NLS-1$
         root.add(drawer);
         
         return root;

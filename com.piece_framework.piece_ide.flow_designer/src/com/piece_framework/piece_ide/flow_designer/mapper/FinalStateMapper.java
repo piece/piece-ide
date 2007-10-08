@@ -56,12 +56,12 @@ public class FinalStateMapper extends AbstractStateMapper {
         }
         
         State finalState = stateList.get(0);
-        Event finalEvent = finalState.getEventByName("Final");
+        Event finalEvent = finalState.getEventByName("Final"); //$NON-NLS-1$
         if (finalEvent != null) {
             addEventHandlerToMap(
                     finalEvent.getEventHandlerClassName(),
                     finalEvent.getEventHandlerMethodName(),
-                    "final",
+                    "final", //$NON-NLS-1$
                     map);
         }
         
@@ -76,10 +76,10 @@ public class FinalStateMapper extends AbstractStateMapper {
         }
         
         if (stateListForYaml.size() > 1) {
-            map.put("lastState", stateListForYaml);
+            map.put("lastState", stateListForYaml); //$NON-NLS-1$
         } else if (stateListForYaml.size() == 1) {
             Map stateMap = (Map) stateListForYaml.get(0);
-            map.put("lastState", stateMap);
+            map.put("lastState", stateMap); //$NON-NLS-1$
         }
 
         return map;

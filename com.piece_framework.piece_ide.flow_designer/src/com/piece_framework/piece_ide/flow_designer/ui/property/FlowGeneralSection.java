@@ -48,13 +48,16 @@ public class FlowGeneralSection extends GeneralPropertySection {
 
         fFlowNameLabel = 
             getWidgetFactory().createCLabel(composite, 
-                    Messages.getString("FlowGeneralSection.FlowName"));
-        fFlowName = getWidgetFactory().createText(composite, "");
+                Messages.getString(
+                    "FlowGeneralSection.FlowName")); //$NON-NLS-1$
+        fFlowName = getWidgetFactory().createText(composite, ""); //$NON-NLS-1$
         
         fActionClassNameLabel = 
             getWidgetFactory().createCLabel(composite, 
-                    Messages.getString("FlowGeneralSection.ActionClass"));
-        fActionClassName = getWidgetFactory().createText(composite, "");
+                Messages.getString(
+                    "FlowGeneralSection.ActionClass")); //$NON-NLS-1$
+        fActionClassName = 
+            getWidgetFactory().createText(composite, ""); //$NON-NLS-1$
         
         arrangeGroup(
                 new CLabel[] {fFlowNameLabel, fActionClassNameLabel},
@@ -73,8 +76,8 @@ public class FlowGeneralSection extends GeneralPropertySection {
      */
     @Override
     public void refresh() {
-        fFlowName.setText("");
-        fActionClassName.setText("");
+        fFlowName.setText(""); //$NON-NLS-1$
+        fActionClassName.setText(""); //$NON-NLS-1$
         
         Flow flow = (Flow) getModel();
         if (flow != null) {
@@ -101,9 +104,9 @@ public class FlowGeneralSection extends GeneralPropertySection {
         String attributeName = null;
         
         if (control == fFlowName) {
-            attributeName = "Name";
+            attributeName = "Name"; //$NON-NLS-1$
         } else if (control == fActionClassName) {
-            attributeName = "ActionClassName";
+            attributeName = "ActionClassName"; //$NON-NLS-1$
         }
         
         return attributeName;

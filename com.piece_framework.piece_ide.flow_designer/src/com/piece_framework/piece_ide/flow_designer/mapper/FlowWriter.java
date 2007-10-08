@@ -67,7 +67,8 @@ public final class FlowWriter {
         String yamlString = mapper.getYAML(flow);
         try {
             yamlFile.setContents(
-                    new ByteArrayInputStream(yamlString.getBytes("UTF-8")), 
+                    new ByteArrayInputStream(
+                            yamlString.getBytes("UTF-8")),  //$NON-NLS-1$
                     true,
                     false,
                     monitor);

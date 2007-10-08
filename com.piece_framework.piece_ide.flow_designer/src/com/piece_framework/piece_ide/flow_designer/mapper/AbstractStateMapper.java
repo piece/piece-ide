@@ -69,7 +69,7 @@ public abstract class AbstractStateMapper extends AbstractMapper {
         StringBuffer yamlBuffer = new StringBuffer();
         if (map.size() > 0) {
             yamlBuffer.append(Yaml.dump(map, true));
-            yamlBuffer.append("\n\n");
+            yamlBuffer.append("\n\n"); //$NON-NLS-1$
         }
         return formatYAMLString(yamlBuffer.toString());
     }
@@ -93,9 +93,9 @@ public abstract class AbstractStateMapper extends AbstractMapper {
     protected void addStateInformationToMap(
                         State state, 
                         Map<String, Object> map) {
-        map.put("name", state.getName());
+        map.put("name", state.getName()); //$NON-NLS-1$
         if (state.getType() == State.VIEW_STATE) {
-            map.put("view", state.getView());
+            map.put("view", state.getView()); //$NON-NLS-1$
         }
     }
     
@@ -111,23 +111,23 @@ public abstract class AbstractStateMapper extends AbstractMapper {
                 continue;
             }
             
-            if (event.getName().equals("Activity")) {
+            if (event.getName().equals("Activity")) { //$NON-NLS-1$
                 addEventHandlerToMap(
                         event.getEventHandlerClassName(),
                         event.getEventHandlerMethodName(),
-                        "activity",
+                        "activity", //$NON-NLS-1$
                         map);
-            } else if (event.getName().equals("Entry")) {
+            } else if (event.getName().equals("Entry")) { //$NON-NLS-1$
                 addEventHandlerToMap(
                         event.getEventHandlerClassName(),
                         event.getEventHandlerMethodName(),
-                        "entry",
+                        "entry", //$NON-NLS-1$
                         map);                
-            } else if (event.getName().equals("Exit")) {
+            } else if (event.getName().equals("Exit")) { //$NON-NLS-1$
                 addEventHandlerToMap(
                         event.getEventHandlerClassName(),
                         event.getEventHandlerMethodName(),
-                        "exit",
+                        "exit", //$NON-NLS-1$
                         map);
             }
         }
@@ -152,24 +152,25 @@ public abstract class AbstractStateMapper extends AbstractMapper {
                 continue;
             }
             Map<String, Object> eventMap = new LinkedHashMap<String, Object>();
-            eventMap.put("event", event.getName());
-            eventMap.put("nextState", event.getNextState().getName());
+            eventMap.put("event", event.getName()); //$NON-NLS-1$
+            eventMap.put(
+                    "nextState", event.getNextState().getName()); //$NON-NLS-1$
             
             addEventHandlerToMap(
                     event.getEventHandlerClassName(),
                     event.getEventHandlerMethodName(), 
-                    "action", 
+                    "action",  //$NON-NLS-1$
                     eventMap);
             addEventHandlerToMap(
                     event.getGuardEventHandlerClassName(),
                     event.getGuardEventHandlerMethodName(), 
-                    "guard", 
+                    "guard",  //$NON-NLS-1$
                     eventMap);
             
             eventList.add(eventMap);
         }
         if (eventList.size() > 0) {
-            map.put("transition", eventList);
+            map.put("transition", eventList); //$NON-NLS-1$
         }
     }
     
@@ -193,9 +194,9 @@ public abstract class AbstractStateMapper extends AbstractMapper {
         Map<String, Object> eventHandlerMap = 
                     new LinkedHashMap<String, Object>();
         if (eventHandlerClassName != null) {
-            eventHandlerMap.put("class", eventHandlerClassName);
+            eventHandlerMap.put("class", eventHandlerClassName); //$NON-NLS-1$
         }
-        eventHandlerMap.put("method", eventHandlerMethodName);
+        eventHandlerMap.put("method", eventHandlerMethodName); //$NON-NLS-1$
         map.put(key, eventHandlerMap);
     }
 }

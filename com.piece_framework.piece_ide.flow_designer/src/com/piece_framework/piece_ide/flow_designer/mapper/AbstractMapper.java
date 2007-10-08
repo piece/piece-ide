@@ -38,12 +38,13 @@ public abstract class AbstractMapper {
     protected String formatYAMLString(String yamlString) {
         String result = yamlString;
         
-        result = result.replace("\r\n", "\n");
-        result = result.replace("--- \n", "");
-        result = result.replace("\"", "");
-        result = result.replace(" !java.util.LinkedHashMap", "");
-        result = result.replaceAll("-\n *", "- ");
-        result = result.replace(": \n", ":\n");
+        result = result.replace("\r\n", "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+        result = result.replace("--- \n", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        result = result.replace("\"", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        result = result.replace(
+                " !java.util.LinkedHashMap", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        result = result.replaceAll("-\n *", "- "); //$NON-NLS-1$ //$NON-NLS-2$
+        result = result.replace(": \n", ":\n"); //$NON-NLS-1$ //$NON-NLS-2$
         if (result.length() > 0) {
             result = result.substring(0, result.length() - 1);
         }

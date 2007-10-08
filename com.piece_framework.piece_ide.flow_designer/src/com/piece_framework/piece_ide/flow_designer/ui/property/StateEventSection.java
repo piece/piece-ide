@@ -149,7 +149,8 @@ public class StateEventSection extends FlowDesignerPropertySection {
         FormData data;
         fStateNameLabel = 
             getWidgetFactory().createCLabel(composite, 
-                    Messages.getString("StateEventSection.StateName"));
+                Messages.getString(
+                    "StateEventSection.StateName")); //$NON-NLS-1$
         data = new FormData();
         data.left = new FormAttachment(0, 0);
         data.right = new FormAttachment(LABEL_POSITION_PERCENT, 0);
@@ -167,7 +168,8 @@ public class StateEventSection extends FlowDesignerPropertySection {
         fDeleteInternalEvent =
             getWidgetFactory().createButton(
                 composite, 
-                Messages.getString("StateEventSection.DeleteInternalEvent"), 
+                Messages.getString(
+                        "StateEventSection.DeleteInternalEvent"),  //$NON-NLS-1$
                 SWT.PUSH);
         data = new FormData();
         data.right = new FormAttachment(BUTTON_POSITION_PERCENT, 0);
@@ -178,7 +180,8 @@ public class StateEventSection extends FlowDesignerPropertySection {
         fCreateInternalEvent =
             getWidgetFactory().createButton(
                 composite,
-                Messages.getString("StateEventSection.CreateInternalEvent"), 
+                Messages.getString(
+                        "StateEventSection.CreateInternalEvent"),  //$NON-NLS-1$
                 SWT.PUSH);
         data = new FormData();
         data.right = new FormAttachment(fDeleteInternalEvent, 0);
@@ -203,10 +206,10 @@ public class StateEventSection extends FlowDesignerPropertySection {
         fEventTableViewer.setContentProvider(new ArrayContentProvider());
         fEventTableViewer.setLabelProvider(new EventTableLabelProvider());
         fEventTableViewer.setColumnProperties(new String[] {
-                            "Name",
+                            "Name", //$NON-NLS-1$
                             null,
-                            "EventHandler",
-                            "GuardEventHandler" });
+                            "EventHandler", //$NON-NLS-1$
+                            "GuardEventHandler" }); //$NON-NLS-1$
         fEventTableViewer.setCellEditors(new CellEditor[] {
                             new TextCellEditor(eventTable),
                             null,
@@ -217,20 +220,21 @@ public class StateEventSection extends FlowDesignerPropertySection {
         eventTable.setLinesVisible(true);
         
         createEventTableColumn(
-                eventTable, 
-                Messages.getString("StateEventSection.EventName"), 
-                EVENT_COLUMN_WIDTH);
+            eventTable, 
+            Messages.getString("StateEventSection.EventName"),  //$NON-NLS-1$
+            EVENT_COLUMN_WIDTH);
+        createEventTableColumn(
+            eventTable, 
+            Messages.getString(
+                    "StateEventSection.TransitionStateName"),  //$NON-NLS-1$
+            NEXT_STATE_COLUMN_WIDTH);
+        createEventTableColumn(
+            eventTable, 
+            Messages.getString("StateEventSection.EventHandler"),  //$NON-NLS-1$
+            EVENT_HANDLER_COLUMN_WIDTH);
         createEventTableColumn(
                 eventTable, 
-                Messages.getString("StateEventSection.TransitionStateName"), 
-                NEXT_STATE_COLUMN_WIDTH);
-        createEventTableColumn(
-                eventTable, 
-                Messages.getString("StateEventSection.EventHandler"), 
-                EVENT_HANDLER_COLUMN_WIDTH);
-        createEventTableColumn(
-                eventTable, 
-                Messages.getString("StateEventSection.Guard"), 
+                Messages.getString("StateEventSection.Guard"),  //$NON-NLS-1$
                 GUARD_COLUMN_WIDTH);
         
         eventTable.addSelectionListener(new SelectionListener() {
@@ -302,7 +306,8 @@ public class StateEventSection extends FlowDesignerPropertySection {
         
         if (state != null) {
             fStateNameLabel.setText(
-                    Messages.getString("StateEventSection.StateName"));
+                    Messages.getString(
+                            "StateEventSection.StateName")); //$NON-NLS-1$
             if (state.getName() != null) {
                 fStateNameLabel.setText(
                         fStateNameLabel.getText() + state.getName());

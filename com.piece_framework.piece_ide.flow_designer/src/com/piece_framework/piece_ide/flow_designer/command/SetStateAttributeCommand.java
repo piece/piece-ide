@@ -41,12 +41,12 @@ public class SetStateAttributeCommand extends AbstractSetAttributeCommand {
         
         setModel(state);
         Method setterMethod = createMethod(State.class, 
-                                           "set" + attributeName, 
+                                           "set" + attributeName,  //$NON-NLS-1$
                                            new Class[]{String.class});
         setSetterMethod(setterMethod);
         setAttributeValue(attributeValue);
         Method getterMethod = createMethod(State.class, 
-                                           "get" + attributeName, 
+                                           "get" + attributeName,  //$NON-NLS-1$
                                            null);  
         Object oldValue = (String) executeMethod(getterMethod, state, null);
         setOldValue(oldValue);
@@ -62,14 +62,16 @@ public class SetStateAttributeCommand extends AbstractSetAttributeCommand {
      */
     @Override
     boolean canExecuteSpecialCase() {
-        if (fAttributeName.equals("Name")) {
+        if (fAttributeName.equals("Name")) { //$NON-NLS-1$
             if (!fFlow.checkUsableStateName((String) getAttributeValue())) {
                 MessageDialog.openError(
-                        null, 
-                        Messages.getString(
-                            "SetStateAttributeCommand.StateNameErrorTitle"),
-                        Messages.getString(
-                             "SetStateAttributeCommand.StateNameError"));
+                    null, 
+                    Messages.getString(
+                        "SetStateAttributeCommand"      //$NON-NLS-1$
+                            + ".StateNameErrorTitle"),  //$NON-NLS-1$
+                    Messages.getString(
+                         "SetStateAttributeCommand"     //$NON-NLS-1$
+                            + ".StateNameError"));      //$NON-NLS-1$
                 return false;
             }
         }
