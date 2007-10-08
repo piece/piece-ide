@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Piece_IDE
+Bundle-Name: %Manifest.BundleName
 Bundle-SymbolicName: com.piece_framework.piece_ide
 Bundle-Version: 0.1.0
-Bundle-Vendor: Piece Project
+Bundle-Vendor: %Manifest.BundleProvider
 Bundle-Localization: plugin
