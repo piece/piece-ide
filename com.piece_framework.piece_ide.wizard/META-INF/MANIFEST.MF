@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Piece_IDE Wizard
+Bundle-Name: %Manifest.BundleName
 Bundle-SymbolicName: com.piece_framework.piece_ide.wizard;singleton:=true
 Bundle-Version: 0.1.0
 Bundle-Activator: com.piece_framework.piece_ide.wizard.plugin.WizardPlugin
-Bundle-Vendor: Piece Project
+Bundle-Vendor: %Manifest.BundleProvider
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
