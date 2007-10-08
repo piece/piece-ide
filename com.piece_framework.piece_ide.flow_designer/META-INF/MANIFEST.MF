@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Piece_IDE FlowDesigner
+Bundle-Name: %Manifest.BundleName
 Bundle-SymbolicName: com.piece_framework.piece_ide.flow_designer;singleton:=true
 Bundle-Version: 0.1.0
 Bundle-Activator: com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin
-Bundle-Vendor: Piece Project
+Bundle-Vendor: %Manifest.BundleProvider
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
