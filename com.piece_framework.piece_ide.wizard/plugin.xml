@@ -11,7 +11,7 @@
       </category>
 
       <wizard
-            name="Piece Project"
+            name="Piece_Unity Project"
             category="com.piece_framework.piece_ide"
             class="com.piece_framework.piece_ide.wizard.project.NewPieceProjectWizard"
             icon="icons/Project.gif"
