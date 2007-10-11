@@ -27,12 +27,70 @@ import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
  */
 public class StateGeneralSection extends GeneralPropertySection {
 
-    private Text fStateName;
-    private CLabel fStateNameLabel;
-    private Text fSummary;
-    private CLabel fSummaryLabel;
-    private Text fViewName;
-    private CLabel fViewNameLabel;
+    /**
+     * スラベルとテキストをまとめて処理するクラス.
+     * 
+     * @author MATSUFUJI Hideharu
+     * @version 0.2.0
+     * @since 0.2.0
+     * 
+     */
+    private class LabelText {
+        private CLabel fLabel;
+        private Text fText;
+        
+        /**
+         * ラベル・テキストのコントロールを作成する.
+         * 
+         * @param parent 親コンポーネント
+         */
+        void create(Composite parent) {
+            fLabel = getWidgetFactory().createCLabel(parent, null);
+            fText = getWidgetFactory().createText(parent, ""); //$NON-NLS-1$
+            
+            setTextListener(fText);
+        }
+        
+        /**
+         * ラベルの文字列をセットする.
+         * 
+         * @param label ラベル文字列
+         */
+        void setLabel(String label) {
+            fLabel.setText(label);
+        }
+        
+        /**
+         * 表示・非表示を設定する.
+         * 
+         * @param visible 表示・非表示
+         */
+        void setVisible(boolean visible) {
+            fLabel.setVisible(visible);
+            fText.setVisible(visible);
+        }
+        
+        /**
+         * ラベルコントロールを返す.
+         * 
+         * @return ラベルコントロール
+         */
+        CLabel getLabel() {
+            return fLabel;
+        }
+        
+        /**
+         * テキストコントロールを返す.
+         * 
+         * @return テキストコントロール
+         */
+        Text getText() {
+            return fText;
+        }
+    }
+    
+    private static final int LABELTEXT_NUM = 3;
+    private LabelText[] fLabelText;
     
     /**
      * コントロールを作成する.
@@ -53,29 +111,18 @@ public class StateGeneralSection extends GeneralPropertySection {
         Composite composite = 
             getWidgetFactory().createFlatFormComposite(parent);
         
-        fStateNameLabel = 
-            getWidgetFactory().createCLabel(composite, 
-                Messages.getString(
-                    "StateGeneralSection.StateName")); //$NON-NLS-1$
-        fStateName = getWidgetFactory().createText(composite, ""); //$NON-NLS-1$
-        fSummaryLabel = 
-            getWidgetFactory().createCLabel(composite, 
-                Messages.getString(
-                    "StateGeneralSection.Summary")); //$NON-NLS-1$
-        fSummary = getWidgetFactory().createText(composite, ""); //$NON-NLS-1$
-        fViewNameLabel = 
-            getWidgetFactory().createCLabel(composite, 
-                Messages.getString(
-                    "StateGeneralSection.ViewName")); //$NON-NLS-1$
-        fViewName = getWidgetFactory().createText(composite, ""); //$NON-NLS-1$
+        fLabelText = new LabelText[LABELTEXT_NUM];
+        CLabel[] labels = new CLabel[LABELTEXT_NUM];
+        Text[] texts = new Text[LABELTEXT_NUM];
+        for (int i = 0; i < LABELTEXT_NUM; i++) {
+            fLabelText[i] = new LabelText();
+            fLabelText[i].create(composite);
+            
+            labels[i] = fLabelText[i].getLabel();
+            texts[i] = fLabelText[i].getText();
+        }
         
-        arrangeGroup(
-                new CLabel[] {fStateNameLabel, fSummaryLabel, fViewNameLabel},
-                new Text[] {fStateName, fSummary, fViewName});
-
-        setTextListener(fStateName);
-        setTextListener(fSummary);
-        setTextListener(fViewName);
+        arrangeGroup(labels, texts);
     }
 
     /**
@@ -97,31 +144,30 @@ public class StateGeneralSection extends GeneralPropertySection {
     public void setInput(IWorkbenchPart part, ISelection selection) {
         super.setInput(part, selection);
         
-        State state = (State) getModel();
-        setGroupVisible(fStateNameLabel, fStateName, false);
-        setGroupVisible(fSummaryLabel, fSummary, false);
-        setGroupVisible(fViewNameLabel, fViewName, false);
+        for (int i = 0; i < LABELTEXT_NUM; i++) {
+            fLabelText[i].setVisible(false);
+        }
         
-        if (state.getType() == State.ACTION_STATE
-            || state.getType() == State.VIEW_STATE) {
-            setGroupVisible(fStateNameLabel, fStateName, true);
-            setGroupVisible(fSummaryLabel, fSummary, true);
+        State state = (State) getModel();
+        if (state.getType() == State.ACTION_STATE) {
+            fLabelText[0].setVisible(true);
+            fLabelText[0].setLabel(Messages.getString(
+                            "StateGeneralSection.StateName")); //$NON-NLS-1$
+            fLabelText[1].setVisible(true);
+            fLabelText[1].setLabel(Messages.getString(
+                            "StateGeneralSection.Summary")); //$NON-NLS-1$
+            fLabelText[2].setVisible(false);
+        } else if (state.getType() == State.VIEW_STATE) {
+            fLabelText[0].setVisible(true);
+            fLabelText[0].setLabel(Messages.getString(
+                            "StateGeneralSection.StateName")); //$NON-NLS-1$
+            fLabelText[1].setVisible(true);
+            fLabelText[1].setLabel(Messages.getString(
+                            "StateGeneralSection.ViewName")); //$NON-NLS-1$
+            fLabelText[2].setVisible(true);
+            fLabelText[2].setLabel(Messages.getString(
+                            "StateGeneralSection.Summary")); //$NON-NLS-1$
         }
-        if (state.getType() == State.VIEW_STATE) {
-            setGroupVisible(fViewNameLabel, fViewName, true);
-        }
-    }
-
-    /**
-     * ラベルとテキストの表示・非表示を設定する.
-     * 
-     * @param label ラベル
-     * @param text テキスト
-     * @param visible 表示・非表示
-     */
-    private void setGroupVisible(CLabel label, Text text, boolean visible) {
-        label.setVisible(visible);
-        text.setVisible(visible);
     }
 
     /**
@@ -134,24 +180,26 @@ public class StateGeneralSection extends GeneralPropertySection {
     @Override
     public void refresh() {
         State state = (State) getModel();
-        fStateName.setText(""); //$NON-NLS-1$
-        fSummary.setText(""); //$NON-NLS-1$
-        fViewName.setText(""); //$NON-NLS-1$
-        
+        for (int i = 0; i < LABELTEXT_NUM; i++) {
+            fLabelText[i].getText().setText("");    //$NON-NLS-1$
+        }
         if (state != null) {
-            if (state.getType() == State.ACTION_STATE
-                || state.getType() == State.VIEW_STATE) {
+            if (state.getType() == State.ACTION_STATE) {
                 if (state.getName() != null) {
-                    fStateName.setText(state.getName());
+                    fLabelText[0].getText().setText(state.getName());
                 }
                 if (state.getSummary() != null) {
-                    fSummary.setText(state.getSummary());
+                    fLabelText[1].getText().setText(state.getSummary());
                 }
-            }
-            
-            if (state.getType() == State.VIEW_STATE) {
+            } else if (state.getType() == State.VIEW_STATE) {
+                if (state.getName() != null) {
+                    fLabelText[0].getText().setText(state.getName());
+                }
                 if (state.getView() != null) {
-                    fViewName.setText(state.getView());
+                    fLabelText[1].getText().setText(state.getView());
+                }
+                if (state.getSummary() != null) {
+                    fLabelText[2].getText().setText(state.getSummary());
                 }
             }
         }
@@ -170,12 +218,21 @@ public class StateGeneralSection extends GeneralPropertySection {
     String getAttributeName(Control control) {
         String attributeName = null;
         
-        if (control == fStateName) {
-            attributeName = "Name"; //$NON-NLS-1$
-        } else if (control == fSummary) {
-            attributeName = "Summary"; //$NON-NLS-1$
-        } else if (control == fViewName) {
-            attributeName = "View"; //$NON-NLS-1$
+        State state = (State) getModel();
+        if (state.getType() == State.ACTION_STATE) {
+            if (control == fLabelText[0].getText()) {
+                attributeName = "Name"; //$NON-NLS-1$
+            } else if (control == fLabelText[1].getText()) {
+                attributeName = "Summary"; //$NON-NLS-1$ 
+            }
+        } else if (state.getType() == State.VIEW_STATE) {
+            if (control == fLabelText[0].getText()) {
+                attributeName = "Name"; //$NON-NLS-1$
+            } else if (control == fLabelText[1].getText()) {
+                attributeName = "View"; //$NON-NLS-1$ 
+            } else if (control == fLabelText[2].getText()) {
+                attributeName = "Summary"; //$NON-NLS-1$ 
+            }
         }
         
         return attributeName;
