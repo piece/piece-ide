@@ -43,8 +43,6 @@ public class CreateEventCommand extends Command {
     public void execute() {
         fEvent.setName(fState.generateEventName(fNextState.getName()));
         fEvent.setNextState(fNextState);
-        fEvent.setEventHandler(
-                fEvent.generateEventHandlerMethodName());
         
         fState.addEvent(fEvent);
     }
