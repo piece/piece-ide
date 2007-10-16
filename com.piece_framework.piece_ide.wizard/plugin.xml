@@ -6,19 +6,19 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <category
-            name="Piece Framework"
+            name="%Manifest.Category.Name"
             id="com.piece_framework.piece_ide">
       </category>
 
       <wizard
-            name="Piece_Unity Project"
+            name="%Manifest.Wizard.Name"
             category="com.piece_framework.piece_ide"
             class="com.piece_framework.piece_ide.wizard.project.NewPieceProjectWizard"
             icon="icons/Project.gif"
             id="com.piece_framework.piece_ide.wizard"
             project="true" >
          <description>
-            A wizard that creates a new Piece Project
+            %Manifest.Wizard.Description
          </description>
          <selection
                class="org.eclipse.core.resources.IResource">
