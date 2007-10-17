@@ -13,7 +13,7 @@ import com.piece_framework.piece_ide.internal.PieceIDE;
  * 継承したクラスが作成したsetterメソッドでコマンドを実行する。
  * 
  * @author MATSUFUJI Hideharu
- * @version 0.1.0
+ * @version 0.2.0
  * @since 0.1.0
  *
  */

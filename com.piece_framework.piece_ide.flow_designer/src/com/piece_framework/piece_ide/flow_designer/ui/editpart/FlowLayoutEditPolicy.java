@@ -18,7 +18,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  * ステートの作成・位置情報のコマンドを発行するエディットポリシー。
  * 
  * @author MATSUFUJI Hideharu
- * @version 0.1.0
+ * @version 0.2.0
  * @since 0.1.0
  * @see org.eclipse.gef.editpolicies.XYLayoutEditPolicy
  */

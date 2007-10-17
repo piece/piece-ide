@@ -10,7 +10,7 @@ import com.piece_framework.piece_ide.flow_designer.model.Flow;
  * 指定された属性名に対応する属性値を設定する。
  * 
  * @author MATSUFUJI Hideharu
- * @version 0.1.0
+ * @version 0.2.0
  * @since 0.1.0
  *
  */

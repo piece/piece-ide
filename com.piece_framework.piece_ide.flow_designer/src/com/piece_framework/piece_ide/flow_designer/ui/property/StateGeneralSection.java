@@ -21,14 +21,14 @@ import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
  * ステート・プロパティシートの一般セクション.
  * 
  * @author MATSUFUJI Hideharu
- * @version 0.1.0
+ * @version 0.2.0
  * @since 0.1.0
  * 
  */
 public class StateGeneralSection extends GeneralPropertySection {
 
     /**
-     * スラベルとテキストをまとめて処理するクラス.
+     * ラベルとテキストをまとめて処理するクラス.
      * 
      * @author MATSUFUJI Hideharu
      * @version 0.2.0
