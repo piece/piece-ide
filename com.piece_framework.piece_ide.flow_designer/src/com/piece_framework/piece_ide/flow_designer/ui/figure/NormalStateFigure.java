@@ -194,7 +194,7 @@ public abstract class NormalStateFigure
             x = 0;
         }
         
-        int y = -1;
+        int y = 0;
         if (upperFigure != null) {
             Rectangle upperFigureBounds = upperFigure.getBounds();
             y = (upperFigureBounds.y - getBounds().y) 
