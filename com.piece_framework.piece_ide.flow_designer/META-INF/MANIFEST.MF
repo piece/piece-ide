@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Manifest.BundleName
 Bundle-SymbolicName: com.piece_framework.piece_ide.flow_designer;singleton:=true
-Bundle-Version: 0.1.0
+Bundle-Version: 0.2.0
 Bundle-Activator: com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin
 Bundle-Vendor: %Manifest.BundleProvider
 Bundle-Localization: plugin
