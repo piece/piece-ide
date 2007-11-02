@@ -2,7 +2,7 @@
 <feature
       id="com.piece_framework.piece_ide_feature"
       label="%Feature.BundleName"
-      version="0.1.0"
+      version="0.2.0"
       provider-name="%Feature.BundleProvider"
       plugin="com.piece_framework.piece_ide"
       image="piece_ide_120.jpg">
