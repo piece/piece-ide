@@ -27,21 +27,21 @@
          id="com.piece_framework.piece_ide.flow_designer"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.2.0"
          unpack="false"/>
 
    <plugin
          id="com.piece_framework.piece_ide.wizard"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.2.0"
          unpack="false"/>
 
    <plugin
          id="com.piece_framework.piece_ide"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.2.0"
          unpack="false"/>
 
 </feature>
