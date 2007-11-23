@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Form_designer プラグイン
+Bundle-SymbolicName: com.piece_framework.piece_ide.form_designer
+Bundle-Version: 1.0.0
+Bundle-Activator: com.piece_framework.piece_ide.form_designer.Activator
+Bundle-Vendor: PIECE_FRAMEWORK
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Eclipse-LazyStart: true
