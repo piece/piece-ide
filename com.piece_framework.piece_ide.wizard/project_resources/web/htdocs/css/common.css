@@ -1,0 +1,304 @@
+/* -------------------------------------------------------------- 
+   Piece Framework - Common Style Sheet 
+-------------------------------------------------------------- */
+
+/***************************************************
+   HTML Element Styles
+ ***************************************************/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  text-align: left;
+}
+
+/***************************************************
+  Layout Element Styles
+ ***************************************************/
+#page {
+  width: 100%;
+}
+
+.hide {
+  display: none;
+}
+
+.clear {
+  clear: both;
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+}
+
+a img { border: none; }
+
+/***************************************************
+  Header Styles
+ ***************************************************/
+#header { 
+  float: left;
+  margin: 0 auto;
+}
+
+/***************************************************
+  Container Styles
+ ***************************************************/
+#container {
+  float: left;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#container ol,
+#container ol li,
+#container ol li a {
+  margin: 0;
+  padding: 0;
+}
+
+/***************************************************
+  Special text formatting
+ ***************************************************/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  color: #333333;
+}
+
+h1 {
+  font-size: 2.0em;
+}
+
+h2 {
+  font-size: 1.8em;
+}
+
+h3 {
+  font-size: 1.6em;
+}
+
+h4 {
+  font-size: 1.4em;
+}
+
+h5 {
+  font-size: 1.2em;
+}
+
+h6 {
+  font-size: 1.0em;
+}
+
+p {
+  font-size: 0.9em;
+}
+
+p.error,
+p.message {
+  padding: .5em;
+  margin-bottom: 1em;
+  border: 2px solid #DDDDDD;
+}
+
+u {
+  text-decoration: underline;
+}
+
+a, a:link { 
+  color: #6699cc;
+  border-bottom: 1px dotted #6699cc;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #669933;
+  border-bottom: 1px dotted #669933;
+}
+
+a:active {
+  color: #cc3333;
+  border-bottom: 1px dotted #cc3333;
+}
+
+a:visited {
+  color: #666699;
+  border-bottom: 1px dotted #666699;
+}
+
+a img, img {
+  border: 0;
+}
+
+/***************************************************
+  Special table formatting 
+ ***************************************************/
+table,
+th,
+td {
+  text-align: left;
+  color: #333333;
+  border: 1px solid #C3C3C3;
+  line-height: 1.2em;
+  padding: 5px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  font-size: 1.0em;
+  font-weight: bold;
+  background-color: #FBF2F1;
+  border-left: 0px;
+  border-right: 0px;
+}
+
+td {
+  font-size: 0.9em;
+  border-right: 0px;
+}
+
+/***************************************************
+  Form Element Styles
+ ***************************************************/
+fieldset,
+form,
+label,
+legend {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+}
+
+/* Fieldsets */
+fieldset {
+  padding: 1.4em;
+  margin: 0 0 1.5em 0;
+  border: 1px solid #CCCCCC;
+}
+
+legend {
+  font-weight: bold;
+  font-size: 1.0em;
+}
+
+/* Text fields */
+input.text {
+  margin: 0;
+  padding: 3px;
+}
+
+input.text {
+  border: 1px solid #BBBBBB;
+  background: #F6F6F6;
+}
+
+input.text:focus {
+  border: 1px solid #999999;
+  background: #FFFFFF;
+}
+
+input.text {
+  font-size: 1.5em;
+}
+
+/* Textareas */
+textarea {
+  margin: 0;
+  padding: 3px;
+}
+
+textarea {
+  border: 1px solid #BBBBBB;
+  background: #F6F6F6;
+
+}
+
+textarea:focus {
+  border: 1px solid #999999;
+  background: #FFFFFF;
+}
+
+textarea {
+  font-size: 1.5em;
+}
+
+/* Select fields */
+select {
+  margin: 0;
+  padding: 3px;
+}
+
+select {
+  border: 1px solid #CCCCCC;
+  background: #F6F6F6;
+}
+
+select:focus {
+  border: 1px solid #999999;
+  background: #FFFFFF;
+}
+
+/* Submit button */
+input {
+  margin: 0;
+  padding : 2px;
+}
+
+input {
+  background-color: #F0F0F0;
+  border-top: 2px solid #FFFFFF;
+  border-right: 2px solid #848484;
+  border-bottom: 2px solid #848484;  
+  border-left: 2px solid #FFFFFF;
+}
+
+input:focus {
+  background-color: #F0F0F0;
+  border-top: 2px solid #848484;
+  border-right: 2px solid #FFFFFF;
+  border-bottom: 2px solid #FFFFFF;  
+  border-left: 2px solid #848484;
+}
+
+input {
+  font-size: 1.1em;
+}
+
+/* Confirmation fields */
+fieldset .text {
+  font-size: 1.5em;
+}
+
+/***************************************************
+ Footer
+ ***************************************************/
+#footer {
+  float: left;
+  margin: 0 auto;
+}
+

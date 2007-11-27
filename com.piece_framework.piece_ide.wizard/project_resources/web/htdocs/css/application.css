@@ -1,0 +1,164 @@
+/* -------------------------------------------------------------- 
+   Piece Framework - Application Style Sheet 
+-------------------------------------------------------------- */
+@import 'common.css';
+
+/***************************************************
+   HTML Element Styles
+ ***************************************************/
+body {
+  font-size: 87%;
+  color: #333333;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  background: #f4f4f4 url(../images/bg.gif) top center repeat-y;
+  margin:0;
+}
+
+h1,h2,h3,h4,h5,h6 { 
+  color: #111; 
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+}
+
+/***************************************************
+  Layout Element Styles
+ ***************************************************/
+#page {
+  width: 780px;
+  margin: 0 auto;
+}
+
+.clear {
+  width: 780px;
+}
+
+/***************************************************
+  Header Styles
+ ***************************************************/
+#header { 
+  background: #eeeeee url(../images/piece_header.jpg) top center no-repeat;
+  position: relative;
+  width: 780px;
+  height: 115px;
+}
+
+#header h1 {
+  margin: 35px 0 0 20px;
+  color: #FFFFFF;
+  text-shadow: #330000 2px 2px 2px;
+}
+
+/***************************************************
+  Container Styles
+ ***************************************************/
+#container {
+  width: 740px;
+  margin: 20px 0 20px 20px;
+  line-height: 1.5em;
+  text-align: left;
+}
+
+#container ol {
+  margin: 0 0 20px 40px;
+}
+
+#container ol li,
+#container ol li a {
+  list-style: decimal;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+/***************************************************
+  Special text formatting 
+ ***************************************************/
+#container h1 {
+  clear: both;
+  padding: 5px 0 10px 10px;
+}
+
+#container h2 {
+  display: inline;
+  float: left;
+  margin: 0 0 10px 10px;
+  padding: 5px 10px;
+  border: 1px solid #aaaaaa;
+}
+
+#container h3 {
+  clear: both;
+  margin: 10px 0 0 0;
+  padding: 0 0 10px 10px;
+}
+
+#container h4 {
+  clear: both;
+  color: #660000;
+  margin: 0 0 10px 0;
+  padding: 0 0 0 18px;
+  letter-spacing: 1px;
+  background: url(../images/date_icon.gif) no-repeat 0 15%;
+}
+
+p {
+  margin: 0 0 10px 20px;
+}
+
+p.error {
+  background: #FBE3E4;
+  color: #D12F19;
+  border-color: #FBC2C4;
+}
+
+p.message {
+  background: #E6EFC2;
+  color: #529214;
+  border-color: #C6D880;
+}
+
+p.error a {
+  color: #D12F19;
+}
+
+p.message a {
+  color: #529214;
+}
+
+
+/***************************************************
+  Form Element Styles
+ ***************************************************/
+input.text {
+  width: 500px;
+}
+
+textarea {
+  width: 500px;
+  height: 50px;
+}
+
+select {
+  width: 200px;
+}
+
+/***************************************************
+ Footer
+ ***************************************************/
+#footer {
+  width: 780px;
+  background: #eeeeee url(../images/piece_footer.jpg) no-repeat top left;
+}
+
+#footer p {
+  margin: 10px 0 0 0;
+  padding: 20px 0 5px 0;
+  font-size: 0.8em;
+  color: #330000;
+  text-align: center;
+}
+
+#footer a,
+#footer a:hover {
+  border-bottom: none;
+  color: #660000;
+  border-bottom: 1px dotted #330000;
+}
