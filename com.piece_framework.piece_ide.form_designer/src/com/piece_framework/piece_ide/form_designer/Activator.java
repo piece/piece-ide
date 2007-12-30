@@ -1,3 +1,4 @@
+// $Id$
 package com.piece_framework.piece_ide.form_designer;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
