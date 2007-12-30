@@ -56,7 +56,8 @@ public final class FlowReader {
             boolean dataExists = false;
             BufferedInputStream bufferedIn = null; 
             try {
-                bufferedIn = new BufferedInputStream(yamlFile.getContents(true));
+                bufferedIn = 
+                    new BufferedInputStream(yamlFile.getContents(true));
                 if (bufferedIn.read() != -1) {
                     dataExists = true;
                 }
@@ -197,7 +198,8 @@ public final class FlowReader {
             if (serializeFlowFile.exists()) {
                 ObjectInputStream in = null;
                 try {
-                    in = new ObjectInputStream(serializeFlowFile.getContents(true));
+                    in = new ObjectInputStream(
+                                serializeFlowFile.getContents(true));
                     serializeFlow = (Flow) in.readObject();
                 } catch (ClassNotFoundException cnfe) {
                     cnfe.printStackTrace();
