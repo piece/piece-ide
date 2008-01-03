@@ -14,7 +14,7 @@ public class FormDesignerEditor extends FormEditor {
     @Override
     protected void addPages() {
         try {
-            addPage(new FieldPage(this));
+            addPage(new FieldsPage(this));
         } catch (PartInitException e) {
             // TODO é©ìÆê∂ê¨Ç≥ÇÍÇΩ catch ÉuÉçÉbÉN
             e.printStackTrace();
