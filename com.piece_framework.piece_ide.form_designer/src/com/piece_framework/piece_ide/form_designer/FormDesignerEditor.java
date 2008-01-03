@@ -2,10 +2,8 @@
 package com.piece_framework.piece_ide.form_designer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.editor.FormEditor;
-import org.eclipse.ui.forms.widgets.Form;
-import org.eclipse.ui.forms.widgets.FormToolkit;
 
 public class FormDesignerEditor extends FormEditor {
 
@@ -15,11 +13,12 @@ public class FormDesignerEditor extends FormEditor {
 
     @Override
     protected void addPages() {
-        FormToolkit formToolkit = new FormToolkit(getContainer().getDisplay());
-        Form form = formToolkit.createForm(getContainer());
-        form.setText("Hello Eclipse Forms!!");
-        
-        addPage(form);
+        try {
+            addPage(new FieldPage(this));
+        } catch (PartInitException e) {
+            // TODO é©ìÆê∂ê¨Ç≥ÇÍÇΩ catch ÉuÉçÉbÉN
+            e.printStackTrace();
+        }
     }
 
     @Override
