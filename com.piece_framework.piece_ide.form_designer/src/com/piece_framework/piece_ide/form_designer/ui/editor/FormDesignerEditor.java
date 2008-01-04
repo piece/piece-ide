@@ -1,5 +1,5 @@
 // $Id$
-package com.piece_framework.piece_ide.form_designer;
+package com.piece_framework.piece_ide.form_designer.ui.editor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IEditorInput;

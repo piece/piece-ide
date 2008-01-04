@@ -1,5 +1,5 @@
 // $Id$
-package com.piece_framework.piece_ide.form_designer;
+package com.piece_framework.piece_ide.form_designer.model;
 
 public final class Field {
     private String fName;

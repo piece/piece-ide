@@ -1,5 +1,5 @@
 // $Id$
-package com.piece_framework.piece_ide.form_designer;
+package com.piece_framework.piece_ide.form_designer.ui.editor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,8 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+
+import com.piece_framework.piece_ide.form_designer.model.Field;
 
 public class FieldsPage extends FormPage {
     
