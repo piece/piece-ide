@@ -4,6 +4,7 @@ package com.piece_framework.piece_ide.form_designer.ui.editor;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -13,6 +14,8 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -47,7 +50,7 @@ public class FieldsPage extends FormPage {
         @Override
         protected void createMasterPart(
                         final IManagedForm managedForm,
-                        Composite parent) {
+                        final Composite parent) {
             FormToolkit toolkit = managedForm.getToolkit();
             
             Section section = toolkit.createSection(parent, 
@@ -56,12 +59,20 @@ public class FieldsPage extends FormPage {
             section.setDescription("編集するフィールドを選択してください。");
             
             Composite composite = toolkit.createComposite(section);
-            composite.setLayout(new FillLayout());
+            composite.setLayout(new GridLayout(2, false));
             Table table = toolkit.createTable(
                                     composite, 
                                     SWT.SINGLE | SWT.FULL_SELECTION);
             table.setHeaderVisible(true);
             table.setLinesVisible(true);
+            
+            GridData data = new GridData();
+            data.horizontalAlignment = GridData.FILL;
+            data.verticalAlignment = GridData.FILL;
+            data.grabExcessHorizontalSpace = true;
+            data.grabExcessVerticalSpace = true;
+            table.setLayoutData(data);
+            
             TableColumn column1 = new TableColumn(table, SWT.NULL);
             column1.setText("name");
             column1.setWidth(NAME_WIDTH);
@@ -101,6 +112,44 @@ public class FieldsPage extends FormPage {
                 }
             });
             viewer.setInput(createSampleData());
+
+            Composite buttons = toolkit.createComposite(composite);
+            GridData gd = new GridData(GridData.FILL_VERTICAL);
+            buttons.setLayoutData(gd);
+
+            GridLayout layout = new GridLayout();
+            layout.marginWidth = layout.marginHeight = 0;
+            buttons.setLayout(layout);
+
+            Button addButton = toolkit.createButton(buttons, "追加(&A)...", SWT.PUSH);
+            GridData buttonData = new GridData(GridData.FILL_HORIZONTAL
+                                               | GridData.VERTICAL_ALIGN_BEGINNING);
+            addButton.setLayoutData(buttonData);
+            addButton.addSelectionListener(new SelectionListener() {
+                public void widgetSelected(SelectionEvent event) {
+                    InputDialog dialog = new InputDialog(parent.getShell(), "フィールド名入力", "フィールド名を入力してください。", null, null);
+                    dialog.open();
+                    System.out.println(dialog.getValue());
+                }
+
+                public void widgetDefaultSelected(SelectionEvent event) {
+                }
+            });
+
+            Button delButton = toolkit.createButton(buttons, "削除(&D)...", SWT.PUSH);
+            buttonData = new GridData(GridData.FILL_HORIZONTAL
+                                      | GridData.VERTICAL_ALIGN_BEGINNING);
+            delButton.setLayoutData(buttonData);
+
+            Button upButton = toolkit.createButton(buttons, "上へ", SWT.PUSH);
+            buttonData = new GridData(GridData.FILL_HORIZONTAL
+                                      | GridData.VERTICAL_ALIGN_BEGINNING);
+            upButton.setLayoutData(buttonData);
+
+            Button downButton = toolkit.createButton(buttons, "下へ", SWT.PUSH);
+            buttonData = new GridData(GridData.FILL_HORIZONTAL
+                                      | GridData.VERTICAL_ALIGN_BEGINNING);
+            downButton.setLayoutData(buttonData);
 
             final SectionPart sectionPart = new SectionPart(section);
             managedForm.addPart(sectionPart);
