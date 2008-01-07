@@ -8,6 +8,13 @@ public final class Field {
     private boolean fForceValidation;
     private String fMessage;
 
+    public Field(final String name) {
+        if (name == null) {
+            throw new NullPointerException();
+        }
+        fName = name;
+    }
+
     public String getName() {
         return fName;
     }
