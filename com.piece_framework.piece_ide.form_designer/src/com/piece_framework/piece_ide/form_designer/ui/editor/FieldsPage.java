@@ -1,6 +1,9 @@
 // $Id$
 package com.piece_framework.piece_ide.form_designer.ui.editor;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -12,6 +15,8 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
@@ -39,11 +44,12 @@ import com.piece_framework.piece_ide.form_designer.model.Field;
 public class FieldsPage extends FormPage {
     private FieldsBlock fBlock;
 
-    public class FieldsBlock extends MasterDetailsBlock {
-
+    public class FieldsBlock extends MasterDetailsBlock implements PropertyChangeListener {
         private static final int NAME_WIDTH = 100; 
         private static final int DESCRIPTION_WIDTH = 100; 
         
+        private TableViewer fViewer;
+
         @Override
         protected void createMasterPart(
                         final IManagedForm managedForm,
@@ -76,9 +82,9 @@ public class FieldsPage extends FormPage {
             TableColumn column2 = new TableColumn(table, SWT.NULL);
             column2.setText("description");
             column2.setWidth(DESCRIPTION_WIDTH);
-            final TableViewer viewer = new TableViewer(table);
-            viewer.setContentProvider(new ArrayContentProvider());
-            viewer.setLabelProvider(new ITableLabelProvider() {
+            fViewer = new TableViewer(table);
+            fViewer.setContentProvider(new ArrayContentProvider());
+            fViewer.setLabelProvider(new ITableLabelProvider() {
                 public Image getColumnImage(Object element, int columnIndex) {
                     return null;
                 }
@@ -127,9 +133,12 @@ public class FieldsPage extends FormPage {
                     InputDialog dialog = new InputDialog(parent.getShell(), "フィールド名入力", "フィールド名を入力してください。", null, null);
                     dialog.open();
 
+                    // TODO:名前の重複チェック
+
                     Field field = new Field(dialog.getValue());
-                    viewer.add(field);
-                    viewer.setSelection(new StructuredSelection(field));
+                    field.addPropertyChangeListener(FieldsBlock.this);
+                    fViewer.add(field);
+                    fViewer.setSelection(new StructuredSelection(field));
                 }
 
                 public void widgetDefaultSelected(SelectionEvent event) {
@@ -153,14 +162,14 @@ public class FieldsPage extends FormPage {
 
             final SectionPart sectionPart = new SectionPart(section);
             managedForm.addPart(sectionPart);
-            viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+            fViewer.addSelectionChangedListener(new ISelectionChangedListener() {
                 public void selectionChanged(SelectionChangedEvent event) {
                     managedForm.fireSelectionChanged(
                                     sectionPart, 
                                     event.getSelection());
                 }
             });
-
+            
             section.setClient(composite);
         }
 
@@ -182,6 +191,8 @@ public class FieldsPage extends FormPage {
                     private Button fRequired;
                     private Button fForceValidation;
 
+                    private Field fField;
+                    
                     public void createContents(Composite parent) {
                         parent.setLayout(new FillLayout());
                         FormToolkit toolkit = fForm.getToolkit();
@@ -193,31 +204,56 @@ public class FieldsPage extends FormPage {
                         Composite composite = toolkit.createComposite(section);
                         composite.setLayout(new GridLayout(3, false));
 
+                        // TODO:1文字でも入力されたら反応するようなイベントを生成する。
+                        FocusListener focusListener = new FocusListener() {
+                            public void focusGained(FocusEvent event) {
+                            }
+
+                            public void focusLost(FocusEvent event) {
+                                if (fNameText == event.widget) {
+                                    fField.setName(fNameText.getText());
+                                } else if (fDescriptionText == event.widget) {
+                                    fField.setDescription(fDescriptionText.getText());
+                                } else if (fRequired == event.widget) {
+                                    fField.setRequired(fRequired.getSelection());
+                                } else if (fMessageText == event.widget) {
+                                    fField.setMessage(fMessageText.getText());
+                                } else if (fForceValidation == event.widget) {
+                                    fField.setForceValidation(fForceValidation.getSelection());
+                                }
+                            }
+                        };
+
                         toolkit.createLabel(composite, "name");
                         toolkit.createLabel(composite, "：");
                         fNameText = toolkit.createText(composite, "");
                         fNameText.setLayoutData(
                                 new GridData(GridData.FILL_HORIZONTAL));
+                        fNameText.addFocusListener(focusListener);
 
                         toolkit.createLabel(composite, "description");
                         toolkit.createLabel(composite, "：");
                         fDescriptionText = toolkit.createText(composite, "");
                         fDescriptionText.setLayoutData(
                                 new GridData(GridData.FILL_HORIZONTAL));
+                        fDescriptionText.addFocusListener(focusListener);
 
                         toolkit.createLabel(composite, "required");
                         toolkit.createLabel(composite, "：");
                         fRequired = toolkit.createButton(composite, "", SWT.CHECK);
+                        fRequired.addFocusListener(focusListener);
 
                         toolkit.createLabel(composite, "message");
                         toolkit.createLabel(composite, "：");
                         fMessageText = toolkit.createText(composite, "");
                         fMessageText.setLayoutData(
                                 new GridData(GridData.FILL_HORIZONTAL));
+                        fMessageText.addFocusListener(focusListener);
 
                         toolkit.createLabel(composite, "force validation");
                         toolkit.createLabel(composite, "：");
                         fForceValidation = toolkit.createButton(composite, "", SWT.CHECK);
+                        fForceValidation.addFocusListener(focusListener);
 
                         section.setClient(composite);
                     }
@@ -259,30 +295,33 @@ public class FieldsPage extends FormPage {
                         fMessageText.setText("");
                         fForceValidation.setSelection(false);
 
-                        Field field = (Field) ((IStructuredSelection) selection).getFirstElement();
-                        if (field != null) {
-                            fNameText.setText(field.getName());
-                            if (field.getDescription() != null) {
-                                fDescriptionText.setText(field.getDescription());
+                        fField = (Field) ((IStructuredSelection) selection).getFirstElement();
+                        if (fField != null) {
+                            fNameText.setText(fField.getName());
+                            if (fField.getDescription() != null) {
+                                fDescriptionText.setText(fField.getDescription());
                             }
-                            fRequired.setSelection(field.isRequired());
-                            if (field.getMessage() != null) {
-                                fMessageText.setText(field.getMessage());
+                            fRequired.setSelection(fField.isRequired());
+                            if (fField.getMessage() != null) {
+                                fMessageText.setText(fField.getMessage());
                             }
-                            fForceValidation.setSelection(field.isForceValidation());
+                            fForceValidation.setSelection(fField.isForceValidation());
                         }
                     }
                 });
         }
-        
+
+        public void propertyChange(PropertyChangeEvent event) {
+            if (!(event.getSource() instanceof Field)) {
+                return;
+            }
+
+            fViewer.refresh((Field) event.getSource());
+        }
     }
     
     public FieldsPage(FormEditor editor) {
         super(editor, null, "フィールド");
-
-        // TODO:ダミーデータ作成
-//        createSampleData();
-
         fBlock = new FieldsBlock();
     }
 
@@ -290,24 +329,4 @@ public class FieldsPage extends FormPage {
     protected void createFormContent(IManagedForm managedForm) {
         fBlock.createContent(managedForm);
     }
-
-//    private void createSampleData() {
-//        fFields = new ArrayList<Field>();
-//
-//        Field field1 = new Field();
-//        field1.setName("name");
-//        field1.setDescription("氏名");
-//        field1.setRequired(true);
-//        field1.setForceValidation(true);
-//        field1.setMessage("%description%は必須項目です。");
-//        fFields.add(field1);
-//
-//        Field field2 = new Field();
-//        field2.setName("age");
-//        field2.setDescription("年齢");
-//        field2.setRequired(false);
-//        field2.setForceValidation(false);
-//        field2.setMessage("%description%は必須項目です。");
-//        fFields.add(field2);
-//    }
 }

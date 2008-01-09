@@ -1,7 +1,12 @@
 // $Id$
 package com.piece_framework.piece_ide.form_designer.model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 public final class Field {
+    private PropertyChangeSupport fSupport;
+    
     private String fName;
     private String fDescription;
     private boolean fRequired;
@@ -13,6 +18,8 @@ public final class Field {
             throw new NullPointerException();
         }
         fName = name;
+        
+        fSupport = new PropertyChangeSupport(this);
     }
 
     public String getName() {
@@ -20,7 +27,9 @@ public final class Field {
     }
 
     public void setName(final String name) {
+        String oldValue = fName;
         fName = name;
+        firePropertyChange("Field#Name", oldValue, fName); //$NON-NLS-1$
     }
 
     public String getDescription() {
@@ -28,7 +37,9 @@ public final class Field {
     }
 
     public void setDescription(final String description) {
+        String oldValue = fDescription;
         fDescription = description;
+        firePropertyChange("Field#Description", oldValue, fDescription); //$NON-NLS-1$
     }
 
     public boolean isRequired() {
@@ -52,6 +63,28 @@ public final class Field {
     }
 
     public void setMessage(final String message) {
+        String oldValue = fMessage;
         fMessage = message;
+        firePropertyChange("Field#Message", oldValue, fMessage); //$NON-NLS-1$
+    }
+
+    protected void firePropertyChange(String name, 
+                                    Object oldValue, 
+                                    Object newValue) {
+        fSupport.firePropertyChange(name, oldValue, newValue);
+    }
+
+    protected void firePropertyChange(String name, 
+                                    boolean oldValue, 
+                                    boolean newValue) {
+        fSupport.firePropertyChange(name, oldValue, newValue);
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        fSupport.addPropertyChangeListener(listener);
+    }
+    
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        fSupport.removePropertyChangeListener(listener);
     }
 }
