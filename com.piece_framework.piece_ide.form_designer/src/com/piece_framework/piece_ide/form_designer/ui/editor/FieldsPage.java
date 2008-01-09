@@ -149,6 +149,19 @@ public class FieldsPage extends FormPage {
             buttonData = new GridData(GridData.FILL_HORIZONTAL
                                       | GridData.VERTICAL_ALIGN_BEGINNING);
             delButton.setLayoutData(buttonData);
+            delButton.addSelectionListener(new SelectionListener() {
+                // TODO:widgetDefaultSelectedイベントの発生条件を調べる
+                public void widgetDefaultSelected(SelectionEvent event) {
+                }
+
+                public void widgetSelected(SelectionEvent event) {
+                    // TODO:確認ダイアログを表示する
+                    
+                    // Field オブジェクトにキャストしないと正しく削除されない
+                    fViewer.remove(
+                            (Field)((IStructuredSelection) fViewer.getSelection()).getFirstElement());
+                }
+            });
 
             Button upButton = toolkit.createButton(buttons, "上へ", SWT.PUSH);
             buttonData = new GridData(GridData.FILL_HORIZONTAL
