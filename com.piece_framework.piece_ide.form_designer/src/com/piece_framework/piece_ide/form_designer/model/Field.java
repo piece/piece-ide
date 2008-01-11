@@ -83,8 +83,33 @@ public final class Field {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         fSupport.addPropertyChangeListener(listener);
     }
-    
+
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return fSupport.getPropertyChangeListeners();
+    }
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         fSupport.removePropertyChangeListener(listener);
+    }
+    
+    public static final void swap(Field field1, Field field2) {
+        Field tmp = new Field(field1.getName());
+        copy(field1, tmp);
+        copy(field2, field1);
+        copy(tmp, field2);
+
+        field1.firePropertyChange("Field#swap", null, null);
+        field2.firePropertyChange("Field#swap", null, null);
+    }
+
+    private static final void copy(Field source, Field destnation) {
+        destnation.fName = source.fName;
+        destnation.fDescription = source.fDescription;
+        destnation.fRequired = source.fRequired;
+        destnation.fForceValidation = source.fForceValidation;
+        destnation.fMessage = source.fMessage;
+        destnation.fSupport = new PropertyChangeSupport(destnation);
+        for (PropertyChangeListener listener : source.getPropertyChangeListeners()) {
+            destnation.addPropertyChangeListener(listener);
+        }
     }
 }
