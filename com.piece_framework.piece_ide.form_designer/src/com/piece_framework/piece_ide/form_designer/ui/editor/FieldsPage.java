@@ -167,11 +167,45 @@ public class FieldsPage extends FormPage {
             buttonData = new GridData(GridData.FILL_HORIZONTAL
                                       | GridData.VERTICAL_ALIGN_BEGINNING);
             upButton.setLayoutData(buttonData);
+            upButton.addSelectionListener(new SelectionListener() {
+                // TODO:widgetDefaultSelectedイベントの発生条件を調べる
+                public void widgetDefaultSelected(SelectionEvent event) {
+                }
+
+                public void widgetSelected(SelectionEvent event) {
+                    int index = fViewer.getTable().getSelectionIndex();
+                    if (index == 0) {
+                        return;
+                    }
+                    
+                    Field.swap((Field) fViewer.getElementAt(index),
+                               (Field) fViewer.getElementAt(index - 1));
+                    fViewer.setSelection(
+                            new StructuredSelection((Field) fViewer.getElementAt(index - 1)));
+                }
+            });
 
             Button downButton = toolkit.createButton(buttons, "下へ", SWT.PUSH);
             buttonData = new GridData(GridData.FILL_HORIZONTAL
                                       | GridData.VERTICAL_ALIGN_BEGINNING);
             downButton.setLayoutData(buttonData);
+            downButton.addSelectionListener(new SelectionListener() {
+                // TODO:widgetDefaultSelectedイベントの発生条件を調べる
+                public void widgetDefaultSelected(SelectionEvent event) {
+                }
+
+                public void widgetSelected(SelectionEvent event) {
+                    int index = fViewer.getTable().getSelectionIndex();
+                    if (index >= fViewer.getTable().getItemCount()) {
+                        return;
+                    }
+
+                    Field.swap((Field) fViewer.getElementAt(index),
+                               (Field) fViewer.getElementAt(index + 1));
+                    fViewer.setSelection(
+                            new StructuredSelection((Field) fViewer.getElementAt(index + 1)));
+                }
+            });
 
             final SectionPart sectionPart = new SectionPart(section);
             managedForm.addPart(sectionPart);
