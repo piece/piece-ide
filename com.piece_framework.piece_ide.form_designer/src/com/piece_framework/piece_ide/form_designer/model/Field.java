@@ -6,7 +6,7 @@ import java.beans.PropertyChangeSupport;
 
 public final class Field {
     private PropertyChangeSupport fSupport;
-    
+
     private String fName;
     private String fDescription;
     private boolean fRequired;
@@ -18,7 +18,10 @@ public final class Field {
             throw new NullPointerException();
         }
         fName = name;
-        
+        fDescription = "";
+        fRequired = false;
+        fForceValidation = false;
+        fMessage = "";
         fSupport = new PropertyChangeSupport(this);
     }
 
@@ -27,6 +30,9 @@ public final class Field {
     }
 
     public void setName(final String name) {
+        if (name == null) {
+            throw new NullPointerException();
+        }
         String oldValue = fName;
         fName = name;
         firePropertyChange("Field#Name", oldValue, fName); //$NON-NLS-1$
@@ -37,6 +43,9 @@ public final class Field {
     }
 
     public void setDescription(final String description) {
+        if (description == null) {
+            throw new NullPointerException();
+        }
         String oldValue = fDescription;
         fDescription = description;
         firePropertyChange("Field#Description", oldValue, fDescription); //$NON-NLS-1$
@@ -63,6 +72,9 @@ public final class Field {
     }
 
     public void setMessage(final String message) {
+        if (fMessage == null) {
+            throw new NullPointerException();
+        }
         String oldValue = fMessage;
         fMessage = message;
         firePropertyChange("Field#Message", oldValue, fMessage); //$NON-NLS-1$
