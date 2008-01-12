@@ -61,38 +61,46 @@ public class FieldDetailsPage implements IDetailsPage {
             }
         };
 
-        toolkit.createLabel(composite, "name");
-        toolkit.createLabel(composite, "：");
-        fNameText = toolkit.createText(composite, "");
-        fNameText.setLayoutData(
-                new GridData(GridData.FILL_HORIZONTAL));
-        fNameText.addFocusListener(focusListener);
-
-        toolkit.createLabel(composite, "description");
-        toolkit.createLabel(composite, "：");
-        fDescriptionText = toolkit.createText(composite, "");
-        fDescriptionText.setLayoutData(
-                new GridData(GridData.FILL_HORIZONTAL));
-        fDescriptionText.addFocusListener(focusListener);
-
-        toolkit.createLabel(composite, "required");
-        toolkit.createLabel(composite, "：");
-        fRequired = toolkit.createButton(composite, "", SWT.CHECK);
-        fRequired.addFocusListener(focusListener);
-
-        toolkit.createLabel(composite, "message");
-        toolkit.createLabel(composite, "：");
-        fMessageText = toolkit.createText(composite, "");
-        fMessageText.setLayoutData(
-                new GridData(GridData.FILL_HORIZONTAL));
-        fMessageText.addFocusListener(focusListener);
-
-        toolkit.createLabel(composite, "force validation");
-        toolkit.createLabel(composite, "：");
-        fForceValidation = toolkit.createButton(composite, "", SWT.CHECK);
-        fForceValidation.addFocusListener(focusListener);
+        fNameText = createText(
+                toolkit, composite, "name", focusListener);
+        fDescriptionText = createText(
+                toolkit, composite, "description", focusListener);
+        fRequired = createCheckBox(
+                toolkit, composite, "required", focusListener);
+        fMessageText = createText(
+                toolkit, composite, "message", focusListener);
+        fForceValidation = createCheckBox(
+                toolkit, composite, "force validation", focusListener);
 
         section.setClient(composite);
+    }
+
+    private Text createText(
+                    FormToolkit toolkit, 
+                    Composite parent,
+                    String label,
+                    FocusListener focusListener) {
+        toolkit.createLabel(parent, label);
+        toolkit.createLabel(parent, "：");
+        Text text = toolkit.createText(parent, "");
+        text.setLayoutData(
+                new GridData(GridData.FILL_HORIZONTAL));
+        text.addFocusListener(focusListener);
+
+        return text;
+    }
+
+    private Button createCheckBox(
+            FormToolkit toolkit, 
+            Composite parent,
+            String label,
+            FocusListener focusListener) {
+        toolkit.createLabel(parent, "required");
+        toolkit.createLabel(parent, "：");
+        Button button = toolkit.createButton(parent, "", SWT.CHECK);
+        button.addFocusListener(focusListener);
+        
+        return button;
     }
 
     public void commit(boolean onSave) {
@@ -139,5 +147,4 @@ public class FieldDetailsPage implements IDetailsPage {
         fMessageText.setText(fField.getMessage());
         fForceValidation.setSelection(fField.isForceValidation());
     }
-
 }
