@@ -345,13 +345,9 @@ public class FieldsPage extends FormPage {
                         fField = (Field) ((IStructuredSelection) selection).getFirstElement();
                         if (fField != null) {
                             fNameText.setText(fField.getName());
-                            if (fField.getDescription() != null) {
-                                fDescriptionText.setText(fField.getDescription());
-                            }
+                            fDescriptionText.setText(fField.getDescription());
                             fRequired.setSelection(fField.isRequired());
-                            if (fField.getMessage() != null) {
-                                fMessageText.setText(fField.getMessage());
-                            }
+                            fMessageText.setText(fField.getMessage());
                             fForceValidation.setSelection(fField.isForceValidation());
                         }
                     }
