@@ -30,12 +30,26 @@ import org.eclipse.ui.forms.widgets.Section;
 
 import com.piece_framework.piece_ide.form_designer.model.Field;
 
-public class FieldsMasterSection extends SectionPart implements PropertyChangeListener {
+/**
+ * フィールドMasterセクション.
+ * 
+ * @version 0.1.0
+ * @since 0.1.0
+ *
+ */
+public class FieldsMasterSection extends SectionPart 
+                                 implements PropertyChangeListener {
     private static final int NAME_WIDTH = 100; 
     private static final int DESCRIPTION_WIDTH = 100; 
     
     private TableViewer fViewer;
 
+    /**
+     * コンストラクタ.
+     * 
+     * @param parent 親コンポジット
+     * @param managedForm 管理フォーム
+     */
     public FieldsMasterSection(Composite parent, IManagedForm managedForm) {
         super(parent, 
               managedForm.getToolkit(), 
@@ -44,6 +58,12 @@ public class FieldsMasterSection extends SectionPart implements PropertyChangeLi
         createClient(getSection(), managedForm.getToolkit());
     }
 
+    /**
+     * コントロールを生成する.
+     * 
+     * @param section セクション
+     * @param toolkit ツールキット
+     */
     private void createClient(Section section, FormToolkit toolkit) {
         section.setText("フィールド一覧");
         section.setDescription("編集するフィールドを選択してください。");
@@ -70,6 +90,12 @@ public class FieldsMasterSection extends SectionPart implements PropertyChangeLi
     }
 
 
+    /**
+     * Tableコントロールを生成する.
+     * 
+     * @param parent 親コンポジット
+     * @param toolkit ツールキット
+     */
     private void createTable(Composite parent, FormToolkit toolkit) {
         final Table table = toolkit.createTable(
                                 parent, 
@@ -120,12 +146,27 @@ public class FieldsMasterSection extends SectionPart implements PropertyChangeLi
         });
     }
 
-    private void createTableColumn(final Table table, String text, int width) {
+    /**
+     * TableColumnオブジェクトを生成する.
+     * 
+     * @param table Tableオブジェクト
+     * @param caption カラムのキャプション
+     * @param width カラム幅
+     */
+    private void createTableColumn(final Table table, 
+                                   String caption, 
+                                   int width) {
         TableColumn column = new TableColumn(table, SWT.NULL);
-        column.setText(text);
+        column.setText(caption);
         column.setWidth(width);
     }
 
+    /**
+     * 追加、削除、上へ、下への各ボタンを生成する.
+     * 
+     * @param parent 親コンポジット
+     * @param toolkit ツールキット
+     */
     private void createButtons(final Composite parent, FormToolkit toolkit) {
         Composite buttons = toolkit.createComposite(parent);
         buttons.setLayoutData(new GridData(GridData.FILL_VERTICAL));
@@ -217,8 +258,18 @@ public class FieldsMasterSection extends SectionPart implements PropertyChangeLi
         });
     }
 
-    private Button createButton(Composite buttons, String text, FormToolkit toolkit) {
-        Button button = toolkit.createButton(buttons, text, SWT.PUSH);
+    /**
+     * Buttonオブジェクトを生成する.
+     * 
+     * @param parent 親コンポジット
+     * @param caption ボタンのキャプション
+     * @param toolkit ツールキット
+     * @return 生成したButtonオブジェクト
+     */
+    private Button createButton(Composite parent, 
+                                String caption, 
+                                FormToolkit toolkit) {
+        Button button = toolkit.createButton(parent, caption, SWT.PUSH);
         button.setLayoutData(
                 new GridData(
                         GridData.FILL_HORIZONTAL
@@ -226,6 +277,13 @@ public class FieldsMasterSection extends SectionPart implements PropertyChangeLi
         return button;
     }
 
+    /**
+     * 設定変更通知を受け取るイベント.
+     * 
+     * @param event 変更通知イベント
+     * @see java.beans.PropertyChangeListener#propertyChange(
+     *          java.beans.PropertyChangeEvent)
+     */
     public void propertyChange(PropertyChangeEvent event) {
         if (!(event.getSource() instanceof Field)) {
             return;
