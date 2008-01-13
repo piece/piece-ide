@@ -95,7 +95,7 @@ public class FieldDetailsPage implements IDetailsPage {
             Composite parent,
             String label,
             FocusListener focusListener) {
-        toolkit.createLabel(parent, "required");
+        toolkit.createLabel(parent, label);
         toolkit.createLabel(parent, "ÅF");
         Button button = toolkit.createButton(parent, "", SWT.CHECK);
         button.addFocusListener(focusListener);
