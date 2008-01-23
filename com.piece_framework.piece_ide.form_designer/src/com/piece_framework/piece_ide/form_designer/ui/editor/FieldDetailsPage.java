@@ -11,6 +11,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.IDetailsPage;
 import org.eclipse.ui.forms.IFormPart;
@@ -28,13 +31,20 @@ import com.piece_framework.piece_ide.form_designer.model.Field;
  *
  */
 public class FieldDetailsPage implements IDetailsPage {
-    private static final int GRID_ROW = 3; 
+    private static final int GENERAL_ROW = 3; 
+    private static final int VALIDATOR_ROW = 3; 
+    private static final int VALIDATOR_DETAIL_ROW = 3; 
+
     private IManagedForm fForm;
     private Text fNameText;
     private Text fDescriptionText;
     private Text fMessageText;
     private Button fRequired;
     private Button fForceValidation;
+
+    private Table fValidatorTable;
+    private Label fValidatorNameLabel;
+    private Text fValidatorMessageText;
 
     private Field fField;
 
@@ -46,16 +56,31 @@ public class FieldDetailsPage implements IDetailsPage {
      *          org.eclipse.swt.widgets.Composite)
      */
     public void createContents(Composite parent) {
-        parent.setLayout(new FillLayout());
+        parent.setLayout(new FillLayout(SWT.VERTICAL));
+
         FormToolkit toolkit = fForm.getToolkit();
-        Section section = toolkit.createSection(
-                    parent, 
-                    Section.TITLE_BAR | Section.DESCRIPTION);
-        section.setText("フィールド詳細");
 
-        Composite composite = toolkit.createComposite(section);
-        composite.setLayout(new GridLayout(GRID_ROW, false));
-
+        Composite parentComposite = toolkit.createComposite(parent);
+        GridLayout layout = new GridLayout(1, false);
+        layout.marginHeight = 0;
+        layout.marginWidth = 0;
+        parentComposite.setLayout(layout);
+        
+        Section generalSection = toolkit.createSection(
+                                    parentComposite, 
+                                    Section.TITLE_BAR);
+        generalSection.setText("Field Detail");
+        GridData layoutData = new GridData();
+        layoutData.grabExcessHorizontalSpace = true;
+        layoutData.horizontalAlignment = GridData.FILL;
+        generalSection.setLayoutData(layoutData);
+        
+        Composite generalComposite = toolkit.createComposite(generalSection);
+        layout = new GridLayout(GENERAL_ROW, false);
+        layout.marginHeight = 0;
+        layout.marginWidth = 0;
+        generalComposite.setLayout(layout);
+        
         // TODO:1文字でも入力されたら反応するようなイベントを生成する。
         FocusListener focusListener = new FocusListener() {
             public void focusGained(FocusEvent event) {
@@ -75,19 +100,120 @@ public class FieldDetailsPage implements IDetailsPage {
                 }
             }
         };
-
+      
         fNameText = createText(
-                composite, "name", focusListener, toolkit);
+                generalComposite, "name", focusListener, toolkit);
         fDescriptionText = createText(
-                composite, "description", focusListener, toolkit);
+                generalComposite, "description", focusListener, toolkit);
         fRequired = createCheckBox(
-                composite, "required", focusListener, toolkit);
+                generalComposite, "required", focusListener, toolkit);
         fMessageText = createText(
-                composite, "message", focusListener, toolkit);
+                generalComposite, "message", focusListener, toolkit);
         fForceValidation = createCheckBox(
-                composite, "force validation", focusListener, toolkit);
+                generalComposite, "force validation", focusListener, toolkit);
+        
+        generalSection.setClient(generalComposite);
+        
+        Section validatorSection = toolkit.createSection(
+                                        parentComposite, 
+                                        Section.TITLE_BAR);
+        validatorSection.setText("Validator");
+        layoutData = new GridData();
+        layoutData.grabExcessHorizontalSpace = true;
+        layoutData.horizontalAlignment = GridData.FILL;
+        validatorSection.setLayoutData(layoutData);
 
-        section.setClient(composite);
+        Composite validatorComposite = toolkit.createComposite(
+                                            validatorSection);
+        layout = new GridLayout(VALIDATOR_ROW, false);
+        layout.marginHeight = 0;
+        layout.marginWidth = 0;
+        validatorComposite.setLayout(layout);
+
+        fValidatorTable = toolkit.createTable(
+                                    validatorComposite, 
+                                    SWT.SINGLE | SWT.FULL_SELECTION);
+        fValidatorTable.setHeaderVisible(false);
+        fValidatorTable.setLinesVisible(true);
+
+        layoutData = new GridData();
+        layoutData.horizontalAlignment = GridData.FILL;
+        layoutData.verticalAlignment = GridData.FILL;
+        layoutData.grabExcessHorizontalSpace = true;
+        layoutData.grabExcessVerticalSpace = true;
+        fValidatorTable.setLayoutData(layoutData);
+
+        new TableColumn(fValidatorTable, SWT.NULL);
+
+        Composite validatorButtonComposite = toolkit.createComposite(
+                                                        validatorComposite);
+        layoutData = new GridData();
+        layoutData.verticalAlignment = GridData.FILL;
+        validatorButtonComposite.setLayoutData(layoutData);
+
+        layout = new GridLayout();
+        layout.marginWidth = 0;
+        layout.marginHeight = 0;
+        validatorButtonComposite.setLayout(layout);
+
+        Button addButton = toolkit.createButton(
+                                    validatorButtonComposite, 
+                                    "追加(&A)...", 
+                                    SWT.PUSH);
+        layoutData = new GridData();
+        layoutData.horizontalAlignment = GridData.FILL;
+        addButton.setLayoutData(layoutData);
+
+        Button delButton = toolkit.createButton(
+                                    validatorButtonComposite, 
+                                    "削除(&D)...", 
+                                    SWT.PUSH);
+        layoutData = new GridData();
+        layoutData.horizontalAlignment = GridData.FILL;
+        delButton.setLayoutData(layoutData);
+        
+        Button upButton = toolkit.createButton(
+                                    validatorButtonComposite, 
+                                    "上へ", 
+                                    SWT.PUSH);
+        layoutData = new GridData();
+        layoutData.horizontalAlignment = GridData.FILL;
+        upButton.setLayoutData(layoutData);
+
+        Button downButton = toolkit.createButton(
+                                        validatorButtonComposite, 
+                                        "下へ", 
+                                        SWT.PUSH);
+        layoutData = new GridData();
+        layoutData.horizontalAlignment = GridData.FILL;
+        downButton.setLayoutData(layoutData);
+
+        Composite validatorDetailComposite = toolkit.createComposite(
+                                                        validatorComposite);
+        layout = new GridLayout(VALIDATOR_DETAIL_ROW, false);
+        layout.marginHeight = 0;
+        layout.marginWidth = 0;
+        validatorDetailComposite.setLayout(layout);
+
+        layoutData = new GridData();
+        layoutData.horizontalAlignment = GridData.FILL;
+        layoutData.verticalAlignment = GridData.FILL;
+        layoutData.grabExcessHorizontalSpace = true;
+        layoutData.grabExcessVerticalSpace = true;
+        validatorDetailComposite.setLayoutData(layoutData);
+
+        fValidatorNameLabel = toolkit.createLabel(
+                                        validatorDetailComposite, 
+                                        "[validator name]");
+        layoutData = new GridData();
+        layoutData.horizontalSpan = VALIDATOR_DETAIL_ROW;
+        fValidatorNameLabel.setLayoutData(layoutData);
+
+        fValidatorMessageText = createText(
+                validatorDetailComposite, "message", focusListener, toolkit);
+
+        validatorSection.setClient(validatorComposite);
+
     }
 
     /**
@@ -105,10 +231,12 @@ public class FieldDetailsPage implements IDetailsPage {
                     FocusListener focusListener,
                     FormToolkit toolkit) {
         toolkit.createLabel(parent, caption);
-        toolkit.createLabel(parent, "：");
+        toolkit.createLabel(parent, ":");
         Text text = toolkit.createText(parent, "");
         text.setLayoutData(
-                new GridData(GridData.FILL_HORIZONTAL));
+                new GridData(
+                        GridData.FILL_HORIZONTAL
+                        | GridData.GRAB_HORIZONTAL));
         text.addFocusListener(focusListener);
 
         return text;
@@ -129,7 +257,7 @@ public class FieldDetailsPage implements IDetailsPage {
                         FocusListener focusListener,
                         FormToolkit toolkit) { 
         toolkit.createLabel(parent, caption);
-        toolkit.createLabel(parent, "：");
+        toolkit.createLabel(parent, ":");
         Button button = toolkit.createButton(parent, "", SWT.CHECK);
         button.addFocusListener(focusListener);
         
