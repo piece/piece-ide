@@ -100,7 +100,11 @@ public final class Field {
      * @param required 必須の場合はtrue
      */
     public void setRequired(final boolean required) {
+        boolean oldValue = fRequired;
         fRequired = required;
+        firePropertyChange("Field#Required", 
+                oldValue, 
+                fRequired);
     }
 
     /**
@@ -118,7 +122,11 @@ public final class Field {
      * @param forceValidation フィールドの状態にかかわらずバリデートを行う場合はtrue
      */
     public void setForceValidation(final boolean forceValidation) {
+        boolean oldValue = fForceValidation;
         fForceValidation = forceValidation;
+        firePropertyChange("Field#ForceValidation", 
+                oldValue, 
+                fForceValidation);
     }
 
     /**
@@ -201,8 +209,8 @@ public final class Field {
         copy(field2, field1);
         copy(tmp, field2);
 
-        field1.firePropertyChange("Field#swap", null, null);
-        field2.firePropertyChange("Field#swap", null, null);
+        field1.firePropertyChange("Field#Swap", null, null);
+        field2.firePropertyChange("Field#Swap", null, null);
     }
 
     /**
