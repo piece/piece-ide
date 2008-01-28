@@ -29,6 +29,28 @@ public class FieldTest extends TestCase {
         }
     }
 
+    public void testEventShouldBeExecutedWhenChangeFieldProperty() {
+        Field field = new Field("name");
+        TestPropertyChangeListener listener = 
+            new TestPropertyChangeListener("Field");
+        field.addPropertyChangeListener(listener);
+
+        field.setName("first_name");
+        assertEquals("Field#Name", listener.getPropertyName());
+        
+        field.setDescription("名前");
+        assertEquals("Field#Description", listener.getPropertyName());
+
+        field.setRequired(true);
+        assertEquals("Field#Required", listener.getPropertyName());
+
+        field.setMessage("名前は必須です。");
+        assertEquals("Field#Message", listener.getPropertyName());
+
+        field.setForceValidation(true);
+        assertEquals("Field#ForceValidation", listener.getPropertyName());
+    }
+    
     public void test2FieldsShouldBeSwapped() {
         Field field1 = new Field("name");
         field1.setDescription("名前");
@@ -56,7 +78,7 @@ public class FieldTest extends TestCase {
         assertEquals("住所は必須です。", field1.getMessage());
         assertFalse(field1.isForceValidation());
         assertEquals("Field1", listener1.getListenerName());
-        assertEquals("Field#swap", listener1.getPropertyName());
+        assertEquals("Field#Swap", listener1.getPropertyName());
 
         assertEquals("name", field2.getName());
         assertEquals("名前", field2.getDescription());
@@ -64,7 +86,7 @@ public class FieldTest extends TestCase {
         assertEquals("名前は必須です。", field2.getMessage());
         assertTrue(field2.isForceValidation());
         assertEquals("Field2", listener2.getListenerName());
-        assertEquals("Field#swap", listener2.getPropertyName());
+        assertEquals("Field#Swap", listener2.getPropertyName());
     }
     
     public void testNullFieldShouldNotBeAbleSwap() {
