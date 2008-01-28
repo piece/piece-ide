@@ -29,6 +29,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 
 import com.piece_framework.piece_ide.form_designer.model.Field;
+import com.piece_framework.piece_ide.form_designer.model.Validator;
 
 /**
  * フィールドMasterセクション.
@@ -191,6 +192,12 @@ public class FieldsMasterSection extends SectionPart
                 // TODO:名前の重複チェック
 
                 Field field = new Field(dialog.getValue());
+
+                // TODO:ダミーバリデータを追加
+                field.addValidator(Validator.COMPARE);
+                field.addValidator(Validator.DATE);
+                field.addValidator(Validator.EMAIL);
+                
                 field.addPropertyChangeListener(FieldsMasterSection.this);
                 fViewer.add(field);
                 fViewer.setSelection(new StructuredSelection(field));

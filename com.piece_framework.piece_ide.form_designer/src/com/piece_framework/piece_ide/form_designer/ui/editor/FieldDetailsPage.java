@@ -1,11 +1,19 @@
 // $Id$
 package com.piece_framework.piece_ide.form_designer.ui.editor;
 
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -22,6 +30,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 
 import com.piece_framework.piece_ide.form_designer.model.Field;
+import com.piece_framework.piece_ide.form_designer.model.Validator;
 
 /**
  * フィールドDetailsページ.
@@ -42,7 +51,7 @@ public class FieldDetailsPage implements IDetailsPage {
     private Button fRequired;
     private Button fForceValidation;
 
-    private Table fValidatorTable;
+    private TableViewer fValidatorViewer;
     private Label fValidatorNameLabel;
     private Text fValidatorMessageText;
 
@@ -53,7 +62,7 @@ public class FieldDetailsPage implements IDetailsPage {
      * 
      * @param parent 親コンポジット
      * @see org.eclipse.ui.forms.IDetailsPage#createContents(
-     *          org.eclipse.swt.widgets.Composite)
+     * n         org.eclipse.swt.widgets.Composite)
      */
     public void createContents(Composite parent) {
         parent.setLayout(new FillLayout(SWT.VERTICAL));
@@ -130,21 +139,60 @@ public class FieldDetailsPage implements IDetailsPage {
         layout.marginWidth = 0;
         validatorComposite.setLayout(layout);
 
-        fValidatorTable = toolkit.createTable(
+        Table validatorTable = toolkit.createTable(
                                     validatorComposite, 
                                     SWT.SINGLE | SWT.FULL_SELECTION);
-        fValidatorTable.setHeaderVisible(false);
-        fValidatorTable.setLinesVisible(true);
+        validatorTable.setHeaderVisible(false);
+        validatorTable.setLinesVisible(true);
 
         layoutData = new GridData();
         layoutData.horizontalAlignment = GridData.FILL;
         layoutData.verticalAlignment = GridData.FILL;
         layoutData.grabExcessHorizontalSpace = true;
         layoutData.grabExcessVerticalSpace = true;
-        fValidatorTable.setLayoutData(layoutData);
+        validatorTable.setLayoutData(layoutData);
 
-        new TableColumn(fValidatorTable, SWT.NULL);
+        TableColumn column1 = new TableColumn(validatorTable, SWT.NULL);
+        column1.setWidth(100);
 
+        fValidatorViewer = new TableViewer(validatorTable);
+        fValidatorViewer.setContentProvider(new ArrayContentProvider());
+        fValidatorViewer.setLabelProvider(new ITableLabelProvider() {
+            public Image getColumnImage(Object element, int columnIndex) {
+                return null;
+            }
+
+            public String getColumnText(Object element, int columnIndex) {
+                Validator validator = (Validator) element;
+                if (columnIndex == 0) {
+                    return validator.getName();
+                }
+                return "";
+            }
+
+            public void addListener(ILabelProviderListener listener) {
+            }
+
+            public void dispose() {
+            }
+
+            public boolean isLabelProperty(
+                                Object element, 
+                                String property) {
+                return false;
+            }
+
+            public void removeListener(ILabelProviderListener listener) {
+            }
+        });
+        fValidatorViewer.addSelectionChangedListener(
+                new ISelectionChangedListener() {
+            public void selectionChanged(SelectionChangedEvent event) {
+                Validator validator = (Validator) ((StructuredSelection) event.getSelection()).getFirstElement();
+                fValidatorNameLabel.setText(validator.getName() + " - " + validator.getDescription());
+            }
+        });
+        
         Composite validatorButtonComposite = toolkit.createComposite(
                                                         validatorComposite);
         layoutData = new GridData();
@@ -204,9 +252,11 @@ public class FieldDetailsPage implements IDetailsPage {
 
         fValidatorNameLabel = toolkit.createLabel(
                                         validatorDetailComposite, 
-                                        "[validator name]");
+                                        "");
         layoutData = new GridData();
         layoutData.horizontalSpan = VALIDATOR_DETAIL_ROW;
+        layoutData.grabExcessHorizontalSpace = true;
+        layoutData.horizontalAlignment = GridData.FILL;
         fValidatorNameLabel.setLayoutData(layoutData);
 
         fValidatorMessageText = createText(
@@ -363,5 +413,9 @@ public class FieldDetailsPage implements IDetailsPage {
         fRequired.setSelection(fField.isRequired());
         fMessageText.setText(fField.getMessage());
         fForceValidation.setSelection(fField.isForceValidation());
+
+        for (Validator validator : fField.getValidators()) {
+            fValidatorViewer.add(validator);
+        }
     }
 }
