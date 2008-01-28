@@ -3,6 +3,9 @@ package com.piece_framework.piece_ide.form_designer.model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * フィールドクラス.
@@ -20,6 +23,8 @@ public final class Field {
     private boolean fForceValidation;
     private String fMessage;
 
+    private List<Validator> fValidators;
+
     /**
      * コンストラクタ.
      * 
@@ -34,6 +39,9 @@ public final class Field {
         fRequired = false;
         fForceValidation = false;
         fMessage = "";
+        
+        fValidators = new ArrayList<Validator>();
+
         fSupport = new PropertyChangeSupport(this);
     }
 
@@ -150,6 +158,20 @@ public final class Field {
         String oldValue = fMessage;
         fMessage = message;
         firePropertyChange("Field#Message", oldValue, fMessage); //$NON-NLS-1$
+    }
+
+    public List<Validator> getValidators() {
+        if (fValidators == null) {
+            return null;
+        }
+        return Collections.unmodifiableList(fValidators);
+    }
+
+    public void addValidator(Validator validator) {
+        if (validator == null) {
+            throw new NullPointerException();
+        }
+        fValidators.add(new Validator(validator));
     }
 
     /**
