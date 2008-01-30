@@ -75,21 +75,8 @@ public class FieldsMasterSection extends SectionPart
         createTable(composite, toolkit);
         createButtons(composite, toolkit);
 
-        final SectionPart sectionPart = new SectionPart(section);
-        final IManagedForm managedForm = getManagedForm();
-        managedForm.addPart(sectionPart);
-        fViewer.addSelectionChangedListener(
-                new ISelectionChangedListener() {
-            public void selectionChanged(SelectionChangedEvent event) {
-                managedForm.fireSelectionChanged(
-                                sectionPart, 
-                                event.getSelection());
-            }
-        });
-
         section.setClient(composite);
     }
-
 
     /**
      * TableÉRÉìÉgÉçÅ[ÉãÇê∂ê¨Ç∑ÇÈ.
@@ -143,6 +130,14 @@ public class FieldsMasterSection extends SectionPart
             }
 
             public void removeListener(ILabelProviderListener listener) {
+            }
+        });
+        fViewer.addSelectionChangedListener(
+                new ISelectionChangedListener() {
+            public void selectionChanged(SelectionChangedEvent event) {
+                FieldsMasterSection.this.getManagedForm().fireSelectionChanged(
+                                FieldsMasterSection.this,
+                                event.getSelection());
             }
         });
     }
