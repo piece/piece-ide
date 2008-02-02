@@ -3,42 +3,81 @@ package com.piece_framework.piece_ide.form_designer.model;
 
 import junit.framework.TestCase;
 
+import com.piece_framework.piece_ide.form_designer.model.Validator.Rule;
+
 public class ValidatorTest extends TestCase {
-
-    // バリデータはフィールドに追加される。
-    public void testValidatorShouldBeAddedField() {
-        Field field = new Field("name");
-
-        field.addValidator(Validator.COMPARE);
-
-        assertEquals(1, field.getValidators().size());
-        Validator validator = field.getValidators().get(0);
-        assertEquals(1, validator.getRules().size());
-        Validator.Rule rule = validator.getRules().get(0);
-        assertEquals("to", rule.getKey());
-        assertNull(rule.getValue());
+    private Validator fValidator;
+    
+    @Override
+    protected void setUp() throws Exception {
+        fValidator = UsableValidator.getList().get(0).create();
+        super.setUp();
     }
 
-    // バリデータは新しいインスタンスとしてフィールドに追加される。
-    public void testValidatorShouldBeAddedFieldAsNewInstance() {
-        Field field = new Field("email");
-        
-        field.addValidator(Validator.COMPARE);
-
-        assertFalse(Validator.COMPARE == field.getValidators().get(0));
-        
-        field.getValidators().get(0).getRules().get(0).setValue("email2");
-        assertNull(Validator.COMPARE.getRules().get(0).getValue());
+    // バリデータはバリデータ名、説明を保持する
+    public void testValidatorShouldHaveNameAndDescriptionAndMessage() {
+        assertNotNull(fValidator.getName());
+        assertNotNull(fValidator.getDescription());
+    }
+    
+    // バリデータは読み書き可能なメッセージを保持する
+    public void testValidatorShouldHaveReadableAndWritableMessage() {
+        assertEquals("", fValidator.getMessage());
+        fValidator.setMessage("メッセージ");
+        assertEquals("メッセージ", fValidator.getMessage());
     }
 
-    // ルールの値を変更するとフィールドが保持しているバリデータのルールの値も変更される。
-    public void testValidatorRuleThatFiledHasShouldChangeWhenRuleValueChange() {
-        Field field = new Field("email");
-        
-        field.addValidator(Validator.COMPARE);
+    // バリデータのメッセージにnullをセットすると例外が発生する
+    public void testValidatorMessageShouldThrowExceptionWhenSetNull() {
+        try {
+            fValidator.setMessage(null);
+            fail();
+        } catch(NullPointerException e) {
+        }
+    }
+    
+    // バリデータはひとつ以上のルールを保持する
+    public void testValidatorShouldHaveRulesOver1() {
+        assertTrue(0 < fValidator.getRules().size());
+    }
 
-        field.getValidators().get(0).getRules().get(0).setValue("email2");
+    // ルールはキーと値クラスを保持する
+    public void testRuleShouldHaveKeyAndValuClass() {
+        for (Rule rule : fValidator.getRules()) {
+            assertNotNull(rule.getKey());
+            assertNotNull(rule.getValueClass());
+            assertNull(rule.getValue());
+        }
+    }
+    
+    // ルールは値クラスにあった読み書き可能な値を保持する
+    public void testRuleShouldHaveReadableAndWritableValueThatSetValueClass() {
+        for (Rule rule : fValidator.getRules()) {
+            assertNull(rule.getValue());
 
-        assertEquals("email2", field.getValidators().get(0).getRules().get(0).getValue());
+            if (rule.getValueClass() == String.class) {
+                rule.setValue("value");
+                assertTrue(rule.getValue() instanceof String);
+                assertEquals("value", rule.getValue());
+            } else if (rule.getValueClass() == Integer.class) {
+                rule.setValue("3");
+                assertTrue(rule.getValue() instanceof Integer);
+                assertEquals(3, ((Integer) rule.getValue()).intValue());
+            } else if (rule.getValueClass() == Boolean.class) {
+                rule.setValue("true");
+                assertTrue(rule.getValue() instanceof Boolean);
+                assertTrue(((Boolean) rule.getValue()).booleanValue());
+            } else {
+                fail();
+            }
+        }
+    }
+
+    // ルールの値にnullをセットできる
+    public void testRuleValueShouldBeAbleToSetNull() {
+        for (Rule rule : fValidator.getRules()) {
+            rule.setValue(null);
+            assertNull(rule.getValue());
+        }
     }
 }

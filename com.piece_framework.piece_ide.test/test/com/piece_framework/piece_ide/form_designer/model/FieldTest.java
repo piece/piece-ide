@@ -29,6 +29,7 @@ public class FieldTest extends TestCase {
         }
     }
 
+    // プロパティーの値が変更されたらイベントが実行される
     public void testEventShouldBeExecutedWhenChangeFieldProperty() {
         Field field = new Field("name");
         TestPropertyChangeListener listener = 
@@ -51,6 +52,7 @@ public class FieldTest extends TestCase {
         assertEquals("Field#ForceValidation", listener.getPropertyName());
     }
     
+    // ふたつのFieldオブジェクトを入れ替えることができる
     public void test2FieldsShouldBeSwapped() {
         Field field1 = new Field("name");
         field1.setDescription("名前");
@@ -89,6 +91,7 @@ public class FieldTest extends TestCase {
         assertEquals("Field#Swap", listener2.getPropertyName());
     }
     
+    // 片方がnullの場合はFieldオブジェクトを入れ替えることはできない
     public void testNullFieldShouldNotBeAbleSwap() {
         Field field = new Field("name");
         
@@ -104,4 +107,8 @@ public class FieldTest extends TestCase {
         } catch (NullPointerException npe) {
         }
     }
+    
+    // フィールドにはバリデータを追加できる
+    // フィールドからバリデータを削除できる
+    // フィールドの追加・削除時にイベントがされる
 }
