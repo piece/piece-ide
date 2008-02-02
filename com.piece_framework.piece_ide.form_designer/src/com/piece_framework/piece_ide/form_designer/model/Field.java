@@ -171,7 +171,7 @@ public final class Field {
         if (validator == null) {
             throw new NullPointerException();
         }
-        fValidators.add(new Validator(validator));
+        fValidators.add(validator);
     }
 
     /**
