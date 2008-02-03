@@ -8,13 +8,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 
 import com.piece_framework.piece_ide.form_designer.model.Field;
 
-public final class GeneralSection {
+public final class GeneralSection implements IDetailsSection {
     private Text fNameText;
     private Text fDescriptionText;
     private Text fMessageText;
@@ -23,23 +22,7 @@ public final class GeneralSection {
 
     private Field fField;
 
-    /**
-     * コンストラクタ.
-     * 
-     * @param parentSection 親セクション
-     * @param managedForm 管理フォーム
-     */
-    public GeneralSection(Section parentSection, IManagedForm managedForm) {
-        if (parentSection == null) {
-            throw new NullPointerException();
-        }
-        if (managedForm == null) {
-            throw new NullPointerException();
-        }
-        createContents(parentSection, managedForm.getToolkit());
-    }
-
-    private void createContents(final Section parentSection, final FormToolkit toolkit) {
+    public void createContents(final Section parentSection, final FormToolkit toolkit) {
         parentSection.setText("Field Detail");
 
         GridData layoutData = new GridData();

@@ -1,6 +1,9 @@
 // $Id$
 package com.piece_framework.piece_ide.form_designer.ui.editor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -24,8 +27,7 @@ import com.piece_framework.piece_ide.form_designer.model.Field;
  */
 public class FieldDetailsPage implements IDetailsPage {
     private IManagedForm fForm;
-    private GeneralSection fGeneralSection;
-    private ValidatorSection fValidatorSection;
+    private List<IDetailsSection> fDetailsSections;
 
     /**
      * ÉRÉìÉgÉçÅ[ÉãÇê∂ê¨Ç∑ÇÈ.
@@ -45,16 +47,17 @@ public class FieldDetailsPage implements IDetailsPage {
         layout.marginWidth = 0;
         parentComposite.setLayout(layout);
 
-        fGeneralSection = new GeneralSection(
+        fDetailsSections = new ArrayList<IDetailsSection>();
+        fDetailsSections.add(new GeneralSection());
+        fDetailsSections.add(new ValidatorSection());
+        
+        for (IDetailsSection detailsSelection : fDetailsSections) {
+            detailsSelection.createContents(
                                 toolkit.createSection(
                                         parentComposite, 
                                         Section.TITLE_BAR), 
-                                fForm);
-        fValidatorSection = new ValidatorSection(
-                                toolkit.createSection(
-                                        parentComposite, 
-                                        Section.TITLE_BAR), 
-                                fForm);
+                                fForm.getToolkit());
+        }
     }
 
     /**
@@ -142,9 +145,10 @@ public class FieldDetailsPage implements IDetailsPage {
      *          org.eclipse.jface.viewers.ISelection)
      */
     public void selectionChanged(IFormPart part, ISelection selection) {
-        fGeneralSection.selectionChanged(
-                ((Field) ((IStructuredSelection) selection).getFirstElement()));
-        fValidatorSection.selectionChanged(
-                ((Field) ((IStructuredSelection) selection).getFirstElement()));
+        Field field =
+            ((Field) ((IStructuredSelection) selection).getFirstElement());
+        for (IDetailsSection detailsSelection : fDetailsSections) {
+            detailsSelection.selectionChanged(field);
+        }
     }
 }

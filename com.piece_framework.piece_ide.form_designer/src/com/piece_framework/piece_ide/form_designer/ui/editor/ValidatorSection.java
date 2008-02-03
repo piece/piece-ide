@@ -27,30 +27,14 @@ import org.eclipse.ui.forms.widgets.Section;
 import com.piece_framework.piece_ide.form_designer.model.Field;
 import com.piece_framework.piece_ide.form_designer.model.Validator;
 
-public class ValidatorSection {
+public class ValidatorSection implements IDetailsSection{
     private TableViewer fValidatorViewer;
     private Label fValidatorNameLabel;
     private Text fValidatorMessageText;
 
     private Field fField;
 
-    /**
-     * コンストラクタ.
-     * 
-     * @param parentSection 親セクション
-     * @param managedForm 管理フォーム
-     */
-    public ValidatorSection(Section parentSection, IManagedForm managedForm) {
-        if (parentSection == null) {
-            throw new NullPointerException();
-        }
-        if (managedForm == null) {
-            throw new NullPointerException();
-        }
-        createContents(parentSection, managedForm.getToolkit());
-    }
-
-    private void createContents(final Section parentSection, final FormToolkit toolkit) {
+    public void createContents(final Section parentSection, final FormToolkit toolkit) {
         parentSection.setText("Validator");
         GridData layoutData = new GridData();
         layoutData.grabExcessHorizontalSpace = true;
