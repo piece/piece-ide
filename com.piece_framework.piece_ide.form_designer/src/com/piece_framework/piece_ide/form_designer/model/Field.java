@@ -172,6 +172,15 @@ public final class Field {
             throw new NullPointerException();
         }
         fValidators.add(validator);
+        firePropertyChange("Field#AddValidator", null, validator);
+    }
+
+    public void removeValidator(Validator validator) {
+        if (validator == null) {
+            throw new NullPointerException();
+        }
+        fValidators.remove(validator);
+        firePropertyChange("Field#RemoveValidator", validator, null);
     }
 
     /**
