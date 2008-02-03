@@ -3,6 +3,8 @@ package com.piece_framework.piece_ide.form_designer.model;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.TestCase;
 
@@ -11,6 +13,8 @@ public class FieldTest extends TestCase {
     private final class TestPropertyChangeListener implements PropertyChangeListener {
         private String fListenerName;
         private String fPropertyName;
+        private Object fNewValue;
+        private Object fOldValue;
         
         public TestPropertyChangeListener(final String listenerName) {
             fListenerName = listenerName;
@@ -18,14 +22,24 @@ public class FieldTest extends TestCase {
         
         public void propertyChange(PropertyChangeEvent event) {
             fPropertyName = event.getPropertyName();
+            fNewValue = event.getNewValue();
+            fOldValue = event.getOldValue();
         }
-        
+
         public String getListenerName() {
             return fListenerName;
         }
         
         public String getPropertyName() {
             return fPropertyName;
+        }
+        
+        public Object getNewValue() {
+            return fNewValue;
+        }
+        
+        public Object getOldValue() {
+            return fOldValue;
         }
     }
 
@@ -38,18 +52,28 @@ public class FieldTest extends TestCase {
 
         field.setName("first_name");
         assertEquals("Field#Name", listener.getPropertyName());
-        
+        assertEquals("first_name", listener.getNewValue());
+        assertEquals("name", listener.getOldValue());
+
         field.setDescription("名前");
         assertEquals("Field#Description", listener.getPropertyName());
+        assertEquals("名前", listener.getNewValue());
+        assertEquals("", listener.getOldValue());
 
         field.setRequired(true);
         assertEquals("Field#Required", listener.getPropertyName());
+        assertTrue(((Boolean) listener.getNewValue()).booleanValue());
+        assertFalse(((Boolean) listener.getOldValue()).booleanValue());
 
         field.setMessage("名前は必須です。");
         assertEquals("Field#Message", listener.getPropertyName());
+        assertEquals("名前は必須です。", listener.getNewValue());
+        assertEquals("", listener.getOldValue());
 
         field.setForceValidation(true);
         assertEquals("Field#ForceValidation", listener.getPropertyName());
+        assertTrue(((Boolean) listener.getNewValue()).booleanValue());
+        assertFalse(((Boolean) listener.getOldValue()).booleanValue());
     }
     
     // ふたつのFieldオブジェクトを入れ替えることができる
@@ -109,6 +133,57 @@ public class FieldTest extends TestCase {
     }
     
     // フィールドにはバリデータを追加できる
+    public void testFieldShouldAddValidator() {
+        Field field = new Field("name");
+        List<Validator> expectedValidators = new ArrayList<Validator>();
+
+        for (UsableValidator usableValidator : UsableValidator.getList()) {
+            Validator validator = usableValidator.create();
+            field.addValidator(validator);
+            expectedValidators.add(validator);
+        }
+
+        assertEquals(expectedValidators.size(), field.getValidators().size());
+        int index = 0;
+        for (Validator validator : field.getValidators()) {
+            assertEquals(expectedValidators.get(index), validator);
+            index++;
+        }
+    }
+
     // フィールドからバリデータを削除できる
-    // フィールドの追加・削除時にイベントがされる
+    public void testFieldShouldDeleteValidator() {
+        Field field = new Field("name");
+        List<Validator> validators = new ArrayList<Validator>();
+
+        for (UsableValidator usableValidator : UsableValidator.getList()) {
+            Validator validator = usableValidator.create();
+            field.addValidator(validator);
+            validators.add(validator);
+        }
+
+        for (Validator validator : validators) {
+            field.removeValidator(validator);
+        }
+        assertEquals(0, field.getValidators().size());
+    }
+
+    // バリデータの追加・削除時にイベントがされる
+    public void testEventShouldBeExecutedWhenValidatorAddAndRemove() {
+        Field field = new Field("name");
+        TestPropertyChangeListener listener = 
+            new TestPropertyChangeListener("Field");
+        field.addPropertyChangeListener(listener);
+
+        Validator expectedValidator = UsableValidator.getList().get(0).create();
+        field.addValidator(expectedValidator);
+        assertEquals("Field#AddValidator", listener.getPropertyName());
+        assertEquals(expectedValidator, listener.getNewValue());
+        assertNull(listener.getOldValue());
+        
+        field.removeValidator(expectedValidator);
+        assertEquals("Field#RemoveValidator", listener.getPropertyName());
+        assertNull(listener.getNewValue());
+        assertEquals(expectedValidator, listener.getOldValue());
+    }
 }
