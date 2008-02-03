@@ -111,12 +111,12 @@ public class ValidatorSection {
             }
         });
         fValidatorViewer.addSelectionChangedListener(
-                new ISelectionChangedListener() {
-                    public void selectionChanged(SelectionChangedEvent event) {
-                        Validator validator = (Validator) ((StructuredSelection) event.getSelection()).getFirstElement();
-                        fValidatorNameLabel.setText(validator.getName() + " - " + validator.getDescription());
-                    }
-                });
+            new ISelectionChangedListener() {
+                public void selectionChanged(SelectionChangedEvent event) {
+                    Validator validator = (Validator) ((StructuredSelection) event.getSelection()).getFirstElement();
+                    fValidatorNameLabel.setText(validator.getName() + " - " + validator.getDescription());
+                }
+            });
 
         Composite validatorButtonComposite = toolkit.createComposite(
                                                 validatorComposite);
@@ -194,36 +194,10 @@ public class ValidatorSection {
             }
         };
 
-        fValidatorMessageText = createText(
+        fValidatorMessageText = WidgetUtility.createText(
                 validatorDetailComposite, "message", focusListener, toolkit);
 
         parentSection.setClient(validatorComposite);
-    }
-
-    /**
-     * Textオブジェクトを生成する.
-     * 
-     * @param parent 親コンポジット
-     * @param caption キャプション 
-     * @param focusListener フォーカスリスナー
-     * @param toolkit ツールキット
-     * @return 生成したTextオブジェクト
-     */
-    private Text createText(
-                    Composite parent,
-                    String caption,
-                    FocusListener focusListener,
-                    FormToolkit toolkit) {
-        toolkit.createLabel(parent, caption);
-        toolkit.createLabel(parent, ":");
-        Text text = toolkit.createText(parent, "");
-        text.setLayoutData(
-                new GridData(
-                        GridData.FILL_HORIZONTAL
-                        | GridData.GRAB_HORIZONTAL));
-        text.addFocusListener(focusListener);
-
-        return text;
     }
 
     public void selectionChanged(final Field field) {
