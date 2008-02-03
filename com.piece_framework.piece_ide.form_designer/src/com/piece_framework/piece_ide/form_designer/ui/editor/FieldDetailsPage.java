@@ -45,12 +45,8 @@ public class FieldDetailsPage implements IDetailsPage {
     private static final int VALIDATOR_DETAIL_ROW = 3; 
 
     private IManagedForm fForm;
-    private Text fNameText;
-    private Text fDescriptionText;
-    private Text fMessageText;
-    private Button fRequired;
-    private Button fForceValidation;
-
+    private GeneralSection fGeneralSection;
+    
     private TableViewer fValidatorViewer;
     private Label fValidatorNameLabel;
     private Text fValidatorMessageText;
@@ -74,60 +70,18 @@ public class FieldDetailsPage implements IDetailsPage {
         layout.marginHeight = 0;
         layout.marginWidth = 0;
         parentComposite.setLayout(layout);
-        
-        Section generalSection = toolkit.createSection(
-                                    parentComposite, 
-                                    Section.TITLE_BAR);
-        generalSection.setText("Field Detail");
-        GridData layoutData = new GridData();
-        layoutData.grabExcessHorizontalSpace = true;
-        layoutData.horizontalAlignment = GridData.FILL;
-        generalSection.setLayoutData(layoutData);
-        
-        Composite generalComposite = toolkit.createComposite(generalSection);
-        layout = new GridLayout(GENERAL_ROW, false);
-        layout.marginHeight = 0;
-        layout.marginWidth = 0;
-        generalComposite.setLayout(layout);
-        
-        // TODO:1文字でも入力されたら反応するようなイベントを生成する。
-        FocusListener focusListener = new FocusListener() {
-            public void focusGained(FocusEvent event) {
-            }
 
-            public void focusLost(FocusEvent event) {
-                if (fNameText == event.widget) {
-                    fField.setName(fNameText.getText());
-                } else if (fDescriptionText == event.widget) {
-                    fField.setDescription(fDescriptionText.getText());
-                } else if (fRequired == event.widget) {
-                    fField.setRequired(fRequired.getSelection());
-                } else if (fMessageText == event.widget) {
-                    fField.setMessage(fMessageText.getText());
-                } else if (fForceValidation == event.widget) {
-                    fField.setForceValidation(fForceValidation.getSelection());
-                }
-            }
-        };
-      
-        fNameText = createText(
-                generalComposite, "name", focusListener, toolkit);
-        fDescriptionText = createText(
-                generalComposite, "description", focusListener, toolkit);
-        fRequired = createCheckBox(
-                generalComposite, "required", focusListener, toolkit);
-        fMessageText = createText(
-                generalComposite, "message", focusListener, toolkit);
-        fForceValidation = createCheckBox(
-                generalComposite, "force validation", focusListener, toolkit);
-        
-        generalSection.setClient(generalComposite);
+        fGeneralSection = new GeneralSection(
+                                toolkit.createSection(
+                                        parentComposite, 
+                                        Section.TITLE_BAR), 
+                                fForm);
         
         Section validatorSection = toolkit.createSection(
                                         parentComposite, 
                                         Section.TITLE_BAR);
         validatorSection.setText("Validator");
-        layoutData = new GridData();
+        GridData layoutData = new GridData();
         layoutData.grabExcessHorizontalSpace = true;
         layoutData.horizontalAlignment = GridData.FILL;
         validatorSection.setLayoutData(layoutData);
@@ -258,6 +212,16 @@ public class FieldDetailsPage implements IDetailsPage {
         layoutData.grabExcessHorizontalSpace = true;
         layoutData.horizontalAlignment = GridData.FILL;
         fValidatorNameLabel.setLayoutData(layoutData);
+
+        // TODO:1文字でも入力されたら反応するようなイベントを生成する。
+        FocusListener focusListener = new FocusListener() {
+            public void focusGained(FocusEvent event) {
+            }
+            
+            public void focusLost(FocusEvent event) {
+                // TODO:Fieldオブジェクトに値をセットする
+            }
+        };
 
         fValidatorMessageText = createText(
                 validatorDetailComposite, "message", focusListener, toolkit);
@@ -399,21 +363,12 @@ public class FieldDetailsPage implements IDetailsPage {
      *          org.eclipse.jface.viewers.ISelection)
      */
     public void selectionChanged(IFormPart part, ISelection selection) {
-        fNameText.setText("");
-        fDescriptionText.setText("");
-        fRequired.setSelection(false);
-        fMessageText.setText("");
-        fForceValidation.setSelection(false);
+        fGeneralSection.selectionChanged(
+                ((Field) ((IStructuredSelection) selection).getFirstElement()));
 
         fField = 
             (Field) ((IStructuredSelection) selection)
             .getFirstElement();
-        fNameText.setText(fField.getName());
-        fDescriptionText.setText(fField.getDescription());
-        fRequired.setSelection(fField.isRequired());
-        fMessageText.setText(fField.getMessage());
-        fForceValidation.setSelection(fField.isForceValidation());
-
         for (Validator validator : fField.getValidators()) {
             fValidatorViewer.add(validator);
         }
