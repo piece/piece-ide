@@ -16,7 +16,7 @@ import org.eclipse.core.runtime.Path;
  */
 public final class FlowSerializeUtility {
     
-    private static final String FLOW_PATH = ".settings/flow"; //$NON-NLS-1$
+    private static final String FLOW_PATH = ".settings/flow/"; //$NON-NLS-1$
     
     private static final String FLOW_SERIALIZE_EXT = "_obj"; //$NON-NLS-1$
     
@@ -43,7 +43,8 @@ public final class FlowSerializeUtility {
         
         IFile serializeFile = yamlFile.getProject().getFile(
                                 new Path(FLOW_PATH
-                                         + yamlFile.getFullPath().toString()
+                                         + yamlFile.getFullPath().removeFirstSegments(1)
+                                         .toString()
                                          + FLOW_SERIALIZE_EXT));
         if (!serializeFile.exists()) {
             createFolder(serializeFile);
