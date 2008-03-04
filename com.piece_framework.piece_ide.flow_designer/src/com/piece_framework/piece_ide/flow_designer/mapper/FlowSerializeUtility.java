@@ -1,9 +1,17 @@
 // $Id$
 package com.piece_framework.piece_ide.flow_designer.mapper;
 
+import java.util.ArrayList;
+
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
 /**
@@ -42,10 +50,7 @@ public final class FlowSerializeUtility {
         }
         
         IFile serializeFile = yamlFile.getProject().getFile(
-                                new Path(FLOW_PATH
-                                         + yamlFile.getFullPath().removeFirstSegments(1)
-                                         .toString()
-                                         + FLOW_SERIALIZE_EXT));
+                                new Path(getSerializeFilePath(yamlFile)));
         if (!serializeFile.exists()) {
             createFolder(serializeFile);
         }
@@ -65,8 +70,20 @@ public final class FlowSerializeUtility {
         }
         
         return yamlFile.getProject().getFile(
-                ".settings/flow"  //$NON-NLS-1$
-                + yamlFile.getFullPath().toString() + FLOW_SERIALIZE_EXT);
+                getSerializeFilePath(yamlFile));
+    }
+    
+    /**
+     * フローシリアライズファイルへのパスをString型で返す.
+     * 
+     * @param yamlFile YAMLファイル(.flowファイル)
+     * @return フローシリアライズファイル
+     * */
+    private static String getSerializeFilePath(IFile yamlFile){
+        return 
+            FLOW_PATH
+            + yamlFile.getFullPath().removeFirstSegments(1).toString()
+            + FLOW_SERIALIZE_EXT;
     }
     
     /**
@@ -92,6 +109,108 @@ public final class FlowSerializeUtility {
             if (!folder.exists()) {
                 folder.create(true, true, null);
             }
+        }
+    }
+    
+    /**
+     * 指定されたフォルダーが空の場合、削除する。その後、同様の処理を親フォルダーに対し再帰的に行う.
+     * 
+     * @param folder 削除対象となるフォルダー
+     */
+    private static void deleteFolders(IContainer folder) {
+        try {
+            if ((folder instanceof IProject)) {
+                return;
+            }
+
+            if (folder.members().length == 0) {
+                folder.delete(true, null);
+                deleteFolders(folder.getParent());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * 移動されたYAMLファイルに対応したフローシリアラズファイルを作成する.
+     * 
+     * @param addedList
+     *            ワークスペースの変更情報を表現するIResourceDeltaを要素とするArrayList
+     */
+    public static void moveSerializeFiles(ArrayList<IResourceDelta> addedList) {
+        for (IResourceDelta delta : addedList) {
+            moveSerializeFile(delta);
+        }
+    }
+    
+    /**
+     * 移動されたYAMLファイルに対応したフローシリアラズファイルを作成する.
+     * 
+     * @param delta
+     *            ワークスペースの変更情報を表現するIResourceDelta
+     */
+    public static void moveSerializeFile(IResourceDelta delta) {
+        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+
+        IPath fromPath = delta.getMovedFromPath();
+
+        if (fromPath == null) {
+            return;
+        }
+
+        IFile fromSerializeFile = FlowSerializeUtility
+                .getFlowSeirializeFile(root.getFile(fromPath));
+
+        if (fromSerializeFile == null || !fromSerializeFile.exists()) {
+            return;
+        }
+
+        try {
+            IFile toFile = root.getFile(delta.getFullPath());
+            IFile toSerializeFile = FlowSerializeUtility
+                    .createFlowSeirializeFile(toFile);
+            fromSerializeFile.copy(toSerializeFile.getFullPath(), true, null);
+        } catch (CoreException e) {
+            e.printStackTrace();
+        }
+
+    }
+    
+    /**
+     * 削除されたYAMLファイルに対応したフローシリアラズファイルを削除する.
+     * 
+     * @param removedList
+     *            ワークスペースの変更情報を表現するIResourceDeltaを要素とするArrayList
+     */
+    public static void removeSerializeFiles(
+                                       ArrayList<IResourceDelta> removedList) {
+        for (IResourceDelta delta : removedList) {
+          removeSerializeFile(delta);
+        }
+    }
+    
+    /**
+     * 削除されたYAMLファイルに対応したフローシリアラズファイルを削除する.
+     * 
+     * @param delta
+     *            ワークスペースの変更情報を表現するIResourceDelta
+     */
+    public static void removeSerializeFile(IResourceDelta delta) {
+        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+        IFile removedFile = root.getFile(delta.getFullPath());
+        try {
+            IFile sirializeFile = 
+                        FlowSerializeUtility.getFlowSeirializeFile(removedFile);
+            if (!sirializeFile.exists()) {
+                return;
+            }
+            sirializeFile.delete(true, null);
+            IFolder folder = root.getFolder(sirializeFile.getFullPath()
+                    .removeLastSegments(1));
+            deleteFolders(folder);
+        } catch (CoreException e) {
+            e.printStackTrace();
         }
     }
 }
