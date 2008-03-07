@@ -1,9 +1,16 @@
 // $Id$
 package com.piece_framework.piece_ide.flow_designer.plugin;
 
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.IStartup;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import com.piece_framework.piece_ide.flow_designer.resource.ResourceChangeListener;
 
 /**
  * プラグインのライフサイクルを管理する.
@@ -13,7 +20,7 @@ import org.osgi.framework.BundleContext;
  * @since 0.1.0
  * 
  */
-public class FlowDesignerPlugin extends AbstractUIPlugin {
+public class FlowDesignerPlugin extends AbstractUIPlugin implements IStartup {
 
     /** プラグインID. */
     public static final String PLUGIN_ID = 
@@ -21,6 +28,8 @@ public class FlowDesignerPlugin extends AbstractUIPlugin {
 
     /** インスタンス. */
     private static FlowDesignerPlugin fPlugin;
+
+    private IResourceChangeListener listener;
     
     /**
      * コンストラクタ.
@@ -73,5 +82,18 @@ public class FlowDesignerPlugin extends AbstractUIPlugin {
      */
     public static ImageDescriptor getImageDescriptor(String path) {
         return AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID, path);
+    }
+
+    /** 
+     * ワークスペースにリソースの変更を監視するListenerを追加する.
+     * @see org.eclipse.ui.IStartup#earlyStartup()
+     * 
+     */
+    @Override
+    public void earlyStartup() {
+        IWorkspace workspace = ResourcesPlugin.getWorkspace();
+        listener = new ResourceChangeListener();
+        workspace.addResourceChangeListener(
+                                listener, IResourceChangeEvent.POST_BUILD);
     }
 }

@@ -64,4 +64,9 @@
          </propertySection>
       </propertySections>
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin"></startup>
+   </extension>
 </plugin>

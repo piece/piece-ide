@@ -21,8 +21,10 @@ import org.eclipse.gef.ui.actions.ActionRegistry;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IReusableEditor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -54,7 +56,7 @@ import com.piece_framework.piece_ide.flow_designer.ui.editpart.FlowDesignerEditF
  *
  */
 public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette 
-                                implements ITabbedPropertySheetPageContributor {
+           implements ITabbedPropertySheetPageContributor, IReusableEditor {
     
     private static final int INITAL_STATE_X = 50;
     private static final int INITAL_STATE_Y = 50;
@@ -323,5 +325,15 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
      */
     public String getContributorId() {
         return getSite().getId();
+    }
+
+    /** 
+     * エディタ入力をセットする.
+     * 
+     * @param input エディタ入力
+     */
+    @Override
+    public final void setInput(IEditorInput input) {
+        setInputWithNotify(input);
     }
 }
