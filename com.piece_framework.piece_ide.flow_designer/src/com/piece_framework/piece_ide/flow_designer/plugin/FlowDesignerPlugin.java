@@ -28,8 +28,6 @@ public class FlowDesignerPlugin extends AbstractUIPlugin implements IStartup {
 
     /** インスタンス. */
     private static FlowDesignerPlugin fPlugin;
-
-    private IResourceChangeListener listener;
     
     /**
      * コンストラクタ.
@@ -89,11 +87,9 @@ public class FlowDesignerPlugin extends AbstractUIPlugin implements IStartup {
      * @see org.eclipse.ui.IStartup#earlyStartup()
      * 
      */
-    @Override
     public void earlyStartup() {
-        IWorkspace workspace = ResourcesPlugin.getWorkspace();
-        listener = new ResourceChangeListener();
-        workspace.addResourceChangeListener(
-                                listener, IResourceChangeEvent.POST_BUILD);
+        ResourcesPlugin.getWorkspace().addResourceChangeListener(
+                new ResourceChangeListener(), 
+                IResourceChangeEvent.POST_BUILD);
     }
 }
