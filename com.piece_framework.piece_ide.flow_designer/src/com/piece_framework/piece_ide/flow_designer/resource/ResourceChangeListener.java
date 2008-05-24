@@ -9,6 +9,7 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -32,9 +33,9 @@ import com.piece_framework.piece_ide.flow_designer.mapper.FlowSerializeUtility;
  */
 public class ResourceChangeListener implements IResourceChangeListener,
         IResourceDeltaVisitor {
-    private ArrayList<IResourceDelta> addedList;
+    private ArrayList<IResourceDelta> fAddedList;
 
-    private ArrayList<IResourceDelta> removedList;
+    private ArrayList<IResourceDelta> fRemovedList;
 
     /**
      * YAMLファイルの変更に対する処理をシリアライズファイルにも行う.
@@ -44,11 +45,11 @@ public class ResourceChangeListener implements IResourceChangeListener,
      * @see IResourceDelta
      */
     public void resourceChanged(IResourceChangeEvent event) {
-        addedList = new ArrayList<IResourceDelta>();
-        removedList = new ArrayList<IResourceDelta>();
+        fAddedList = new ArrayList<IResourceDelta>();
+        fRemovedList = new ArrayList<IResourceDelta>();
         try {
             event.getDelta().accept(this);
-            for (IResourceDelta delta : addedList) {
+            for (IResourceDelta delta : fAddedList) {
                 IPath fromPath = delta.getMovedFromPath();
                 IPath toPath = delta.getFullPath();
                 boolean result = FlowSerializeUtility.moveSerializeFile(
@@ -58,7 +59,7 @@ public class ResourceChangeListener implements IResourceChangeListener,
                 }
             }
 
-            for (IResourceDelta delta : removedList) {
+            for (IResourceDelta delta : fRemovedList) {
                 FlowSerializeUtility.removeSerializeFile(delta.getFullPath());
                 closeEditor(delta);
             }
@@ -87,10 +88,10 @@ public class ResourceChangeListener implements IResourceChangeListener,
 
         switch (delta.getKind()) {
         case IResourceDelta.ADDED:
-            this.addedList.add(delta);
+            this.fAddedList.add(delta);
             break;
         case IResourceDelta.REMOVED:
-            this.removedList.add(delta);
+            this.fRemovedList.add(delta);
             break;
         default:
             break;
@@ -147,14 +148,14 @@ public class ResourceChangeListener implements IResourceChangeListener,
      *
      */
     private class EditorCloser implements Runnable {
-        private IResourceDelta delta;
+        private IResourceDelta fDelta;
         
         /**
          * コンストラクタ.
          * @param removed リソースツリーの変更内容を表すオブジェクト 
          */
         public EditorCloser(IResourceDelta removed) {
-            this.delta = removed;
+            this.fDelta = removed;
         }
 
         /** 
@@ -166,7 +167,7 @@ public class ResourceChangeListener implements IResourceChangeListener,
             IWorkbench workbench = PlatformUI.getWorkbench();
             IWorkbenchWindow[] windows = workbench.getWorkbenchWindows();
             IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-            IEditorInput input = new FileEditorInput(root.getFile(delta
+            IEditorInput input = new FileEditorInput(root.getFile(fDelta
                     .getFullPath()));
             for (IWorkbenchWindow window : windows) {
                 IWorkbenchPage[] pages = window.getPages();
