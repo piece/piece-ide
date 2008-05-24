@@ -332,7 +332,6 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
      * 
      * @param input エディタ入力
      */
-    @Override
     public final void setInput(IEditorInput input) {
         setInputWithNotify(input);
     }
