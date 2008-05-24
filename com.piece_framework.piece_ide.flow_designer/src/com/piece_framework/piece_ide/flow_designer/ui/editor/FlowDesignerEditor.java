@@ -21,6 +21,7 @@ import org.eclipse.gef.ui.actions.ActionRegistry;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
@@ -334,5 +335,18 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
      */
     public final void setInput(IEditorInput input) {
         setInputWithNotify(input);
+    }
+    
+    /**
+     * @param save
+     */
+    public void close(final boolean save) {
+
+        Display display= getSite().getShell().getDisplay();
+        display.asyncExec(new Runnable() {
+            public void run() {
+                getSite().getPage().closeEditor(FlowDesignerEditor.this, save);
+            }
+        });
     }
 }

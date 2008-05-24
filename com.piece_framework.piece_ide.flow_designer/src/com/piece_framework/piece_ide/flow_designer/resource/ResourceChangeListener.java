@@ -16,14 +16,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IReusableEditor;
-import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
 import com.piece_framework.piece_ide.flow_designer.mapper.FlowSerializeUtility;
+import com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor;
 
 /**
  * workspace の変更通知を受けとり、YAMLファイルの変更に対する処理をシリアライズファイルにも行う.
@@ -50,10 +49,9 @@ public class ResourceChangeListener implements IResourceChangeListener,
         try {
             event.getDelta().accept(this);
             for (IResourceDelta delta : fAddedList) {
-                IPath fromPath = delta.getMovedFromPath();
-                IPath toPath = delta.getFullPath();
                 boolean result = FlowSerializeUtility.moveSerializeFile(
-                        fromPath, toPath);
+                        delta.getMovedFromPath(), 
+                        delta.getFullPath());
                 if (result) {
                     reuseEditor(delta);
                 }
@@ -110,22 +108,11 @@ public class ResourceChangeListener implements IResourceChangeListener,
         IFile toFile = root.getFile(delta.getFullPath());
 
         IEditorInput input = new FileEditorInput(root.getFile(fromPath));
-
-        IWorkbench workbench = PlatformUI.getWorkbench();
-        IWorkbenchWindow[] windows = workbench.getWorkbenchWindows();
-        for (IWorkbenchWindow window : windows) {
-            IWorkbenchPage[] pages = window.getPages();
-            for (IWorkbenchPage page : pages) {
-                String id = "com.piece_framework.piece_ide."
-                        + "flow_designer.ui.editor.FlowDesignerEditor";
-                IEditorReference[] editors = page.findEditors(input, id,
-                        IWorkbenchPage.MATCH_INPUT | IWorkbenchPage.MATCH_ID);
-                for (IEditorReference editorReference : editors) {
-                    IReusableEditor editor = (IReusableEditor) editorReference
-                            .getEditor(true);
-                    editor.setInput(new FileEditorInput(toFile));
-                }
-            }
+        
+        ArrayList<FlowDesignerEditor> editors = getOpenedEditors(input);
+        
+        for (FlowDesignerEditor flowDesignerEditor : editors) {
+            flowDesignerEditor.setInput(new FileEditorInput(toFile));
         }
     }
 
@@ -136,54 +123,40 @@ public class ResourceChangeListener implements IResourceChangeListener,
      * @throws Exception 例外
      */
     private void closeEditor(IResourceDelta delta) throws Exception {
-        EditorCloser closer = new EditorCloser(delta);
-        IWorkbench workbench = PlatformUI.getWorkbench();
-        workbench.getDisplay().asyncExec(closer);
+        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+        IEditorInput input = new FileEditorInput(
+                                    root.getFile(delta.getFullPath()));
+        ArrayList<FlowDesignerEditor> editors = getOpenedEditors(input);
+        
+        for (FlowDesignerEditor flowDesignerEditor : editors) {
+            flowDesignerEditor.close(false);
+        }
     }
     
     /**
-     * エディタを閉じるためRunnable実装したクラス.
-     *
-     *UIを処理するスレッドにエディタを閉じる処理を移譲する。
-     *
+     * 引数に与えられたEditorInputを入力としているエディタのリストを返す.
+     * @param input エディタ入力
+     * @return 引数に与えられたEditorInputを入力としているエディタのリスト
      */
-    private class EditorCloser implements Runnable {
-        private IResourceDelta fDelta;
-        
-        /**
-         * コンストラクタ.
-         * @param removed リソースツリーの変更内容を表すオブジェクト 
-         */
-        public EditorCloser(IResourceDelta removed) {
-            this.fDelta = removed;
-        }
-
-        /** 
-         * UIを処理するスレッドにエディタを閉じる処理を移譲する.
-         * @see java.lang.Runnable#run()
-         * 
-         */
-        public void run() {
-            IWorkbench workbench = PlatformUI.getWorkbench();
-            IWorkbenchWindow[] windows = workbench.getWorkbenchWindows();
-            IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-            IEditorInput input = new FileEditorInput(root.getFile(fDelta
-                    .getFullPath()));
-            for (IWorkbenchWindow window : windows) {
-                IWorkbenchPage[] pages = window.getPages();
-                for (IWorkbenchPage page : pages) {
-                    String id = "com.piece_framework.piece_ide."
-                            + "flow_designer.ui.editor.FlowDesignerEditor";
-                    IEditorReference[] editors = page.findEditors(input, id,
-                            IWorkbenchPage.MATCH_INPUT
-                                    | IWorkbenchPage.MATCH_ID);
-                    for (IEditorReference editorReference : editors) {
-                        IReusableEditor editor = 
-                              (IReusableEditor) editorReference.getEditor(true);
-                        page.closeEditor(editor, false);
-                    }
+    private ArrayList<FlowDesignerEditor> getOpenedEditors(IEditorInput input) {
+        ArrayList<FlowDesignerEditor> openedEditors
+                                        = new ArrayList<FlowDesignerEditor>();
+        IWorkbenchWindow[] windows
+                            = PlatformUI.getWorkbench().getWorkbenchWindows();
+        for (IWorkbenchWindow window : windows) {
+            IWorkbenchPage[] pages = window.getPages();
+            for (IWorkbenchPage page : pages) {
+                String id = "com.piece_framework.piece_ide."
+                        + "flow_designer.ui.editor.FlowDesignerEditor";
+                IEditorReference[] editors = page.findEditors(input, id,
+                        IWorkbenchPage.MATCH_INPUT | IWorkbenchPage.MATCH_ID);
+                for (IEditorReference editorReference : editors) {
+                    FlowDesignerEditor editor = 
+                          (FlowDesignerEditor) editorReference.getEditor(true);
+                    openedEditors.add(editor);
                 }
             }
         }
+        return openedEditors;
     }
 }
