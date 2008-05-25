@@ -136,12 +136,36 @@ public final class FlowSerializeUtility {
     }
 
     /**
+     * YAMLファイルに対応したフローシリアラズファイルが存在すればtrueを
+     * さもなくばfalseを返す.
+     * 
+     * @param yamlPath YAMLファイルのパス
+     * @return フローシリアラズファイルが存在すればtrue.;さもなくばfalse
+     */
+    public static boolean hasSerializeFile(IPath yamlPath) {
+        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+        if (yamlPath == null) {
+            return false;
+        }
+        
+        IFile serializeFile = getFlowSeirializeFile(root.getFile(yamlPath));
+
+        if (serializeFile == null) {
+            return false;
+        }
+        
+        return serializeFile.exists();
+    }
+
+    /**
      * 移動されたYAMLファイルに対応したフローシリアラズファイルを作成する.
      * 
      * @param addedList
      *            ワークスペースの変更情報を表現するIResourceDeltaを要素とするArrayList
+     * @throws CoreException コア例外
      */
-    public static void moveSerializeFiles(ArrayList<IResourceDelta> addedList) {
+    public static void moveSerializeFiles(ArrayList<IResourceDelta> addedList) 
+                                                       throws CoreException {
         for (IResourceDelta delta : addedList) {
             moveSerializeFile(delta.getMovedFromPath(), delta.getFullPath());
         }
@@ -150,37 +174,20 @@ public final class FlowSerializeUtility {
     /**
      * 移動されたYAMLファイルに対応したフローシリアライズファイルを作成する.
      * 
-     * 移動元のパスがnullであったり、フローシリアライズファイルが存在しなかった場合は
-     * 処理を行わずfalseを返す。
-     * 
      * @param fromPath 移動元のパス
      * @param toPath 移動先のパス
-     * @return 処理をおこなった場合はtrue.;処理を行わなかった場合はfalse
+     * @throws CoreException コア例外
      */
-    public static boolean moveSerializeFile(IPath fromPath, IPath toPath) {
+    public static void moveSerializeFile(IPath fromPath, IPath toPath)
+                                                       throws CoreException {
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 
-        if (fromPath == null) {
-            return false;
-        }
+        IFile fromSerializeFile = getFlowSeirializeFile(root.getFile(fromPath));
 
-        IFile fromSerializeFile = FlowSerializeUtility
-                .getFlowSeirializeFile(root.getFile(fromPath));
-
-        if (fromSerializeFile == null || !fromSerializeFile.exists()) {
-            return false;
-        }
-
-        try {
-            IFile toFile = root.getFile(toPath);
-            IFile toSerializeFile = FlowSerializeUtility
-                    .createFlowSeirializeFile(toFile);
-            fromSerializeFile.copy(toSerializeFile.getFullPath(), true, null);
-        } catch (CoreException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
+        IFile toFile = root.getFile(toPath);
+        IFile toSerializeFile = FlowSerializeUtility
+                .createFlowSeirializeFile(toFile);
+        fromSerializeFile.copy(toSerializeFile.getFullPath(), true, null);
     }
 
     /**
@@ -188,9 +195,10 @@ public final class FlowSerializeUtility {
      * 
      * @param removedList
      *            ワークスペースの変更情報を表現するIResourceDeltaを要素とするArrayList
+     * @throws CoreException コア例外
      */
     public static void removeSerializeFiles(
-            ArrayList<IResourceDelta> removedList) {
+            ArrayList<IResourceDelta> removedList) throws CoreException {
         for (IResourceDelta delta : removedList) {
             removeSerializeFile(delta.getFullPath());
         }
@@ -203,25 +211,18 @@ public final class FlowSerializeUtility {
      * 
      * @param removedPath
      *            削除されたファイルへのパス
-     * @return 処理をおこなった場合はtrue.;処理を行わなかった場合はfalse
+     * @throws CoreException コア例外
      */
-    public static boolean removeSerializeFile(IPath removedPath) {
+    public static void removeSerializeFile(IPath removedPath)
+                                                throws CoreException {
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
         IFile removedFile = root.getFile(removedPath);
-        try {
-            IFile sirializeFile = FlowSerializeUtility
-                    .getFlowSeirializeFile(removedFile);
-            if (!sirializeFile.exists()) {
-                return false;
-            }
-            sirializeFile.delete(true, null);
-            IFolder folder = root.getFolder(sirializeFile.getFullPath()
-                    .removeLastSegments(1));
-            deleteFolders(folder);
-        } catch (CoreException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
+        IFile sirializeFile = FlowSerializeUtility
+                .getFlowSeirializeFile(removedFile);
+
+        sirializeFile.delete(true, null);
+        IFolder folder = root.getFolder(sirializeFile.getFullPath()
+                .removeLastSegments(1));
+        deleteFolders(folder);
     }
 }

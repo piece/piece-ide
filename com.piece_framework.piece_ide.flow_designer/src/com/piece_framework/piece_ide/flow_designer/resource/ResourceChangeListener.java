@@ -49,17 +49,24 @@ public class ResourceChangeListener implements IResourceChangeListener,
         try {
             event.getDelta().accept(this);
             for (IResourceDelta delta : fAddedList) {
-                boolean result = FlowSerializeUtility.moveSerializeFile(
-                        delta.getMovedFromPath(), 
-                        delta.getFullPath());
-                if (result) {
+                if (FlowSerializeUtility.hasSerializeFile(
+                                        delta.getMovedFromPath())) {
+                    FlowSerializeUtility.
+                        moveSerializeFile(
+                                delta.getMovedFromPath(),
+                                delta.getFullPath()
+                        );
                     reuseEditor(delta);
                 }
             }
 
             for (IResourceDelta delta : fRemovedList) {
-                FlowSerializeUtility.removeSerializeFile(delta.getFullPath());
-                closeEditor(delta);
+                if (FlowSerializeUtility.hasSerializeFile(
+                                            delta.getFullPath())) {
+                    FlowSerializeUtility.
+                            removeSerializeFile(delta.getFullPath());
+                    closeEditor(delta);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -134,9 +141,9 @@ public class ResourceChangeListener implements IResourceChangeListener,
     }
     
     /**
-     * 引数に与えられたEditorInputを入力としているエディタのリストを返す.
+     * 引数に与えられた EditorInput を入力としているエディタのリストを返す.
      * @param input エディタ入力
-     * @return 引数に与えられたEditorInputを入力としているエディタのリスト
+     * @return 引数に与えられた EditorInput を入力としているエディタのリスト
      */
     private ArrayList<FlowDesignerEditor> getOpenedEditors(IEditorInput input) {
         ArrayList<FlowDesignerEditor> openedEditors
