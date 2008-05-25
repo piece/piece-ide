@@ -338,11 +338,12 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
     }
     
     /**
-     * @param save
+     * エディターを閉じる.
+     * 
+     * @param save 保存するか
      */
     public void close(final boolean save) {
-
-        Display display= getSite().getShell().getDisplay();
+        Display display = getSite().getShell().getDisplay();
         display.asyncExec(new Runnable() {
             public void run() {
                 getSite().getPage().closeEditor(FlowDesignerEditor.this, save);

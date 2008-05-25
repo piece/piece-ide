@@ -36,7 +36,8 @@ public final class FlowSerializeUtility {
     }
 
     /**
-     * フローシリアライズファイルを作成する. フォルダーがなければ、フォルダーも合わせて作成する。
+     * フローシリアライズファイルを作成する. 
+     * フォルダーがなければ、フォルダーも合わせて作成する。
      * 
      * @param yamlFile
      *            YAMLファイル(.flowファイル)
@@ -115,7 +116,8 @@ public final class FlowSerializeUtility {
     }
 
     /**
-     * 指定されたフォルダーが空の場合、削除する。その後、同様の処理を親フォルダーに対し再帰的に行う.
+     * 指定されたフォルダーが空の場合、削除する.
+     * その後、同様の処理を親フォルダーに対し再帰的に行う。
      * 
      * @param folder
      *            削除対象となるフォルダー
@@ -160,8 +162,8 @@ public final class FlowSerializeUtility {
     /**
      * 移動されたYAMLファイルに対応したフローシリアラズファイルを作成する.
      * 
-     * @param addedList
-     *            ワークスペースの変更情報を表現するIResourceDeltaを要素とするArrayList
+     * @param addedList ワークスペースの変更情報を表現する
+     *                  IResourceDeltaを要素とするArrayList
      * @throws CoreException コア例外
      */
     public static void moveSerializeFiles(ArrayList<IResourceDelta> addedList) 
@@ -193,8 +195,8 @@ public final class FlowSerializeUtility {
     /**
      * 削除されたYAMLファイルに対応したフローシリアライズファイルを削除する.
      * 
-     * @param removedList
-     *            ワークスペースの変更情報を表現するIResourceDeltaを要素とするArrayList
+     * @param removedList ワークスペースの変更情報を表現する
+     *                    IResourceDeltaを要素とするArrayList
      * @throws CoreException コア例外
      */
     public static void removeSerializeFiles(

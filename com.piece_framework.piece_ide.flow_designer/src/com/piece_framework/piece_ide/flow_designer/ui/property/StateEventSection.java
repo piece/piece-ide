@@ -71,7 +71,7 @@ public class StateEventSection extends FlowDesignerPropertySection {
     
     private Control fTab;
     
-    private MouseListener deleteInternalEventListener = new MouseListener() {
+    private MouseListener fDeleteInternalEventListener = new MouseListener() {
         public void mouseDoubleClick(MouseEvent mouseEvent) {
         }
 
@@ -90,7 +90,7 @@ public class StateEventSection extends FlowDesignerPropertySection {
         }
     };
     
-    private MouseListener createInternalEventListener = new MouseListener() {
+    private MouseListener fCreateInternalEventListener = new MouseListener() {
         public void mouseDoubleClick(MouseEvent mouseEvent) {
         }
 
@@ -188,8 +188,8 @@ public class StateEventSection extends FlowDesignerPropertySection {
         data.top = new FormAttachment(0, 0);
         fCreateInternalEvent.setLayoutData(data);
         
-        fDeleteInternalEvent.addMouseListener(deleteInternalEventListener);
-        fCreateInternalEvent.addMouseListener(createInternalEventListener);
+        fDeleteInternalEvent.addMouseListener(fDeleteInternalEventListener);
+        fCreateInternalEvent.addMouseListener(fCreateInternalEventListener);
     }
 
     /**
