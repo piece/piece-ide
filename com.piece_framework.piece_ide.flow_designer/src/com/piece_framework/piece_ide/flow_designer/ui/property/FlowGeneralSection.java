@@ -24,8 +24,6 @@ public class FlowGeneralSection extends GeneralPropertySection {
 
     private Text fFlowName;
     private CLabel fFlowNameLabel;
-    private Text fActionClassName;
-    private CLabel fActionClassNameLabel;
 
     /**
      * コントロールを作成する.
@@ -51,20 +49,11 @@ public class FlowGeneralSection extends GeneralPropertySection {
                 Messages.getString(
                     "FlowGeneralSection.FlowName")); //$NON-NLS-1$
         fFlowName = getWidgetFactory().createText(composite, ""); //$NON-NLS-1$
-        
-        fActionClassNameLabel = 
-            getWidgetFactory().createCLabel(composite, 
-                Messages.getString(
-                    "FlowGeneralSection.ActionClass")); //$NON-NLS-1$
-        fActionClassName = 
-            getWidgetFactory().createText(composite, ""); //$NON-NLS-1$
-        
+
         arrangeGroup(
-                new CLabel[] {fFlowNameLabel, fActionClassNameLabel},
-                new Text[] {fFlowName, fActionClassName});
-        
+                new CLabel[] {fFlowNameLabel},
+                new Text[] {fFlowName});
         setTextListener(fFlowName);
-        setTextListener(fActionClassName);
     }
     
     /**
@@ -77,15 +66,11 @@ public class FlowGeneralSection extends GeneralPropertySection {
     @Override
     public void refresh() {
         fFlowName.setText(""); //$NON-NLS-1$
-        fActionClassName.setText(""); //$NON-NLS-1$
         
         Flow flow = (Flow) getModel();
         if (flow != null) {
             if (flow.getName() != null) {
                 fFlowName.setText(flow.getName());
-            }
-            if (flow.getActionClassName() != null) {
-                fActionClassName.setText(flow.getActionClassName());
             }
         }
     }
@@ -105,8 +90,6 @@ public class FlowGeneralSection extends GeneralPropertySection {
         
         if (control == fFlowName) {
             attributeName = "Name"; //$NON-NLS-1$
-        } else if (control == fActionClassName) {
-            attributeName = "ActionClassName"; //$NON-NLS-1$
         }
         
         return attributeName;
