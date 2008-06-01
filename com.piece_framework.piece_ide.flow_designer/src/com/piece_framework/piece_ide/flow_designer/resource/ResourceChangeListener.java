@@ -9,7 +9,6 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
-import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -25,7 +24,8 @@ import com.piece_framework.piece_ide.flow_designer.mapper.FlowSerializeUtility;
 import com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor;
 
 /**
- * workspace の変更通知を受けとり、YAMLファイルの変更に対する処理をシリアライズファイルにも行う.
+ * ワークスペースの変更通知を受けとり、YAMLファイルの変更に対する
+ * 処理をシリアライズファイルにも行う.
  * 
  * @see IResourceDelta
  * @see IWorkspace#addResourceChangeListener(IResourceChangeListener, int)
@@ -76,13 +76,14 @@ public class ResourceChangeListener implements IResourceChangeListener,
 
     /**
      * 与えられた resource delta を訪れる(子をたどって処理を行う) .
-     * 
-     * ファイルが追加された場合はaddedListに、ファイルが削除された場合はremovedListに 引数のdeltaをaddする。
+     * ファイルが追加された場合はaddedListに、ファイルが削除された
+     * 場合はremovedListに 引数のdeltaをaddする。
      * 
      * @param delta
      *            リソースツリーの変更内容を表すオブジェクト
      * @return <code>true</code> resource delta の子をたどって処理を行った場合;
-     *         <code>false</code> resource delta の子に対する処理がスキップされた場合.
+     *         <code>false</code> resource delta の子に対する
+     *                            処理がスキップされた場合.
      * @exception CoreException
      *                if the visit fails for some reason.
      */
@@ -139,7 +140,7 @@ public class ResourceChangeListener implements IResourceChangeListener,
             flowDesignerEditor.close(false);
         }
     }
-    
+
     /**
      * 引数に与えられた EditorInput を入力としているエディタのリストを返す.
      * @param input エディタ入力
