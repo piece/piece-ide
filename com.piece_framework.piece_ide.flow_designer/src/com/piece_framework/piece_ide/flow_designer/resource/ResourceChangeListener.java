@@ -99,6 +99,11 @@ public class ResourceChangeListener implements IResourceChangeListener,
         case IResourceDelta.REMOVED:
             this.fRemovedList.add(delta);
             break;
+        case IResourceDelta.CHANGED:
+            if ((delta.getFlags() & IResourceDelta.REPLACED) != 0) {
+                fAddedList.add(delta);
+            }
+            break;
         default:
             break;
         }

@@ -189,6 +189,7 @@ public final class FlowSerializeUtility {
         IFile toFile = root.getFile(toPath);
         IFile toSerializeFile = FlowSerializeUtility
                 .createFlowSeirializeFile(toFile);
+        toSerializeFile.delete(true, null);
         fromSerializeFile.copy(toSerializeFile.getFullPath(), true, null);
     }
 
