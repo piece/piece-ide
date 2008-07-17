@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * フロークラス.
  * フロークラスはステートを保持する。
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -16,30 +16,30 @@ import java.util.List;
 public class Flow extends AbstractModel {
 
     private static final long serialVersionUID = 4080106758569031141L;
-    
+
     private String fName;
     private String fActionClassName;
     private List<State> fStates;
-    
+
     private int fActionStateSequenceNo;
     private int fViewStateSequenceNo;
-    
+
     /**
      * コンストラクタ.
      * ステートリストを初期化する。
-     * 
+     *
      * @param name フロー名
      * @param actionClassName アクションクラス名
      */
     public Flow(String name, String actionClassName) {
         super();
-        
+
         setName(name);
         setActionClassName(actionClassName);
         if (getActionClassName() == null && getName() != null) {
             setActionClassName(getName() + "Action"); //$NON-NLS-1$
         }
-        
+
         fActionStateSequenceNo = 1;
         fViewStateSequenceNo = 1;
         fStates = new ArrayList<State>();
@@ -47,7 +47,7 @@ public class Flow extends AbstractModel {
 
     /**
      * フロー名を返す.
-     * 
+     *
      * @return フロー名
      */
     public String getName() {
@@ -56,7 +56,7 @@ public class Flow extends AbstractModel {
 
     /**
      * フロー名を設定する.
-     * 
+     *
      * @param name フロー名
      */
     public void setName(String name) {
@@ -68,10 +68,10 @@ public class Flow extends AbstractModel {
         }
         firePropertyChange("Flow#Name", oldValue, fName); //$NON-NLS-1$
     }
-    
+
     /**
      * アクションクラス名を返す.
-     * 
+     *
      * @return アクションクラス名
      */
     public String getActionClassName() {
@@ -80,7 +80,7 @@ public class Flow extends AbstractModel {
 
     /**
      * アクションクラス名を設定する.
-     * 
+     *
      * @param actionClassName アクションクラス名
      */
     public void setActionClassName(String actionClassName) {
@@ -96,16 +96,16 @@ public class Flow extends AbstractModel {
 
     /**
      * ステートリストを返す.
-     * 
+     *
      * @return ステートリスト
      */
     public List<State> getStateList() {
         return fStates;
     }
-    
+
     /**
      * 指定されたステートへ遷移しているステートを返す.
-     * 
+     *
      * @param ownState ステート
      * @return 指定されたステートへ遷移しているステート
      */
@@ -122,11 +122,11 @@ public class Flow extends AbstractModel {
         }
         return stateList;
     }
-    
+
     /**
      * 指定されたステート名に合致するステートを返す.
      * 該当するステートがない場合はnull を返す。
-     * 
+     *
      * @param stateName ステート名
      * @return ステート
      */
@@ -138,10 +138,10 @@ public class Flow extends AbstractModel {
         }
         return null;
     }
-    
+
     /**
      * 指定されたステートが遷移先となるイベントの一覧を返す.
-     * 
+     *
      * @param ownState ステート
      * @return 遷移イベント
      */
@@ -159,10 +159,10 @@ public class Flow extends AbstractModel {
         }
         return transitionEventList;
     }
-    
+
     /**
      * ステートを追加する.
-     * 
+     *
      * @param state ステート
      */
     public void addState(State state) {
@@ -172,7 +172,7 @@ public class Flow extends AbstractModel {
 
     /**
      * ステートを削除する.
-     * 
+     *
      * @param state ステート
      */
     public void removeState(State state) {
@@ -191,7 +191,7 @@ public class Flow extends AbstractModel {
      * ビューステートとアクションステートに関しては、手動で入力された
      * 名前が生成した名前と重複する可能性を考慮して、重複チェックをと
      * おるまで連番をインクリメントする。
-     * 
+     *
      * @param stateType ステートタイプ
      * @return 新しいステート名
      */
@@ -212,10 +212,10 @@ public class Flow extends AbstractModel {
         }
         return stateName;
     }
-    
+
     /**
      * 指定されたステート名が使用可能かチェックする.
-     * 
+     *
      * @param stateName ステート名
      * @return 使用可能なステート名の場合はtrue
      */

@@ -25,26 +25,25 @@ import com.piece_framework.piece_ide.flow_designer.ui.figure.ViewStateFigure;
 
 /**
  * ステート・エディットパート.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- *
  */
-public abstract class StateEditPart extends AbstractModelEditPart 
+public abstract class StateEditPart extends AbstractModelEditPart
                                              implements NodeEditPart {
-    
+
     /**
      * フィギュアーを生成する.
      * ステートタイプに合ったフィギュアーを生成する。
-     * 
+     *
      * @return フィギュアー
      * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart#createFigure()
      */
     @Override
     protected IFigure createFigure() {
         IFigure figure = null;
-        
+
         State state = (State) getModel();
         if (state.getType() == State.INITIAL_STATE) {
             figure = new InitialStateFigure();
@@ -55,13 +54,13 @@ public abstract class StateEditPart extends AbstractModelEditPart
         } else if (state.getType() == State.FINAL_STATE) {
             figure = new FinalStateFigure();
         }
-        
+
         return figure;
     }
 
     /**
      * プロパティ変更イベント対応メソッド.
-     * 
+     *
      * @param event プロパティ変更イベント
      * @see java.beans.PropertyChangeListener
      *          #propertyChange(java.beans.PropertyChangeEvent)
@@ -82,12 +81,12 @@ public abstract class StateEditPart extends AbstractModelEditPart
 
     /**
      * ステートに関するエディットポリシーを作成する.
-     * 
+     *
      * @see org.eclipse.gef.editparts.AbstractEditPart#createEditPolicies()
      */
     @Override
     protected void createEditPolicies() {
-        installEditPolicy(EditPolicy.COMPONENT_ROLE, 
+        installEditPolicy(EditPolicy.COMPONENT_ROLE,
                           new StateComponentEditPolicy());
         installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE,
                           new StateGraphicalNodeEditPolicy());
@@ -95,24 +94,24 @@ public abstract class StateEditPart extends AbstractModelEditPart
 
     /**
      * ビジュアルを再描画する.
-     * 
+     *
      * @see org.eclipse.gef.editparts.AbstractEditPart#refreshVisuals()
      */
     protected void refreshVisuals() {
         State state = (State) getModel();
-        
+
         Point point = new Point(state.getX(), state.getY());
-        
+
         Dimension dimension = new Dimension(-1, -1);
         Rectangle rectangle = new Rectangle(point, dimension);
-        
+
         GraphicalEditPart parent = (GraphicalEditPart) getParent();
         parent.setLayoutConstraint(this, getFigure(), rectangle);
     }
-    
+
     /**
      * ステートが遷移元になっている遷移リストを返す.
-     * 
+     *
      * @return 遷移リスト
      * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart
      *          #getModelSourceConnections()
@@ -126,7 +125,7 @@ public abstract class StateEditPart extends AbstractModelEditPart
      * ステートが遷移先になっている遷移リストを返す.
      * フローが保持する自身を除く全ステートの遷移イベントの
      * 遷移先ステートを調べる。
-     * 
+     *
      * @return 遷移リスト
      * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart
      *          #getModelTargetConnections()
@@ -134,13 +133,13 @@ public abstract class StateEditPart extends AbstractModelEditPart
     @Override
     protected List getModelTargetConnections() {
         Flow flow = (Flow) getParent().getModel();
-        
+
         return flow.getTransitionEventListToOwnState((State) getModel());
     }
 
     /**
      * 遷移の線の遷移元のアンカーを返す.
-     * 
+     *
      * @param connection コネクション・エディットパート
      * @return アンカー
      * @see org.eclipse.gef.NodeEditPart
@@ -154,7 +153,7 @@ public abstract class StateEditPart extends AbstractModelEditPart
 
     /**
      * 遷移の線の遷移元のアンカーを返す.
-     * 
+     *
      * @param request リクエスト情報
      * @return アンカー
      * @see org.eclipse.gef.NodeEditPart
@@ -166,7 +165,7 @@ public abstract class StateEditPart extends AbstractModelEditPart
 
     /**
      * 遷移の線の遷移先のアンカーを返す.
-     * 
+     *
      * @param connection コネクション・エディットパート
      * @return アンカー
      * @see org.eclipse.gef.NodeEditPart
@@ -179,7 +178,7 @@ public abstract class StateEditPart extends AbstractModelEditPart
 
     /**
      * 遷移の線の遷移先のアンカーを返す.
-     * 
+     *
      * @param request リクエスト情報
      * @return アンカー
      * @see org.eclipse.gef.NodeEditPart

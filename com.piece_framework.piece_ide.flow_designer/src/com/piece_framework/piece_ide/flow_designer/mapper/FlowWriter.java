@@ -17,7 +17,7 @@ import com.piece_framework.piece_ide.flow_designer.model.Flow;
 /**
  * フローライター.
  * FlowオブジェクトをYAMLファイルとシリアライズファイルに書き込む.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -30,10 +30,10 @@ public final class FlowWriter {
      */
     private FlowWriter() {
     }
-    
+
     /**
      * FlowオブジェクトをYAMLファイルとシリアライズファイルに書き込む.
-     * 
+     *
      * @param flow Flowオブジェクト
      * @param yamlFile YAMLファイル(.flowファイル)
      * @param monitor プログレスモニターe
@@ -42,27 +42,27 @@ public final class FlowWriter {
      * @throws BackingStoreException ストア例外
      */
     public static void write(
-                            Flow flow, 
-                            IFile yamlFile, 
-                            IProgressMonitor monitor) 
+                            Flow flow,
+                            IFile yamlFile,
+                            IProgressMonitor monitor)
                     throws CoreException, IOException, BackingStoreException {
         writeYAML(flow, yamlFile, monitor);
-        
+
         writeSerializeFile(flow, yamlFile, monitor);
     }
-    
+
     /**
      * FlowオブジェクトをYAMLファイルに書き込む.
-     * 
+     *
      * @param flow Flowオブジェクト
      * @param yamlFile YAMLファイル(.flowファイル)
      * @param monitor プログレスモニターe
      * @throws CoreException コア例外
      */
     private static void writeYAML(
-                                Flow flow, 
-                                IFile yamlFile, 
-                                IProgressMonitor monitor) 
+                                Flow flow,
+                                IFile yamlFile,
+                                IProgressMonitor monitor)
                      throws CoreException {
         FlowMapper mapper = new FlowMapper();
         String yamlString = mapper.getYAML(flow);
@@ -77,10 +77,10 @@ public final class FlowWriter {
             uee.printStackTrace();
         }
     }
-    
+
     /**
      * Flowオブジェクトをシリアライズファイルに書き込む.
-     * 
+     *
      * @param flow Flowオブジェクト
      * @param yamlFile YAMLファイル(.flowファイル)
      * @param monitor プログレスモニターe
@@ -88,16 +88,16 @@ public final class FlowWriter {
      * @throws IOException I/O例外
      */
     private static void writeSerializeFile(
-                                Flow flow, 
-                                IFile yamlFile, 
-                                IProgressMonitor monitor) 
+                                Flow flow,
+                                IFile yamlFile,
+                                IProgressMonitor monitor)
                      throws CoreException, IOException {
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
         ObjectOutputStream objectOut = new ObjectOutputStream(byteOut);
         objectOut.writeObject(flow);
         objectOut.close();
-        
-        IFile serializeFlowFile = 
+
+        IFile serializeFlowFile =
             FlowSerializeUtility.createFlowSeirializeFile(yamlFile);
 
         if (serializeFlowFile == null) {
@@ -106,11 +106,11 @@ public final class FlowWriter {
         if (!serializeFlowFile.exists()) {
             serializeFlowFile.create(
                 new ByteArrayInputStream(byteOut.toByteArray()),
-                true, 
+                true,
                 monitor);
         } else {
             serializeFlowFile.setContents(
-                new ByteArrayInputStream(byteOut.toByteArray()), 
+                new ByteArrayInputStream(byteOut.toByteArray()),
                 true,
                 false,
                 monitor);

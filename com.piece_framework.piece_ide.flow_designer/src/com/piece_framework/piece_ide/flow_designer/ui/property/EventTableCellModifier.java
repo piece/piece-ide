@@ -13,40 +13,39 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
  * イベント表示テーブルのセル・モディファイヤー.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- * 
  */
 public class EventTableCellModifier implements ICellModifier {
     private GraphicalEditor fEditor;
     private TableViewer fEventTableViewer;
-    
+
     private State fState;
-    
+
     /**
      * コンストラクタ.
-     * 
+     *
      * @param editor グラフィカル・エディター
      * @param eventTableViewer イベント表示テーブル
      * @param state ステート
      */
     public EventTableCellModifier(
-                GraphicalEditor editor, 
+                GraphicalEditor editor,
                 TableViewer eventTableViewer,
                 State state) {
         fEventTableViewer = eventTableViewer;
         fEditor = editor;
         fState = state;
     }
-    
+
     /**
      * 変更できるかどうかを判定する.
      * 以下の項目は変更不可とする。<br>
      * ・ビルトインイベントのイベントハンドラ以外<br>
      * ・イニシャルステートの遷移イベントのすべての項目<br>
-     * 
+     *
      * @param element モデル
      * @param property プロパティ文字列
      * @return 変更できるか
@@ -55,25 +54,25 @@ public class EventTableCellModifier implements ICellModifier {
      */
     public boolean canModify(Object element, String property) {
         Event event = (Event) element;
-        
+
         if (event.getType() == Event.BUILTIN_EVENT) {
             if (!property.equals("EventHandler")) { //$NON-NLS-1$
                 return false;
             }
         }
-        
+
         if (fState.getType() == State.INITIAL_STATE
             && event.getType() == Event.TRANSITION_EVENT) {
             return false;
         }
-        
+
         return true;
     }
 
     /**
      * プロパティ文字列にあったオブジェクトを返す.
      * 編集不可の場合は
-     * 
+     *
      * @param element モデル
      * @param property プロパティ文字列
      * @return プロパティ文字列にあったオブジェクト
@@ -104,14 +103,14 @@ public class EventTableCellModifier implements ICellModifier {
                 return event.getGuardEventHandler();
             }
         }
-        
+
         return ""; //$NON-NLS-1$
     }
 
     /**
      * 変更を確定する.
      * SetEventAttributeCommand を使用して Event の変更を行う。
-     * 
+     *
      * @param element モデル
      * @param property プロパティ文字列
      * @param value 変更されたデータ
@@ -124,8 +123,8 @@ public class EventTableCellModifier implements ICellModifier {
         }
         Event event = (Event) element;
         String attributeValue = String.valueOf(value);
-        
-        CommandStack commandStack = 
+
+        CommandStack commandStack =
             (CommandStack) fEditor.getAdapter(CommandStack.class);
         SetEventAttributeCommand command =
             new SetEventAttributeCommand(

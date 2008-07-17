@@ -12,7 +12,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 /**
  * ステートコンポーネント・エディットポリシー.
  * ステートを削除するコマンドを発行するエディットポリシー。
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -22,7 +22,7 @@ public class StateComponentEditPolicy extends ComponentEditPolicy {
 
     /**
      * ステートを削除するコマンドを返す.
-     * 
+     *
      * @param request 削除リクエスト情報
      * @return ステートを削除するコマンド
      * @see org.eclipse.gef.editpolicies.ComponentEditPolicy
@@ -33,5 +33,5 @@ public class StateComponentEditPolicy extends ComponentEditPolicy {
         Flow parent = (Flow) getHost().getParent().getModel();
         State state = (State) getHost().getModel();
         return new DeleteStateCommand(parent, state);
-    }    
+    }
 }

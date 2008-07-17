@@ -11,11 +11,10 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
  * イニシャルステートマッパークラス.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- * 
  */
 public class InitialStateMapper extends AbstractStateMapper {
 
@@ -23,7 +22,7 @@ public class InitialStateMapper extends AbstractStateMapper {
      * イニシャルステートを返す.
      * イニシャルステートはフロー内にひとつしかないはずなので、
      * ひとつ見つかった時点で処理は終了する。
-     * 
+     *
      * @return イニシャルステートを含むリスト
      * @see com.piece_framework.piece_ide.flow_designer.mapper
      *          .AbstractStateMapper#getStateList()
@@ -39,11 +38,11 @@ public class InitialStateMapper extends AbstractStateMapper {
         }
         return stateList;
     }
-    
+
     /**
      * イニシャルステートから遷移しているステートをMapオブジェクト
      * にセットして返す.
-     * 
+     *
      * @param stateList イニシャルステートを含むリスト
      * @return YAML出力のためのMapオブジェクト
      * @see com.piece_framework.piece_ide.flow_designer.mapper
@@ -53,15 +52,15 @@ public class InitialStateMapper extends AbstractStateMapper {
     protected Map<String, Object> getMapForYAML(List<State> stateList) {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         if (stateList.size() != 1) {
-            return map; 
+            return map;
         }
-        
+
         State initialState = stateList.get(0);
         for (Event event : initialState.getEventList()) {
             if (event.getType() == Event.TRANSITION_EVENT) {
                 map.put(
                     "firstState", event.getNextState().getName()); //$NON-NLS-1$
-            } else if (event.getType() == Event.BUILTIN_EVENT 
+            } else if (event.getType() == Event.BUILTIN_EVENT
                         && event.getName().equals("Initial")) { //$NON-NLS-1$
                 addEventHandlerToMap(
                         event.getEventHandlerClassName(),
@@ -70,7 +69,7 @@ public class InitialStateMapper extends AbstractStateMapper {
                         map);
             }
         }
-        
+
         return map;
     }
 }

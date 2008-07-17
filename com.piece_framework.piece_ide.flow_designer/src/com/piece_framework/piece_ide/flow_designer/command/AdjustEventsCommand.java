@@ -17,7 +17,7 @@ import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 /**
  * イベント調整コマンド.
  * ステート名に合わせて、すべてのイベント名及びイベントハンドラ名を調整する。
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.2.0
@@ -26,10 +26,10 @@ import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 public class AdjustEventsCommand extends Command {
     private Flow fFlow;
     private Map<Event, Event> fEventMap;
-    
+
     /**
      * コンストラクタ.
-     * 
+     *
      * @param flow フロー
      */
     public AdjustEventsCommand(Flow flow) {
@@ -40,14 +40,14 @@ public class AdjustEventsCommand extends Command {
     /**
      * すべてのステートが保持するイベントが調整対象となるので、
      * ユーザ問い合わせを行う.
-     * 
+     *
      * @return コマンドを実行できるか
      * @see org.eclipse.gef.commands.Command#canExecute()
      */
     @Override
     public boolean canExecute() {
         return MessageDialog.openQuestion(
-                null, 
+                null,
                 Messages.getString("AdjustEvents.Label"), //$NON-NLS-1$
                 Messages.getString("AdjustEvents.Message")); //$NON-NLS-1$
     }
@@ -59,7 +59,7 @@ public class AdjustEventsCommand extends Command {
      * ントに関して、イベント名を変更しようとすると連番がセットされてしまう。<br>
      * そこでイベントは一度削除して、新しく作成する。<br>
      * このため、随時ステートからイベントを取得するのが望ましい。
-     * 
+     *
      * @see org.eclipse.gef.commands.Command#execute()
      */
     @Override
@@ -67,7 +67,7 @@ public class AdjustEventsCommand extends Command {
         if (fFlow == null) {
             return;
         }
-        
+
         for (State state : fFlow.getStateList()) {
             for (Event event : getCurrentEventList(state)) {
                 replaceEvent(state, event);
@@ -77,7 +77,7 @@ public class AdjustEventsCommand extends Command {
 
     /**
      * Mapオブジェクトの保持された旧イベントに差し替える.
-     * 
+     *
      * @see org.eclipse.gef.commands.Command#undo()
      */
     @Override
@@ -85,7 +85,7 @@ public class AdjustEventsCommand extends Command {
         for (State state : fFlow.getStateList()) {
             for (Event event : getCurrentEventList(state)) {
                 Event oldEvent = fEventMap.get(event);
-                
+
                 state.removeEvent(event);
                 state.addEvent(oldEvent);
             }
@@ -94,7 +94,7 @@ public class AdjustEventsCommand extends Command {
 
     /**
      * ステートが保持するイベントリストを新しいリストとして返す.
-     * 
+     *
      * @param state ステート
      * @return イベントリスト
      */
@@ -105,12 +105,12 @@ public class AdjustEventsCommand extends Command {
         }
         return currentEventList;
     }
-    
+
     /**
      * 新しいイベントを作成し、既存のイベントと差し替える.
      * イベント名生成に影響しないようにするために、必ず先に既存の
      * イベントを削除する。
-     * 
+     *
      * @param state ステート
      * @param event 既存のイベント
      */
@@ -122,17 +122,17 @@ public class AdjustEventsCommand extends Command {
         newEvent.setNextState(event.getNextState());
         newEvent.setEventHandler(getEventHandler(state, event, newEvent));
         newEvent.setGuardEventHandler(event.getGuardEventHandler());
-        
+
         state.addEvent(newEvent);
-        
+
         fEventMap.put(newEvent, event);
     }
-    
+
     /**
      * イベント名を返す.
      * ビルトインイベントの場合はそのまま、それ以外の場合は新たに生成
      * したイベント名を返す.
-     * 
+     *
      * @param state ステート
      * @param event 既存のイベント
      * @return イベント名
@@ -147,36 +147,36 @@ public class AdjustEventsCommand extends Command {
         }
         return eventName;
     }
-    
+
     /**
      * イベントハンドラ名を返す.
      * ノーマルステートのビルトインイベントの場合は末尾に "On" + ステート名を
      * をセットする。
-     * 
+     *
      * @param state ステート名
      * @param currentEvent 既存のステート名
      * @param newEvent 新たしいステート名
      * @return イベントハンドラ名
      */
     public String getEventHandler(
-                        State state, 
-                        Event currentEvent, 
+                        State state,
+                        Event currentEvent,
                         Event newEvent) {
         if (currentEvent.getEventHandler() == null) {
             return null;
         }
-        
+
         String eventHandler = null;
         boolean isNormalState =
                     state.getType() == State.VIEW_STATE
                     || state.getType() == State.ACTION_STATE;
-        boolean isBuildinEvent = 
+        boolean isBuildinEvent =
                     currentEvent.getType() == Event.BUILTIN_EVENT;
 
         String className = currentEvent.getEventHandlerClassName();
         String methodName = null;
         if (isNormalState && isBuildinEvent) {
-            methodName = newEvent.generateEventHandlerMethodName() 
+            methodName = newEvent.generateEventHandlerMethodName()
                          + "On" + state.getName(); //$NON-NLS-1$
         } else {
             methodName = newEvent.generateEventHandlerMethodName();

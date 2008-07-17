@@ -16,18 +16,17 @@ import com.piece_framework.piece_ide.flow_designer.model.AbstractModel;
 
 /**
  * フローデザイナーのプロパティシートの抽象セクション.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- * 
  */
 public abstract class FlowDesignerPropertySection extends
         AbstractPropertySection {
 
     private AbstractModel fModel;
     private boolean fDisposed;
-    
+
     private PropertyChangeListener fListener = new PropertyChangeListener() {
         public void propertyChange(PropertyChangeEvent event) {
             if (!fDisposed) {
@@ -35,16 +34,16 @@ public abstract class FlowDesignerPropertySection extends
             }
         }
     };
-    
+
     /**
      * インプットオブジェクトのセッターメソッド.
      * インプットオブジェクトからモデルを取得し、リスナーを登録する.
-     * 
+     *
      * @param part ワークベンチパート
      * @param selection セレクトオブジェクト
      * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
      *          #setInput(
-     *              org.eclipse.ui.IWorkbenchPart, 
+     *              org.eclipse.ui.IWorkbenchPart,
      *              org.eclipse.jface.viewers.ISelection)
      */
     @Override
@@ -61,7 +60,7 @@ public abstract class FlowDesignerPropertySection extends
 
     /**
      * モデルに登録したリスナーを削除する.
-     * 
+     *
      * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
      *          #dispose()
      */
@@ -76,21 +75,21 @@ public abstract class FlowDesignerPropertySection extends
 
     /**
      * コマンドを実行する.
-     * 
+     *
      * @param command コマンド
      */
     protected void executeCommand(Command command) {
-        CommandStack commandStack = 
+        CommandStack commandStack =
             (CommandStack) getPart().getAdapter(CommandStack.class);
-        
+
         if (commandStack != null) {
             commandStack.execute(command);
         }
     }
-    
+
     /**
      * モデルを返す.
-     * 
+     *
      * @return モデル
      */
     protected AbstractModel getModel() {

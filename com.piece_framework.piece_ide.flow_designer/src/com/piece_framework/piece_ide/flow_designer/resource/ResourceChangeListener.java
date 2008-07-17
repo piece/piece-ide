@@ -1,4 +1,4 @@
-// $Id$ 
+// $Id$
 package com.piece_framework.piece_ide.flow_designer.resource;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor;
 /**
  * ワークスペースの変更通知を受けとり、YAMLファイルの変更に対する
  * 処理をシリアライズファイルにも行う.
- * 
+ *
  * @see IResourceDelta
  * @see IWorkspace#addResourceChangeListener(IResourceChangeListener, int)
  */
@@ -38,7 +38,7 @@ public class ResourceChangeListener implements IResourceChangeListener,
 
     /**
      * YAMLファイルの変更に対する処理をシリアライズファイルにも行う.
-     * 
+     *
      * @param event
      *            the resource change event
      * @see IResourceDelta
@@ -78,7 +78,7 @@ public class ResourceChangeListener implements IResourceChangeListener,
      * 与えられた resource delta を訪れる(子をたどって処理を行う) .
      * ファイルが追加された場合はaddedListに、ファイルが削除された
      * 場合はremovedListに 引数のdeltaをaddする。
-     * 
+     *
      * @param delta
      *            リソースツリーの変更内容を表すオブジェクト
      * @return <code>true</code> resource delta の子をたどって処理を行った場合;
@@ -112,7 +112,7 @@ public class ResourceChangeListener implements IResourceChangeListener,
 
     /**
      * エディタ保存先となるエディタ入力を変更する.
-     * 
+     *
      * @param delta リソースツリーの変更内容を表すオブジェクト
      */
     private void reuseEditor(IResourceDelta delta) {
@@ -121,9 +121,9 @@ public class ResourceChangeListener implements IResourceChangeListener,
         IFile toFile = root.getFile(delta.getFullPath());
 
         IEditorInput input = new FileEditorInput(root.getFile(fromPath));
-        
+
         ArrayList<FlowDesignerEditor> editors = getOpenedEditors(input);
-        
+
         for (FlowDesignerEditor flowDesignerEditor : editors) {
             flowDesignerEditor.setInput(new FileEditorInput(toFile));
         }
@@ -131,7 +131,7 @@ public class ResourceChangeListener implements IResourceChangeListener,
 
     /**
      * 削除されたYAMLファイルを入力としていたエディタを閉じる.
-     * 
+     *
      * @param delta リソースツリーの変更内容を表すオブジェクト
      * @throws Exception 例外
      */
@@ -140,7 +140,7 @@ public class ResourceChangeListener implements IResourceChangeListener,
         IEditorInput input = new FileEditorInput(
                                     root.getFile(delta.getFullPath()));
         ArrayList<FlowDesignerEditor> editors = getOpenedEditors(input);
-        
+
         for (FlowDesignerEditor flowDesignerEditor : editors) {
             flowDesignerEditor.close(false);
         }
@@ -164,7 +164,7 @@ public class ResourceChangeListener implements IResourceChangeListener,
                 IEditorReference[] editors = page.findEditors(input, id,
                         IWorkbenchPage.MATCH_INPUT | IWorkbenchPage.MATCH_ID);
                 for (IEditorReference editorReference : editors) {
-                    FlowDesignerEditor editor = 
+                    FlowDesignerEditor editor =
                           (FlowDesignerEditor) editorReference.getEditor(true);
                     openedEditors.add(editor);
                 }

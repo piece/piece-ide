@@ -19,18 +19,17 @@ import com.piece_framework.piece_ide.flow_designer
 
 /**
  * フローのラベルプロバイダー.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- * 
  */
 public class FlowElementLabelProvider extends LabelProvider {
 
     /**
      * コンストラクタ.
      * マッパーを生成する。
-     * 
+     *
      */
     public FlowElementLabelProvider() {
         super();
@@ -38,7 +37,7 @@ public class FlowElementLabelProvider extends LabelProvider {
 
     /**
      * セクションのタイトルとなる文字列を返す.
-     * 
+     *
      * @param elements 選択されたオブジェクト
      * @return セクションのタイトル文字列
      * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
@@ -46,50 +45,50 @@ public class FlowElementLabelProvider extends LabelProvider {
     @Override
     public String getText(Object elements) {
         String text = null;
-        
+
         if (elements == null || elements.equals(StructuredSelection.EMPTY)) {
             return Messages.getString(
                     "FlowElementLabelProvider.Flow"); //$NON-NLS-1$
         }
-        
+
         Object object = getSelectionObject(elements);
-        
+
         if (object != null) {
             if (object instanceof ActionStateEditPart) {
-                text = 
+                text =
                     Messages.getString(
                         "FlowElementLabelProvider.ActionState"); //$NON-NLS-1$
             } else if (object instanceof ViewStateEditPart) {
-                text = 
+                text =
                     Messages.getString(
                         "FlowElementLabelProvider.ViewState"); //$NON-NLS-1$
             } else if (object instanceof InitialStateEditPart) {
-                text = 
+                text =
                     Messages.getString(
                         "FlowElementLabelProvider.InitialState"); //$NON-NLS-1$
             } else if (object instanceof FinalStateEditPart) {
-                text = 
+                text =
                     Messages.getString(
                         "FlowElementLabelProvider.FinalState"); //$NON-NLS-1$
             } else if (object instanceof FlowEditPart) {
-                text = 
+                text =
                     Messages.getString(
                         "FlowElementLabelProvider.Flow"); //$NON-NLS-1$
             } else {
-                text = 
+                text =
                     Messages.getString(
                         "FlowElementLabelProvider.Unknown"); //$NON-NLS-1$
             }
         }
-        
+
         return text;
     }
-    
+
     /**
      * セレクションオブジェクトからエディットパートを取得する.
      * 複数選択されている場合は、最初に選択したオブジェクトの
      * エディットパートを返す。
-     * 
+     *
      * @param objects セレクションオブジェクト
      * @return エディットパート
      */

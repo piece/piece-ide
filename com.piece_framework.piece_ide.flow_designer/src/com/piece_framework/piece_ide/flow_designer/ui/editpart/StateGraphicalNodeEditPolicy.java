@@ -14,7 +14,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 /**
  * ステートグラフィックノード・エディットポリシー.
  * 遷移の作成に関するコマンドを発行するエディットポリシー。
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -27,9 +27,9 @@ public class StateGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
      * このメソッドは遷移先が決定したときに呼び出される。<br>
      * そこで、遷移作成コマンド (CreateStateConnection) をリクエストから取り出し、<br>
      * 遷移先ステートを設定して返す。
-     * 
+     *
      * @param request リクエスト情報
-     * @return 遷移作成コマンド 
+     * @return 遷移作成コマンド
      * @see org.eclipse.gef.editpolicies.GraphicalNodeEditPolicy
      *          #getConnectionCompleteCommand(
      *              org.eclipse.gef.requests.CreateConnectionRequest)
@@ -38,10 +38,10 @@ public class StateGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
     protected Command getConnectionCompleteCommand(
                             CreateConnectionRequest request) {
         State nextState = (State) request.getTargetEditPart().getModel();
-        CreateConnectionCommand command = 
+        CreateConnectionCommand command =
             (CreateConnectionCommand) request.getStartCommand();
         command.setNextState(nextState);
-        
+
         return command;
     }
 
@@ -51,7 +51,7 @@ public class StateGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
      * この時点では遷移先は決定していないので、
      * 遷移作成コマンド (CreateStateConnection) には遷移元ステート
      * のみを設定して返す。
-     * 
+     *
      * @param request リクエスト情報
      * @return 遷移作成コマンド
      * @see org.eclipse.gef.editpolicies.GraphicalNodeEditPolicy
@@ -64,18 +64,18 @@ public class StateGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
         Event event = (Event) request.getNewObject();
         State state = (State) request.getTargetEditPart().getModel();
         Flow flow = (Flow) request.getTargetEditPart().getParent().getModel();
-        CreateConnectionCommand command = 
+        CreateConnectionCommand command =
             new CreateConnectionCommand(event);
         command.setFlow(flow);
         command.setState(state);
         request.setStartCommand(command);
-        
+
         return command;
     }
 
     /**
      * 遷移元のコネクションを設定し直したときのコマンドを返す.
-     * 
+     *
      * @param request リクエスト情報
      * @return コネクション再設定コマンド
      * @see org.eclipse.gef.editpolicies.GraphicalNodeEditPolicy
@@ -89,7 +89,7 @@ public class StateGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 
     /**
      * 遷移先のコネクションを設定し直したときのコマンドを返す.
-     * 
+     *
      * @param request リクエスト情報
      * @return コネクション再設定コマンド
      * @see org.eclipse.gef.editpolicies.GraphicalNodeEditPolicy

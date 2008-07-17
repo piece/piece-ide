@@ -9,20 +9,20 @@ import com.piece_framework.piece_ide.flow_designer.model.AbstractModel;
 
 /**
  * モデル・エディットパート.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
  *
  */
-public abstract class AbstractModelEditPart 
-                    extends AbstractGraphicalEditPart 
+public abstract class AbstractModelEditPart
+                    extends AbstractGraphicalEditPart
                     implements PropertyChangeListener {
 
     /**
      * アクティブ時に呼ばれるメソッド.
      * モデルのリスナーとしてい自身を登録する.
-     * 
+     *
      * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart#activate()
      */
     @Override
@@ -35,7 +35,7 @@ public abstract class AbstractModelEditPart
     /**
      * 非アクティブ時に呼ばれるメソッド.
      * モデルから登録したリスナーを削除する.
-     * 
+     *
      * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart#deactivate()
      */
     @Override

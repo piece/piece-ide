@@ -10,7 +10,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
  * フローデザイナー・エディットパートファクトリー.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -21,7 +21,7 @@ public class FlowDesignerEditFactory implements EditPartFactory {
     /**
      * エディットパートを作成する.
      * モデルに対応したエディットパートを作成する。
-     * 
+     *
      * @param context エディットパート
      * @param model モデル
      * @return モデルに対応したエディットパート
@@ -30,7 +30,7 @@ public class FlowDesignerEditFactory implements EditPartFactory {
      */
     public EditPart createEditPart(EditPart context, Object model) {
         EditPart editPart = null;
-        
+
         if (model instanceof State) {
             State state = (State) model;
             if (state.getType() == State.INITIAL_STATE) {
@@ -47,7 +47,7 @@ public class FlowDesignerEditFactory implements EditPartFactory {
         } else if (model instanceof Flow) {
             editPart = new FlowEditPart();
         }
-        
+
         editPart.setModel(model);
         return editPart;
     }

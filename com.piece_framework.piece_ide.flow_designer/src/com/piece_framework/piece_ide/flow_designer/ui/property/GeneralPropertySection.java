@@ -11,24 +11,23 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * プロパティシートの一般の抽象セクション.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- * 
  */
 public abstract class GeneralPropertySection extends
         FlowDesignerPropertySection {
 
     private static final int TEXT_WIDTH_PERCENT = 70;
-    
+
     private TextListener fListener = new TextListener() {
 
         @Override
         public void changeText(Control control) {
             String attributeName = getAttributeName(control);
             String attributeValue = ((Text) control).getText();
-            
+
             executeCommand(getAttributeCommand(attributeName, attributeValue));
             refresh();
         }
@@ -41,7 +40,7 @@ public abstract class GeneralPropertySection extends
      * テキストはTEXT_WIDTH_PERCENTに従って配置される。<br>
      * 従って、このメソッドでは各コントロールの幅を調整す
      * ることはできません。
-     * 
+     *
      * @param label ラベルの配列
      * @param text テキストの配列
      */
@@ -56,7 +55,7 @@ public abstract class GeneralPropertySection extends
                 labelFormData.top = new FormAttachment(0, 0);
             }
             label[i].setLayoutData(labelFormData);
-            
+
             FormData textFormData = new FormData();
             textFormData.left = new FormAttachment(label[i], 0);
             textFormData.right = new FormAttachment(TEXT_WIDTH_PERCENT, 0);
@@ -68,10 +67,10 @@ public abstract class GeneralPropertySection extends
             text[i].setLayoutData(textFormData);
         }
     }
-    
+
     /**
      * テキストボックスにリスナーをセットする.
-     * 
+     *
      * @param text テキストボックス
      */
     protected void setTextListener(Text text) {
@@ -79,18 +78,18 @@ public abstract class GeneralPropertySection extends
         text.addListener(SWT.Modify, fListener);
         text.addListener(SWT.KeyDown, fListener);
     }
-    
+
     /**
      * コントロールから属性名を返す.
-     * 
+     *
      * @param control コントロール
      * @return 属性名
      */
     abstract String getAttributeName(Control control);
-    
+
     /**
      * 属性を設定するコマンドを返す.
-     * 
+     *
      * @param attributeName 属性名
      * @param attributeValue 属性値
      * @return 属性を設定するコマンド

@@ -8,7 +8,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
  * イベント削除コマンド.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -18,10 +18,10 @@ public class DeleteEventCommand extends Command {
 
     private State fState;
     private Event fEvent;
-    
+
     /**
      * コンストラクタ.
-     * 
+     *
      * @param state ステート
      * @param event イベント
      */
@@ -33,7 +33,7 @@ public class DeleteEventCommand extends Command {
 
     /**
      * イベントを削除する.
-     * 
+     *
      * @see org.eclipse.gef.commands.Command#execute()
      */
     @Override
@@ -43,7 +43,7 @@ public class DeleteEventCommand extends Command {
 
     /**
      * 削除したイベントを元に戻す.
-     * 
+     *
      * @see org.eclipse.gef.commands.Command#undo()
      */
     @Override

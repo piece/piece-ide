@@ -11,11 +11,10 @@ import org.eclipse.swt.graphics.Color;
  * 角丸矩形フィギュアー(グラデーション対応).
  * グラデーション開始色から背景色へグラデーションする。<br>
  * グラデーションの方向は上から下へ行う。
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- *
  */
 public class GradientRoundedRectangle extends RoundedRectangle {
     private Color fGradientStartColor = ColorConstants.white;
@@ -23,7 +22,7 @@ public class GradientRoundedRectangle extends RoundedRectangle {
 
     /**
      * シェイプを塗りつぶす.
-     * 
+     *
      * @param graphics グラフィックス
      * @see org.eclipse.draw2d.RectangleFigure
      *          #fillShape(org.eclipse.draw2d.Graphics)
@@ -31,7 +30,7 @@ public class GradientRoundedRectangle extends RoundedRectangle {
     @Override
     protected void fillShape(Graphics graphics) {
         Rectangle shapeRectangle = getShapeRectangle();
-        
+
         Color currentColor = graphics.getForegroundColor();
         graphics.setForegroundColor(fGradientStartColor);
         graphics.fillGradient(shapeRectangle, true);
@@ -40,7 +39,7 @@ public class GradientRoundedRectangle extends RoundedRectangle {
 
     /**
      * アウトラインを描画する.
-     * 
+     *
      * @param graphics グラフィックス
      * @see org.eclipse.draw2d.RectangleFigure
      *          #outlineShape(org.eclipse.draw2d.Graphics)
@@ -48,10 +47,10 @@ public class GradientRoundedRectangle extends RoundedRectangle {
     @Override
     protected void outlineShape(Graphics graphics) {
         Rectangle shapeRectangle = getShapeRectangle();
-        
+
         Color currentColor = graphics.getForegroundColor();
         graphics.setForegroundColor(fOutlineColor);
-        graphics.drawRoundRectangle(shapeRectangle, 
+        graphics.drawRoundRectangle(shapeRectangle,
                                     corner.width,
                                     corner.height);
         graphics.setForegroundColor(currentColor);
@@ -59,16 +58,16 @@ public class GradientRoundedRectangle extends RoundedRectangle {
 
     /**
      * グラデーション開始色を返す.
-     * 
+     *
      * @return グラデーション開始色
      */
     public Color getGradientStartColor() {
         return fGradientStartColor;
     }
-    
+
     /**
      * グラデーション開始色を設定する.
-     * 
+     *
      * @param color グラデーション開始色
      */
     public void setGradientStartColor(Color color) {
@@ -76,19 +75,19 @@ public class GradientRoundedRectangle extends RoundedRectangle {
             fGradientStartColor = color;
         }
     }
-    
+
     /**
      * アウトライン色を返す.
-     * 
+     *
      * @return アウトライン色
      */
     public Color getOutlineColor() {
         return fOutlineColor;
     }
-    
+
     /**
      * アウトライン色を設定する.
-     * 
+     *
      * @param color アウトライン色
      */
     public void setOutlineColor(Color color) {
@@ -96,13 +95,13 @@ public class GradientRoundedRectangle extends RoundedRectangle {
             fOutlineColor = color;
         }
     }
-    
+
     /**
      * フィギュアーの実描画領域を矩形で返す.
      * 実描画領域の左上はフィギュアー自身の位置から、境界線幅
      * を足したもの、大きさはフィギュアー自身の大きさから境界
      * 線の幅を引いたもとになる。
-     * 
+     *
      * @return フィギュアーの実描画領域の矩形
      */
     protected Rectangle getShapeRectangle() {

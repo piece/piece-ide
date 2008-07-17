@@ -10,33 +10,32 @@ import com.piece_framework.piece_ide.flow_designer.ui.figure.ViewStateFigure;
 
 /**
  * ビューステート・エディットパート.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- *
  */
 public class ViewStateEditPart extends NormalStateEditPart {
 
     /**
      * フィギュアーを作成する.
-     * 
+     *
      * @return フィギュアー
      * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart#createFigure()
      */
     @Override
     protected IFigure createFigure() {
         ViewStateFigure figure = new ViewStateFigure();
-        
+
         refreshFigure(figure);
         refreshView(figure);
-        
+
         return figure;
     }
 
     /**
      * プロパティ変更イベントを処理する.
-     * 
+     *
      * @param evt プロパティ変更イベント
      * @see com.piece_framework.piece_ide.flow_designer.
      *          ui.editpart.StateEditPart
@@ -57,7 +56,7 @@ public class ViewStateEditPart extends NormalStateEditPart {
      */
     private void refreshView(ViewStateFigure figure) {
         State state = (State) getModel();
-        
+
         figure.setView(state.getView());
     }
 }

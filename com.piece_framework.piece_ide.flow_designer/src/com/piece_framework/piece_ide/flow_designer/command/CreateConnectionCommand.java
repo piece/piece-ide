@@ -9,7 +9,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
  * 遷移作成コマンド.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -20,10 +20,10 @@ public class CreateConnectionCommand extends Command {
     private State fState;
     private State fNextState;
     private Event fEvent;
-    
+
     /**
      * コンストラクタ.
-     * 
+     *
      * @param event 遷移イベント
      */
     public CreateConnectionCommand(Event event) {
@@ -33,31 +33,31 @@ public class CreateConnectionCommand extends Command {
 
     /**
      * フローをセットする.
-     * 
+     *
      * @param flow フロー
      */
     public void setFlow(Flow flow) {
         fFlow = flow;
     }
-    
+
     /**
      * 遷移元ステートをセットする.
-     * 
+     *
      * @param state 遷移元ステート
      */
     public void setState(State state) {
         fState = state;
     }
-    
+
     /**
      * 遷移先ステートをセットする.
-     * 
+     *
      * @param nextState 遷移先ステート
      */
     public void setNextState(State nextState) {
         fNextState = nextState;
     }
-    
+
     /**
      * コマンドを実行できるか判断する.
      * ・遷移元・遷移先ステートがnullでなく、遷移元・遷移先ステートが同一
@@ -66,15 +66,15 @@ public class CreateConnectionCommand extends Command {
      * ・イニシャルステートへの遷移はできない。<br>
      * ・ファイナルステートへの遷移はひとつだけ遷移できるものとする。<br>
      * ・ファイナルステートからの遷移はできない。<br>
-     * 
+     *
      * @return コマンドを実行できるか
      * @see org.eclipse.gef.commands.Command#canExecute()
      */
     @Override
     public boolean canExecute() {
         boolean executable = true;
-        
-        if (fFlow == null || fState == null || fNextState == null 
+
+        if (fFlow == null || fState == null || fNextState == null
             || fState.equals(fNextState)) {
             executable = false;
         } else if (fState.getType() == State.INITIAL_STATE
@@ -88,13 +88,13 @@ public class CreateConnectionCommand extends Command {
         } else if (fState.getType() == State.FINAL_STATE) {
             executable = false;
         }
-        
+
         return executable;
     }
 
     /**
      * 遷移を作成する.
-     * 
+     *
      * @see org.eclipse.gef.commands.Command#execute()
      */
     @Override
@@ -103,10 +103,10 @@ public class CreateConnectionCommand extends Command {
         fEvent.setNextState(fNextState);
         fState.addEvent(fEvent);
     }
-    
+
     /**
      * 作成した遷移を元に戻す.
-     * 
+     *
      * @see org.eclipse.gef.commands.Command#undo()
      */
     @Override

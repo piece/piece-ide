@@ -50,35 +50,35 @@ import com.piece_framework.piece_ide.flow_designer.ui.editpart.FlowDesignerEditF
 
 /**
  * フローデザイナー・エディター.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
  *
  */
-public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette 
+public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
            implements ITabbedPropertySheetPageContributor, IReusableEditor {
-    
+
     private static final int INITAL_STATE_X = 50;
     private static final int INITAL_STATE_Y = 50;
-    
+
     private Flow fFlow;
-    
+
     /**
      * コンストラクタ.
-     * 
+     *
      */
     public FlowDesignerEditor() {
         DefaultEditDomain domain = new DefaultEditDomain(this) {
             private boolean fIsShowPropertySheet = false;
-            
+
             @Override
             public void focusGained(FocusEvent event, EditPartViewer viewer) {
                 super.focusGained(event, viewer);
-                
+
                 if (!fIsShowPropertySheet) {
                     try {
-                        IWorkbenchPage workbenchPage = 
+                        IWorkbenchPage workbenchPage =
                             PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                                 .getActivePage();
                         workbenchPage.showView(
@@ -92,21 +92,21 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         };
         setEditDomain(domain);
     }
-    
+
     /**
      * グラフィカル・ビューアを設定する.
      * グラフィカル・ビューアを作成し、エディットパート・ファクトリと
      * メニュー・プロバイダを設定する。
-     * 
+     *
      * @see org.eclipse.gef.ui.parts.GraphicalEditor#configureGraphicalViewer()
      */
     @Override
     protected void configureGraphicalViewer() {
         super.configureGraphicalViewer();
-        
+
         GraphicalViewer viewer = getGraphicalViewer();
         viewer.setEditPartFactory(new FlowDesignerEditFactory());
-        
+
         FlowDesignerContextMenuProvider menuProvider
             = new FlowDesignerContextMenuProvider(viewer, getActionRegistry());
         viewer.setContextMenu(menuProvider);
@@ -115,7 +115,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
 
     /**
      * アクションを生成する.
-     * 
+     *
      * @see org.eclipse.gef.ui.parts.GraphicalEditor#createActions()
      */
     @Override
@@ -123,11 +123,11 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
     protected void createActions() {
         super.createActions();
         ActionRegistry registry = getActionRegistry();
-        
+
         IAction adjustEventAction = new AdjustEventsAction(this);
         registry.registerAction(adjustEventAction);
         getSelectionActions().add(adjustEventAction.getId());
-        
+
         IAction showPropertyAction = new ShowPropertySheetAction(this);
         registry.registerAction(showPropertyAction);
         getSelectionActions().add(showPropertyAction.getId());
@@ -137,57 +137,57 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
      * グラフィカル・ビューアを初期化する.
      * ファイルからフローを読み込んで、表示する。ファイルにフローの情報が
      * ない場合はイニシャルステートのみを表示する。
-     * 
+     *
      * @see org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette
      *          #initializeGraphicalViewer()
      */
     @Override
     protected void initializeGraphicalViewer() {
-        
+
         boolean needInit = true;
-        
+
         try {
             IFile file = ((IFileEditorInput) getEditorInput()).getFile();
             setPartName(file.getName());
-            
+
             fFlow = FlowReader.read(file);
             if (fFlow != null) {
                 needInit = false;
             }
-            
+
         } catch (CoreException ce) {
             // TODO: オブジェクト読み込み時の例外処理
             ce.printStackTrace();
         }
-        
+
         if (needInit) {
             String flowName = null;
             String actionClassName = null;
             // ファイル名からフロー名・アクションクラス名を生成
             if (getPartName() != null) {
                 String fileName = getPartName();
-                
+
                 flowName = fileName.substring(0, fileName.indexOf('.'));
                 actionClassName = flowName + "Action";   //$NON-NLS-1$
             }
-            
+
             fFlow = new Flow(flowName, actionClassName);
-            
+
             State initialState = new State(State.INITIAL_STATE);
             initialState.setName(fFlow.generateStateName(State.INITIAL_STATE));
             initialState.setX(INITAL_STATE_X);
             initialState.setY(INITAL_STATE_Y);
-            
+
             fFlow.addState(initialState);
         }
-        
+
         GraphicalViewer viewer = getGraphicalViewer();
         viewer.setContents(fFlow);
     }
-    
+
     /**
      * フローを保存する.
-     * 
+     *
      * @param monitor プログレスモニター
      * @see org.eclipse.ui.part.EditorPart
      *          #doSave(org.eclipse.core.runtime.IProgressMonitor)
@@ -199,24 +199,24 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
                              ((IFileEditorInput) getEditorInput()).getFile(),
                              monitor);
             getCommandStack().markSaveLocation();
-            
+
         } catch (CoreException ce) {
             // TODO: オブジェクト読み込み時の例外処理
             ce.printStackTrace();
-            
+
         } catch (IOException ioe) {
             // TODO: オブジェクト読み込み時の例外処理
             ioe.printStackTrace();
-            
+
         } catch (BackingStoreException bse) {
             bse.printStackTrace();
         }
     }
-    
+
     /**
      * コマンドスタックに変更があった場合のイベント.
      * 編集中にする(エディターのタイトルに"*"を表示する)。
-     * 
+     *
      * @param event イベント
      * @see org.eclipse.gef.ui.parts.GraphicalEditor
      *          #commandStackChanged(java.util.EventObject)
@@ -230,7 +230,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
     /**
      * パレット・ルートを返す.
      * パレットを生成して返す。
-     * 
+     *
      * @return 作成したパレット・ルート
      * @see org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette
      *          #getPaletteRoot()
@@ -238,14 +238,14 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
     @Override
     protected PaletteRoot getPaletteRoot() {
         PaletteRoot root = new PaletteRoot();
-        
+
         PaletteGroup group = new PaletteGroup(
                 Messages.getString(
                         "FlowDesignerEditor.PalleteGroup")); //$NON-NLS-1$
         group.add(new PanningSelectionToolEntry());
         group.add(new MarqueeToolEntry());
         root.add(group);
-        
+
         PaletteDrawer drawer = new PaletteDrawer(
                 Messages.getString(
                     "FlowDesignerEditor.PalletteDrawerState")); //$NON-NLS-1$
@@ -280,7 +280,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
             FlowDesignerPlugin.getImageDescriptor(
                     "icons/FinalState.gif")));  //$NON-NLS-1$
         root.add(drawer);
-        
+
         drawer = new PaletteDrawer(
             Messages.getString(
                 "FlowDesignerEditor.PalletteDrawerTransition")); //$NON-NLS-1$
@@ -295,13 +295,13 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
             FlowDesignerPlugin.getImageDescriptor(
                     "icons/Transition.gif")));  //$NON-NLS-1$
         root.add(drawer);
-        
+
         return root;
     }
 
     /**
      * クラスの型に合ったオブジェクトを返す.
-     * 
+     *
      * @param type クラス
      * @return 指定されたクラスの型にあったオブジェクト
      * @see org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette
@@ -319,7 +319,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
 
     /**
      * タブ・プロパティが使用するコントリビュートIDを返す.
-     * 
+     *
      * @return コントリビュートID
      * @see org.eclipse.ui.views.properties.tabbed
      *          .ITabbedPropertySheetPageContributor#getContributorId()
@@ -328,18 +328,18 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         return getSite().getId();
     }
 
-    /** 
+    /**
      * エディタ入力をセットする.
-     * 
+     *
      * @param input エディタ入力
      */
     public final void setInput(IEditorInput input) {
         setInputWithNotify(input);
     }
-    
+
     /**
      * エディターを閉じる.
-     * 
+     *
      * @param save 保存するか
      */
     public void close(final boolean save) {

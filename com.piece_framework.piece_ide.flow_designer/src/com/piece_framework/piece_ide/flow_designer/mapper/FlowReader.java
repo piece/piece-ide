@@ -21,28 +21,28 @@ import com.piece_framework.piece_ide.internal.PieceIDE;
 /**
  * フローリーダー.
  * YAMLファイルとシリアライズファイルからFlowオブジェクトを読み込む.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
  *
  */
 public final class FlowReader {
-    
+
     /**
      * コンストラクタ.
-     * 
+     *
      */
     private FlowReader() {
     }
-    
+
     /**
      * YAMLファイルとシリアライズファイルからFlowオブジェクトを読み込む.
      * YAMLファイルから読み込んだFlowオブジェトとシリアライズファイルか
      * ら読み込んだFlowオブジェクトを比較し、一致すればシリアライズファ
      * イルから読み込んだFlowオブジェクトを返す。
      * 異なる場合はYAMLファイルから読み込んだFlowオブジェクトを返す。
-     * 
+     *
      * @param yamlFile YAMLファイル(.flowファイル)
      * @return Flowオブジェクト
      * @throws CoreException コア例外
@@ -50,18 +50,18 @@ public final class FlowReader {
     public static Flow read(IFile yamlFile) throws CoreException {
         Flow yamlFlow = null;
         Flow serializeFlow = null;
-        
+
         yamlFlow = getFlowFromYAMLFile(yamlFile);
         if (yamlFlow == null) {
             boolean dataExists = false;
-            BufferedInputStream bufferedIn = null; 
+            BufferedInputStream bufferedIn = null;
             try {
-                bufferedIn = 
+                bufferedIn =
                     new BufferedInputStream(yamlFile.getContents(true));
                 if (bufferedIn.read() != -1) {
                     dataExists = true;
                 }
-                
+
             } catch (IOException ioe) {
             } finally {
                 try {
@@ -69,10 +69,10 @@ public final class FlowReader {
                 } catch (IOException ioe) {
                 }
             }
-            
+
             if (dataExists) {
                 MessageDialog.openError(
-                        null, 
+                        null,
                         Messages.getString(
                             "FlowReader.ReadErrorTitle"), //$NON-NLS-1$
                         Messages.getString(
@@ -80,14 +80,14 @@ public final class FlowReader {
             }
             return null;
         }
-        
+
         serializeFlow = getFlowFromSeirializeFile(yamlFile);
-        
+
         Flow returnFlow = yamlFlow;
         if (compareFlow(yamlFlow, serializeFlow)) {
             returnFlow = serializeFlow;
         }
-        
+
         if (returnFlow != null) {
             String fileName = yamlFile.getName();
             String flowName = fileName.substring(0, fileName.indexOf('.'));
@@ -99,13 +99,13 @@ public final class FlowReader {
                         flowName + "Action"); //$NON-NLS-1$
             }
         }
-        
+
         return returnFlow;
     }
-    
+
     /**
      * フローを比較する.
-     * 
+     *
      * @param flow1 フロー1
      * @param flow2 フロー2
      * @return ふたつのフローが一致しているか
@@ -114,13 +114,13 @@ public final class FlowReader {
         if (flow1 == null || flow2 == null) {
             return false;
         }
-        
+
         for (State state1 : flow1.getStateList()) {
             State state2 = flow2.getStateByName(state1.getName());
             if (!compareState(state1, state2)) {
                 return false;
             }
-            
+
             for (Event event1 : state1.getEventList()) {
                 if (!compareEvent(event1,
                                   state2.getEventByName(event1.getName()))) {
@@ -128,19 +128,19 @@ public final class FlowReader {
                 }
             }
         }
-        
+
         return true;
     }
 
 
     /**
      * YAMLファイルからFlowオブジェクトを取得する.
-     * 
+     *
      * @param yamlFile YAMLファイル
      * @return Flowオブジェクト
      * @throws CoreException コア例外
      */
-    private static Flow getFlowFromYAMLFile(IFile yamlFile) 
+    private static Flow getFlowFromYAMLFile(IFile yamlFile)
                                 throws CoreException {
         Flow yamlFlow = null;
         BufferedInputStream bufferedIn = null;
@@ -152,11 +152,11 @@ public final class FlowReader {
             while ((read = bufferedIn.read()) != -1) {
                 byteOut.write(read);
             }
-            
+
             FlowMapper flowMapper = new FlowMapper();
-            yamlFlow = 
+            yamlFlow =
                 flowMapper.getFlow(byteOut.toString("UTF-8")); //$NON-NLS-1$
-            
+
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
         } catch (IOException ioe) {
@@ -175,25 +175,25 @@ public final class FlowReader {
             } catch (IOException ioe) {
             }
         }
-        
+
         return yamlFlow;
     }
-    
+
     /**
      * シリアライズファイルからFlowオブジェクトを取得する.
      * シリアライズファイルのパスはYAMLファイルのパスを元に導出される
      * ので、YAMLファイルを引数として受け取る。
-     * 
+     *
      * @param yamlFile YAMLファイル
      * @return Flowオブジェクト
      * @throws CoreException コア例外
      */
-    private static Flow getFlowFromSeirializeFile(IFile yamlFile) 
+    private static Flow getFlowFromSeirializeFile(IFile yamlFile)
                             throws CoreException {
         Flow serializeFlow = null;
-        IFile serializeFlowFile = 
-                FlowSerializeUtility.getFlowSeirializeFile(yamlFile); 
-        
+        IFile serializeFlowFile =
+                FlowSerializeUtility.getFlowSeirializeFile(yamlFile);
+
         if (serializeFlowFile != null) {
             if (serializeFlowFile.exists()) {
                 ObjectInputStream in = null;
@@ -213,16 +213,16 @@ public final class FlowReader {
                 }
             }
         }
-        
+
         return serializeFlow;
     }
-    
+
     /**
      * ステートを比較する.
      * 比較する内容は下記のとおり。<br>
      * ・ステート名が同じか(フロー2からの呼び出し時にチェック)<br>
      * ・ビュー名が同じか(ビューステートの場合のみ)<br>
-     * 
+     *
      * @param state1 ステート1
      * @param state2 ステート2
      * @return ふたつのステートが一致しているか
@@ -231,7 +231,7 @@ public final class FlowReader {
         if (state2 == null) {
             return false;
         }
-        
+
         if (state1.getType() == State.VIEW_STATE) {
             if (!PieceIDE.compare(state1.getView(),
                                   state2.getView())) {
@@ -240,14 +240,14 @@ public final class FlowReader {
         }
         return true;
     }
-    
+
     /**
      * イベントを比較する.
      * 比較する内容は下記のとおり。<br>
      * ・次ステートが同じか<br>
      * ・イベントハンドラが同じか<br>
      * ・ガードイベントハンドラが同じか<br>
-     * 
+     *
      * @param event1 イベント1
      * @param event2 イベント2
      * @return ふたつのイベントが一致しているか
@@ -256,24 +256,24 @@ public final class FlowReader {
         if (event2 == null) {
             return false;
         }
-        
+
         Method getNameMethod = null;
         try {
-            getNameMethod = 
+            getNameMethod =
                 State.class.getMethod("getName", (Class[]) null); //$NON-NLS-1$
         } catch (NoSuchMethodException nsme) {
         }
-        
+
         if (!PieceIDE.compare(event1.getNextState(),
                               event2.getNextState(),
                               getNameMethod)) {
             return false;
         }
-        if (!PieceIDE.compare(event1.getEventHandler(), 
+        if (!PieceIDE.compare(event1.getEventHandler(),
                               event2.getEventHandler())) {
             return false;
         }
-        if (!PieceIDE.compare(event1.getGuardEventHandler(), 
+        if (!PieceIDE.compare(event1.getGuardEventHandler(),
                               event2.getGuardEventHandler())) {
             return false;
         }

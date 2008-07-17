@@ -10,7 +10,7 @@ import com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin;
 
 /**
  * ビューステート・フィギュアー.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -24,41 +24,41 @@ public class ViewStateFigure extends NormalStateFigure {
     private static final RGB STATE_OUTLINE_COLOR = new RGB(174, 161, 90);
 
     private static final String ICON = "icons/ViewState.gif"; //$NON-NLS-1$
-    
+
     /**
      * コンストラクタ.
      * ステートに描画するフィギュアーを作成する。
-     * 
+     *
      */
     public ViewStateFigure() {
         super();
-        
+
         fViewLabel = new Label();
         fViewLabel.setTextAlignment(Label.CENTER);
         add(fViewLabel);
     }
-    
+
     /**
      * 子フィギュアのサイズを調整する.
-     * 
+     *
      * @param graphics グラフィックス
      * @see org.eclipse.draw2d.Figure#paint(org.eclipse.draw2d.Graphics)
      */
     @Override
     public void paint(Graphics graphics) {
         super.paint(graphics);
-        
+
         setFigureHorizontalCenter(getNameLabel(), null);
         setFigureHorizontalCenter(fViewLabel, getNameLabel());
-        
+
         if (isVisibleEventList()) {
             setFigureHorizontalCenter(getEventList(), fViewLabel);
         }
     }
-    
+
     /**
      * ビュー名を設定する.
-     * 
+     *
      * @param view ビュー名
      */
     public void setView(String view) {
@@ -71,7 +71,7 @@ public class ViewStateFigure extends NormalStateFigure {
 
     /**
      * ステート色を返す.
-     * 
+     *
      * @return ステート色.
      * @see com.piece_framework.piece_ide.flow_designer.ui.figure
      *          .NormalStateFigure#getStateColor()
@@ -80,7 +80,7 @@ public class ViewStateFigure extends NormalStateFigure {
     RGB getStateColor() {
         return STATE_COLOR;
     }
-    
+
     /**
      * ステートのアウトライン色を返す.
      *
@@ -95,7 +95,7 @@ public class ViewStateFigure extends NormalStateFigure {
 
     /**
      * ステートのアイコンを返す.
-     * 
+     *
      * @return ステートのアイコンイメージ
      * @see com.piece_framework.piece_ide.flow_designer.ui.figure
      *          .NormalStateFigure#getIcon()

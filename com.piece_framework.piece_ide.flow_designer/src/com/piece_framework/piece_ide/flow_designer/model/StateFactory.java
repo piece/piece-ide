@@ -5,7 +5,7 @@ import org.eclipse.gef.requests.CreationFactory;
 
 /**
  * ステート・ファクトリー.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -14,14 +14,14 @@ import org.eclipse.gef.requests.CreationFactory;
 public class StateFactory implements CreationFactory {
 
     private int fStateType;
-    
+
     /**
      * コンストラクタ.
-     * 
+     *
      * @param stateType ステートタイプ
      */
     public StateFactory(int stateType) {
-        if (State.INITIAL_STATE == stateType 
+        if (State.INITIAL_STATE == stateType
             || State.FINAL_STATE == stateType
             || State.ACTION_STATE == stateType
             || State.VIEW_STATE == stateType) {
@@ -30,11 +30,11 @@ public class StateFactory implements CreationFactory {
             fStateType = State.UNKNOWN_STATE;
         }
     }
-    
+
     /**
      * ステートのインスタンスを返す.
      * ステートタイプにあったステートを生成して返す。
-     * 
+     *
      * @return ステートのインスタンス
      * @see org.eclipse.gef.requests.CreationFactory#getNewObject()
      */
@@ -44,7 +44,7 @@ public class StateFactory implements CreationFactory {
 
     /**
      * ステートクラスを返す.
-     * 
+     *
      * @return ステートクラス
      * @see org.eclipse.gef.requests.CreationFactory#getObjectType()
      */

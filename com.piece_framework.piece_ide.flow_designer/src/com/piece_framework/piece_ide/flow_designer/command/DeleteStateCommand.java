@@ -12,7 +12,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
  * ステート削除コマンド.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -23,7 +23,7 @@ public class DeleteStateCommand extends Command {
     /**
      * ステート・イベント セットクラス.
      * ステートとイベントを1対1の関係で保持するクラス。
-     * 
+     *
      * @author MATSUFUJI Hideharu
      * @version 0.2.0
      * @since 0.1.0
@@ -32,10 +32,10 @@ public class DeleteStateCommand extends Command {
     private class StateEvent {
         private State fState;
         private Event fEvent;
-        
+
         /**
          * ステートを設定する.
-         * 
+         *
          * @param state ステート
          */
         void setState(State state) {
@@ -44,7 +44,7 @@ public class DeleteStateCommand extends Command {
 
         /**
          * イベントを設定する.
-         * 
+         *
          * @param event イベント
          */
         void setEvent(Event event) {
@@ -53,39 +53,39 @@ public class DeleteStateCommand extends Command {
 
         /**
          * イベントを追加する.
-         * 
+         *
          */
         void addEvent() {
             fState.addEvent(fEvent);
         }
-        
+
         /**
          * イベントを削除する.
-         * 
+         *
          */
         void removeEvent() {
             fState.removeEvent(fEvent);
         }
     }
-    
+
     private Flow fFlow;
     private State fState;
     private List<Event> fEvents;
     private List<StateEvent> fToOwnState;
-    
+
     /**
      * コンストラクタ.
-     * 
+     *
      * @param flow フロー
      * @param state 削除対象ステート
      */
     public DeleteStateCommand(Flow flow, State state) {
         fFlow = flow;
         fState = state;
-        
+
         fEvents = new ArrayList<Event>();
         fEvents.addAll(fState.getEventList());
-        
+
         fToOwnState = new ArrayList<StateEvent>();
         for (State stateToOwnState : fFlow.getStateListToOwnState(fState)) {
             for (Event event : stateToOwnState.getTransitionEventList()) {
@@ -99,12 +99,10 @@ public class DeleteStateCommand extends Command {
         }
     }
 
-    
-    
     /**
      * コマンドを実行できるか判断する.
      * イニシャルステートでなければ、コマンドを実行できるものとする。
-     * 
+     *
      * @return コマンドを実行できるか
      * @see org.eclipse.gef.commands.Command#canExecute()
      */
@@ -123,7 +121,7 @@ public class DeleteStateCommand extends Command {
      * 　(遷移の線を削除するため)<br>
      * 2.フローからステートを削除する。<br>
      * 3.削除対象ステートが遷移先となっている遷移ステートを削除する。<br>
-     * 
+     *
      * @see org.eclipse.gef.commands.Command#execute()
      */
     @Override
@@ -143,7 +141,7 @@ public class DeleteStateCommand extends Command {
      * 1.削除対象ステートをフローに追加する。<br>
      * 2.削除対象ステートのイベントを追加する。<br>
      * 3.削除対象ステートが遷移先となっているイベントを追加する。<br>
-     * 
+     *
      * @see org.eclipse.gef.commands.Command#undo()
      */
     @Override

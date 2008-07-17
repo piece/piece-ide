@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 /**
  * イベントクラス.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class Event extends AbstractModel implements Serializable {
 
     private static final long serialVersionUID = 2259605742197882832L;
-    
+
     /** イベントタイプ定数：ビルトインイベント. */
     public static final int BUILTIN_EVENT = 1;
     /** イベントタイプ定数：内部イベント. */
@@ -23,16 +23,16 @@ public class Event extends AbstractModel implements Serializable {
     public static final int TRANSITION_EVENT = 3;
     /** イベントタイプ定数：不明. */
     public static final int UNKNOWN_EVENT = 0;
-    
+
     private String fName;
     private State fNextState;
     private int fType;
     private EventHandler fEventHandler;
     private EventHandler fGuardEventHandler;
-    
+
     /**
      * イベントハンドラクラス.
-     * 
+     *
      * @author MATSUFUJI Hideharu
      * @version 0.2.0
      * @since 0.1.0
@@ -41,15 +41,15 @@ public class Event extends AbstractModel implements Serializable {
     private final class EventHandler implements Serializable {
 
         private static final long serialVersionUID = 8627376257429314590L;
-        
+
         private String fClassName;
         private String fMethodName;
-        
+
         /**
          * コンストラクタ.
          * クラス名とメソッド名が ":" で接続された文字列からクラス名
          * とメソッド名を分割して、設定する。
-         * 
+         *
          * @param classAndMethodName クラス名 + ":" + メソッド名
          */
         private EventHandler(String classAndMethodName) {
@@ -57,10 +57,10 @@ public class Event extends AbstractModel implements Serializable {
                 return;
             }
             String[] arrayValue = classAndMethodName.split(":"); //$NON-NLS-1$
-            
+
             String className = null;
             String methodName = null;
-            
+
             if (arrayValue.length == 2) {
                 className = arrayValue[0];
                 methodName = arrayValue[1];
@@ -71,23 +71,23 @@ public class Event extends AbstractModel implements Serializable {
                     methodName = arrayValue[0];
                 }
             }
-            
+
             setClassName(className);
             setMethodName(methodName);
         }
-        
+
         /**
          * クラス名を返す.
-         * 
+         *
          * @return クラス名
          */
         private String getClassName() {
             return fClassName;
         }
-        
+
         /**
          * クラス名を設定する.
-         * 
+         *
          * @param className クラス名
          */
         private void setClassName(String className) {
@@ -100,16 +100,16 @@ public class Event extends AbstractModel implements Serializable {
 
         /**
          * メソッド名を返す.
-         * 
+         *
          * @return メソッド名
          */
         private String getMethodName() {
             return fMethodName;
         }
-        
+
         /**
          * メソッド名を設定する.
-         * 
+         *
          * @param methodName メソッド名
          */
         private void setMethodName(String methodName) {
@@ -122,25 +122,25 @@ public class Event extends AbstractModel implements Serializable {
 
         /**
          * クラス名・メソッド名を ":" で接続した文字列を返す.
-         * 
-         * @return クラス名・メソッド名を ":" で接続した文字列 
+         *
+         * @return クラス名・メソッド名を ":" で接続した文字列
          * @see java.lang.Object#toString()
          */
         @Override
         public String toString() {
             String className = getClassName();
             String methodName = getMethodName();
-            
-            if (className != null && className.length() > 0 
+
+            if (className != null && className.length() > 0
                 && methodName != null && methodName.length() > 0) {
                 return className + ":" + methodName; //$NON-NLS-1$
             } else if (methodName != null && methodName.length() > 0) {
                 return methodName;
             }
             return null;
-        }   
+        }
     }
-    
+
     /**
      * コンストラクタ.
      * イベントタイプは以下の定数のいずれかである必要があります。<br>
@@ -149,7 +149,7 @@ public class Event extends AbstractModel implements Serializable {
      * 遷移イベント：TRANSITION_EVENT<br>
      * これら以外のイベントタイプが指定された場合は、UNKNOWN_EVENTが
      * セットされます。
-     * 
+     *
      * @param type イベントタイプ
      */
     public Event(int type) {
@@ -161,19 +161,19 @@ public class Event extends AbstractModel implements Serializable {
             fType = UNKNOWN_EVENT;
         }
     }
-    
+
     /**
      * イベント名を返す.
-     * 
+     *
      * @return イベント名
      */
     public String getName() {
         return fName;
     }
-    
+
     /**
      * イベント名を設定する.
-     * 
+     *
      * @param name イベント名
      */
     public void setName(String name) {
@@ -188,8 +188,8 @@ public class Event extends AbstractModel implements Serializable {
 
     /**
      * 遷移先ステートを返す.
-     * 
-     * @return 遷移先ステート 
+     *
+     * @return 遷移先ステート
      */
     public State getNextState() {
         return fNextState;
@@ -197,7 +197,7 @@ public class Event extends AbstractModel implements Serializable {
 
     /**
      * 遷移先ステートを設定する.
-     * 
+     *
      * @param nextState 遷移先ステート
      */
     public void setNextState(State nextState) {
@@ -205,13 +205,13 @@ public class Event extends AbstractModel implements Serializable {
             fNextState = null;
             return;
         }
-        
+
         State oldValue = fNextState;
         fNextState = nextState;
         firePropertyChange(
             "Event#NextState", oldValue, fNextState); //$NON-NLS-1$
     }
-    
+
     /**
      * イベントタイプを返す.
      * イベントタイプは以下の定数のいずれかで返される。<br>
@@ -219,16 +219,16 @@ public class Event extends AbstractModel implements Serializable {
      * 内部イベント：INTERNAL_EVENT<br>
      * 遷移イベント：TRANSITION_EVENT<br>
      * 不明：UNKNOWN_EVENT<br>
-     * 
+     *
      * @return イベントタイプ
      */
     public int getType() {
         return fType;
     }
-    
+
     /**
      * イベントハンドラを返す.
-     * 
+     *
      * @return イベントハンドラ
      */
     public String getEventHandler() {
@@ -243,7 +243,7 @@ public class Event extends AbstractModel implements Serializable {
 
     /**
      * イベントハンドラのクラス名を返す.
-     * 
+     *
      * @return イベントハンドラのクラス名.
      */
     public String getEventHandlerClassName() {
@@ -252,10 +252,10 @@ public class Event extends AbstractModel implements Serializable {
         }
         return fEventHandler.getClassName();
     }
-    
+
     /**
      * イベントハンドラのメソッド名を返す.
-     * 
+     *
      * @return イベントハンドラのメソッド名.
      */
     public String getEventHandlerMethodName() {
@@ -264,10 +264,10 @@ public class Event extends AbstractModel implements Serializable {
         }
         return fEventHandler.getMethodName();
     }
-    
+
     /**
      * イベントハンドラを設定する.
-     * 
+     *
      * @param classAndMethodName クラス名 + ":" + メソッド名
      */
     public void setEventHandler(String classAndMethodName) {
@@ -287,10 +287,10 @@ public class Event extends AbstractModel implements Serializable {
         firePropertyChange(
             "Event#EventHandler", oldValue, newValue); //$NON-NLS-1$
     }
-    
+
     /**
      * ガード用イベントハンドラを返す.
-     * 
+     *
      * @return ガード用イベントハンドラ
      */
     public String getGuardEventHandler() {
@@ -302,10 +302,10 @@ public class Event extends AbstractModel implements Serializable {
         }
         return fGuardEventHandler.toString();
     }
-    
+
     /**
      * ガード要イベントハンドラのクラス名を返す.
-     * 
+     *
      * @return ガード要イベントハンドラのクラス名
      */
     public String getGuardEventHandlerClassName() {
@@ -314,10 +314,10 @@ public class Event extends AbstractModel implements Serializable {
         }
         return fGuardEventHandler.getClassName();
     }
-    
+
     /**
      * ガード要イベントハンドラのメソッド名を返す.
-     * 
+     *
      * @return ガード要イベントハンドラのメソッド名
      */
     public String getGuardEventHandlerMethodName() {
@@ -326,10 +326,10 @@ public class Event extends AbstractModel implements Serializable {
         }
         return fGuardEventHandler.getMethodName();
     }
-    
+
     /**
      * ガード用イベントハンドラを設定する.
-     * 
+     *
      * @param classAndMethodName クラス名 + ":" + メソッド名
      */
     public void setGuardEventHandler(String classAndMethodName) {
@@ -337,7 +337,7 @@ public class Event extends AbstractModel implements Serializable {
             fGuardEventHandler = null;
             return;
         }
-        
+
         String oldValue = null;
         if (fGuardEventHandler != null) {
             oldValue = fGuardEventHandler.toString();
@@ -351,16 +351,16 @@ public class Event extends AbstractModel implements Serializable {
         if (fGuardEventHandler != null) {
             newValue = fGuardEventHandler.toString();
         }
-        
+
         firePropertyChange(
             "Event#GuardEventHandler", oldValue, newValue); //$NON-NLS-1$
     }
-    
+
     /**
      * イベントハンドラのメソッド名を生成する.
      * イベントハンドラのメソッド名は、以下の規則で生成される。<br>
-     * "do" + イベント名 
-     * 
+     * "do" + イベント名
+     *
      * @return イベントハンドラのメソッド名
      */
     public String generateEventHandlerMethodName() {

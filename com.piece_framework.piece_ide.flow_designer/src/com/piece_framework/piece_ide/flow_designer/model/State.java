@@ -8,16 +8,16 @@ import java.util.List;
 
 /**
  * ステートクラス.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
  *
  */
 public class State extends AbstractModel {
-    
+
     private static final long serialVersionUID = -7778980617394743980L;
-    
+
     /** ステートタイプ定数：イニシャルステート. */
     public static final int INITIAL_STATE = 1;
     /** ステートタイプ定数：ファイナルステート. */
@@ -28,13 +28,13 @@ public class State extends AbstractModel {
     public static final int VIEW_STATE = 4;
     /** ステートタイプ定数：不明. */
     public static final int UNKNOWN_STATE = 0;
-    
+
     private int fType;
     private String fName;
     private String fSummary;
     private String fView;
     private List<Event> fEvents = new ArrayList<Event>();
-    
+
     private int fX;
     private int fY;
 
@@ -47,7 +47,7 @@ public class State extends AbstractModel {
      * ビューステート：VIEW_STATE<br>
      * これら以外のステートタイプが指定された場合は、UNKNOWN_STATEが
      * セットされます。
-     * 
+     *
      * @param type ステートタイプ
      */
     public State(int type) {
@@ -59,10 +59,10 @@ public class State extends AbstractModel {
             fType = UNKNOWN_STATE;
         }
     }
-    
+
     /**
      * ステートタイプごとに必要なビルトインイベントを作成する.
-     * 
+     *
      */
     private void createBuiltinEventByStateType() {
         if (fType == INITIAL_STATE) {
@@ -76,23 +76,23 @@ public class State extends AbstractModel {
             fEvents.add(createBuiltinEvent("Final")); //$NON-NLS-1$
         }
     }
-    
+
     /**
      * ビルトインイベントオブジェクトを作成する.
-     * 
+     *
      * @param eventName ビルトインイベント名
      * @return ビルトインイベント
      */
     private Event createBuiltinEvent(String eventName) {
         Event event = new Event(Event.BUILTIN_EVENT);
         event.setName(eventName);
-        
+
         return event;
     }
 
     /**
      * リスナー追加時、イベントにも同様のリスナーを登録する.
-     * 
+     *
      * @param listener 登録するリスナー
      * @see com.piece_framework.piece_ide.flow_designer.model.AbstractModel
      *          #addPropertyChangeListener(java.beans.PropertyChangeListener)
@@ -107,7 +107,7 @@ public class State extends AbstractModel {
 
     /**
      * リスナー削除時、イベントからも同様にリスナーを削除する.
-     * 
+     *
      * @param listener 削除するリスナー
      * @see com.piece_framework.piece_ide.flow_designer.model.AbstractModel
      *          #removePropertyChangeListener(java.beans.PropertyChangeListener)
@@ -128,7 +128,7 @@ public class State extends AbstractModel {
      * アクションステート：ACTION_STATE<br>
      * ビューステート：VIEW_STATE<br>
      * 不明：UNKNOWN_STATE<br>
-     * 
+     *
      * @return ステートタイプ
      */
     public int getType() {
@@ -137,7 +137,7 @@ public class State extends AbstractModel {
 
     /**
      * ステート名を返す.
-     * 
+     *
      * @return ステート名
      */
     public String getName() {
@@ -148,7 +148,7 @@ public class State extends AbstractModel {
      * ステート名を設定する.
      * ステート名が付加されていないビルトインイベントがある場合は、
      * 付加する。
-     * 
+     *
      * @param name ステート名
      */
     public void setName(String name) {
@@ -163,7 +163,7 @@ public class State extends AbstractModel {
 
     /**
      * 概要を取得する.
-     * 
+     *
      * @return 概要
      */
     public String getSummary() {
@@ -172,7 +172,7 @@ public class State extends AbstractModel {
 
     /**
      * 概要を設定する.
-     * 
+     *
      * @param summary 概要
      */
     public void setSummary(String summary) {
@@ -184,11 +184,11 @@ public class State extends AbstractModel {
         }
         firePropertyChange("State#Summary", oldValue, fSummary); //$NON-NLS-1$
     }
-    
+
     /**
      * ビュー名を返す.
      * ステートタイプが VIEW_STATE でなければ、NULL を返す。
-     * 
+     *
      * @return ビュー名
      */
     public String getView() {
@@ -201,7 +201,7 @@ public class State extends AbstractModel {
     /**
      * ビュー名を設定する.
      * ステートタイプが VIEW_STATE でなければなにもしない。
-     * 
+     *
      * @param view ビュー名
      */
     public void setView(String view) {
@@ -218,17 +218,17 @@ public class State extends AbstractModel {
 
     /**
      * イベント一覧を返す.
-     * 
+     *
      * @return イベント一覧
      */
     public List<Event> getEventList() {
         return fEvents;
     }
-    
+
     /**
      * 指定されたイベント名に合致するイベントを返す.
      * 該当するイベントがない場合はnull を返す。
-     * 
+     *
      * @param eventName イベント名
      * @return イベント
      */
@@ -243,10 +243,10 @@ public class State extends AbstractModel {
         }
         return null;
     }
-    
+
     /**
      * 遷移イベント一覧を返す.
-     * 
+     *
      * @return 遷移イベント一覧
      */
     public List<Event> getTransitionEventList() {
@@ -258,12 +258,12 @@ public class State extends AbstractModel {
         }
         return transitionEventList;
     }
-    
+
     /**
      * イベントを追加する.
      * イベントを追加する前にステートに登録されているリスナーをセットする。<br>
      * また遷移イベントの場合は遷移先のステートに変更を通知する。
-     * 
+     *
      * @param event イベント
      */
     public void addEvent(Event event) {
@@ -272,40 +272,40 @@ public class State extends AbstractModel {
         }
         fEvents.add(event);
         firePropertyChange("State#Event", null, event); //$NON-NLS-1$
-        
-        if (event.getType() == Event.TRANSITION_EVENT 
+
+        if (event.getType() == Event.TRANSITION_EVENT
             && event.getNextState() != null) {
             event.getNextState().firePropertyChange(
                     "State#TransitionEvent", null, event); //$NON-NLS-1$
         }
     }
-    
+
     /**
      * イベントを削除する.
      * イベントが保持しているリスナーを削除する。<br>
      * また遷移イベントの場合は遷移先のステートに変更を通知する。
-     * 
+     *
      * @param event イベント
      */
     public void removeEvent(Event event) {
-        List<PropertyChangeListener> removeListenerList = 
+        List<PropertyChangeListener> removeListenerList =
                 new ArrayList<PropertyChangeListener>();
         removeListenerList.addAll(
                 Arrays.asList(event.getPropertyChangeListener()));
         for (PropertyChangeListener listener : removeListenerList) {
             event.removePropertyChangeListener(listener);
         }
-        
+
         fEvents.remove(event);
         firePropertyChange("State#Event", event, null); //$NON-NLS-1$
-        
+
         if (event.getType() == Event.TRANSITION_EVENT
             && event.getNextState() != null) {
             event.getNextState().firePropertyChange(
                     "State#TransitionEvent", event, null); //$NON-NLS-1$
         }
     }
-    
+
     /**
      * イベント名を生成する.
      * イベント名は、以下の規則で生成される。<br>
@@ -313,7 +313,7 @@ public class State extends AbstractModel {
      * 但し、内部イベントの場合は、<br>
      * "On" + ステート名<br>
      * とする。
-     * 
+     *
      * @param nextStateName 遷移先ステート名
      * @return イベント名
      */
@@ -341,10 +341,10 @@ public class State extends AbstractModel {
         }
         return eventName;
     }
-    
+
     /**
      * 指定されたイベント名が使用可能かチェックする.
-     * 
+     *
      * @param eventName イベント名
      * @return 使用可能なイベント名の場合はtrue
      */
@@ -362,20 +362,19 @@ public class State extends AbstractModel {
         }
         return true;
     }
-    
-    
+
     /**
      * ステートのX座標を返す.
-     * 
+     *
      * @return X座標
      */
     public int getX() {
         return fX;
     }
-    
+
     /**
      * ステートのX座標を設定する.
-     * 
+     *
      * @param x X座標
      */
     public void setX(int x) {
@@ -383,10 +382,10 @@ public class State extends AbstractModel {
         fX = x;
         firePropertyChagen("State#X", oldValue, fX); //$NON-NLS-1$
     }
-    
+
     /**
      * ステートのY座標を返す.
-     * 
+     *
      * @return Y座標
      */
     public int getY() {
@@ -395,7 +394,7 @@ public class State extends AbstractModel {
 
     /**
      * ステートのY座標を設定する.
-     * 
+     *
      * @param y Y座標
      */
     public void setY(int y) {

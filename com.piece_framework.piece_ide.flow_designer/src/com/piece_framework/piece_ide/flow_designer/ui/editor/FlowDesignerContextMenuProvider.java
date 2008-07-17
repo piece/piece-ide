@@ -10,7 +10,7 @@ import org.eclipse.ui.actions.ActionFactory;
 
 /**
  * フローデザイナー・エディターのコンテキストメニュー・プロバイダー.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -19,14 +19,14 @@ import org.eclipse.ui.actions.ActionFactory;
 public class FlowDesignerContextMenuProvider extends ContextMenuProvider {
 
     private ActionRegistry fRegistry;
-    
+
     /**
      * コンストラクタ.
-     * 
+     *
      * @param viewer ビューア
      * @param registry アクションレジストリ
      */
-    public FlowDesignerContextMenuProvider(EditPartViewer viewer, 
+    public FlowDesignerContextMenuProvider(EditPartViewer viewer,
                                             ActionRegistry registry) {
         super(viewer);
         fRegistry = registry;
@@ -34,7 +34,7 @@ public class FlowDesignerContextMenuProvider extends ContextMenuProvider {
 
     /**
      * コンテキストメニューをビルドする.
-     * 
+     *
      * @param menu メニューマネージャ
      * @see org.eclipse.gef.ContextMenuProvider
      *          #buildContextMenu(org.eclipse.jface.action.IMenuManager)
@@ -42,17 +42,17 @@ public class FlowDesignerContextMenuProvider extends ContextMenuProvider {
     @Override
     public void buildContextMenu(IMenuManager menu) {
         GEFActionConstants.addStandardActionGroups(menu);
-        
-        menu.appendToGroup(GEFActionConstants.GROUP_UNDO, 
+
+        menu.appendToGroup(GEFActionConstants.GROUP_UNDO,
                            fRegistry.getAction(ActionFactory.UNDO.getId()));
-        menu.appendToGroup(GEFActionConstants.GROUP_UNDO, 
+        menu.appendToGroup(GEFActionConstants.GROUP_UNDO,
                            fRegistry.getAction(ActionFactory.REDO.getId()));
-        menu.appendToGroup(GEFActionConstants.GROUP_EDIT, 
+        menu.appendToGroup(GEFActionConstants.GROUP_EDIT,
                            fRegistry.getAction(ActionFactory.DELETE.getId()));
-        
-        menu.appendToGroup(GEFActionConstants.GROUP_REST, 
+
+        menu.appendToGroup(GEFActionConstants.GROUP_REST,
             fRegistry.getAction(AdjustEventsAction.ADJUST_EVENTS));
-        menu.appendToGroup(GEFActionConstants.GROUP_REST, 
+        menu.appendToGroup(GEFActionConstants.GROUP_REST,
             fRegistry.getAction(ShowPropertySheetAction.SHOW_PROPERTY_SHEET));
     }
 }

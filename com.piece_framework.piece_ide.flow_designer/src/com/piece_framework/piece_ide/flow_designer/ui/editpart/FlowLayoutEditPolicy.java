@@ -16,7 +16,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 /**
  * フローレイアウト・エディットポリシー.
  * ステートの作成・位置情報のコマンドを発行するエディットポリシー。
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -26,7 +26,7 @@ public class FlowLayoutEditPolicy extends XYLayoutEditPolicy {
 
     /**
      * ステートの位置が変化したときのコマンドを返す.
-     * 
+     *
      * @param child エディットパート
      * @param constraint ステートの座標
      * @return ステートを移動するコマンド
@@ -39,13 +39,13 @@ public class FlowLayoutEditPolicy extends XYLayoutEditPolicy {
             Object constraint) {
         Rectangle rectangle = (Rectangle) constraint;
         State state = (State) child.getModel();
-        
+
         return new MoveStateCommand(rectangle.x, rectangle.y, state);
     }
 
     /**
      * 新しいステートを作成するコマンドを返す.
-     * 
+     *
      * @param request リクエスト情報
      * @return ステートを作成するコマンド
      * @see org.eclipse.gef.editpolicies.LayoutEditPolicy
@@ -56,7 +56,7 @@ public class FlowLayoutEditPolicy extends XYLayoutEditPolicy {
         Point point = request.getLocation();
         Flow flow = (Flow) getHost().getModel();
         State state = (State) request.getNewObject();
-        
+
         return new CreateStateCommand(flow, state, point.x, point.y);
     }
 

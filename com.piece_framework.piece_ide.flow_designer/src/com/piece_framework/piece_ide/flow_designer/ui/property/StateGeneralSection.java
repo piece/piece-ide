@@ -19,109 +19,107 @@ import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 
 /**
  * ステート・プロパティシートの一般セクション.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- * 
  */
 public class StateGeneralSection extends GeneralPropertySection {
 
     /**
      * ラベルとテキストをまとめて処理するクラス.
-     * 
+     *
      * @author MATSUFUJI Hideharu
      * @version 0.2.0
      * @since 0.2.0
-     * 
      */
     private class LabelText {
         private CLabel fLabel;
         private Text fText;
-        
+
         /**
          * ラベル・テキストのコントロールを作成する.
-         * 
+         *
          * @param parent 親コンポーネント
          */
         void create(Composite parent) {
             fLabel = getWidgetFactory().createCLabel(parent, null);
             fText = getWidgetFactory().createText(parent, ""); //$NON-NLS-1$
-            
+
             setTextListener(fText);
         }
-        
+
         /**
          * ラベルの文字列をセットする.
-         * 
+         *
          * @param label ラベル文字列
          */
         void setLabel(String label) {
             fLabel.setText(label);
         }
-        
+
         /**
          * 表示・非表示を設定する.
-         * 
+         *
          * @param visible 表示・非表示
          */
         void setVisible(boolean visible) {
             fLabel.setVisible(visible);
             fText.setVisible(visible);
         }
-        
+
         /**
          * ラベルコントロールを返す.
-         * 
+         *
          * @return ラベルコントロール
          */
         CLabel getLabel() {
             return fLabel;
         }
-        
+
         /**
          * テキストコントロールを返す.
-         * 
+         *
          * @return テキストコントロール
          */
         Text getText() {
             return fText;
         }
     }
-    
+
     private static final int LABELTEXT_NUM = 3;
     private LabelText[] fLabelText;
-    
+
     /**
      * コントロールを作成する.
-     * 
+     *
      * @param parent 親コンテナ
      * @param tabbedPropertySheetPage プロパティシートページ
      * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
      *        #createControls(
-     *          org.eclipse.swt.widgets.Composite, 
+     *          org.eclipse.swt.widgets.Composite,
      *          org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage)
      */
     @Override
     public void createControls(
-                    Composite parent, 
+                    Composite parent,
                     TabbedPropertySheetPage tabbedPropertySheetPage) {
         super.createControls(parent, tabbedPropertySheetPage);
-        
-        Composite composite = 
+
+        Composite composite =
             getWidgetFactory().createFlatFormComposite(parent);
-        
+
         fLabelText = new LabelText[LABELTEXT_NUM];
         CLabel[] labels = new CLabel[LABELTEXT_NUM];
         Text[] texts = new Text[LABELTEXT_NUM];
         for (int i = 0; i < LABELTEXT_NUM; i++) {
             fLabelText[i] = new LabelText();
             fLabelText[i].create(composite);
-            
+
             labels[i] = fLabelText[i].getLabel();
             texts[i] = fLabelText[i].getText();
         }
-        
+
         arrangeGroup(labels, texts);
     }
 
@@ -132,22 +130,22 @@ public class StateGeneralSection extends GeneralPropertySection {
      * ・イニシャルステート・ファイナルステート：なにも表示しない<br>
      * ・アクションステート：ステート名を表示<br>
      * ・ビューステート：ステート名・ビュー名を表示<br>
-     * s
+     *
      * @param part ワークベンチパート
      * @param selection セレクトオブジェクト
      * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
      *          #setInput(
-     *              org.eclipse.ui.IWorkbenchPart, 
+     *              org.eclipse.ui.IWorkbenchPart,
      *              org.eclipse.jface.viewers.ISelection)
      */
     @Override
     public void setInput(IWorkbenchPart part, ISelection selection) {
         super.setInput(part, selection);
-        
+
         for (int i = 0; i < LABELTEXT_NUM; i++) {
             fLabelText[i].setVisible(false);
         }
-        
+
         State state = (State) getModel();
         if (state.getType() == State.ACTION_STATE) {
             fLabelText[0].setVisible(true);
@@ -173,7 +171,7 @@ public class StateGeneralSection extends GeneralPropertySection {
     /**
      * 画面をリフレッシュする.
      * ステートから必要な情報を取得し、コントロールにセットする。
-     * 
+     *
      * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
      *          #refresh()
      */
@@ -207,7 +205,7 @@ public class StateGeneralSection extends GeneralPropertySection {
 
     /**
      * コントロールから属性名を返す.
-     * 
+     *
      * @param control コントロール
      * @return 属性名
      * @see com.piece_framework.piece_ide.flow_designer.ui.property
@@ -217,30 +215,30 @@ public class StateGeneralSection extends GeneralPropertySection {
     @Override
     String getAttributeName(Control control) {
         String attributeName = null;
-        
+
         State state = (State) getModel();
         if (state.getType() == State.ACTION_STATE) {
             if (control == fLabelText[0].getText()) {
                 attributeName = "Name"; //$NON-NLS-1$
             } else if (control == fLabelText[1].getText()) {
-                attributeName = "Summary"; //$NON-NLS-1$ 
+                attributeName = "Summary"; //$NON-NLS-1$
             }
         } else if (state.getType() == State.VIEW_STATE) {
             if (control == fLabelText[0].getText()) {
                 attributeName = "Name"; //$NON-NLS-1$
             } else if (control == fLabelText[1].getText()) {
-                attributeName = "View"; //$NON-NLS-1$ 
+                attributeName = "View"; //$NON-NLS-1$
             } else if (control == fLabelText[2].getText()) {
-                attributeName = "Summary"; //$NON-NLS-1$ 
+                attributeName = "Summary"; //$NON-NLS-1$
             }
         }
-        
+
         return attributeName;
     }
-    
+
     /**
      * ステート属性を設定するコマンドを返す.
-     * 
+     *
      * @param attributeName 属性名
      * @param attributeValue 属性値
      * @return 属性を設定するコマンド
@@ -252,7 +250,7 @@ public class StateGeneralSection extends GeneralPropertySection {
     Command getAttributeCommand(String attributeName, String attributeValue) {
         Flow flow = null;
         if (getSelection() instanceof IStructuredSelection) {
-            Object input = 
+            Object input =
                 ((IStructuredSelection) getSelection()).getFirstElement();
             if (input instanceof EditPart) {
                 flow = (Flow) ((EditPart) input).getParent().getModel();
@@ -260,5 +258,5 @@ public class StateGeneralSection extends GeneralPropertySection {
         }
         return new SetStateAttributeCommand(
                 attributeName, attributeValue, flow, (State) getModel());
-    }    
+    }
 }

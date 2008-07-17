@@ -5,7 +5,7 @@ import org.eclipse.gef.requests.CreationFactory;
 
 /**
  * イベント・ファクトリー.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -14,10 +14,10 @@ import org.eclipse.gef.requests.CreationFactory;
 public class EventFactory implements CreationFactory {
 
     private int fEventType;
-    
+
     /**
      * コンストラクタ.
-     * 
+     *
      * @param eventType イベントタイプ
      */
     public EventFactory(int eventType) {
@@ -29,11 +29,11 @@ public class EventFactory implements CreationFactory {
             fEventType = Event.UNKNOWN_EVENT;
         }
     }
-    
+
     /**
      * イベントのインスタンスを返す.
      * イベントタイプにあったイベントを生成して返す。
-     * 
+     *
      * @return イベントのインスタンス
      * @see org.eclipse.gef.requests.CreationFactory#getNewObject()
      */
@@ -43,7 +43,7 @@ public class EventFactory implements CreationFactory {
 
     /**
      * イベントクラスを返す.
-     * 
+     *
      * @return イベントクラス
      * @see org.eclipse.gef.requests.CreationFactory#getObjectType()
      */

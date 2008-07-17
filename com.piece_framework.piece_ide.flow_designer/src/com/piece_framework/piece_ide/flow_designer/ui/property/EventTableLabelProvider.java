@@ -10,11 +10,10 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
  * イベント表示テーブルのラベル・プロバイダー.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- * 
  */
 public class EventTableLabelProvider extends LabelProvider implements
         ITableLabelProvider {
@@ -23,10 +22,10 @@ public class EventTableLabelProvider extends LabelProvider implements
     private static final int NEXT_STATE_COLUMN = 1;
     private static final int EVENT_HANDLER_COLUMN = 2;
     private static final int GUARD_COLUMN = 3;
-    
+
     /**
      * 行に対応するイメージを返す.
-     * 
+     *
      * @param element モデル
      * @param columnIndex 行インデックス
      * @return 行に対応するイメージ
@@ -36,10 +35,10 @@ public class EventTableLabelProvider extends LabelProvider implements
     public Image getColumnImage(Object element, int columnIndex) {
         return null;
     }
-    
+
     /**
      * 行に対応する文字列を返す.
-     * 
+     *
      * @param element モデル
      * @param columnIndex 行インデックス
      * @return 行に対応する文字列
@@ -48,7 +47,7 @@ public class EventTableLabelProvider extends LabelProvider implements
      */
     public String getColumnText(Object element, int columnIndex) {
         Event event = (Event) element;
-        
+
         switch (columnIndex) {
             case EVENT_COLUMN:
                 if (event.getName() != null) {
@@ -74,7 +73,7 @@ public class EventTableLabelProvider extends LabelProvider implements
             default:
                 break;
         }
-        
+
         return ""; //$NON-NLS-1$
     }
 }

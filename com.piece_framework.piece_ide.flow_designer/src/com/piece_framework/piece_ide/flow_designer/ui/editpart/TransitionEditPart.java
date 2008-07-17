@@ -17,41 +17,40 @@ import com.piece_framework.piece_ide.flow_designer.ui.figure.TransitionFigure;
 
 /**
  * 遷移・エディットパート.
- * 
+ *
  * @author Seiichi Sugimoto
  * @version 0.2.0
  * @since 0.1.0
- * 
  */
 public class TransitionEditPart extends AbstractConnectionEditPart implements
         PropertyChangeListener {
 
     /* 遷移衝突時の避ける幅. */
     private static final int AVOID_WIDTH = 20;
-    
+
     /**
      * フィギュアーを作成する.
-     * 
+     *
      * @return フィギュアー
      * @see org.eclipse.gef.editparts.AbstractConnectionEditPart#createFigure()
      */
     @Override
     protected IFigure createFigure() {
         TransitionFigure figure = new TransitionFigure();
-                
+
         ConnectionLayer connLayer
                   = (ConnectionLayer) getLayer(LayerConstants.CONNECTION_LAYER);
         FanRouter fanRouter = new FanRouter();
         fanRouter.setSeparation(AVOID_WIDTH);
 
         connLayer.setConnectionRouter(fanRouter);
-        
+
         return figure;
     }
 
     /**
      * フィギュアーのアクティブ時処理.
-     * 
+     *
      * @see org.eclipse.gef.editparts.AbstractConnectionEditPart
      * 　　　　　　　　　　　　　　　　　　　　　　　#createEditPolicies()
      */
@@ -64,7 +63,7 @@ public class TransitionEditPart extends AbstractConnectionEditPart implements
 
     /**
      * フィギュアーの非アクティブ時処理.
-     * 
+     *
      * @see org.eclipse.gef.editparts.AbstractConnectionEditPart
      *                                               #createEditPolicies()
      */
@@ -77,7 +76,7 @@ public class TransitionEditPart extends AbstractConnectionEditPart implements
 
     /**
      * エディットポリシーを作成する.
-     * 
+     *
      * @see java.beans.PropertyChangeListener#createEditPolicies()
      */
     @Override
@@ -90,7 +89,7 @@ public class TransitionEditPart extends AbstractConnectionEditPart implements
 
     /**
      * プロパティ変更イベントを処理する.
-     * 
+     *
      * @param evt
      *            プロパティ変更イベント
      * @see java.beans.PropertyChangeListener

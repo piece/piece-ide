@@ -11,14 +11,13 @@ import org.eclipse.draw2d.PolylineConnection;
 
 /**
  * 遷移コネクタ用フィギュア.
- * 
+ *
  * @author Seiichi Sugimoto
  * @version 0.2.0
  * @since 0.1.0
- * 
  */
 public class TransitionFigure extends PolylineConnection {
-    
+
     /** ラベル. */
     private Label fNameLabel;
 
@@ -51,7 +50,6 @@ public class TransitionFigure extends PolylineConnection {
         setTargetDecoration(arrow);
     }
 
-    
     /**
      * ラベル追加.
     */
@@ -65,7 +63,7 @@ public class TransitionFigure extends PolylineConnection {
         add(fNameLabel, relationshipLocator);
         fNameLabel.setVisible(true);
     }
-    
+
     /**
      * ラベル取得.
      * @return ラベル
@@ -73,5 +71,4 @@ public class TransitionFigure extends PolylineConnection {
     public Label getNameLabel() {
         return fNameLabel;
     }
-    
 }

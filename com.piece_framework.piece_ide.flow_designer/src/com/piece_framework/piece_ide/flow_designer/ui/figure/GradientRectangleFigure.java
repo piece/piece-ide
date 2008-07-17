@@ -11,7 +11,7 @@ import org.eclipse.swt.graphics.Color;
  * 矩形フィギュアー(グラデーション対応).
  * グラデーション開始色から背景色へグラデーションする。<br>
  * グラデーションの方向は上から下へ行う。
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -20,10 +20,10 @@ import org.eclipse.swt.graphics.Color;
 public class GradientRectangleFigure extends RectangleFigure {
     private Color fGradientStartColor = ColorConstants.white;
     private Color fOutlineColor = ColorConstants.black;
-    
+
     /**
      * シェイプを塗りつぶす.
-     * 
+     *
      * @param graphics グラフィックス
      * @see org.eclipse.draw2d.RectangleFigure
      *          #fillShape(org.eclipse.draw2d.Graphics)
@@ -36,7 +36,7 @@ public class GradientRectangleFigure extends RectangleFigure {
         f.y = r.y + lineWidth / 2;
         f.width = r.width - lineWidth;
         f.height = r.height - lineWidth;
-        
+
         Color currentColor = graphics.getForegroundColor();
         graphics.setForegroundColor(fGradientStartColor);
         graphics.fillGradient(f, true);
@@ -45,7 +45,7 @@ public class GradientRectangleFigure extends RectangleFigure {
 
     /**
      * アウトラインを描画する.
-     * 
+     *
      * @param graphics グラフィックス
      * @see org.eclipse.draw2d.RectangleFigure
      *          #outlineShape(org.eclipse.draw2d.Graphics)
@@ -57,19 +57,19 @@ public class GradientRectangleFigure extends RectangleFigure {
         super.outlineShape(graphics);
         graphics.setForegroundColor(currentColor);
     }
-    
+
     /**
      * グラデーション開始色を返す.
-     * 
+     *
      * @return グラデーション開始色
      */
     public Color getGradientStartColor() {
         return fGradientStartColor;
     }
-    
+
     /**
      * グラデーション開始色を設定する.
-     * 
+     *
      * @param color グラデーション開始色
      */
     public void setGradientStartColor(Color color) {
@@ -77,19 +77,19 @@ public class GradientRectangleFigure extends RectangleFigure {
             fGradientStartColor = color;
         }
     }
-    
+
     /**
      * アウトライン色を返す.
-     * 
+     *
      * @return アウトライン色
      */
     public Color getOutlineColor() {
         return fOutlineColor;
     }
-    
+
     /**
      * アウトライン色を設定する.
-     * 
+     *
      * @param color アウトライン色
      */
     public void setOutlineColor(Color color) {

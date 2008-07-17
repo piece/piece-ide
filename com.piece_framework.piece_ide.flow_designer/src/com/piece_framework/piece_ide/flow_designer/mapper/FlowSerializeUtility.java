@@ -16,11 +16,10 @@ import org.eclipse.core.runtime.Path;
 
 /**
  * フローシリアラズユーティリティ.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- * 
  */
 public final class FlowSerializeUtility {
 
@@ -30,15 +29,15 @@ public final class FlowSerializeUtility {
 
     /**
      * コンストラクタ.
-     * 
+     *
      */
     private FlowSerializeUtility() {
     }
 
     /**
-     * フローシリアライズファイルを作成する. 
+     * フローシリアライズファイルを作成する.
      * フォルダーがなければ、フォルダーも合わせて作成する。
-     * 
+     *
      * @param yamlFile
      *            YAMLファイル(.flowファイル)
      * @return フローシリアラズファイル
@@ -62,7 +61,7 @@ public final class FlowSerializeUtility {
 
     /**
      * フローシリアライズファイルを返す.
-     * 
+     *
      * @param yamlFile
      *            YAMLファイル(.flowファイル)
      * @return フローシリアライズファイル
@@ -77,7 +76,7 @@ public final class FlowSerializeUtility {
 
     /**
      * フローシリアライズファイルへのパスをString型で返す.
-     * 
+     *
      * @param yamlFile
      *            YAMLファイル(.flowファイル)
      * @return フローシリアライズファイル
@@ -90,7 +89,7 @@ public final class FlowSerializeUtility {
 
     /**
      * 指定されたファイルに到達するためのフォルダーを作成する.
-     * 
+     *
      * @param file
      *            ファイル
      * @throws CoreException
@@ -118,7 +117,7 @@ public final class FlowSerializeUtility {
     /**
      * 指定されたフォルダーが空の場合、削除する.
      * その後、同様の処理を親フォルダーに対し再帰的に行う。
-     * 
+     *
      * @param folder
      *            削除対象となるフォルダー
      */
@@ -140,7 +139,7 @@ public final class FlowSerializeUtility {
     /**
      * YAMLファイルに対応したフローシリアラズファイルが存在すればtrueを
      * さもなくばfalseを返す.
-     * 
+     *
      * @param yamlPath YAMLファイルのパス
      * @return フローシリアラズファイルが存在すればtrue.;さもなくばfalse
      */
@@ -149,24 +148,24 @@ public final class FlowSerializeUtility {
         if (yamlPath == null) {
             return false;
         }
-        
+
         IFile serializeFile = getFlowSeirializeFile(root.getFile(yamlPath));
 
         if (serializeFile == null) {
             return false;
         }
-        
+
         return serializeFile.exists();
     }
 
     /**
      * 移動されたYAMLファイルに対応したフローシリアラズファイルを作成する.
-     * 
+     *
      * @param addedList ワークスペースの変更情報を表現する
      *                  IResourceDeltaを要素とするArrayList
      * @throws CoreException コア例外
      */
-    public static void moveSerializeFiles(ArrayList<IResourceDelta> addedList) 
+    public static void moveSerializeFiles(ArrayList<IResourceDelta> addedList)
                                                        throws CoreException {
         for (IResourceDelta delta : addedList) {
             moveSerializeFile(delta.getMovedFromPath(), delta.getFullPath());
@@ -175,7 +174,7 @@ public final class FlowSerializeUtility {
 
     /**
      * 移動されたYAMLファイルに対応したフローシリアライズファイルを作成する.
-     * 
+     *
      * @param fromPath 移動元のパス
      * @param toPath 移動先のパス
      * @throws CoreException コア例外
@@ -195,7 +194,7 @@ public final class FlowSerializeUtility {
 
     /**
      * 削除されたYAMLファイルに対応したフローシリアライズファイルを削除する.
-     * 
+     *
      * @param removedList ワークスペースの変更情報を表現する
      *                    IResourceDeltaを要素とするArrayList
      * @throws CoreException コア例外
@@ -209,9 +208,7 @@ public final class FlowSerializeUtility {
 
     /**
      * 削除されたYAMLファイルに対応したフローシリアラズファイルを削除する.
-     * 
-     * 
-     * 
+     *
      * @param removedPath
      *            削除されたファイルへのパス
      * @throws CoreException コア例外

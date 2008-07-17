@@ -15,11 +15,10 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 /**
  * ステートマッパー抽象クラス.
  * すべてのステートマッパーのスーパークラスとなる。
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- * 
  */
 public abstract class AbstractStateMapper extends AbstractMapper {
 
@@ -29,7 +28,7 @@ public abstract class AbstractStateMapper extends AbstractMapper {
      * YAMLを返す.
      * ステートリストを取得し、必要なMapオブジェクトを生成し、そこから
      * YAML文字列を抽出する。
-     * 
+     *
      * @param flow フロー
      * @return YAML文字列
      * @see com.piece_framework.piece_ide.flow_designer.mapper.AbstractMapper
@@ -37,32 +36,31 @@ public abstract class AbstractStateMapper extends AbstractMapper {
      */
     public String getYAML(Flow flow) {
         fFlow = flow;
-        
+
         List<State> stateList = getStateList();
         Map<String, Object> map = getMapForYAML(stateList);
         return convertMapToYAML(map);
     }
-    
+
     /**
      * 処理対象となるステートの一覧を返す.
-     * 
+     *
      * @return 処理対象ステートリスト
      */
     protected abstract List<State> getStateList();
-    
-    
+
     /**
      * YAML出力のためのMapオブジェクトを返す.
-     * 
+     *
      * @param stateList 処理対象ステートリスト
      * @return YAML文字列
      */
     protected abstract Map<String, Object> getMapForYAML(
                             List<State> stateList);
-    
+
     /**
      * MapオブジェクトをYAMLに変換する.
-     * 
+     *
      * @param map Mapオブジェクト
      * @return YAML文字列
      */
@@ -74,35 +72,35 @@ public abstract class AbstractStateMapper extends AbstractMapper {
         }
         return formatYAMLString(yamlBuffer.toString());
     }
-    
+
     /**
      * フローを返す.
-     * 
+     *
      * @return フロー
      */
     protected Flow getFlow() {
         return fFlow;
     }
-    
+
     /**
      * ステート名・ビュー名(ビューステートの場合のみ)をMapオブジェクトに
      * 追加する.
-     * 
+     *
      * @param state ステート
      * @param map Mapオブジェクト
      */
     protected void addStateInformationToMap(
-                        State state, 
+                        State state,
                         Map<String, Object> map) {
         map.put("name", state.getName()); //$NON-NLS-1$
         if (state.getType() == State.VIEW_STATE) {
             map.put("view", state.getView()); //$NON-NLS-1$
         }
     }
-    
+
     /**
      * ステートが保持するビルトインイベントをMapオブジェクトに追加する.
-     * 
+     *
      * @param state ステート
      * @param map Mapオブジェクト
      */
@@ -111,7 +109,7 @@ public abstract class AbstractStateMapper extends AbstractMapper {
             if (event.getType() != Event.BUILTIN_EVENT) {
                 continue;
             }
-            
+
             if (event.getName().equals("Activity")) { //$NON-NLS-1$
                 addEventHandlerToMap(
                         event.getEventHandlerClassName(),
@@ -123,7 +121,7 @@ public abstract class AbstractStateMapper extends AbstractMapper {
                         event.getEventHandlerClassName(),
                         event.getEventHandlerMethodName(),
                         "entry", //$NON-NLS-1$
-                        map);                
+                        map);
             } else if (event.getName().equals("Exit")) { //$NON-NLS-1$
                 addEventHandlerToMap(
                         event.getEventHandlerClassName(),
@@ -133,15 +131,15 @@ public abstract class AbstractStateMapper extends AbstractMapper {
             }
         }
     }
-    
+
     /**
      * ステートが保持する遷移イベント・内部イベントをMapオブジェクトに追加する.
-     * 
+     *
      * @param state ステート
      * @param map Mapオブジェクト
      */
     protected void addTransitionAndInternalEventToMap(
-                        State state, 
+                        State state,
                         Map<String, Object> map) {
         List<Map> eventList = new ArrayList<Map>();
         for (Event event : state.getEventList()) {
@@ -156,28 +154,28 @@ public abstract class AbstractStateMapper extends AbstractMapper {
             eventMap.put("event", event.getName()); //$NON-NLS-1$
             eventMap.put(
                     "nextState", event.getNextState().getName()); //$NON-NLS-1$
-            
+
             addEventHandlerToMap(
                     event.getEventHandlerClassName(),
-                    event.getEventHandlerMethodName(), 
+                    event.getEventHandlerMethodName(),
                     "action",  //$NON-NLS-1$
                     eventMap);
             addEventHandlerToMap(
                     event.getGuardEventHandlerClassName(),
-                    event.getGuardEventHandlerMethodName(), 
+                    event.getGuardEventHandlerMethodName(),
                     "guard",  //$NON-NLS-1$
                     eventMap);
-            
+
             eventList.add(eventMap);
         }
         if (eventList.size() > 0) {
             map.put("transition", eventList); //$NON-NLS-1$
         }
     }
-    
+
     /**
      * イベントハンドラをMapオブジェクトに追加する.
-     * 
+     *
      * @param eventHandlerClassName イベントハンドラクラス名
      * @param eventHandlerMethodName イベントハンドラメソッド名
      * @param key キー
@@ -185,14 +183,14 @@ public abstract class AbstractStateMapper extends AbstractMapper {
      */
     protected void addEventHandlerToMap(
                         String eventHandlerClassName,
-                        String eventHandlerMethodName, 
-                        String key, 
+                        String eventHandlerMethodName,
+                        String key,
                         Map<String, Object> map) {
         if (eventHandlerMethodName == null) {
             return;
         }
-        
-        Map<String, Object> eventHandlerMap = 
+
+        Map<String, Object> eventHandlerMap =
                     new LinkedHashMap<String, Object>();
         if (eventHandlerClassName != null) {
             eventHandlerMap.put("class", eventHandlerClassName); //$NON-NLS-1$

@@ -14,11 +14,10 @@ import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 
 /**
  * フロー・プロパティシートの一般セクション.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- * 
  */
 public class FlowGeneralSection extends GeneralPropertySection {
 
@@ -27,25 +26,25 @@ public class FlowGeneralSection extends GeneralPropertySection {
 
     /**
      * コントロールを作成する.
-     * 
+     *
      * @param parent 親コンテナ
      * @param tabbedPropertySheetPage プロパティシートページ
      * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
      *        #createControls(
-     *          org.eclipse.swt.widgets.Composite, 
+     *          org.eclipse.swt.widgets.Composite,
      *          org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage)
      */
     @Override
     public void createControls(
-                    Composite parent, 
+                    Composite parent,
                     TabbedPropertySheetPage tabbedPropertySheetPage) {
         super.createControls(parent, tabbedPropertySheetPage);
-        
-        Composite composite = 
+
+        Composite composite =
             getWidgetFactory().createFlatFormComposite(parent);
 
-        fFlowNameLabel = 
-            getWidgetFactory().createCLabel(composite, 
+        fFlowNameLabel =
+            getWidgetFactory().createCLabel(composite,
                 Messages.getString(
                     "FlowGeneralSection.FlowName")); //$NON-NLS-1$
         fFlowName = getWidgetFactory().createText(composite, ""); //$NON-NLS-1$
@@ -55,18 +54,18 @@ public class FlowGeneralSection extends GeneralPropertySection {
                 new Text[] {fFlowName});
         setTextListener(fFlowName);
     }
-    
+
     /**
      * 画面をリフレッシュする.
      * フローから必要な情報を取得し、コントロールにセットする。
-     * 
+     *
      * @see org.eclipse.ui.views.properties.tabbed.AbstractPropertySection
      *          #refresh()
      */
     @Override
     public void refresh() {
         fFlowName.setText(""); //$NON-NLS-1$
-        
+
         Flow flow = (Flow) getModel();
         if (flow != null) {
             if (flow.getName() != null) {
@@ -77,7 +76,7 @@ public class FlowGeneralSection extends GeneralPropertySection {
 
     /**
      * コントロールから属性名を返す.
-     * 
+     *
      * @param control コントロール
      * @return 属性名
      * @see com.piece_framework.piece_ide.flow_designer.ui.property
@@ -87,17 +86,17 @@ public class FlowGeneralSection extends GeneralPropertySection {
     @Override
     String getAttributeName(Control control) {
         String attributeName = null;
-        
+
         if (control == fFlowName) {
             attributeName = "Name"; //$NON-NLS-1$
         }
-        
+
         return attributeName;
     }
 
     /**
      * フロー属性を設定するコマンドを返す.
-     * 
+     *
      * @param attributeName 属性名
      * @param attributeValue 属性値
      * @return フロー属性を設定するコマンド

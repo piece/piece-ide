@@ -8,7 +8,7 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 
 /**
  * ステート作成コマンド.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -20,10 +20,10 @@ public class CreateStateCommand extends Command {
     private State fState;
     private int fX;
     private int fY;
-    
+
     /**
      * コンストラクタ.
-     * 
+     *
      * @param flow フロー
      * @param state 作成するステート
      * @param x X座標
@@ -41,7 +41,7 @@ public class CreateStateCommand extends Command {
      * コマンドが実行できるか判断する.
      * 既にフローにファイナルステートがあるときは
      * ファイナルステートは追加できない。
-     * 
+     *
      * @return コマンドを実行できるか
      * @see org.eclipse.gef.commands.Command#canExecute()
      */
@@ -59,7 +59,7 @@ public class CreateStateCommand extends Command {
 
     /**
      * ステートを作成する.
-     * 
+     *
      * @see org.eclipse.gef.commands.Command#execute()
      */
     @Override
@@ -72,7 +72,7 @@ public class CreateStateCommand extends Command {
 
     /**
      * 作成したステートを元に戻す.
-     * 
+     *
      * @see org.eclipse.gef.commands.Command#undo()
      */
     @Override

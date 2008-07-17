@@ -8,22 +8,21 @@ import com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin;
 
 /**
  * アクションステート・フィギュアー.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- *
  */
 public class ActionStateFigure extends NormalStateFigure {
 
     private static final RGB STATE_COLOR = new RGB(204, 204, 204);
     private static final RGB STATE_OUTLINE_COLOR = new RGB(153, 153, 153);
-    
+
     private static final String ICON = "icons/ActionState.gif"; //$NON-NLS-1$
-    
+
     /**
      * ステート色を返す.
-     * 
+     *
      * @return ステート色.
      * @see com.piece_framework.piece_ide.flow_designer.ui.figure
      *          .NormalStateFigure#getStateColor()
@@ -32,7 +31,7 @@ public class ActionStateFigure extends NormalStateFigure {
     RGB getStateColor() {
         return STATE_COLOR;
     }
-    
+
     /**
      * ステートのアウトライン色を返す.
      *
@@ -44,10 +43,10 @@ public class ActionStateFigure extends NormalStateFigure {
     RGB getStateOutlineColor() {
         return STATE_OUTLINE_COLOR;
     }
-    
+
     /**
      * ステートのアイコンを返す.
-     * 
+     *
      * @return ステートのアイコンイメージ
      * @see com.piece_framework.piece_ide.flow_designer.ui.figure
      *          .NormalStateFigure#getIcon()

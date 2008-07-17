@@ -12,23 +12,22 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
 /**
  * ノーマルステートマッパークラス.
  * ビューステート、アクションステートのマッパークラス.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- * 
  */
 public class NormalStateMapper extends AbstractStateMapper {
 
     private int fStateType;
-    
+
     /**
      * コンストラクタ.
      * ステートタイプを設定する。ステートタイプに、
      * State.VIEW_STATE, State.ACTION_STATE 以外が
      * 指定されている場合はState.UNKNOWN_STATEを設
      * 定する。
-     * 
+     *
      * @param stateType ステートタイプ
      */
     public NormalStateMapper(int stateType) {
@@ -44,7 +43,7 @@ public class NormalStateMapper extends AbstractStateMapper {
      * 返す.
      * 但し、ファイナルステートに遷移しているステート
      * はファイナルステートに定義するので除外する。
-     * 
+     *
      * @return ビューステートまたはアクションステートのリスト
      * @see com.piece_framework.piece_ide.flow_designer.mapper
      *          .AbstractStateMapper#getStateList()
@@ -55,7 +54,7 @@ public class NormalStateMapper extends AbstractStateMapper {
         if (fStateType == State.UNKNOWN_STATE) {
             return stateList;
         }
-        
+
         for (State state : getFlow().getStateList()) {
             if (state.getType() == fStateType) {
                 // ファイナルステートへの遷移がある場合はなにもしない
@@ -77,7 +76,7 @@ public class NormalStateMapper extends AbstractStateMapper {
     /**
      * ビューステートまたはアクションステートをMapオブジェクト
      * にセットして返す.
-     * 
+     *
      * @param stateList ビューステートまたはアクションステートのリスト
      * @return YAML出力のためのMapオブジェクト
      * @see com.piece_framework.piece_ide.flow_designer.mapper
@@ -87,15 +86,15 @@ public class NormalStateMapper extends AbstractStateMapper {
     protected Map<String, Object> getMapForYAML(List<State> stateList) {
         List<Map> stateListForYAML = new ArrayList<Map>();
         for (State state : stateList) {
-            Map<String, Object> stateMap = 
+            Map<String, Object> stateMap =
                     new LinkedHashMap<String, Object>();
             addStateInformationToMap(state, stateMap);
             addBuiltinEventToMap(state, stateMap);
             addTransitionAndInternalEventToMap(state, stateMap);
-            
+
             stateListForYAML.add(stateMap);
         }
-        
+
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         if (stateListForYAML.size() > 0) {
             if (fStateType == State.VIEW_STATE) {
@@ -104,7 +103,7 @@ public class NormalStateMapper extends AbstractStateMapper {
                 map.put("actionState", stateListForYAML); //$NON-NLS-1$
             }
         }
-        
+
         return map;
     }
 }

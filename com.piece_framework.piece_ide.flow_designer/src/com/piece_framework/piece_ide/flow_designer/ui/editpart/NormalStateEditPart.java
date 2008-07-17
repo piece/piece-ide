@@ -12,7 +12,7 @@ import com.piece_framework.piece_ide.flow_designer.ui.figure.NormalStateFigure;
 
 /**
  * ノーマルステート・抽象エディットパート.
- * 
+ *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
@@ -22,14 +22,14 @@ public abstract class NormalStateEditPart extends StateEditPart {
 
     /**
      * フィギュアーをリフレッシュする.
-     * 
+     *
      * @param figure リフレッシュするフィギュアー
      */
     protected void refreshFigure(NormalStateFigure figure) {
         refreshName(figure);
         refreshEvent(figure);
     }
-    
+
     /**
      * ステート名をリフレッシュする.
      *
@@ -37,22 +37,22 @@ public abstract class NormalStateEditPart extends StateEditPart {
      */
     protected void refreshName(NormalStateFigure figure) {
         State state = (State) getModel();
-        
+
         figure.setName(state.getName());
     }
-    
+
     /**
      * イベントをリフレッシュする.
-     * 
+     *
      * @param figure フィギュアー
      */
     protected void refreshEvent(NormalStateFigure figure) {
         State state = (State) getModel();
-        
+
         figure.removeAllBuiltinEvent();
         figure.removeAllTransitionEvent();
         figure.removeAllInternalEvent();
-        
+
         for (Event event : state.getEventList()) {
             if (event.getType() == Event.BUILTIN_EVENT) {
                 figure.addBuiltinEvent(event.getName());
@@ -66,7 +66,7 @@ public abstract class NormalStateEditPart extends StateEditPart {
 
     /**
      * プロパティー変更イベントを処理する.
-     * 
+     *
      * @param event プロパティー変更イベント
      * @see com.piece_framework.piece_ide.flow_designer.
      *          ui.editpart.StateEditPart
@@ -82,12 +82,11 @@ public abstract class NormalStateEditPart extends StateEditPart {
         }
         super.propertyChange(event);
     }
-    
 
     /**
      * リクエストを処理する.
      * ダブルクリック時にビューステート・アクションステートの
-     * 
+     *
      * @param request リクエスト情報
      * @see org.eclipse.gef.editparts.AbstractEditPart
      *          #performRequest(org.eclipse.gef.Request)
@@ -98,10 +97,10 @@ public abstract class NormalStateEditPart extends StateEditPart {
             if (getParent() instanceof FlowEditPart) {
                 ((FlowEditPart) getParent()).reorderEditPartToLast(this);
             }
-            
+
             NormalStateFigure figure = (NormalStateFigure) getFigure();
             figure.setVisibleEventList(!figure.isVisibleEventList());
-            
+
             return;
         }
         super.performRequest(request);
