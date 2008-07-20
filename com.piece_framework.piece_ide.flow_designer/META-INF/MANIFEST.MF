@@ -62,3 +62,5 @@ Export-Package: META-INF,
  org.ho.yaml.exception,
  org.ho.yaml.wrapper;uses:="org.ho.yaml",
  yaml.parser
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
