@@ -79,7 +79,7 @@ public abstract class AbstractSetAttributeCommand extends Command {
      * @return メソッドオブジェクト
      */
     protected Method createMethod(
-                            Class klass,
+                            Class< ? extends AbstractModel > klass,
                             String methodName,
                             Class[] parameters) {
         Method method = null;
