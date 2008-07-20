@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @since 0.1.0
  */
 public abstract class AbstractModel implements Serializable {
-
+    private static final long serialVersionUID = -298583418873971664L;
     private PropertyChangeSupport fSupport;
 
     /**
