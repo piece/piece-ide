@@ -36,30 +36,21 @@ import com.piece_framework.piece_ide.wizard.plugin.WizardPlugin;
 /**
  * 新規プロジェクトウィザード.
  * 新規プロジェクト作成ウィザードを管理する。
- * 
+ *
  * @author Seiichi Sugimoto
  * @version 0.2.0
  * @since 0.1.0
- * 
  */
 public class NewPieceProjectWizard extends Wizard implements INewWizard {
-    
     private NewPieceProjectWizardPage fPage1;
-    
-    /** 作業量. */
+
     private static final int WORK_TASK = 2000;
-    
-    /** サブ作業量. */
     private static final int SUB_WORK_TASK = 1000;
-
-    /** 初期設定ファイル格納ディレクトリ名. */
     private static final String PROJECT_RESOURCES = "project_resources";
-
     private static final String DEFAULT_PROJECT_NAME = "MyApp";
-    
+
     /**
      * コンストラクタ.
-     * 
      */
     public NewPieceProjectWizard() {
         super();
@@ -70,16 +61,15 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
 
     /**
      * 初期処理.
-     * 
+     *
      * @param workbench ワークベンチ
      * @param selection 選択した構成
      */
     public void init(IWorkbench workbench, IStructuredSelection selection) {
-    }   
-    
+    }
+
     /**
      * ページ追加.
-     * 
      */
     public void addPages() {
         fPage1 = new NewPieceProjectWizardPage("page1"); //$NON-NLS-1$
@@ -88,20 +78,20 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
         fPage1.setDescription(Messages.getString(
                                 "NewPieceProjectWizard.PageDescription"));
         fPage1.setInitialProjectName(DEFAULT_PROJECT_NAME);
-        
+
         addPage(fPage1);
     }
-    
+
     /**
      * 完了ボタンクリック時処理.
-     * 
+     *
      * @return 処理結果
      */
     public boolean performFinish() {
         final IProject newProjectHandle = this.fPage1.getProjectHandle();
         final IProjectDescription description =
                                createProjectDescription(newProjectHandle);
- 
+
         WorkspaceModifyOperation op = new WorkspaceModifyOperation() {
             protected void execute(IProgressMonitor monitor)
                                                 throws CoreException {
@@ -110,15 +100,15 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
         };
         try {
             runProjectCreationOperation(op, newProjectHandle);
-            
+
             URL pluginURL =
               Platform.getBundle(
                           WizardPlugin.PLUGIN_ID).getEntry(PROJECT_RESOURCES);
             File pluginFolder =
                            new File(FileLocator.toFileURL(pluginURL).getPath());
-    
+
             createResource(newProjectHandle, pluginFolder, "");
-            
+
         } catch (IOException e1) {
             // TODO 自動生成された catch ブロック
             e1.printStackTrace();
@@ -137,7 +127,7 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
 
     /**
      * 完了ボタンクリック時処理.
-     * 
+     *
      * @param newProjectHandle 新規プロジェクトハンドラ
      * @return プロジェクトディスクリプション
      */
@@ -153,13 +143,13 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
         description.setLocation(newPath);
         return description;
     }
-        
+
     /**
      * プロジェクト作成処理.
-     * 
+     *
      * @param description 　
      * @param projectHandle プロジェクトハンドラ
-     * @param monitor プログレスモニター 
+     * @param monitor プログレスモニター
      * @throws CoreException コア例外
      */
     private void createProject(IProjectDescription description,
@@ -169,7 +159,7 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
             monitor.beginTask("", WORK_TASK);
             projectHandle.create(description,
                            new SubProgressMonitor(monitor, SUB_WORK_TASK));
-            
+
             if (monitor.isCanceled()) {
                 throw new OperationCanceledException();
             }
@@ -182,7 +172,7 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
 
     /**
      * 新規プロジェクト作成起動時処理.
-     * 
+     *
      * @param op ワークスペースオペレーション
      * @param newProjectHandle 新規プロジェクトハンドラ
      * @throws InterruptedException インターセプト例外
@@ -194,10 +184,10 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
                     throws InvocationTargetException, InterruptedException {
         getContainer().run(false, true, op);
     }
-    
+
     /**
      * 初期ファイル作成処理.
-     * 
+     *
      * @param project 新規プロジェクト
      * @param pluginFile プラグイン側のファイル群
      * @param path プロジェクト側のファイルパス
@@ -210,18 +200,18 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
                                 String path)
                         throws CoreException, FileNotFoundException {
         String[] pluginFiles = pluginFile.list();
-            
+
         for (int i = 0; i < pluginFiles.length; i++) {
             if (pluginFiles[i].equals(".svn")) {
                 continue;
             }
-            
+
             File pluginChildFile =
                      new File(pluginFile, pluginFiles[i]);
-            String resourceName = 
+            String resourceName =
                     (path + "/" + pluginFiles[i]).replace(
                             DEFAULT_PROJECT_NAME, project.getName());
-            
+
             if (pluginChildFile.isDirectory()) {
                 project.getFolder(resourceName).create(false, true, null);
                 createResource(project,
@@ -237,7 +227,7 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
             }
         }
     }
-    
+
     /**
      * 拡張子のチェックを行う.
      * 拡張子が以下のものに該当するかをチェックする。<br>
@@ -247,18 +237,18 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
      * ・html<br>
      * ・css<br>
      * ・js<br>
-     * 
+     *
      * @param file チェック対象ファイル
      * @return 該当する場合はtrueを返す。
      */
     private boolean checkExtension(IFile file) {
-        final String[] replaceExtensions = 
+        final String[] replaceExtensions =
                                 {
-                                    "php", 
-                                    "yaml", 
-                                    "flow", 
-                                    "html", 
-                                    "css", 
+                                    "php",
+                                    "yaml",
+                                    "flow",
+                                    "html",
+                                    "css",
                                     "js"
                                 };
         for (int i = 0; i < replaceExtensions.length; i++) {
@@ -268,13 +258,13 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
         }
         return false;
     }
-    
+
     /**
      * ファイルコンテンツ内に含まれているDEFAULT_PROJECT_NAMEの値を
      * プロジェクト名に置換する.
      * パフォーマンスを考慮して、置換前後の文字列が同じ場合は処理を
      * 行わない。
-     * 
+     *
      * @param file ファイル
      * @throws CoreException コア例外
      */
@@ -282,7 +272,7 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
         BufferedInputStream bufferedIn = null;
         ByteArrayOutputStream byteOut = null;
         ByteArrayInputStream byteIn = null;
-        
+
         try {
             bufferedIn = new BufferedInputStream(file.getContents());
             byteOut = new ByteArrayOutputStream();
@@ -290,9 +280,9 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
             while ((read = bufferedIn.read()) != -1) {
                 byteOut.write(read);
             }
-            
+
             String replaceData = byteOut.toString().replace(
-                                        DEFAULT_PROJECT_NAME, 
+                                        DEFAULT_PROJECT_NAME,
                                         file.getProject().getName());
             if (!replaceData.equals(byteOut.toString())) {
                 byteIn = new ByteArrayInputStream(replaceData.getBytes());
@@ -315,7 +305,7 @@ public class NewPieceProjectWizard extends Wizard implements INewWizard {
             } catch (IOException ioe) {
             }
         }
-        
+
         if (byteIn != null) {
             file.setContents(byteIn, true, false, null);
         }

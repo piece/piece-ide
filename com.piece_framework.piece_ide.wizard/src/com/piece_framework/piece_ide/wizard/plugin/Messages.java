@@ -6,8 +6,8 @@ import java.util.ResourceBundle;
 
 /**
  * 外部文字列アクセサクラス.
- * 
- * @author Hideharu Matsufuji
+ *
+ * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
  */
@@ -27,7 +27,7 @@ public final class Messages {
 
     /**
      * 指定されたキーに対応する文字列を返す.
-     * 
+     *
      * @param key キー
      * @return キーに対応する文字列
      */
