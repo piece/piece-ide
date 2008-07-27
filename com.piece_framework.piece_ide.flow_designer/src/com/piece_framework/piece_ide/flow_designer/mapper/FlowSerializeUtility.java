@@ -22,14 +22,11 @@ import org.eclipse.core.runtime.Path;
  * @since 0.1.0
  */
 public final class FlowSerializeUtility {
-
     private static final String FLOW_PATH = ".settings/flow/"; //$NON-NLS-1$
-
     private static final String FLOW_SERIALIZE_EXT = "_obj"; //$NON-NLS-1$
 
     /**
      * コンストラクタ.
-     *
      */
     private FlowSerializeUtility() {
     }
@@ -38,11 +35,9 @@ public final class FlowSerializeUtility {
      * フローシリアライズファイルを作成する.
      * フォルダーがなければ、フォルダーも合わせて作成する。
      *
-     * @param yamlFile
-     *            YAMLファイル(.flowファイル)
+     * @param yamlFile YAMLファイル
      * @return フローシリアラズファイル
-     * @throws CoreException
-     *             コア例外
+     * @throws CoreException コア例外
      */
     public static IFile createFlowSeirializeFile(IFile yamlFile)
             throws CoreException {
@@ -55,30 +50,26 @@ public final class FlowSerializeUtility {
         if (!serializeFile.exists()) {
             createFolder(serializeFile);
         }
-
         return serializeFile;
     }
 
     /**
      * フローシリアライズファイルを返す.
      *
-     * @param yamlFile
-     *            YAMLファイル(.flowファイル)
+     * @param yamlFile YAMLファイル
      * @return フローシリアライズファイル
      */
     public static IFile getFlowSeirializeFile(IFile yamlFile) {
         if (yamlFile.getProject() == null) {
             return null;
         }
-
         return yamlFile.getProject().getFile(getSerializePathString(yamlFile));
     }
 
     /**
-     * フローシリアライズファイルへのパスをString型で返す.
+     * フローシリアライズファイルへのパスを返す.
      *
-     * @param yamlFile
-     *            YAMLファイル(.flowファイル)
+     * @param yamlFile YAMLファイル
      * @return フローシリアライズファイル
      */
     public static String getSerializePathString(IFile yamlFile) {
@@ -90,10 +81,8 @@ public final class FlowSerializeUtility {
     /**
      * 指定されたファイルに到達するためのフォルダーを作成する.
      *
-     * @param file
-     *            ファイル
-     * @throws CoreException
-     *             コア例外
+     * @param file ファイル
+     * @throws CoreException コア例外
      */
     private static void createFolder(IFile file) throws CoreException {
         String[] folders = file.getFullPath().toString().split("/");
@@ -118,12 +107,11 @@ public final class FlowSerializeUtility {
      * 指定されたフォルダーが空の場合、削除する.
      * その後、同様の処理を親フォルダーに対し再帰的に行う。
      *
-     * @param folder
-     *            削除対象となるフォルダー
+     * @param folder 削除対象となるフォルダー
      */
     private static void deleteFolders(IContainer folder) {
         try {
-            if ((folder instanceof IProject)) {
+            if (folder instanceof IProject) {
                 return;
             }
 
@@ -137,32 +125,28 @@ public final class FlowSerializeUtility {
     }
 
     /**
-     * YAMLファイルに対応したフローシリアラズファイルが存在すればtrueを
-     * さもなくばfalseを返す.
+     * YAMLファイルに対応したフローシリアラズファイルが存在するかを返す.
      *
      * @param yamlPath YAMLファイルのパス
-     * @return フローシリアラズファイルが存在すればtrue.;さもなくばfalse
+     * @return フローシリアラズファイルが存在するか
      */
     public static boolean hasSerializeFile(IPath yamlPath) {
-        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
         if (yamlPath == null) {
             return false;
         }
 
-        IFile serializeFile = getFlowSeirializeFile(root.getFile(yamlPath));
-
+        IFile serializeFile = getFlowSeirializeFile(
+                ResourcesPlugin.getWorkspace().getRoot().getFile(yamlPath));
         if (serializeFile == null) {
             return false;
         }
-
         return serializeFile.exists();
     }
 
     /**
      * 移動されたYAMLファイルに対応したフローシリアラズファイルを作成する.
      *
-     * @param addedList ワークスペースの変更情報を表現する
-     *                  IResourceDeltaを要素とするArrayList
+     * @param addedList ワークスペースの変更情報
      * @throws CoreException コア例外
      */
     public static void moveSerializeFiles(ArrayList<IResourceDelta> addedList)
@@ -195,8 +179,7 @@ public final class FlowSerializeUtility {
     /**
      * 削除されたYAMLファイルに対応したフローシリアライズファイルを削除する.
      *
-     * @param removedList ワークスペースの変更情報を表現する
-     *                    IResourceDeltaを要素とするArrayList
+     * @param removedList ワークスペースの変更情報
      * @throws CoreException コア例外
      */
     public static void removeSerializeFiles(
@@ -209,8 +192,7 @@ public final class FlowSerializeUtility {
     /**
      * 削除されたYAMLファイルに対応したフローシリアラズファイルを削除する.
      *
-     * @param removedPath
-     *            削除されたファイルへのパス
+     * @param removedPath 削除されたファイルへのパス
      * @throws CoreException コア例外
      */
     public static void removeSerializeFile(IPath removedPath)
