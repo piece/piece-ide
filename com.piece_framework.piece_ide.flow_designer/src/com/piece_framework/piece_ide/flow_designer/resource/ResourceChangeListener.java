@@ -27,21 +27,19 @@ import com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor;
  * ワークスペースの変更通知を受けとり、YAMLファイルの変更に対する
  * 処理をシリアライズファイルにも行う.
  *
- * @see IResourceDelta
- * @see IWorkspace#addResourceChangeListener(IResourceChangeListener, int)
+ * @author TANAKA
+ * @version 0.3.0
+ * @since 0.3.0
  */
 public class ResourceChangeListener implements IResourceChangeListener,
         IResourceDeltaVisitor {
     private ArrayList<IResourceDelta> fAddedList;
-
     private ArrayList<IResourceDelta> fRemovedList;
 
     /**
      * YAMLファイルの変更に対する処理をシリアライズファイルにも行う.
      *
-     * @param event
-     *            the resource change event
-     * @see IResourceDelta
+     * @param event リソース変更イベント
      */
     public void resourceChanged(IResourceChangeEvent event) {
         fAddedList = new ArrayList<IResourceDelta>();
@@ -75,17 +73,12 @@ public class ResourceChangeListener implements IResourceChangeListener,
     }
 
     /**
-     * 与えられた resource delta を訪れる(子をたどって処理を行う) .
-     * ファイルが追加された場合はaddedListに、ファイルが削除された
-     * 場合はremovedListに 引数のdeltaをaddする。
+     * 与えられた変更情報から変更対象リソースを取得する.
+     * 追加、削除されたファイルをそれぞれリストに保存する。
      *
-     * @param delta
-     *            リソースツリーの変更内容を表すオブジェクト
-     * @return <code>true</code> resource delta の子をたどって処理を行った場合;
-     *         <code>false</code> resource delta の子に対する
-     *                            処理がスキップされた場合.
-     * @exception CoreException
-     *                if the visit fails for some reason.
+     * @param delta リソース変更情報
+     * @return 常に真
+     * @exception CoreException コア例外
      */
     public boolean visit(IResourceDelta delta) throws CoreException {
         if (delta.getResource().getType() != IResource.FILE) {
@@ -107,13 +100,13 @@ public class ResourceChangeListener implements IResourceChangeListener,
         default:
             break;
         }
-        return true; // visit the children
+        return true;
     }
 
     /**
-     * エディタ保存先となるエディタ入力を変更する.
+     * エディター保存先となるエディター入力を変更する.
      *
-     * @param delta リソースツリーの変更内容を表すオブジェクト
+     * @param delta リソース変更情報
      */
     private void reuseEditor(IResourceDelta delta) {
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
@@ -130,9 +123,9 @@ public class ResourceChangeListener implements IResourceChangeListener,
     }
 
     /**
-     * 削除されたYAMLファイルを入力としていたエディタを閉じる.
+     * 削除されたYAMLファイルを入力としていたエディターを閉じる.
      *
-     * @param delta リソースツリーの変更内容を表すオブジェクト
+     * @param delta リソース変更情報
      * @throws Exception 例外
      */
     private void closeEditor(IResourceDelta delta) throws Exception {
@@ -147,9 +140,10 @@ public class ResourceChangeListener implements IResourceChangeListener,
     }
 
     /**
-     * 引数に与えられた EditorInput を入力としているエディタのリストを返す.
-     * @param input エディタ入力
-     * @return 引数に与えられた EditorInput を入力としているエディタのリスト
+     * 引数に与えられたエディター入力を使用としているエディターのリストを返す.
+     *
+     * @param input エディター入力
+     * @return 引数に与えられた EditorInput を入力としているエディターのリスト
      */
     private ArrayList<FlowDesignerEditor> getOpenedEditors(IEditorInput input) {
         ArrayList<FlowDesignerEditor> openedEditors

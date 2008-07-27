@@ -20,7 +20,6 @@ import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
  * @since 0.1.0
  */
 public class FlowGeneralSection extends GeneralPropertySection {
-
     private Text fFlowName;
     private CLabel fFlowNameLabel;
 

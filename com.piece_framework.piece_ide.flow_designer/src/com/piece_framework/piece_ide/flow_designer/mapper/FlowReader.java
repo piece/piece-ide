@@ -25,13 +25,11 @@ import com.piece_framework.piece_ide.internal.PieceIDE;
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- *
  */
 public final class FlowReader {
 
     /**
      * コンストラクタ.
-     *
      */
     private FlowReader() {
     }
@@ -43,7 +41,7 @@ public final class FlowReader {
      * イルから読み込んだFlowオブジェクトを返す。
      * 異なる場合はYAMLファイルから読み込んだFlowオブジェクトを返す。
      *
-     * @param yamlFile YAMLファイル(.flowファイル)
+     * @param yamlFile YAMLファイル
      * @return Flowオブジェクト
      * @throws CoreException コア例外
      */

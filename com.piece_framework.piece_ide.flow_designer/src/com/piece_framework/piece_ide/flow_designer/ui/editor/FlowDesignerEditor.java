@@ -45,20 +45,15 @@ import com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin;
 import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
 import com.piece_framework.piece_ide.flow_designer.ui.editpart.FlowDesignerEditFactory;
 
-//import piece_ide.flow_designer.ui.editpart.FlowDesignerEditFactory;
-//import piece_ide.PieceIDEPlugin;
-
 /**
  * フローデザイナー・エディター.
  *
  * @author MATSUFUJI Hideharu
  * @version 0.2.0
  * @since 0.1.0
- *
  */
 public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
            implements ITabbedPropertySheetPageContributor, IReusableEditor {
-
     private static final int INITAL_STATE_X = 50;
     private static final int INITAL_STATE_Y = 50;
 
@@ -66,7 +61,6 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
 
     /**
      * コンストラクタ.
-     *
      */
     public FlowDesignerEditor() {
         DefaultEditDomain domain = new DefaultEditDomain(this) {
@@ -143,9 +137,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
      */
     @Override
     protected void initializeGraphicalViewer() {
-
         boolean needInit = true;
-
         try {
             IFile file = ((IFileEditorInput) getEditorInput()).getFile();
             setPartName(file.getName());
@@ -154,7 +146,6 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
             if (fFlow != null) {
                 needInit = false;
             }
-
         } catch (CoreException ce) {
             // TODO: オブジェクト読み込み時の例外処理
             ce.printStackTrace();
@@ -203,11 +194,9 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         } catch (CoreException ce) {
             // TODO: オブジェクト読み込み時の例外処理
             ce.printStackTrace();
-
         } catch (IOException ioe) {
             // TODO: オブジェクト読み込み時の例外処理
             ioe.printStackTrace();
-
         } catch (BackingStoreException bse) {
             bse.printStackTrace();
         }

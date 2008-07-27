@@ -16,15 +16,11 @@ import com.piece_framework.piece_ide.flow_designer.resource.ResourceChangeListen
  * @author Seiichi Sugimoto
  * @version 0.2.0
  * @since 0.1.0
- *
  */
 public class FlowDesignerPlugin extends AbstractUIPlugin implements IStartup {
-
     /** プラグインID. */
     public static final String PLUGIN_ID =
                 "com.piece_framework.piece_ide.flow_designer"; //$NON-NLS-1$
-
-    /** インスタンス. */
     private static FlowDesignerPlugin fPlugin;
 
     /**
@@ -56,7 +52,6 @@ public class FlowDesignerPlugin extends AbstractUIPlugin implements IStartup {
      *          #stop(org.osgi.framework.BundleContext)
      */
     public void stop(BundleContext context) throws Exception {
-
         fPlugin = null;
         super.stop(context);
     }
@@ -82,8 +77,8 @@ public class FlowDesignerPlugin extends AbstractUIPlugin implements IStartup {
 
     /**
      * ワークスペースにリソースの変更を監視するListenerを追加する.
-     * @see org.eclipse.ui.IStartup#earlyStartup()
      *
+     * @see org.eclipse.ui.IStartup#earlyStartup()
      */
     public void earlyStartup() {
         ResourcesPlugin.getWorkspace().addResourceChangeListener(
