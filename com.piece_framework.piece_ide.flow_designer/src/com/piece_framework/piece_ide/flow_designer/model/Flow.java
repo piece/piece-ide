@@ -9,7 +9,6 @@ import java.util.List;
  * フロークラスはステートを保持する。
  *
  * @author MATSUFUJI Hideharu
- * @version 0.2.0
  * @since 0.1.0
  *
  */

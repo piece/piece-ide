@@ -13,7 +13,6 @@ import org.eclipse.swt.graphics.Color;
  * グラデーションの方向は上から下へ行う。
  *
  * @author MATSUFUJI Hideharu
- * @version 0.2.0
  * @since 0.1.0
  */
 public class GradientRoundedRectangle extends RoundedRectangle {

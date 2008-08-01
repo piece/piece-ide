@@ -14,7 +14,6 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  * ステート削除コマンド.
  *
  * @author MATSUFUJI Hideharu
- * @version 0.2.0
  * @since 0.1.0
  *
  */
@@ -25,7 +24,6 @@ public class DeleteStateCommand extends Command {
      * ステートとイベントを1対1の関係で保持するクラス。
      *
      * @author MATSUFUJI Hideharu
-     * @version 0.2.0
      * @since 0.1.0
      *
      */

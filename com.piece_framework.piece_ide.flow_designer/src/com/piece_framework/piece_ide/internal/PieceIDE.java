@@ -9,7 +9,6 @@ import java.lang.reflect.Method;
  * Piece_IDE全体で使用されるユーティリティクラス。
  *
  * @author MATSUFUJI Hideharu
- * @version 0.2.0
  * @since 0.1.0
  */
 public final class PieceIDE {

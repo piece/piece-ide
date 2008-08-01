@@ -28,7 +28,6 @@ import com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor;
  * 処理をシリアライズファイルにも行う.
  *
  * @author TANAKA
- * @version 0.3.0
  * @since 0.3.0
  */
 public class ResourceChangeListener implements IResourceChangeListener,

@@ -18,7 +18,6 @@ import org.eclipse.core.runtime.Path;
  * フローシリアラズユーティリティ.
  *
  * @author MATSUFUJI Hideharu
- * @version 0.2.0
  * @since 0.1.0
  */
 public final class FlowSerializeUtility {

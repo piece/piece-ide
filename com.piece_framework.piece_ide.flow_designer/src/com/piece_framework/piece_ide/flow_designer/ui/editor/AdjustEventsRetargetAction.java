@@ -10,7 +10,6 @@ import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
  * イベント調整リターゲットアクション.
  *
  * @author MATSUFUJI Hideharu
- * @version 0.2.0
  * @since 0.2.0
  *
  */

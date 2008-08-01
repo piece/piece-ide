@@ -7,7 +7,6 @@ import org.eclipse.gef.requests.CreationFactory;
  * ステート・ファクトリー.
  *
  * @author MATSUFUJI Hideharu
- * @version 0.2.0
  * @since 0.1.0
  *
  */

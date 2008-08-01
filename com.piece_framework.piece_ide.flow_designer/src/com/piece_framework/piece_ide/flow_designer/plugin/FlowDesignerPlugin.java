@@ -14,7 +14,6 @@ import com.piece_framework.piece_ide.flow_designer.resource.ResourceChangeListen
  * プラグインのライフサイクルを管理する.
  *
  * @author Seiichi Sugimoto
- * @version 0.2.0
  * @since 0.1.0
  */
 public class FlowDesignerPlugin extends AbstractUIPlugin implements IStartup {

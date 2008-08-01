@@ -23,7 +23,6 @@ import com.piece_framework.piece_ide.internal.PieceIDE;
  * YAMLファイルとシリアライズファイルからFlowオブジェクトを読み込む.
  *
  * @author MATSUFUJI Hideharu
- * @version 0.2.0
  * @since 0.1.0
  */
 public final class FlowReader {

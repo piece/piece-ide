@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Text;
  * プロパティシートの一般の抽象セクション.
  *
  * @author MATSUFUJI Hideharu
- * @version 0.2.0
  * @since 0.1.0
  */
 public abstract class GeneralPropertySection extends

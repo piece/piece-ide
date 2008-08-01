@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
  * 外部文字列アクセサクラス.
  *
  * @author Hideharu Matsufuji
- * @version 0.2.0
  * @since 0.1.0
  */
 public final class Messages {

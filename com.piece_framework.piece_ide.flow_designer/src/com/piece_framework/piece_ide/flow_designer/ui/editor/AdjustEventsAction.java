@@ -15,7 +15,6 @@ import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
  * イベント名・イベントハンドラ名をステート名に合わせて一括更新するアクション。
  *
  * @author MATSUFUJI Hideharu
- * @version 0.2.0
  * @since 0.2.0
  *
  */

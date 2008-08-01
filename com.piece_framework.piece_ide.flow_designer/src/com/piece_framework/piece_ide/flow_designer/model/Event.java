@@ -7,7 +7,6 @@ import java.io.Serializable;
  * イベントクラス.
  *
  * @author MATSUFUJI Hideharu
- * @version 0.2.0
  * @since 0.1.0
  *
  */
@@ -34,7 +33,6 @@ public class Event extends AbstractModel implements Serializable {
      * イベントハンドラクラス.
      *
      * @author MATSUFUJI Hideharu
-     * @version 0.2.0
      * @since 0.1.0
      *
      */
