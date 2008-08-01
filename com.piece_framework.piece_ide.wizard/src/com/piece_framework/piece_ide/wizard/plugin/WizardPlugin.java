@@ -9,7 +9,6 @@ import org.osgi.framework.BundleContext;
  * プラグインのライフサイクルを管理する.
  *
  * @author Seiichi Sugimoto
- * @version 0.2.0
  * @since 0.1.0
  */
 public class WizardPlugin extends AbstractUIPlugin {
