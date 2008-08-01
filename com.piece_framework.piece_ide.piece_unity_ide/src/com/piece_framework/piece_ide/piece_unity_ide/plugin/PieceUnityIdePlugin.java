@@ -8,7 +8,6 @@ import org.osgi.framework.BundleContext;
  * プラグインのライフサイクルを管理する.
  * 
  * @author Seiichi Sugimoto
- * @version 0.1.0
  * @since 0.1.0
  * 
  */
