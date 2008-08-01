@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id$ -->
 <site>
    <description url="http://eclipse.piece-framework.com/piece-ide/">
       %Site.UpdateSite.Description
@@ -7,5 +6,8 @@
    <feature url="features/com.piece_framework.piece_ide_feature_0.2.1.jar" id="com.piece_framework.piece_ide_feature" version="0.2.1">
       <category name="%Site.Category.Name"/>
    </feature>
-   <category-def name="%Site.Category.Name" label="%Site.Category.Label"/>
+   <feature url="features/com.piece_framework.piece_ide_feature_0.3.0.jar" id="com.piece_framework.piece_ide_feature" version="0.3.0">
+      <category name="%Site.Category.Name"/>
+   </feature>
+   <category-def name="%Site.Category.Name" label="Piece_IDE"/>
 </site>
