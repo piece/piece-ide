@@ -11,7 +11,6 @@ import junit.framework.TestCase;
  * テスト対象：com.piece_framework.piece_ide.flow_designer.model.state
  *
  * @author MATSUFUJI Hideharu
- * @version 0.2.0
  * @since 0.1.0
  */
 public class StateTest extends TestCase {

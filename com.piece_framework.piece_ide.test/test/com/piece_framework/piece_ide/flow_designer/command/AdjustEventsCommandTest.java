@@ -13,7 +13,6 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  *                  .AdjustEventsCommand
  *
  * @author MATSUFUJI Hideharu
- * @version 0.2.0
  * @since 0.2.0
  *
  */
