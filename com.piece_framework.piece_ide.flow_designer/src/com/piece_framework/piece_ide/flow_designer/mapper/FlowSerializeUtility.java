@@ -14,6 +14,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
+import com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin;
+
 /**
  * フローシリアラズユーティリティ.
  *
@@ -21,7 +23,8 @@ import org.eclipse.core.runtime.Path;
  * @since 0.1.0
  */
 public final class FlowSerializeUtility {
-    private static final String FLOW_PATH = ".settings/flow/"; //$NON-NLS-1$
+    private static final String FLOW_PATH =
+        ".settings/" + FlowDesignerPlugin.PLUGIN_ID + "/"; //$NON-NLS-1$
     private static final String FLOW_SERIALIZE_EXT = "_obj"; //$NON-NLS-1$
 
     /**
