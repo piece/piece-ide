@@ -10,7 +10,6 @@ import org.eclipse.ui.forms.editor.FormEditor;
 /**
  * フォームデザイナー・エディター.
  * 
- * @version 0.1.0
  * @since 0.1.0
  *
  */

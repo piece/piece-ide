@@ -13,7 +13,6 @@ import com.piece_framework.piece_ide.form_designer.model.Field;
 /**
  * フィールドページ.
  * 
- * @version 0.1.0
  * @since 0.1.0
  *
  */
@@ -23,7 +22,6 @@ public class FieldsPage extends FormPage {
     /**
      * Master/Detailsブロック.
      * 
-     * @version 0.1.0
      * @since 0.1.0
      *
      */

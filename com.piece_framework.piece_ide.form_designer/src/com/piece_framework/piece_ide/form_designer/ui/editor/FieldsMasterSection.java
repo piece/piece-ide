@@ -34,7 +34,6 @@ import com.piece_framework.piece_ide.form_designer.model.Validator;
 /**
  * フィールドMasterセクション.
  * 
- * @version 0.1.0
  * @since 0.1.0
  *
  */

@@ -21,7 +21,6 @@ import com.piece_framework.piece_ide.form_designer.model.Field;
 /**
  * フィールドDetailsページ.
  * 
- * @version 0.1.0
  * @since 0.1.0
  *
  */

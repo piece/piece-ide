@@ -7,7 +7,6 @@ import org.osgi.framework.BundleContext;
 /**
  * プラグインのライフサイクルを管理する.
  * 
- * @version 0.1.0
  * @since 0.1.0
  * 
  */
