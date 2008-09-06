@@ -3,6 +3,8 @@ package com.piece_framework.piece_ide.flow_designer.ui.property;
 
 import org.eclipse.gef.commands.Command;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -40,16 +42,16 @@ public class FlowGeneralSection extends GeneralPropertySection {
 
         Composite composite =
             getWidgetFactory().createFlatFormComposite(parent);
+        composite.setLayout(new GridLayout(2, false));
 
         fFlowNameLabel =
             getWidgetFactory().createCLabel(composite,
                 Messages.getString(
                     "FlowGeneralSection.FlowName")); //$NON-NLS-1$
-        fFlowName = getWidgetFactory().createText(composite, ""); //$NON-NLS-1$
+        fFlowNameLabel.setLayoutData(new GridData(GridData.BEGINNING));
 
-        arrangeGroup(
-                new CLabel[] {fFlowNameLabel},
-                new Text[] {fFlowName});
+        fFlowName = getWidgetFactory().createText(composite, ""); //$NON-NLS-1$
+        fFlowName.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         setTextListener(fFlowName);
     }
 

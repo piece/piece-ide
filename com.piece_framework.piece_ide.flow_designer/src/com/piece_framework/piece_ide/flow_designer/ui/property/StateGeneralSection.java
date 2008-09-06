@@ -6,6 +6,8 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -42,8 +44,10 @@ public class StateGeneralSection extends GeneralPropertySection {
          */
         void create(Composite parent) {
             fLabel = getWidgetFactory().createCLabel(parent, null);
-            fText = getWidgetFactory().createText(parent, ""); //$NON-NLS-1$
+            fLabel.setLayoutData(new GridData(GridData.BEGINNING));
 
+            fText = getWidgetFactory().createText(parent, ""); //$NON-NLS-1$
+            fText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
             setTextListener(fText);
         }
 
@@ -106,19 +110,13 @@ public class StateGeneralSection extends GeneralPropertySection {
 
         Composite composite =
             getWidgetFactory().createFlatFormComposite(parent);
+        composite.setLayout(new GridLayout(2, false));
 
         fLabelText = new LabelText[LABELTEXT_NUM];
-        CLabel[] labels = new CLabel[LABELTEXT_NUM];
-        Text[] texts = new Text[LABELTEXT_NUM];
         for (int i = 0; i < LABELTEXT_NUM; i++) {
             fLabelText[i] = new LabelText();
             fLabelText[i].create(composite);
-
-            labels[i] = fLabelText[i].getLabel();
-            texts[i] = fLabelText[i].getText();
         }
-
-        arrangeGroup(labels, texts);
     }
 
     /**
@@ -163,6 +161,11 @@ public class StateGeneralSection extends GeneralPropertySection {
             fLabelText[2].setVisible(true);
             fLabelText[2].setLabel(Messages.getString(
                             "StateGeneralSection.Summary")); //$NON-NLS-1$
+        }
+
+        for (int i = 0; i < LABELTEXT_NUM; ++i) {
+            fLabelText[i].getLabel().pack();
+            fLabelText[i].getLabel().getParent().redraw();
         }
     }
 
