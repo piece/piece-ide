@@ -5,17 +5,14 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 
+import com.piece_framework.piece_ide.flow_designer.model.State;
 import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
-import com.piece_framework.piece_ide.flow_designer
-            .ui.editpart.ActionStateEditPart;
-import com.piece_framework.piece_ide.flow_designer
-            .ui.editpart.FinalStateEditPart;
-import com.piece_framework.piece_ide.flow_designer
-            .ui.editpart.FlowEditPart;
-import com.piece_framework.piece_ide.flow_designer
-            .ui.editpart.InitialStateEditPart;
-import com.piece_framework.piece_ide.flow_designer
-            .ui.editpart.ViewStateEditPart;
+import com.piece_framework.piece_ide.flow_designer.ui.editpart.ActionStateEditPart;
+import com.piece_framework.piece_ide.flow_designer.ui.editpart.FinalStateEditPart;
+import com.piece_framework.piece_ide.flow_designer.ui.editpart.FlowEditPart;
+import com.piece_framework.piece_ide.flow_designer.ui.editpart.InitialStateEditPart;
+import com.piece_framework.piece_ide.flow_designer.ui.editpart.NormalStateEditPart;
+import com.piece_framework.piece_ide.flow_designer.ui.editpart.ViewStateEditPart;
 
 /**
  * フローのラベルプロバイダー.
@@ -53,14 +50,22 @@ public class FlowElementLabelProvider extends LabelProvider {
         Object object = getSelectionObject(elements);
 
         if (object != null) {
+            String stateName = null;
+            if (object instanceof NormalStateEditPart) {
+                stateName =
+                    ((State) ((NormalStateEditPart) object).getModel())
+                        .getName();
+            }
             if (object instanceof ActionStateEditPart) {
                 text =
                     Messages.getString(
-                        "FlowElementLabelProvider.ActionState"); //$NON-NLS-1$
+                        "FlowElementLabelProvider.ActionState")  //$NON-NLS-1$
+                    + " : " + stateName;
             } else if (object instanceof ViewStateEditPart) {
                 text =
                     Messages.getString(
-                        "FlowElementLabelProvider.ViewState"); //$NON-NLS-1$
+                        "FlowElementLabelProvider.ViewState")    //$NON-NLS-1$
+                    + " : " + stateName;
             } else if (object instanceof InitialStateEditPart) {
                 text =
                     Messages.getString(
@@ -68,7 +73,7 @@ public class FlowElementLabelProvider extends LabelProvider {
             } else if (object instanceof FinalStateEditPart) {
                 text =
                     Messages.getString(
-                        "FlowElementLabelProvider.FinalState"); //$NON-NLS-1$
+                        "FlowElementLabelProvider.FinalState");  //$NON-NLS-1$
             } else if (object instanceof FlowEditPart) {
                 text =
                     Messages.getString(

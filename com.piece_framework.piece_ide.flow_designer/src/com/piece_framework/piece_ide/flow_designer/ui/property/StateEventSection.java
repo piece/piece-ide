@@ -11,21 +11,16 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -46,13 +41,6 @@ import com.piece_framework.piece_ide.flow_designer.plugin.Messages;
  * @since 0.1.0
  */
 public class StateEventSection extends FlowDesignerPropertySection {
-
-    private static final int LABEL_POSITION_PERCENT = 50;
-    private static final int TABLE_POSITION_PERCENT = 100;
-    private static final int BUTTON_POSITION_PERCENT = 100;
-
-    private static final int TABLE_HEIGHT_MARGIN = 40;
-
     private static final int EVENT_COLUMN_WIDTH = 100;
     private static final int NEXT_STATE_COLUMN_WIDTH = 100;
     private static final int EVENT_HANDLER_COLUMN_WIDTH = 150;
@@ -62,12 +50,9 @@ public class StateEventSection extends FlowDesignerPropertySection {
     private static final RGB EVENT_TRANSITION_COLOR = new RGB(238, 240, 180);
     private static final RGB EVENT_INTERNAL_COLOR = new RGB(239, 218, 188);
 
-    private CLabel fStateNameLabel;
     private Button fCreateInternalEvent;
     private Button fDeleteInternalEvent;
     private TableViewer fEventTableViewer;
-
-    private Control fTab;
 
     private MouseListener fDeleteInternalEventListener = new MouseListener() {
         public void mouseDoubleClick(MouseEvent mouseEvent) {
@@ -119,41 +104,17 @@ public class StateEventSection extends FlowDesignerPropertySection {
                     TabbedPropertySheetPage tabbedPropertySheetPage) {
         super.createControls(parent, tabbedPropertySheetPage);
 
-        Composite composite =
-            getWidgetFactory().createFlatFormComposite(parent);
+        GridData layoutData = (GridData) parent.getLayoutData();
+        layoutData.horizontalAlignment = SWT.FILL;
+        layoutData.verticalAlignment = SWT.FILL;
+        layoutData.grabExcessHorizontalSpace = true;
+        layoutData.grabExcessVerticalSpace = true;
 
-        createStateNameLabel(composite);
+        Composite composite = getWidgetFactory().createComposite(parent);
+        composite.setLayout(new GridLayout(1, false));
+
         createInternalEventButton(composite);
         createEventTable(composite);
-
-        fTab = tabbedPropertySheetPage.getControl();
-        fTab.addControlListener(new ControlListener() {
-            public void controlMoved(ControlEvent e) {
-            }
-
-            public void controlResized(ControlEvent e) {
-                Composite source = (Composite) e.getSource();
-                resizeEventTable(source.getSize());
-            }
-        });
-    }
-
-    /**
-     * ステート名ラベルを生成・配置する.
-     *
-     * @param composite 親コンテナ
-     */
-    private void createStateNameLabel(Composite composite) {
-        FormData data;
-        fStateNameLabel =
-            getWidgetFactory().createCLabel(composite,
-                Messages.getString(
-                    "StateEventSection.StateName")); //$NON-NLS-1$
-        data = new FormData();
-        data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(LABEL_POSITION_PERCENT, 0);
-        data.top = new FormAttachment(0, 0);
-        fStateNameLabel.setLayoutData(data);
     }
 
     /**
@@ -162,31 +123,29 @@ public class StateEventSection extends FlowDesignerPropertySection {
      * @param composite 親コンテナ
      */
     private void createInternalEventButton(Composite composite) {
-        FormData data;
-        fDeleteInternalEvent =
-            getWidgetFactory().createButton(
-                composite,
-                Messages.getString(
-                        "StateEventSection.DeleteInternalEvent"),  //$NON-NLS-1$
-                SWT.PUSH);
-        data = new FormData();
-        data.right = new FormAttachment(BUTTON_POSITION_PERCENT, 0);
-        data.top = new FormAttachment(0, 0);
-        fDeleteInternalEvent.setLayoutData(data);
+        Composite buttonComposite =
+            getWidgetFactory().createComposite(composite);
+        buttonComposite.setLayout(new GridLayout(2, false));
+        buttonComposite.setLayoutData(
+            new GridData(GridData.HORIZONTAL_ALIGN_END));
+
+        fDeleteInternalEvent = getWidgetFactory().createButton(
+            buttonComposite,
+            Messages.getString(
+                "StateEventSection.DeleteInternalEvent"),  //$NON-NLS-1$
+            SWT.PUSH);
+        fDeleteInternalEvent.setLayoutData(
+            new GridData(GridData.HORIZONTAL_ALIGN_END));
+        fDeleteInternalEvent.addMouseListener(fDeleteInternalEventListener);
         fDeleteInternalEvent.setEnabled(false);
 
-        fCreateInternalEvent =
-            getWidgetFactory().createButton(
-                composite,
-                Messages.getString(
-                        "StateEventSection.CreateInternalEvent"),  //$NON-NLS-1$
-                SWT.PUSH);
-        data = new FormData();
-        data.right = new FormAttachment(fDeleteInternalEvent, 0);
-        data.top = new FormAttachment(0, 0);
-        fCreateInternalEvent.setLayoutData(data);
-
-        fDeleteInternalEvent.addMouseListener(fDeleteInternalEventListener);
+        fCreateInternalEvent = getWidgetFactory().createButton(
+            buttonComposite,
+            Messages.getString(
+                "StateEventSection.CreateInternalEvent"),  //$NON-NLS-1$
+            SWT.PUSH);
+        fCreateInternalEvent.setLayoutData(
+            new GridData(GridData.HORIZONTAL_ALIGN_END));
         fCreateInternalEvent.addMouseListener(fCreateInternalEventListener);
     }
 
@@ -196,26 +155,21 @@ public class StateEventSection extends FlowDesignerPropertySection {
      * @param composite 親コンテナ
      */
     private void createEventTable(Composite composite) {
-        fEventTableViewer = new TableViewer(composite,
-                                    SWT.HORIZONTAL | SWT.VERTICAL | SWT.VIRTUAL
-                                    | SWT.FULL_SELECTION | SWT.BORDER);
-        Table eventTable = fEventTableViewer.getTable();
-
-        fEventTableViewer.setContentProvider(new ArrayContentProvider());
-        fEventTableViewer.setLabelProvider(new EventTableLabelProvider());
-        fEventTableViewer.setColumnProperties(new String[] {
-                            "Name", //$NON-NLS-1$
-                            null,
-                            "EventHandler", //$NON-NLS-1$
-                            "GuardEventHandler" }); //$NON-NLS-1$
-        fEventTableViewer.setCellEditors(new CellEditor[] {
-                            new TextCellEditor(eventTable),
-                            null,
-                            new TextCellEditor(eventTable),
-                            new TextCellEditor(eventTable) });
-
+        Table eventTable = getWidgetFactory().createTable(composite,
+                                                          SWT.HORIZONTAL
+                                                          | SWT.VERTICAL
+                                                          | SWT.VIRTUAL
+                                                          | SWT.FULL_SELECTION
+                                                          | SWT.BORDER
+                                                          );
         eventTable.setHeaderVisible(true);
         eventTable.setLinesVisible(true);
+
+        eventTable.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL
+                                              | GridData.VERTICAL_ALIGN_FILL
+                                              | GridData.GRAB_HORIZONTAL
+                                              | GridData.GRAB_VERTICAL
+                                              ));
 
         createEventTableColumn(
             eventTable,
@@ -231,9 +185,9 @@ public class StateEventSection extends FlowDesignerPropertySection {
             Messages.getString("StateEventSection.EventHandler"),  //$NON-NLS-1$
             EVENT_HANDLER_COLUMN_WIDTH);
         createEventTableColumn(
-                eventTable,
-                Messages.getString("StateEventSection.Guard"),  //$NON-NLS-1$
-                GUARD_COLUMN_WIDTH);
+            eventTable,
+            Messages.getString("StateEventSection.Guard"),  //$NON-NLS-1$
+            GUARD_COLUMN_WIDTH);
 
         eventTable.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent selectionEvent) {
@@ -248,6 +202,21 @@ public class StateEventSection extends FlowDesignerPropertySection {
                 }
             }
         });
+
+        fEventTableViewer = new TableViewer(eventTable);
+
+        fEventTableViewer.setContentProvider(new ArrayContentProvider());
+        fEventTableViewer.setLabelProvider(new EventTableLabelProvider());
+        fEventTableViewer.setColumnProperties(new String[] {
+                            "Name", //$NON-NLS-1$
+                            null,
+                            "EventHandler", //$NON-NLS-1$
+                            "GuardEventHandler" }); //$NON-NLS-1$
+        fEventTableViewer.setCellEditors(new CellEditor[] {
+                            new TextCellEditor(eventTable),
+                            null,
+                            new TextCellEditor(eventTable),
+                            new TextCellEditor(eventTable) });
     }
 
     /**
@@ -303,20 +272,10 @@ public class StateEventSection extends FlowDesignerPropertySection {
         State state = (State) getModel();
 
         if (state != null) {
-            fStateNameLabel.setText(
-                    Messages.getString(
-                            "StateEventSection.StateName")); //$NON-NLS-1$
-            if (state.getName() != null) {
-                fStateNameLabel.setText(
-                        fStateNameLabel.getText() + state.getName());
-            }
-
             fEventTableViewer.getTable().removeAll();
             fEventTableViewer.setInput(getItems());
 
             setEventTableBackground();
-
-            resizeEventTable(fTab.getSize());
 
             fCreateInternalEvent.setVisible(true);
             fDeleteInternalEvent.setVisible(true);
@@ -382,20 +341,5 @@ public class StateEventSection extends FlowDesignerPropertySection {
             }
             item.setBackground(new Color(Display.getCurrent(), backColor));
         }
-    }
-
-    /**
-     * プロパティーのリサイズに合わせて、イベント表示テーブルの
-     * サイズを修正する.
-     *
-     * @param tabSize タブプロパティーのサイズ
-     */
-    private void resizeEventTable(Point tabSize) {
-        FormData data = new FormData();
-        data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(TABLE_POSITION_PERCENT, 0);
-        data.top = new FormAttachment(fStateNameLabel, 0);
-        data.bottom = new FormAttachment(0, tabSize.y - TABLE_HEIGHT_MARGIN);
-        fEventTableViewer.getTable().setLayoutData(data);
     }
 }
