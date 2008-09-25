@@ -18,6 +18,7 @@ import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.PanningSelectionToolEntry;
 import org.eclipse.gef.ui.actions.ActionRegistry;
+import org.eclipse.gef.ui.actions.ToggleGridAction;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.events.FocusEvent;
@@ -99,6 +100,9 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
 
         GraphicalViewer viewer = getGraphicalViewer();
         viewer.setEditPartFactory(new FlowDesignerEditFactory());
+
+        getActionRegistry().registerAction(
+            new ToggleGridAction(getGraphicalViewer()));
 
         FlowDesignerContextMenuProvider menuProvider
             = new FlowDesignerContextMenuProvider(viewer, getActionRegistry());

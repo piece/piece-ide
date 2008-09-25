@@ -3,11 +3,17 @@ package com.piece_framework.piece_ide.flow_designer.ui.editor;
 
 import org.eclipse.gef.ui.actions.ActionBarContributor;
 import org.eclipse.gef.ui.actions.DeleteRetargetAction;
+import org.eclipse.gef.ui.actions.GEFActionConstants;
 import org.eclipse.gef.ui.actions.RedoRetargetAction;
 import org.eclipse.gef.ui.actions.UndoRetargetAction;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.actions.RetargetAction;
 
 /**
  * フローデザイナー・エディターのアクションバー.
@@ -28,6 +34,11 @@ public class FlowDesignerActionBarContributor extends ActionBarContributor {
         addRetargetAction(new UndoRetargetAction());
         addRetargetAction(new RedoRetargetAction());
         addRetargetAction(new AdjustEventsRetargetAction());
+        addRetargetAction(
+            new RetargetAction(GEFActionConstants.TOGGLE_GRID_VISIBILITY,
+                               "Grid",
+                               IAction.AS_CHECK_BOX
+                               ));
     }
 
     /**
@@ -45,6 +56,21 @@ public class FlowDesignerActionBarContributor extends ActionBarContributor {
 
         toolBarManager.add(new Separator());
         toolBarManager.add(getAction(AdjustEventsAction.ADJUST_EVENTS));
+    }
+
+    /**
+     * メニューバーへコントリビュートする.
+     *
+     * @param menuManager メニューバー・マネージャ
+     * @see org.eclipse.ui.part.EditorActionBarContributor
+     *          #contributeToMenu(org.eclipse.jface.action.IMenuManager)
+     */
+    @Override
+    public void contributeToMenu(IMenuManager menuManager) {
+        super.contributeToMenu(menuManager);
+        MenuManager viewMenu = new MenuManager("View");
+        viewMenu.add(getAction(GEFActionConstants.TOGGLE_GRID_VISIBILITY));
+        menuManager.insertAfter(IWorkbenchActionConstants.M_EDIT, viewMenu);
     }
 
     /**
