@@ -7,9 +7,12 @@ import java.util.List;
 import org.eclipse.draw2d.FreeformLayer;
 import org.eclipse.draw2d.FreeformLayout;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.gef.CompoundSnapToHelper;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.LayerConstants;
+import org.eclipse.gef.SnapToGrid;
+import org.eclipse.gef.SnapToHelper;
 
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 
@@ -86,5 +89,26 @@ public class FlowEditPart extends AbstractModelEditPart {
             (IFigure) getLayer(LayerConstants.PRINTABLE_LAYERS);
         printableLayer.remove(getFigure().getParent());
         printableLayer.add(getFigure().getParent());
+    }
+
+    /**
+     * クラスの型に合ったオブジェクトを返す.
+     *
+     * @param adapter クラス
+     * @return 指定されたクラスの型にあったオブジェクト
+     * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart
+     *          #getAdapter(java.lang.Class)
+     */
+    @Override
+    public Object getAdapter(Class adapter) {
+        if (adapter == SnapToHelper.class) {
+            Boolean enableGrid = (Boolean) getViewer().getProperty(
+                                            SnapToGrid.PROPERTY_GRID_ENABLED);
+            if (enableGrid != null && enableGrid.booleanValue()) {
+                SnapToHelper[] snapToHelpers = {new SnapToGrid(this)};
+                return new CompoundSnapToHelper(snapToHelpers);
+            }
+        }
+        return super.getAdapter(adapter);
     }
 }
