@@ -1,11 +1,15 @@
 // $Id$
 package com.piece_framework.piece_ide.flow_designer.ui.editor;
 
+import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.gef.ui.actions.ActionBarContributor;
 import org.eclipse.gef.ui.actions.DeleteRetargetAction;
 import org.eclipse.gef.ui.actions.GEFActionConstants;
 import org.eclipse.gef.ui.actions.RedoRetargetAction;
 import org.eclipse.gef.ui.actions.UndoRetargetAction;
+import org.eclipse.gef.ui.actions.ZoomComboContributionItem;
+import org.eclipse.gef.ui.actions.ZoomInRetargetAction;
+import org.eclipse.gef.ui.actions.ZoomOutRetargetAction;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -34,6 +38,9 @@ public class FlowDesignerActionBarContributor extends ActionBarContributor {
         addRetargetAction(new UndoRetargetAction());
         addRetargetAction(new RedoRetargetAction());
         addRetargetAction(new AdjustEventsRetargetAction());
+
+        addRetargetAction(new ZoomInRetargetAction());
+        addRetargetAction(new ZoomOutRetargetAction());
         addRetargetAction(
             new RetargetAction(GEFActionConstants.TOGGLE_GRID_VISIBILITY,
                                "Grid",
@@ -56,6 +63,14 @@ public class FlowDesignerActionBarContributor extends ActionBarContributor {
 
         toolBarManager.add(new Separator());
         toolBarManager.add(getAction(AdjustEventsAction.ADJUST_EVENTS));
+
+        toolBarManager.add(new Separator());
+        String[] zoomStrings = new String[] {ZoomManager.FIT_ALL,
+                                             ZoomManager.FIT_HEIGHT,
+                                             ZoomManager.FIT_WIDTH};
+        toolBarManager.add(new ZoomComboContributionItem(getPage(),
+                                                         zoomStrings)
+                           );
     }
 
     /**
@@ -69,6 +84,9 @@ public class FlowDesignerActionBarContributor extends ActionBarContributor {
     public void contributeToMenu(IMenuManager menuManager) {
         super.contributeToMenu(menuManager);
         MenuManager viewMenu = new MenuManager("View");
+        viewMenu.add(getAction(GEFActionConstants.ZOOM_IN));
+        viewMenu.add(getAction(GEFActionConstants.ZOOM_OUT));
+        viewMenu.add(new Separator());
         viewMenu.add(getAction(GEFActionConstants.TOGGLE_GRID_VISIBILITY));
         menuManager.insertAfter(IWorkbenchActionConstants.M_EDIT, viewMenu);
     }

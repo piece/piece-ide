@@ -2,14 +2,17 @@
 package com.piece_framework.piece_ide.flow_designer.ui.editor;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPartViewer;
-import org.eclipse.gef.GraphicalViewer;
+import org.eclipse.gef.editparts.ScalableFreeformRootEditPart;
+import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.gef.palette.ConnectionCreationToolEntry;
 import org.eclipse.gef.palette.CreationToolEntry;
 import org.eclipse.gef.palette.MarqueeToolEntry;
@@ -18,9 +21,14 @@ import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.PanningSelectionToolEntry;
 import org.eclipse.gef.ui.actions.ActionRegistry;
+import org.eclipse.gef.ui.actions.GEFActionConstants;
 import org.eclipse.gef.ui.actions.ToggleGridAction;
+import org.eclipse.gef.ui.actions.ZoomInAction;
+import org.eclipse.gef.ui.actions.ZoomOutAction;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
+import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.commands.ActionHandler;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
@@ -30,6 +38,7 @@ import org.eclipse.ui.IReusableEditor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -98,11 +107,32 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
     protected void configureGraphicalViewer() {
         super.configureGraphicalViewer();
 
-        GraphicalViewer viewer = getGraphicalViewer();
+        List<String> zoomLevels = new ArrayList<String>();
+        zoomLevels.add(ZoomManager.FIT_ALL);
+        zoomLevels.add(ZoomManager.FIT_WIDTH);
+        zoomLevels.add(ZoomManager.FIT_HEIGHT);
+        ScalableFreeformRootEditPart root = new ScalableFreeformRootEditPart();
+        root.getZoomManager().setZoomLevelContributions(zoomLevels);
+
+        IAction zoomIn = new ZoomInAction(root.getZoomManager());
+        IAction zoomOut = new ZoomOutAction(root.getZoomManager());
+        getActionRegistry().registerAction(zoomIn);
+        getActionRegistry().registerAction(zoomOut);
+        IHandlerService service =
+            (IHandlerService) getSite().getService(IHandlerService.class);
+        service.activateHandler(GEFActionConstants.ZOOM_IN,
+                                new ActionHandler(zoomIn)
+                                );
+        service.activateHandler(GEFActionConstants.ZOOM_OUT,
+                                new ActionHandler(zoomOut)
+                                );
+
+        ScrollingGraphicalViewer viewer =
+            (ScrollingGraphicalViewer) getGraphicalViewer();
+        viewer.setRootEditPart(root);
         viewer.setEditPartFactory(new FlowDesignerEditFactory());
 
-        getActionRegistry().registerAction(
-            new ToggleGridAction(getGraphicalViewer()));
+        getActionRegistry().registerAction(new ToggleGridAction(viewer));
 
         FlowDesignerContextMenuProvider menuProvider
             = new FlowDesignerContextMenuProvider(viewer, getActionRegistry());
@@ -175,8 +205,7 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
             fFlow.addState(initialState);
         }
 
-        GraphicalViewer viewer = getGraphicalViewer();
-        viewer.setContents(fFlow);
+        getGraphicalViewer().setContents(fFlow);
     }
 
     /**
@@ -305,7 +334,11 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
             return new TabbedPropertySheetPage(this);
         } else if (type == Flow.class) {
             return fFlow;
+        } else if (type == ZoomManager.class) {
+            return getGraphicalViewer().getProperty(
+                        ZoomManager.class.toString());
         }
+
         return super.getAdapter(type);
     }
 
