@@ -23,6 +23,7 @@ import org.eclipse.gef.palette.PanningSelectionToolEntry;
 import org.eclipse.gef.ui.actions.ActionRegistry;
 import org.eclipse.gef.ui.actions.GEFActionConstants;
 import org.eclipse.gef.ui.actions.ToggleGridAction;
+import org.eclipse.gef.ui.actions.ToggleSnapToGeometryAction;
 import org.eclipse.gef.ui.actions.ZoomInAction;
 import org.eclipse.gef.ui.actions.ZoomOutAction;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
@@ -133,6 +134,8 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
         viewer.setEditPartFactory(new FlowDesignerEditFactory());
 
         getActionRegistry().registerAction(new ToggleGridAction(viewer));
+        getActionRegistry().registerAction(
+                new ToggleSnapToGeometryAction(viewer));
 
         FlowDesignerContextMenuProvider menuProvider
             = new FlowDesignerContextMenuProvider(viewer, getActionRegistry());

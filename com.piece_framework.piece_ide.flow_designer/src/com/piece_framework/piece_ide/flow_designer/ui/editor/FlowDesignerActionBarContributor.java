@@ -43,9 +43,14 @@ public class FlowDesignerActionBarContributor extends ActionBarContributor {
         addRetargetAction(new ZoomOutRetargetAction());
         addRetargetAction(
             new RetargetAction(GEFActionConstants.TOGGLE_GRID_VISIBILITY,
-                               "Grid",
+                               "&Grid",
                                IAction.AS_CHECK_BOX
                                ));
+        addRetargetAction(
+                new RetargetAction(GEFActionConstants.TOGGLE_SNAP_TO_GEOMETRY,
+                                   "Snap To Geo&metry",
+                                   IAction.AS_CHECK_BOX
+                                   ));
     }
 
     /**
@@ -83,11 +88,12 @@ public class FlowDesignerActionBarContributor extends ActionBarContributor {
     @Override
     public void contributeToMenu(IMenuManager menuManager) {
         super.contributeToMenu(menuManager);
-        MenuManager viewMenu = new MenuManager("View");
+        MenuManager viewMenu = new MenuManager("&View");
         viewMenu.add(getAction(GEFActionConstants.ZOOM_IN));
         viewMenu.add(getAction(GEFActionConstants.ZOOM_OUT));
         viewMenu.add(new Separator());
         viewMenu.add(getAction(GEFActionConstants.TOGGLE_GRID_VISIBILITY));
+        viewMenu.add(getAction(GEFActionConstants.TOGGLE_SNAP_TO_GEOMETRY));
         menuManager.insertAfter(IWorkbenchActionConstants.M_EDIT, viewMenu);
     }
 
