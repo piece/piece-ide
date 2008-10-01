@@ -47,10 +47,10 @@ public class FlowDesignerActionBarContributor extends ActionBarContributor {
                                IAction.AS_CHECK_BOX
                                ));
         addRetargetAction(
-                new RetargetAction(GEFActionConstants.TOGGLE_SNAP_TO_GEOMETRY,
-                                   "Snap To Geo&metry",
-                                   IAction.AS_CHECK_BOX
-                                   ));
+            new RetargetAction(GEFActionConstants.TOGGLE_SNAP_TO_GEOMETRY,
+                               "Snap To Geo&metry",
+                               IAction.AS_CHECK_BOX
+                               ));
     }
 
     /**
