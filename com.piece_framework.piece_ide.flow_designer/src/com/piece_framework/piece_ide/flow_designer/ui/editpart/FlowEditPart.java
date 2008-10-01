@@ -2,6 +2,7 @@
 package com.piece_framework.piece_ide.flow_designer.ui.editpart;
 
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.draw2d.FreeformLayer;
@@ -11,8 +12,10 @@ import org.eclipse.gef.CompoundSnapToHelper;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.LayerConstants;
+import org.eclipse.gef.SnapToGeometry;
 import org.eclipse.gef.SnapToGrid;
 import org.eclipse.gef.SnapToHelper;
+import org.eclipse.gef.editpolicies.SnapFeedbackPolicy;
 
 import com.piece_framework.piece_ide.flow_designer.model.Flow;
 
@@ -46,7 +49,11 @@ public class FlowEditPart extends AbstractModelEditPart {
     @Override
     protected void createEditPolicies() {
         installEditPolicy(EditPolicy.LAYOUT_ROLE,
-                          new FlowLayoutEditPolicy());
+                          new FlowLayoutEditPolicy()
+                          );
+        installEditPolicy("Snap Feedback",  //$NON-NLS-1$
+                          new SnapFeedbackPolicy()
+                          );
     }
 
     /**
@@ -102,12 +109,22 @@ public class FlowEditPart extends AbstractModelEditPart {
     @Override
     public Object getAdapter(Class adapter) {
         if (adapter == SnapToHelper.class) {
-            Boolean enableGrid = (Boolean) getViewer().getProperty(
-                                            SnapToGrid.PROPERTY_GRID_ENABLED);
-            if (enableGrid != null && enableGrid.booleanValue()) {
-                SnapToHelper[] snapToHelpers = {new SnapToGrid(this)};
-                return new CompoundSnapToHelper(snapToHelpers);
+            List<SnapToHelper> snapToHelpers = new ArrayList<SnapToHelper>();
+
+            Boolean enableSnap = (Boolean) getViewer().getProperty(
+                    SnapToGeometry.PROPERTY_SNAP_ENABLED);
+            if (enableSnap != null && enableSnap.booleanValue()) {
+                snapToHelpers.add(new SnapToGeometry(this));
             }
+
+            Boolean enableGrid = (Boolean) getViewer().getProperty(
+                    SnapToGrid.PROPERTY_GRID_ENABLED);
+            if (enableGrid != null && enableGrid.booleanValue()) {
+                snapToHelpers.add(new SnapToGrid(this));
+            }
+
+            return new CompoundSnapToHelper(
+                       snapToHelpers.toArray(new SnapToHelper[0]));
         }
         return super.getAdapter(adapter);
     }
