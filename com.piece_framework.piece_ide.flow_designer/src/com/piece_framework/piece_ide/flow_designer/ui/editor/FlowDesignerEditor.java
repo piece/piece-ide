@@ -11,6 +11,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPartViewer;
+import org.eclipse.gef.SnapToGeometry;
 import org.eclipse.gef.editparts.ScalableFreeformRootEditPart;
 import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.gef.palette.ConnectionCreationToolEntry;
@@ -141,6 +142,9 @@ public class FlowDesignerEditor extends GraphicalEditorWithFlyoutPalette
             = new FlowDesignerContextMenuProvider(viewer, getActionRegistry());
         viewer.setContextMenu(menuProvider);
         getSite().registerContextMenu(menuProvider, viewer);
+
+        viewer.setProperty(SnapToGeometry.PROPERTY_SNAP_ENABLED,
+                           new Boolean(true));
     }
 
     /**
