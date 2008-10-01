@@ -22,7 +22,6 @@ import com.piece_framework.piece_ide.flow_designer.model.State;
  * @see org.eclipse.gef.editpolicies.XYLayoutEditPolicy
  */
 public class FlowLayoutEditPolicy extends XYLayoutEditPolicy {
-
     /**
      * ステートの位置が変化したときのコマンドを返す.
      *
@@ -35,7 +34,8 @@ public class FlowLayoutEditPolicy extends XYLayoutEditPolicy {
      */
     @Override
     protected Command createChangeConstraintCommand(EditPart child,
-            Object constraint) {
+                                                    Object constraint
+                                                    ) {
         Rectangle rectangle = (Rectangle) constraint;
         State state = (State) child.getModel();
 
