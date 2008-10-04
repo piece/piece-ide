@@ -1,0 +1,64 @@
+//specify your DSL grammar rules here ...
+//IMPORTANT: You should change the property 'overwrite.pluginresources=true' in the properties file to 'overwrite.pluginresources=false' AFTER first generation
+
+Mapper :
+  (methods+=Method)*;
+
+Method :
+  name=ID
+    (methodFeatures+=Query)?
+    (methodFeatures+=OrderBy)?
+    (methodFeatures+=Associations)?;
+
+Query :
+  name="query" value=STRING;
+
+OrderBy :
+  name="orderBy" value=STRING;
+
+Associations :
+  name="associations"
+    (associations+=Association)*;
+
+Association :
+  name=ID
+    (associationFeatures+=Table)
+    (associationFeatures+=Type)
+    (associationFeatures+=Column)?
+    (associationFeatures+=ReferencedColumn)?
+    (associationFeatures+=Through)?
+    (associationFeatures+=OrderBy)?;
+
+Table :
+  name="table" value=STRING;
+
+Type :
+  name="type" value=TypeRule;
+
+TypeRule :
+  "ManyToMany" | "OneToMany" | "ManyToOne" | "OneToOne";
+
+Column :
+  name="column" value=STRING;
+
+ReferencedColumn :
+  name="referencedColumn" value=STRING;
+
+Through :
+  name="through"
+    (throuthFeatures+=ThroughTable)
+    (throuthFeatures+=ThroughColumn)?
+    (throuthFeatures+=ThroughReferencedColumn)?
+    (throuthFeatures+=ThroughInverseColumn)?;
+
+ThroughTable :
+  name="table" value=STRING;
+
+ThroughColumn :
+  name="column" value=STRING;
+
+ThroughReferencedColumn :
+  name="referencedColumn" value=STRING;
+
+ThroughInverseColumn :
+  name="inverseColumn" value=STRING;

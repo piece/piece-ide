@@ -1,0 +1,17 @@
+<workflow>
+    <property name="doCheck" value="true"/>
+    <bean class="org.eclipse.mwe.emf.StandaloneSetup"/>
+    <bean class="com.piece_framework.piece_ide.piece_orm.mapper.MetaModelRegistration"/>
+	<component id="Piece_ORM_Mapper-parser" class="com.piece_framework.piece_ide.piece_orm.mapper.parser.ParserComponent">
+		<modelFile value="${modelFile}"/>
+		<outputSlot value="${outputSlot}"/>
+	</component>
+	<if cond="${doCheck}">
+		<component id="Piece_ORM_Mapper-checker" class="oaw.check.CheckComponent">
+	       <metaModel id="mm" class="org.eclipse.m2t.type.emf.EmfRegistryMetaModel"/>
+	       <expression value="${outputSlot}.eAllContents.union({${outputSlot}})"/>
+		   <checkFile value="com::piece_framework::piece_ide::piece_orm::mapper::GenChecks"/>
+		   <checkFile value="com::piece_framework::piece_ide::piece_orm::mapper::Checks"/>
+		</component>
+	</if>
+</workflow>

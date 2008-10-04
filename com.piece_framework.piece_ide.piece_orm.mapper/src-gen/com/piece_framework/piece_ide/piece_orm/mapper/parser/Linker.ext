@@ -1,0 +1,12 @@
+
+extension com::piece_framework::piece_ide::piece_orm::mapper::Extensions;
+extension com::piece_framework::piece_ide::piece_orm::mapper::Linking;
+
+link(emf::EObject this) :
+	this.allVisibleElements().internalLink();
+
+private Void internalLink(emf::EObject this) :
+	null;
+
+
+

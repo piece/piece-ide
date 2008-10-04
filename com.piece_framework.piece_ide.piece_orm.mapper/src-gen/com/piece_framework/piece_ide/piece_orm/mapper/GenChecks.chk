@@ -1,0 +1,13 @@
+import piece_orm_mapper;
+
+extension org::openarchitectureware::xtext::parser::LinkerUtils;
+
+extension com::piece_framework::piece_ide::piece_orm::mapper::Extensions;
+
+/*
+ * check linking
+ */
+
+
+
+

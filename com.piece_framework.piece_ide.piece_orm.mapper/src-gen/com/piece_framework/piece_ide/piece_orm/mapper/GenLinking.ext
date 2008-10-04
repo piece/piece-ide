@@ -1,0 +1,10 @@
+
+extension com::piece_framework::piece_ide::piece_orm::mapper::Extensions;
+extension org::openarchitectureware::xtext::parser::LinkerUtils;
+
+link(emf::EObject this) :
+	let all = allLocalElements() :
+        null;
+
+
+

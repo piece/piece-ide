@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.piece_framework.piece_ide.piece_orm.mapper.editor.Piece_ORM_MapperEditor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            extensions="mapper"
+            icon="icons/file.gif"
+            id="com.piece_framework.piece_ide.piece_orm.mapper.editor.Piece_ORM_MapperEditor"
+            name="Piece_ORM_Mapper Editor">
+      </editor>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+         
+		<wizard
+			category="org.openarchitectureware.xtext.wizards"
+			class="com.piece_framework.piece_ide.piece_orm.mapper.wizards.NewPiece_ORM_MapperProjectWizard"
+			icon="icons/template.gif"
+			id="com.piece_framework.piece_ide.piece_orm.mapper.wizards.NewPiece_ORM_MapperProjectWizard"
+			name="Piece_ORM_Mapper Project"
+			project="true">
+		</wizard>
+         
+		<wizard
+			category="org.openarchitectureware.xtext.wizards"
+			class="com.piece_framework.piece_ide.piece_orm.mapper.wizards.NewPiece_ORM_MapperFileWizard"
+			icon="icons/file.gif"
+			id="com.piece_framework.piece_ide.piece_orm.mapper.wizards.NewPiece_ORM_MapperFileWizard"
+			name="Piece_ORM_Mapper Editor file">
+		</wizard>
+	</extension>
+</plugin>

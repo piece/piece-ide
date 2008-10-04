@@ -1,0 +1,10 @@
+import piece_orm_mapper;
+import org::openarchitectureware::xtext::resource::AbstractXtextResource;
+
+extension com::piece_framework::piece_ide::piece_orm::mapper::Extensions;
+
+String format(List[emf::EObject] this) :
+	JAVA org.openarchitectureware.xtext.resource.AbstractXtextResource.throwNoFormatterException();
+
+String NL() : "\n";
+String TAB() : "\t";
