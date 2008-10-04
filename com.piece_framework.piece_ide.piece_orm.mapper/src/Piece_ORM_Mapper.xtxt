@@ -1,6 +1,4 @@
-//specify your DSL grammar rules here ...
-//IMPORTANT: You should change the property 'overwrite.pluginresources=true' in the properties file to 'overwrite.pluginresources=false' AFTER first generation
-
+// $Id$
 Mapper :
   (methods+=Method)*;
 
