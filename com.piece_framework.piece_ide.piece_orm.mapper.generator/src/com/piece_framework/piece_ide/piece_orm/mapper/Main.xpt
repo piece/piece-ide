@@ -1,9 +1,23 @@
-Â«IMPORT piece_orm_mapperÂ»
+«REM»$Id$«ENDREM»
+«IMPORT piece_orm_mapper»
 
-Â«REMÂ»
-   This is the 'main' template. 
-   You should replace the type 'Object' with your respective meta type.
-Â«ENDREMÂ»
-Â«DEFINE main FOR ObjectÂ»
-   
-Â«ENDDEFINEÂ»
+«DEFINE main FOR Mapper»
+«FILE "test.yaml"»
+methods:
+  «FOREACH methods AS method»
+  «method.name»:
+  «FOREACH method.methodFeatures AS methodFeature»
+    «methodFeature.name»: «methodFeature.value»
+  «ENDFOREACH»
+  «IF method.methodAssociationFeature.name != null»
+    «method.methodAssociationFeature.name»:
+  «ENDIF»
+  «FOREACH method.methodAssociationFeature.associations AS association»
+    «association.name»:
+    «FOREACH association.associationFeatures AS associationFeature»
+      «associationFeature.name»: «associationFeature.value»
+    «ENDFOREACH»
+  «ENDFOREACH»
+  «ENDFOREACH»
+«ENDFILE»
+«ENDDEFINE»
