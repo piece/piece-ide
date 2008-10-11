@@ -32,9 +32,9 @@ Table :
   name="table" value=STRING;
 
 Type :
-  name="type" value=TypeRule;
+  name="type" value=AssociationType;
 
-Enum TypeRule :
+Enum AssociationType :
   ManyToMany="ManyToMany" | ManyToOne="ManyToOne" | OneToMany="OneToMany" | OneToOne="OneToOne";
 
 Column :
