@@ -45,10 +45,10 @@ ReferencedColumn :
 
 Through :
   name="through"
-    (throuthFeatures+=ThroughTable)
-    (throuthFeatures+=ThroughColumn)?
-    (throuthFeatures+=ThroughReferencedColumn)?
-    (throuthFeatures+=ThroughInverseColumn)?;
+    (throughFeatures+=ThroughTable)
+    (throughFeatures+=ThroughColumn)?
+    (throughFeatures+=ThroughReferencedColumn)?
+    (throughFeatures+=ThroughInverseColumn)?;
 
 ThroughTable :
   name="table" value=STRING;
