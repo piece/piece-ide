@@ -35,7 +35,7 @@ Type :
   name="type" value=AssociationType;
 
 Enum AssociationType :
-  ManyToMany="ManyToMany" | ManyToOne="ManyToOne" | OneToMany="OneToMany" | OneToOne="OneToOne";
+  ManyToMany="manyToMany" | ManyToOne="manyToOne" | OneToMany="oneToMany" | OneToOne="oneToOne";
 
 Column :
   name="column" value=STRING;
