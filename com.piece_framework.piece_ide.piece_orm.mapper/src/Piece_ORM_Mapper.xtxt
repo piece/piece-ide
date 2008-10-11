@@ -7,7 +7,7 @@ Method :
   name=ID
     (methodFeatures+=Query)?
     (methodFeatures+=OrderBy)?
-    (methodFeatures+=Associations)?;
+    (methodAssociationFeature=Associations)?;
 
 Query :
   name="query" value=STRING;
@@ -34,8 +34,8 @@ Table :
 Type :
   name="type" value=TypeRule;
 
-TypeRule :
-  "ManyToMany" | "OneToMany" | "ManyToOne" | "OneToOne";
+Enum TypeRule :
+  ManyToMany="ManyToMany" | ManyToOne="ManyToOne" | OneToMany="OneToMany" | OneToOne="OneToOne";
 
 Column :
   name="column" value=STRING;
