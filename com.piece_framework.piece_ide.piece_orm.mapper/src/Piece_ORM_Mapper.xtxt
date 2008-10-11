@@ -1,6 +1,7 @@
 // $Id$
 Mapper :
-  (methods+=Method)*;
+  name="methods"
+    (methods+=Method)*;
 
 Method :
   name=ID
