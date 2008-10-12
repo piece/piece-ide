@@ -25,8 +25,8 @@ Association :
     (associationFeatures+=Type)
     (associationFeatures+=Column)?
     (associationFeatures+=ReferencedColumn)?
-    (associationFeatures+=Through)?
-    (associationFeatures+=OrderBy)?;
+    (associationFeatures+=OrderBy)?
+    (associationThroughFeature=Through)?;
 
 Table :
   name="table" value=STRING;
