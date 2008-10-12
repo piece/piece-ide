@@ -2,28 +2,29 @@
 «IMPORT piece_orm_mapper»
 
 «DEFINE main FOR Mapper»
-«FILE "test.yaml"»
+«FILE "test.yaml"-»
 «name»:
-  «FOREACH methods AS method»
+  «FOREACH methods AS method-»
+
   «method.name»:
-  «FOREACH method.methodFeatures AS methodFeature»
+    «FOREACH method.methodFeatures AS methodFeature-»
     «methodFeature.name»: «methodFeature.value»
-  «ENDFOREACH»
-  «IF method.methodAssociationFeature.name != null»
+    «ENDFOREACH-»
+    «IF method.methodAssociationFeature.name != null-»
     «method.methodAssociationFeature.name»:
-  «ENDIF»
-  «FOREACH method.methodAssociationFeature.associations AS association»
-    «association.name»:
-    «FOREACH association.associationFeatures AS associationFeature»
+    «ENDIF-»
+    «FOREACH method.methodAssociationFeature.associations AS association-»
+      «association.name»:
+      «FOREACH association.associationFeatures AS associationFeature-»
       «associationFeature.name»: «associationFeature.value»
-    «ENDFOREACH»
-    «IF association.associationThroughFeature.name != null»
+      «ENDFOREACH-»
+      «IF association.associationThroughFeature.name != null-»
       «association.associationThroughFeature.name»:
-    «ENDIF»
-    «FOREACH association.associationThroughFeature.throughFeatures AS throughFeature»
+      «ENDIF-»
+      «FOREACH association.associationThroughFeature.throughFeatures AS throughFeature-»
         «throughFeature.name»: «throughFeature.value»
-    «ENDFOREACH»
-  «ENDFOREACH»
-  «ENDFOREACH»
-«ENDFILE»
+      «ENDFOREACH-»
+    «ENDFOREACH-»
+  «ENDFOREACH-»
+«ENDFILE-»
 «ENDDEFINE»
