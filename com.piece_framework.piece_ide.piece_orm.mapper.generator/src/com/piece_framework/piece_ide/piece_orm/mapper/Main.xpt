@@ -3,7 +3,7 @@
 
 «DEFINE main FOR Mapper»
 «FILE "test.yaml"»
-methods:
+«name»:
   «FOREACH methods AS method»
   «method.name»:
   «FOREACH method.methodFeatures AS methodFeature»
@@ -16,6 +16,12 @@ methods:
     «association.name»:
     «FOREACH association.associationFeatures AS associationFeature»
       «associationFeature.name»: «associationFeature.value»
+    «ENDFOREACH»
+    «IF association.associationThroughFeature.name != null»
+      «association.associationThroughFeature.name»:
+    «ENDIF»
+    «FOREACH association.associationThroughFeature.throughFeatures AS throughFeature»
+        «throughFeature.name»: «throughFeature.value»
     «ENDFOREACH»
   «ENDFOREACH»
   «ENDFOREACH»
