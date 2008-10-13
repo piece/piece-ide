@@ -1,60 +1,30 @@
 // $Id$
 Mapper :
-  (name="methods"
+  (name='methods'
     (methods+=Method)*)?;
 
 Method :
   name=ID
-    ("query" query=STRING)?
-    ("orderBy" orderBy=STRING)?
-    (methodAssociationFeature=Associations)?;
-
-OrderBy :
-  name="orderBy" value=STRING;
-
-Associations :
-  name="associations"
-    (associations+=Association)*;
+    ('query' query=STRING)?
+    ('orderBy' orderBy=STRING)?
+    ('associations'
+      (associations+=Association)*)?;
 
 Association :
   name=ID
-    (associationFeatures+=Table)
-    (associationFeatures+=Type)
-    (associationFeatures+=Column)?
-    (associationFeatures+=ReferencedColumn)?
-    (associationFeatures+=OrderBy)?
-    (associationThroughFeature=Through)?;
-
-Table :
-  name="table" value=STRING;
-
-Type :
-  name="type" value=AssociationType;
+    'table' table=ID
+    'type' type=AssociationType
+    ('column' column=ID)?
+    ('referencedColumn' referencedColumn=ID)?
+    (through=Through)?
+    ('orderBy' orderBy=STRING)?;
 
 Enum AssociationType :
-  ManyToMany="manyToMany" | ManyToOne="manyToOne" | OneToMany="oneToMany" | OneToOne="oneToOne";
-
-Column :
-  name="column" value=STRING;
-
-ReferencedColumn :
-  name="referencedColumn" value=STRING;
+  ManyToMany='manyToMany' | ManyToOne='manyToOne' | OneToMany='oneToMany' | OneToOne='oneToOne';
 
 Through :
-  name="through"
-    (throughFeatures+=ThroughTable)
-    (throughFeatures+=ThroughColumn)?
-    (throughFeatures+=ThroughReferencedColumn)?
-    (throughFeatures+=ThroughInverseColumn)?;
-
-ThroughTable :
-  name="table" value=STRING;
-
-ThroughColumn :
-  name="column" value=STRING;
-
-ThroughReferencedColumn :
-  name="referencedColumn" value=STRING;
-
-ThroughInverseColumn :
-  name="inverseColumn" value=STRING;
+  name='through'
+    'table' table=ID
+    ('column' column=ID)?
+    ('referencedColumn' referencedColumn=ID)?
+    ('inverseColumn' inverseColumn=ID)?;

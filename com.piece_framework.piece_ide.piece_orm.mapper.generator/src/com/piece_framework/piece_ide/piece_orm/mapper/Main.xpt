@@ -13,20 +13,35 @@
     «IF method.orderBy != null-»
     orderBy: «method.orderBy»
     «ENDIF-»
-    «IF method.methodAssociationFeature.name != null-»
-    «method.methodAssociationFeature.name»:
+    «IF method.associations.size > 0-»
+    associations:
     «ENDIF-»
-    «FOREACH method.methodAssociationFeature.associations AS association-»
+    «FOREACH method.associations AS association-»
       «association.name»:
-      «FOREACH association.associationFeatures AS associationFeature-»
-      «associationFeature.name»: «associationFeature.value»
-      «ENDFOREACH-»
-      «IF association.associationThroughFeature.name != null-»
-      «association.associationThroughFeature.name»:
-      «ENDIF-»
-      «FOREACH association.associationThroughFeature.throughFeatures AS throughFeature-»
-        «throughFeature.name»: «throughFeature.value»
-      «ENDFOREACH-»
+        table: «association.table»
+        type: «association.type»
+        «IF association.column != null-»
+        column: «association.column»
+        «ENDIF-»
+        «IF association.referencedColumn != null-»
+        referencedColumn: «association.referencedColumn»
+        «ENDIF-»
+        «IF association.through.name != null-»
+        «association.through.name»:
+          table: «association.through.table»
+          «IF association.through.column != null-»
+          column: «association.through.column»
+          «ENDIF-»
+          «IF association.through.referencedColumn != null-»
+          referencedColumn: «association.through.referencedColumn»
+          «ENDIF-»
+          «IF association.through.inverseColumn != null-»
+          inverseColumn: «association.through.inverseColumn»
+          «ENDIF-»
+        «ENDIF-»
+        «IF association.orderBy != null-»
+        orderBy: «association.orderBy»
+        «ENDIF-»
     «ENDFOREACH-»
   «ENDFOREACH-»
 «ENDFILE-»
