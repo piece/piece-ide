@@ -1,16 +1,13 @@
 // $Id$
 Mapper :
-  name="methods"
-    (methods+=Method)*;
+  (name="methods"
+    (methods+=Method)*)?;
 
 Method :
   name=ID
-    (methodFeatures+=Query)?
-    (methodFeatures+=OrderBy)?
+    ("query" query=STRING)?
+    ("orderBy" orderBy=STRING)?
     (methodAssociationFeature=Associations)?;
-
-Query :
-  name="query" value=STRING;
 
 OrderBy :
   name="orderBy" value=STRING;

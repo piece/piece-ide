@@ -7,9 +7,12 @@
   «FOREACH methods AS method-»
 
   «method.name»:
-    «FOREACH method.methodFeatures AS methodFeature-»
-    «methodFeature.name»: «methodFeature.value»
-    «ENDFOREACH-»
+    «IF method.query != null-»
+    query: «method.query»
+    «ENDIF-»
+    «IF method.orderBy != null-»
+    orderBy: «method.orderBy»
+    «ENDIF-»
     «IF method.methodAssociationFeature.name != null-»
     «method.methodAssociationFeature.name»:
     «ENDIF-»
