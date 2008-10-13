@@ -8,7 +8,7 @@
 
   «method.name»:
     «IF method.query != null-»
-    query: «method.query»
+    query: |«method.query»
     «ENDIF-»
     «IF method.orderBy != null-»
     orderBy: «method.orderBy»
