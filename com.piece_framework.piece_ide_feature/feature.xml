@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<feature
+      id="com.piece_framework.piece_ide_feature"
+      label="%Feature.BundleName"
+      version="0.3.0"
+      provider-name="%Feature.BundleProvider"
+      plugin="com.piece_framework.piece_ide"
+      image="piece_ide_120.jpg">
+
+   <description url="%Feature.DescriptionURL">
+      %Feature.Description
+   </description>
+
+   <copyright url="%Feature.CopyrightURL">
+      %Feature.Copyright
+   </copyright>
+
+   <license url="%Feature.LicenseURL">
+      %Feature.License
+   </license>
+
+   <url>
+      <update label="%Feature.UpdateSiteName" url="http://eclipse.piece-framework.com/piece-ide/"/>
+   </url>
+
+   <plugin
+         id="com.piece_framework.piece_ide.flow_designer"
+         download-size="0"
+         install-size="0"
+         version="0.3.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.piece_framework.piece_ide.wizard"
+         download-size="0"
+         install-size="0"
+         version="0.2.1"
+         unpack="false"/>
+
+   <plugin
+         id="com.piece_framework.piece_ide"
+         download-size="0"
+         install-size="0"
+         version="0.3.0"
+         unpack="false"/>
+
+</feature>

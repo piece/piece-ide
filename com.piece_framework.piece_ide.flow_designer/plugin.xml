@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<!-- $Id: plugin.xml 87 2007-02-04 14:51:16Z matsufuji $ -->
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor"
+            contributorClass="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerActionBarContributor"
+            default="true"
+            extensions="flow"
+            icon="icons/FlowDesigner.gif"
+            id="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor"
+            name="Flow Designer"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor"
+            labelProvider="com.piece_framework.piece_ide.flow_designer.ui.property.FlowElementLabelProvider"
+            typeMapper="com.piece_framework.piece_ide.flow_designer.ui.property.FlowElementTypeMapper">
+         <propertyCategory category="FlowCategory"/>
+         <propertyCategory category="StateCategory"/>
+      </propertyContributor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs contributorId="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor">
+         <propertyTab
+               category="FlowCategory"
+               id="FlowGeneralTab"
+               label="%PropertyTab.Label.General"/>
+         <propertyTab
+               category="StateCategory"
+               id="StateGeneralTab"
+               label="%PropertyTab.Label.General"/>
+         <propertyTab
+               category="StateCategory"
+               id="StateEventTab"
+               label="%PropertyTab.Label.Event"/>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertySections">
+      <propertySections contributorId="com.piece_framework.piece_ide.flow_designer.ui.editor.FlowDesignerEditor">
+         <propertySection
+               class="com.piece_framework.piece_ide.flow_designer.ui.property.FlowGeneralSection"
+               id="FlowGeneralSection"
+               tab="FlowGeneralTab">
+            <input type="com.piece_framework.piece_ide.flow_designer.model.Flow"/>
+         </propertySection>
+         <propertySection
+               class="com.piece_framework.piece_ide.flow_designer.ui.property.StateGeneralSection"
+               id="StateGeneralSection"
+               tab="StateGeneralTab">
+            <input type="com.piece_framework.piece_ide.flow_designer.model.State"/>
+         </propertySection>
+         <propertySection
+               class="com.piece_framework.piece_ide.flow_designer.ui.property.StateEventSection"
+               id="StateEventSection"
+               tab="StateEventTab">
+            <input type="com.piece_framework.piece_ide.flow_designer.model.State"/>
+         </propertySection>
+      </propertySections>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="com.piece_framework.piece_ide.flow_designer.plugin.FlowDesignerPlugin"></startup>
+   </extension>
+</plugin>

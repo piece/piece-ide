@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Piece_IDE PieceUnityIde
+Bundle-SymbolicName: com.piece_framework.piece_ide.piece_unity_ide;singleton:=true
+Bundle-Version: 0.1.0
+Bundle-Activator: com.piece_framework.piece_ide.piece_unity_ide.plugin.PieceUnityIdePlugin
+Bundle-Vendor: Piece Project
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Eclipse-LazyStart: true

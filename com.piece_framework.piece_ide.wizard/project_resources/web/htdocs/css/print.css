@@ -1,0 +1,136 @@
+/* -------------------------------------------------------------- 
+   Piece Framework - Print Style Sheet 
+-------------------------------------------------------------- */
+@import 'common.css';
+
+/***************************************************
+   HTML Element Styles
+ ***************************************************/
+body {
+  font-size: 87%;
+  color: #333333;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  background: #FFFFFF;
+  margin:0;
+}
+
+h1,h2,h3,h4,h5,h6 { 
+  color: #111; 
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+}
+
+/***************************************************
+  Layout Element Styles
+ ***************************************************/
+#page {
+  width: 780px;
+  margin: 0 auto;
+}
+
+.clear {
+  width: 780px;
+}
+
+/***************************************************
+  Header Styles
+ ***************************************************/
+#header { 
+  background: #FFFFFF;
+  position: relative;
+  width: 780px;
+}
+
+#header h1 {
+  margin: 35px 0 0 20px;
+  color: #333333;
+  text-shadow: #330000 2px 2px 2px;
+}
+
+/***************************************************
+  Container Styles
+ ***************************************************/
+#container {
+  width: 740px;
+  margin: 20px 0 20px 20px;
+  line-height: 1.5em;
+  text-align: left;
+}
+
+#container ol {
+  margin: 0 0 20px 40px;
+}
+
+#container ol li,
+#container ol li a {
+  list-style: decimal;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+/***************************************************
+  Special text formatting 
+ ***************************************************/
+#container h1 {
+  clear: both;
+  padding: 5px 0 10px 10px;
+}
+
+h2 {
+  display: inline;
+  float: left;
+  margin: 0 0 10px 10px;
+  padding: 5px 10px;
+  border: 1px solid #aaaaaa;
+}
+
+h3 {
+  clear: both;
+  margin: 10px 0 0 0;
+  padding: 0 0 10px 10px;
+}
+
+h4 {
+  clear: both;
+  margin: 0 0 10px 0;
+  padding: 0 0 0 5px;
+  letter-spacing: 1px;
+}
+
+p {
+  margin: 0 0 10px 20px;
+}
+
+a, a:link,
+a:hover,
+a:active,
+a:visited {
+  color: #666666;
+  border-bottom: 1px dotted #666666;
+}
+
+
+/***************************************************
+  Form Element Styles
+ ***************************************************/
+input.text {
+  width: 500px;
+}
+
+textarea {
+  width: 500px;
+  height: 50px;
+}
+
+select {
+  width: 200px;
+}
+
+/***************************************************
+ Footer
+ ***************************************************/
+#footer {
+  width: 780px;
+  padding: 1.0em 0;
+  border-top: 1px solid #CCCCCC;
+}
+

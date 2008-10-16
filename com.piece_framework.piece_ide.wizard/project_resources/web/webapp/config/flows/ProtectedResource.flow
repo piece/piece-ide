@@ -1,0 +1,26 @@
+firstState: DisplayA
+
+viewState:
+  - name: DisplayA
+    view: A
+    activity:
+      method: doActivityOnDisplayA
+    transition:
+      - event: DisplayBFromDisplayA
+        nextState: DisplayB
+  - name: DisplayB
+    view: B
+    activity:
+      method: doActivityOnDisplayB
+    transition:
+      - event: DisplayCFromDisplayB
+        nextState: DisplayC
+      - event: DisplayAFromDisplayB
+        nextState: DisplayA
+  - name: DisplayC
+    view: C
+    activity:
+      method: doActivityOnDisplayC
+    transition:
+      - event: DisplayBFromDisplayC
+        nextState: DisplayB
