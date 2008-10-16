@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Piece_ORM_Mapper Plug-in
+Bundle-SymbolicName: com.piece_framework.piece_ide.piece_orm.mapper;singleton:=true
+Bundle-Version: 1.0.0
+Require-Bundle: org.openarchitectureware.dependencies;visibility:=reexport,
+ org.antlr;visibility:=reexport,
+ org.openarchitectureware.xtext.core.base;visibility:=reexport,
+ org.openarchitectureware.xtext.generator
+Eclipse-LazyStart: true
+Export-Package: com.piece_framework.piece_ide.piece_orm.mapper,
+                com.piece_framework.piece_ide.piece_orm.mapper.parser
+
