@@ -1,0 +1,9 @@
+import piece_orm_mapper;
+
+extension com::piece_framework::piece_ide::piece_orm::mapper::Extensions reexport;
+extension com::piece_framework::piece_ide::piece_orm::mapper::GenEditorExtensions reexport;
+
+/*
+ * use this file to overwrite the label() and the image()
+ * extension for your model elements
+ */
