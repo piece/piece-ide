@@ -4,6 +4,12 @@ Mapper :
 
 Method :
   'method' name=ID '{'
-    ('query' query=STRING)?
-    ('orderBy' orderBy=STRING)?
+    (attributes+=Query)?
+    (attributes+=OrderBy)?
   '}';
+
+Query :
+  name='query' value=STRING;
+
+OrderBy :
+  name='orderBy' value=STRING;
