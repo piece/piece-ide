@@ -69,24 +69,24 @@ public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
 
     private int getBraceCount(IDocument document) throws BadLocationException {
         int offset = 0;
-        int bracketCount= 0;
+        int braceCount= 0;
         while (offset < document.getLength()) {
             char currentChar = document.getChar(offset);
             offset++;
             switch (currentChar) {
-                case '/' :
+                case '/':
                     offset = getCommentEnd(document,
                                            offset
                                            );
                     break;
-                case '{' :
-                    bracketCount++;
+                case '{':
+                    braceCount++;
                     break;
-                case '}' :
-                    bracketCount--;
+                case '}':
+                    braceCount--;
                     break;
-                case '"' :
-                case '\'' :
+                case '"':
+                case '\'':
                     offset = getStringEnd(document,
                                           offset,
                                           currentChar
@@ -95,7 +95,7 @@ public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
                 default :
             }
         }
-        return bracketCount;
+        return braceCount;
     }
 
     private int getCommentEnd(IDocument document,
