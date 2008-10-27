@@ -11,19 +11,10 @@ import org.eclipse.jface.text.TextUtilities;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 
 public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
-    private String fIndent;
+    private IPreferenceStore fPreferenceStore;
 
-    public MapperAutoEditStrategy(IPreferenceStore store) {
-        if (store.getBoolean(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS)) {
-            int tabSize = store.getInt(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_TAB_WIDTH);
-            StringBuffer buffer = new StringBuffer();
-            for (int i = 1; i <= tabSize; ++i) {
-                buffer.append(" ");
-            }
-            fIndent = buffer.toString();
-        } else {
-            fIndent = "\t";
-        }
+    public MapperAutoEditStrategy(IPreferenceStore preferenceStore) {
+        fPreferenceStore = preferenceStore;
     }
 
     public void customizeDocumentCommand(IDocument document, DocumentCommand command) {
@@ -53,11 +44,13 @@ public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
                                                    );
             String prefix = document.get(region.getOffset(), contentStart - region.getOffset());
 
+            String indent = getIndentString();
+
             StringBuffer commandText = new StringBuffer(command.text);
             int caretOffset = 0;
             if (getBraceCount(document) > 0) {
                 commandText.append(prefix);
-                commandText.append(fIndent);
+                commandText.append(indent);
                 commandText.append(TextUtilities.getDefaultLineDelimiter(document));
                 commandText.append(prefix);
                 commandText.append("}");
@@ -67,7 +60,7 @@ public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
 
                 caretOffset = TextUtilities.getDefaultLineDelimiter(document).length() +
                               prefix.length() +
-                              fIndent.length();
+                              indent.length();
             } else {
                 commandText.append(prefix);
 
@@ -174,5 +167,18 @@ public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
             }
         }
         return document.getLength();
+    }
+
+    private String getIndentString() {
+        StringBuffer indent = new StringBuffer();
+        if (fPreferenceStore.getBoolean(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS)) {
+            int tabSize = fPreferenceStore.getInt(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_TAB_WIDTH);
+            for (int i = 1; i <= tabSize; ++i) {
+                indent.append(" ");
+            }
+        } else {
+            indent.append("\t");
+        }
+        return indent.toString();
     }
 }
