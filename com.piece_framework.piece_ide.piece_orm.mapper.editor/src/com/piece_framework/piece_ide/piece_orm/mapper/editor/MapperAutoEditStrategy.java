@@ -22,7 +22,7 @@ public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
             return;
         }
 
-        if (command.length == 0 && command.text != null && isLineDelimiter(document, command.text)) {
+        if (isLineDelimiter(document, command)) {
             smartIndentAfterNewLine(document, command);
         } else {
             super.customizeDocumentCommand(document, command);
@@ -77,10 +77,14 @@ public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
         }
     }
 
-    private boolean isLineDelimiter(IDocument document, String text) {
+    private boolean isLineDelimiter(IDocument document, DocumentCommand command) {
+        if (command.length != 0 || command.text == null) {
+            return false;
+        }
+
         String[] delimiters= document.getLegalLineDelimiters();
         if (delimiters != null) {
-            return TextUtilities.equals(delimiters, text) > -1;
+            return TextUtilities.equals(delimiters, command.text) > -1;
         }
         return false;
     }
