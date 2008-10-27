@@ -2,6 +2,7 @@
 package com.piece_framework.piece_ide.piece_orm.mapper.editor;
 
 import org.eclipse.jface.text.IAutoEditStrategy;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.openarchitectureware.xtext.AbstractXtextEditorPlugin;
 import org.openarchitectureware.xtext.editor.AbstractXtextEditor;
@@ -18,11 +19,7 @@ public class MapperSourceViewerConfiguration extends XtextSourceViewerConfigurat
     public IAutoEditStrategy[] getAutoEditStrategies(ISourceViewer sourceViewer,
                                                      String contentType
                                                      ) {
-        String partitioning= getConfiguredDocumentPartitioning(sourceViewer);
-        System.out.println("contentType:" + contentType);
-        System.out.println("partitioning:" + partitioning);
-
-        if (contentType.equals("__dftl_partition_content_type")) {
+        if (contentType.equals(IDocument.DEFAULT_CONTENT_TYPE)) {
             return new IAutoEditStrategy[] { new MapperAutoEditStrategy(fPreferenceStore) };
         }
 
