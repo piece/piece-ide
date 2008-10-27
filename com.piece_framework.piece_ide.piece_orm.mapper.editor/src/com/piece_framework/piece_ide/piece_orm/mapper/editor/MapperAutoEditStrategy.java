@@ -35,14 +35,7 @@ public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
         }
 
         try {
-            int offsetForLine = command.offset == document.getLength() ? command.offset - 1 : command.offset;
-            int line = document.getLineOfOffset(offsetForLine);
-            IRegion region = document.getLineInformation(line);
-            int contentStart = findEndOfWhiteSpace(document,
-                                                   region.getOffset(),
-                                                   region.getOffset() + region.getLength()
-                                                   );
-            String prefix = document.get(region.getOffset(), contentStart - region.getOffset());
+            String prefix = getPrefixString(document, command);
 
             String indent = getIndentString();
 
@@ -184,5 +177,21 @@ public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
             indent.append("\t");
         }
         return indent.toString();
+    }
+
+    private String getPrefixString(IDocument document,
+                                   DocumentCommand command
+                                   ) throws BadLocationException {
+        int offsetForLine = command.offset == document.getLength() ? command.offset - 1
+                                                                   : command.offset;
+        IRegion line =
+            document.getLineInformation(document.getLineOfOffset(offsetForLine));
+        int contentOffset = findEndOfWhiteSpace(document,
+                                                line.getOffset(),
+                                                line.getOffset() + line.getLength()
+                                                );
+        return document.get(line.getOffset(),
+                            contentOffset - line.getOffset()
+                            );
     }
 }
