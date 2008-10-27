@@ -33,9 +33,9 @@ public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
 
         if (command.length == 0 && command.text != null && isLineDelimiter(document, command.text)) {
             smartIndentAfterNewLine(document, command);
+        } else {
+            super.customizeDocumentCommand(document, command);
         }
-
-        super.customizeDocumentCommand(document, command);
     }
 
     private void smartIndentAfterNewLine(IDocument document, DocumentCommand command) {
@@ -44,15 +44,40 @@ public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
         }
 
         try {
+            int offsetForLine = command.offset == document.getLength() ? command.offset - 1 : command.offset;
+            int line = document.getLineOfOffset(offsetForLine);
+            IRegion region = document.getLineInformation(line);
+            int contentStart = findEndOfWhiteSpace(document,
+                                                   region.getOffset(),
+                                                   region.getOffset() + region.getLength()
+                                                   );
+            String prefix = document.get(region.getOffset(), contentStart - region.getOffset());
+
+            StringBuffer commandText = new StringBuffer(command.text);
+            int caretOffset = 0;
             if (getBraceCount(document) > 0) {
-                command.text = command.text +
-                               fIndent +
-                               TextUtilities.getDefaultLineDelimiter(document) +
-                               "}" +
-                               TextUtilities.getDefaultLineDelimiter(document);
-                command.shiftsCaret = false;
-                command.caretOffset = command.offset + fIndent.length() + 1;
+                commandText.append(prefix);
+                commandText.append(fIndent);
+                commandText.append(TextUtilities.getDefaultLineDelimiter(document));
+                commandText.append(prefix);
+                commandText.append("}");
+                if (command.offset == document.getLength()) {
+                    commandText.append(TextUtilities.getDefaultLineDelimiter(document));
+                }
+
+                caretOffset = TextUtilities.getDefaultLineDelimiter(document).length() +
+                              prefix.length() +
+                              fIndent.length();
+            } else {
+                commandText.append(prefix);
+
+                caretOffset = TextUtilities.getDefaultLineDelimiter(document).length() +
+                              prefix.length();
             }
+
+            command.text = commandText.toString();
+            command.shiftsCaret = false;
+            command.caretOffset = command.offset + caretOffset;
         } catch (BadLocationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
