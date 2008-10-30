@@ -4,8 +4,9 @@ Mapper :
 
 Method :
   'method' name=ID '{'
-    (attributes+=Query)?
-    (attributes+=OrderBy)?
+    (methodStatementList+=Query)?
+    (methodStatementList+=OrderBy)?
+    (methodStatementList+=Association)*
   '}';
 
 Query :
@@ -13,3 +14,43 @@ Query :
 
 OrderBy :
   name='orderBy' value=STRING;
+
+Association :
+  'association {'
+    associationStatementList+=Table
+    associationStatementList+=AssociationType
+    associationStatementList+=Property
+    (associationStatementList+=Column)?
+    (associationStatementList+=ReferencedColumn)?
+    (associationStatementList+=OrderBy)?
+    (associationStatementList+=Through)?
+  '}';
+
+Table :
+  name='table' value=ID;
+
+AssociationType :
+  name='type' value=EnumAssociationType;
+
+Enum EnumAssociationType :
+  ManyToMany='manyToMany' | ManyToOne='manyToOne' | OneToMany='oneToMany' | OneToOne='oneToOne';
+
+Property :
+  name='property' value=ID;
+
+Column :
+  name='column' value=ID;
+
+ReferencedColumn :
+  name='referencedColumn' value=ID;
+
+Through :
+  'through {'
+    throughStatementList+=Table
+    (throughStatementList+=Column)?
+    (throughStatementList+=ReferencedColumn)?
+    (throughStatementList+=InverseColumn)?
+  '}';
+
+InverseColumn :
+  name='inverseColumn' value=ID;
