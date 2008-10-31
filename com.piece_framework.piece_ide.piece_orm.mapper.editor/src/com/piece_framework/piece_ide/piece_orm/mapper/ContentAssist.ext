@@ -15,3 +15,8 @@ extension com::piece_framework::piece_ide::piece_orm::mapper::GenContentAssist r
  * you can sort and/or filter the proposals by overwriting 'List[Proposal] sortProposals(List[Proposal] proposalsToSort)'
  */
 
+List[Proposal] completeMethod_name(emf::EObject ctx, String prefix) :
+    getProposalListForMethodName();
+
+List[Proposal] getProposalListForMethodName() :
+    JAVA com.piece_framework.piece_ide.piece_orm.mapper.editor.MethodNameContentAssist.getProposalList();
