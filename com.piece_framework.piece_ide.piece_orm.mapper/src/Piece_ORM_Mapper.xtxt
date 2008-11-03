@@ -4,10 +4,11 @@ Mapper :
 
 Method :
   'method' name=ID '{'
-    (methodStatementList+=Query)?
-    (methodStatementList+=OrderBy)?
-    (methodStatementList+=Association)*
+    (methodStatementList+=MethodStatement)*
   '}';
+
+MethodStatement :
+  Query | OrderBy | Association;
 
 Query :
   name='query' value=STRING;
@@ -17,14 +18,11 @@ OrderBy :
 
 Association :
   'association {'
-    associationStatementList+=Table
-    associationStatementList+=AssociationType
-    associationStatementList+=Property
-    (associationStatementList+=Column)?
-    (associationStatementList+=ReferencedColumn)?
-    (associationStatementList+=OrderBy)?
-    (associationStatementList+=Through)?
+    (associationStatementList+=AssociationStatement)*
   '}';
+
+AssociationStatement :
+  Table | AssociationType | Property | Column | ReferencedColumn | OrderBy | Through;
 
 Table :
   name='table' value=ID;
@@ -46,11 +44,11 @@ ReferencedColumn :
 
 Through :
   'through {'
-    throughStatementList+=Table
-    (throughStatementList+=Column)?
-    (throughStatementList+=ReferencedColumn)?
-    (throughStatementList+=InverseColumn)?
+    (throughStatementList+=ThroughStatement)*
   '}';
+
+ThroughStatement :
+  Table | Column | ReferencedColumn | InverseColumn;
 
 InverseColumn :
   name='inverseColumn' value=ID;
