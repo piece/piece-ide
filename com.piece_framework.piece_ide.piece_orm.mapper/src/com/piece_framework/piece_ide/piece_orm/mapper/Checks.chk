@@ -52,4 +52,3 @@ context Association ERROR
 context Through ERROR
     "The [ table ] statement was not found in the 'through' statement. A 'through' statement must contain the 'table' statement." :
     eContents.typeSelect(Table).size == 1;
-   
