@@ -14,3 +14,33 @@ context Query ERROR "Duplicate type detected: " + this.name :
 
 context OrderBy ERROR "Duplicate type detected: " + this.name :
     eContainer.eContents.typeSelect(OrderBy).select(e|e.name == this.name).size == 1;
+
+context Table ERROR "Duplicate type detected: " + this.name :
+    eContainer.eContents.typeSelect(Table).select(e|e.name == this.name).size == 1;
+
+context AssociationType ERROR "Duplicate type detected: " + this.name :
+    eContainer.eContents.typeSelect(AssociationType).select(e|e.name == this.name).size == 1;
+
+context Property ERROR "Duplicate type detected: " + this.name :
+    eContainer.eContents.typeSelect(Property).select(e|e.name == this.name).size == 1;
+
+context Column ERROR "Duplicate type detected: " + this.name :
+    eContainer.eContents.typeSelect(Column).select(e|e.name == this.name).size == 1;
+
+context ReferencedColumn ERROR "Duplicate type detected: " + this.name :
+    eContainer.eContents.typeSelect(ReferencedColumn).select(e|e.name == this.name).size == 1;
+
+context Through ERROR "Duplicate type detected: through" :
+    eContainer.eContents.typeSelect(Through).size == 1;
+
+context Association ERROR
+    "The [ table ] statement was not found in the 'association' statement. An 'association' statement must contain the 'table', 'type', and 'property' statements." :
+    eContents.typeSelect(Table).size == 1;
+
+context Association ERROR
+    "The [ type ] statement was not found in the 'association' statement. An 'association' statement must contain the 'table', 'type', and 'property' statements." :
+    eContents.typeSelect(AssociationType).size == 1;
+
+context Association ERROR
+    "The [ property ] statement was not found in the 'association' statement. An 'association' statement must contain the 'table', 'type', and 'property' statements." :
+    eContents.typeSelect(Property).size == 1;
