@@ -22,7 +22,7 @@ Association :
   '}';
 
 AssociationStatement :
-  Table | AssociationType | Property | Column | ReferencedColumn | OrderBy | Through;
+  Table | AssociationType | Property | Column | ReferencedColumn | OrderBy | LinkTable;
 
 Table :
   name='table' value=ID;
@@ -42,12 +42,12 @@ Column :
 ReferencedColumn :
   name='referencedColumn' value=ID;
 
-Through :
-  'through {'
-    (throughStatementList+=ThroughStatement)*
+LinkTable :
+  'linkTable {'
+    (linkTableStatementList+=LinkTableStatement)*
   '}';
 
-ThroughStatement :
+LinkTableStatement :
   Table | Column | ReferencedColumn | InverseColumn;
 
 InverseColumn :
