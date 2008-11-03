@@ -34,6 +34,9 @@ context ReferencedColumn ERROR "Duplicate type detected: " + this.name :
 context Through ERROR "Duplicate type detected: through" :
     eContainer.eContents.typeSelect(Through).size == 1;
 
+context InverseColumn ERROR "Duplicate type detected: " + this.name :
+    eContainer.eContents.typeSelect(InverseColumn).select(e|e.name == this.name).size == 1;
+
 context Association ERROR
     "The [ table ] statement was not found in the 'association' statement. An 'association' statement must contain the 'table', 'type', and 'property' statements." :
     eContents.typeSelect(Table).size == 1;
@@ -45,3 +48,8 @@ context Association ERROR
 context Association ERROR
     "The [ property ] statement was not found in the 'association' statement. An 'association' statement must contain the 'table', 'type', and 'property' statements." :
     eContents.typeSelect(Property).size == 1;
+
+context Through ERROR
+    "The [ table ] statement was not found in the 'through' statement. A 'through' statement must contain the 'table' statement." :
+    eContents.typeSelect(Table).size == 1;
+   
