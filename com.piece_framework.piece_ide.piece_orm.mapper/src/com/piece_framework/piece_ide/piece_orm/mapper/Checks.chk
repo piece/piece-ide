@@ -7,4 +7,10 @@ extension com::piece_framework::piece_ide::piece_orm::mapper::Extensions;
  */
 
 context Method ERROR "Duplicate type detected: " + this.name :
-    allElements().typeSelect(Method).select(e|e.name == this.name).size ==1;
+    allElements().typeSelect(Method).select(e|e.name == this.name).size == 1;
+
+context Query ERROR "Duplicate type detected: " + this.name :
+    eContainer.eContents.typeSelect(Query).select(e|e.name == this.name).size == 1;
+
+context OrderBy ERROR "Duplicate type detected: " + this.name :
+    eContainer.eContents.typeSelect(OrderBy).select(e|e.name == this.name).size == 1;
