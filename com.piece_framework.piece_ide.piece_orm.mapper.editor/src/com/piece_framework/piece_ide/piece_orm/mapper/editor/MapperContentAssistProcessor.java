@@ -73,7 +73,6 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
             return null;
         }
 
-        String text = wholetext.substring(0, offset);
         NodeForContentAssist lastComplete = new NodeForContentAssist(node, offset);
         if (lastComplete.hasParent()) {
             Grammar grammar = new Grammar(lastComplete.getParent());
@@ -82,70 +81,75 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
             }
         }
 
+        String text = wholetext.substring(0, offset);
         List<Proposal> proposals = new ArrayList<Proposal>();
         String prefix = null;
-        // if lastComplete is under the cursor we look up proposals for
-        // completing this node
-        // and proposals for possible completions of the preceeding node.
-        if (lastComplete.fNode != null && lastComplete.getEnd() >= offset) {
-            int startReplace;
-            int endReplace;
 
-            // get the preceeding node
-            NodeForContentAssist previous = new NodeForContentAssist(lastComplete.fNode,
-                                                                     lastComplete.getStart()
-                                                                     );
-            if (previous.fNode == lastComplete.fNode) {
-                // This case only occurrs in an empty document.
-                // Since ANTLR specifies the end of an empty document to be at position 1 (NOT zero),
-                // we subtract 1 at this place:
-                startReplace = lastComplete.getEnd() - 1;
-                endReplace = lastComplete.getEnd() - 1;
+        if (offset > 0) {
+            if (lastComplete.getEnd() < offset) {
+                int startReplace = (prefix == null) ? offset : offset - prefix.length();
+                int endReplace = offset;
+                prefix = getPrefix(text, lastComplete);
 
                 Set<Element> followUps = NodeUtil.getPossibleFollows(fLangUtil.getXtextFile(),
-                        lastComplete);
-                proposals.addAll(createProposals(lastComplete, null, followUps, startReplace,
-                        endReplace, true));
+                                                                     lastComplete
+                                                                     );
+                proposals.addAll(createProposals(lastComplete,
+                                                 prefix,
+                                                 followUps,
+                                                 startReplace,
+                                                 endReplace,
+                                                 false
+                                                 ));
             } else {
-                Set<Element> followUps;
+                int startReplace = lastComplete.getStart();
+                int endReplace = lastComplete.getEnd();
 
-                // 2008-04-10 Peter: 
-                //      Do NOT take the last complete node into consideration,
-                //      as this will produce superfluous proposals!
-//              // Last Complete Node
-//              startReplace = lastComplete.getEnd();
-//              endReplace   = lastComplete.getEnd();
-//
-//              followUps = NodeUtil.getPossibleFollows(langUtil.getXtextFile(), lastComplete);
-//              proposals.addAll(createProposals(lastComplete, null, followUps, startReplace, endReplace, false, true));
-                //--- end deactivated code
-
-                // Previous Node
-                startReplace = lastComplete.getStart();
-                endReplace = lastComplete.getEnd();
-
+                NodeForContentAssist previous = new NodeForContentAssist(lastComplete.fNode,
+                                                                         lastComplete.getStart()
+                                                                         );
                 prefix = getPrefix(text, previous);
-                followUps = NodeUtil.getPossibleFollows(fLangUtil.getXtextFile(), previous);
-                proposals.addAll(createProposals(previous, prefix, followUps, startReplace,
-                        endReplace, true));
+                Set<Element> followUps = NodeUtil.getPossibleFollows(fLangUtil.getXtextFile(),
+                                                                     previous
+                                                                     );
+                proposals.addAll(createProposals(previous,
+                                                 prefix,
+                                                 followUps,
+                                                 startReplace,
+                                                 endReplace,
+                                                 true)
+                                                 );
             }
         } else {
-            int startReplace;
-            int endReplace;
-            prefix = getPrefix(text, lastComplete);
+            if (wholetext.length() > 0) {
+                int startReplace = 0;
+                int endReplace = (prefix == null) ? 0 : prefix.length();
+                prefix = getPrefix(text, lastComplete);
 
-            if (lastComplete.fNode == null) {
-                startReplace = 0;
-                endReplace = (prefix == null) ? 0 : prefix.length();
+                Set<Element> followUps = NodeUtil.getPossibleFollows(fLangUtil.getXtextFile(),
+                                                                     lastComplete
+                                                                     );
+                proposals.addAll(createProposals(lastComplete,
+                                                 prefix,
+                                                 followUps,
+                                                 startReplace,
+                                                 endReplace,
+                                                 false
+                                                 ));
             } else {
-                startReplace = (prefix == null) ? offset : offset - prefix.length();
-                endReplace = offset;
-            }
+                int startReplace = lastComplete.getEnd() - 1;
+                int endReplace = lastComplete.getEnd() - 1;
 
-            Set<Element> followUps = NodeUtil.getPossibleFollows(fLangUtil.getXtextFile(),
-                    lastComplete);
-            proposals.addAll(createProposals(lastComplete, prefix, followUps, startReplace,
-                    endReplace, false));
+                Set<Element> followUps = NodeUtil.getPossibleFollows(fLangUtil.getXtextFile(),
+                                                                     lastComplete);
+                proposals.addAll(createProposals(lastComplete,
+                                                 null,
+                                                 followUps,
+                                                 startReplace,
+                                                 endReplace,
+                                                 true
+                                                 ));
+            }
         }
 
         // sort proposals using an extension (located in an external .ext file):
