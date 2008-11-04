@@ -48,8 +48,7 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         }
 
         String text = wholetext.substring(0, offset);
-        NodeForContentAssist lastComplete =
-            new NodeForContentAssist(NodeUtil.getNodeBeforeOffset(node, offset));
+        NodeForContentAssist lastComplete = new NodeForContentAssist(node, offset);
         if ((lastComplete != null) && !lastComplete.getErrors().isEmpty()
                 && (lastComplete.getStart() == 0))
             lastComplete = null;
@@ -79,11 +78,9 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
             int endReplace;
 
             // get the preceeding node
-            NodeForContentAssist previous =
-                new NodeForContentAssist(
-                    NodeUtil.getNodeBeforeOffset(lastComplete,
-                                                 lastComplete.getStart()
-                                                 ));
+            NodeForContentAssist previous = new NodeForContentAssist(lastComplete,
+                                                                     lastComplete.getStart()
+                                                                     );
 
             if (previous == lastComplete) {
                 // This case only occurrs in an empty document.

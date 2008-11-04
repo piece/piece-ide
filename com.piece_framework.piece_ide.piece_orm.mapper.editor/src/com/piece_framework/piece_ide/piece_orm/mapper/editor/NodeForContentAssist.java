@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.openarchitectureware.xtext.parser.model.NodeUtil;
 import org.openarchitectureware.xtext.parser.parsetree.Node;
 
 public class NodeForContentAssist implements Node {
@@ -17,6 +18,13 @@ public class NodeForContentAssist implements Node {
 
     public NodeForContentAssist(Node node) {
         fNode = node;
+    }
+
+    public NodeForContentAssist(Node node, int offset) {
+        if (node == null) {
+            return;
+        }
+        fNode = NodeUtil.getNodeBeforeOffset(node, offset);
     }
 
     public EList getChildren() {
