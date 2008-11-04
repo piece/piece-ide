@@ -245,4 +245,9 @@ public class NodeForContentAssist implements Node {
             fNode.eSetDeliver(deliver);
         }
     }
+
+    public boolean hasParent() {
+        return fNode != null
+               && fNode.getParent() != null;
+    }
 }
