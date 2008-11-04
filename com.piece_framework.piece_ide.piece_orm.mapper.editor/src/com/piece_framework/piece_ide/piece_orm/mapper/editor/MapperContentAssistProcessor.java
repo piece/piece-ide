@@ -28,8 +28,34 @@ import org.openarchitectureware.xtext.parser.parsetree.Node;
 
 public class MapperContentAssistProcessor extends XTextModelContentAssist {
     private static final String CONTENT_ASSIST_EXTENSIONS = "ContentAssist";
-
     private LanguageUtilities fLangUtil;
+
+    private class Grammar {
+        private Node fNode;
+        public Grammar(Node node) {
+            fNode = node;
+        }
+
+        public boolean hasCrossReference() {
+            if (fNode.getGrammarElement() instanceof Assignment) {
+                Assignment assignment = (Assignment) fNode.getGrammarElement();
+                return assignment.getToken() instanceof CrossReference;
+            }
+            return false;
+        }
+
+        public boolean hasStringRule() {
+            for (EObject element = fNode.getGrammarElement();
+                 element != null;
+                 element = element.eContainer()
+                 ) {
+                if (element instanceof StringRule) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 
     public MapperContentAssistProcessor(LanguageUtilities langUtil,
                                         AbstractXtextEditor editor
@@ -50,18 +76,9 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         String text = wholetext.substring(0, offset);
         NodeForContentAssist lastComplete = new NodeForContentAssist(node, offset);
         if (lastComplete.hasParent()) {
-            NodeForContentAssist parent = new NodeForContentAssist(lastComplete.getParent());
-            if (parent.getGrammarElement() instanceof Assignment) {
-                Assignment assignment = (Assignment) parent.getGrammarElement();
-                if (assignment.getToken() instanceof CrossReference) {
-                    for (EObject it = lastComplete.getGrammarElement(); it != null; it = it
-                            .eContainer()) {
-                        if (it instanceof StringRule) {
-                            lastComplete = parent;
-                            break;
-                        }
-                    }
-                }
+            Grammar grammar = new Grammar(lastComplete.getParent());
+            if (grammar.hasCrossReference() && grammar.hasStringRule()) {
+                lastComplete = new NodeForContentAssist(lastComplete.getParent());
             }
         }
 
