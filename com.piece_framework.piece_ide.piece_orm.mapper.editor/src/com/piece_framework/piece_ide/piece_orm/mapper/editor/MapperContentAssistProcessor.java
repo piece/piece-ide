@@ -84,9 +84,8 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         String text = wholetext.substring(0, offset);
         List<Proposal> proposals = new ArrayList<Proposal>();
         String prefix = null;
-
         if (offset > 0) {
-            if (lastComplete.getEnd() < offset) {
+            if (!insideNode(lastComplete, offset)) {
                 int startReplace = (prefix == null) ? offset : offset - prefix.length();
                 int endReplace = offset;
                 prefix = getPrefix(text, lastComplete);
@@ -259,5 +258,9 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         return prefix.trim().length() == 0
                 || prefix.substring(prefix.length() - 1, prefix.length()).matches("\\s") ? null
                 : prefix.trim();
+    }
+
+    private boolean insideNode(Node node, int offset) {
+        return node.getEnd() >= offset;
     }
 }
