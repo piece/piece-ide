@@ -49,9 +49,6 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
 
         String text = wholetext.substring(0, offset);
         NodeForContentAssist lastComplete = new NodeForContentAssist(node, offset);
-        if ((lastComplete.fNode != null) && !lastComplete.getErrors().isEmpty()
-                && (lastComplete.getStart() == 0))
-            lastComplete = null;
         if (lastComplete.hasParent()) {
             NodeForContentAssist parent = new NodeForContentAssist(lastComplete.getParent());
             if (parent.getGrammarElement() instanceof Assignment) {

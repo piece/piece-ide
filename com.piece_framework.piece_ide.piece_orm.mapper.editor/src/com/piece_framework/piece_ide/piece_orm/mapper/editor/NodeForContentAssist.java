@@ -25,6 +25,12 @@ public class NodeForContentAssist implements Node {
             return;
         }
         fNode = NodeUtil.getNodeBeforeOffset(node, offset);
+        if (fNode != null
+            && !fNode.getErrors().isEmpty()
+            && fNode.getStart() == 0
+            ) {
+            fNode = null;
+        }
     }
 
     public EList getChildren() {
