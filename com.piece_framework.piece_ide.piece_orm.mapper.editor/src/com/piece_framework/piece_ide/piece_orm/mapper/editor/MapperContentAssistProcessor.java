@@ -46,13 +46,15 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         if (node == null) {
             return null;
         }
+
         String text = wholetext.substring(0, offset);
-        Node lastComplete = NodeUtil.getNodeBeforeOffset(node, offset);
+        NodeForContentAssist lastComplete =
+            new NodeForContentAssist(NodeUtil.getNodeBeforeOffset(node, offset));
         if ((lastComplete != null) && !lastComplete.getErrors().isEmpty()
                 && (lastComplete.getStart() == 0))
             lastComplete = null;
         if ((lastComplete != null) && (lastComplete.getParent()) != null) {
-            Node parent = lastComplete.getParent();
+            NodeForContentAssist parent = new NodeForContentAssist(lastComplete.getParent());
             if (parent.getGrammarElement() instanceof Assignment) {
                 Assignment assignment = (Assignment) parent.getGrammarElement();
                 if (assignment.getToken() instanceof CrossReference) {
@@ -77,8 +79,11 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
             int endReplace;
 
             // get the preceeding node
-            Node previous = NodeUtil.getNodeBeforeOffset(lastComplete, lastComplete
-                    .getStart());
+            NodeForContentAssist previous =
+                new NodeForContentAssist(
+                    NodeUtil.getNodeBeforeOffset(lastComplete,
+                                                 lastComplete.getStart()
+                                                 ));
 
             if (previous == lastComplete) {
                 // This case only occurrs in an empty document.
@@ -132,7 +137,7 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
             proposals.addAll(createProposals(lastComplete, prefix, followUps, startReplace,
                     endReplace, false));
         }
-        
+
         // sort proposals using an extension (located in an external .ext file):
         Object tmpProposals = fLangUtil.invokeExtension(CONTENT_ASSIST_EXTENSIONS, "sortProposals",
                 proposals);
