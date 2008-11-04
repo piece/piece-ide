@@ -49,7 +49,7 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
 
         String text = wholetext.substring(0, offset);
         NodeForContentAssist lastComplete = new NodeForContentAssist(node, offset);
-        if ((lastComplete != null) && !lastComplete.getErrors().isEmpty()
+        if ((lastComplete.fNode != null) && !lastComplete.getErrors().isEmpty()
                 && (lastComplete.getStart() == 0))
             lastComplete = null;
         if (lastComplete.hasParent()) {
@@ -73,16 +73,15 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         // if lastComplete is under the cursor we look up proposals for
         // completing this node
         // and proposals for possible completions of the preceeding node.
-        if (lastComplete != null && lastComplete.getEnd() >= offset) {
+        if (lastComplete.fNode != null && lastComplete.getEnd() >= offset) {
             int startReplace;
             int endReplace;
 
             // get the preceeding node
-            NodeForContentAssist previous = new NodeForContentAssist(lastComplete,
+            NodeForContentAssist previous = new NodeForContentAssist(lastComplete.fNode,
                                                                      lastComplete.getStart()
                                                                      );
-
-            if (previous == lastComplete) {
+            if (previous.fNode == lastComplete.fNode) {
                 // This case only occurrs in an empty document.
                 // Since ANTLR specifies the end of an empty document to be at position 1 (NOT zero),
                 // we subtract 1 at this place:
@@ -121,7 +120,7 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
             int endReplace;
             prefix = getPrefix(text, lastComplete);
 
-            if (lastComplete == null) {
+            if (lastComplete.fNode == null) {
                 startReplace = 0;
                 endReplace = (prefix == null) ? 0 : prefix.length();
             } else {
