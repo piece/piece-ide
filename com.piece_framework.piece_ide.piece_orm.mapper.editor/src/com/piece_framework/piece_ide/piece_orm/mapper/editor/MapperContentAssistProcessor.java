@@ -81,49 +81,11 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
             }
         }
 
-        String text = wholetext.substring(0, offset);
-        List<Proposal> proposals = new ArrayList<Proposal>();
-        String prefix = null;
-        int startReplace = 0;
-        int endReplace = 0;
-        boolean applyPrefixFilter = false;
-
-        if (offset > 0) {
-            if (!insideNode(lastComplete, offset)) {
-                prefix = getPrefix(text, lastComplete);
-                startReplace = (prefix == null) ? offset : offset - prefix.length();
-                endReplace = offset;
-                applyPrefixFilter = false;
-            } else {
-                NodeForContentAssist previous = new NodeForContentAssist(lastComplete.fNode,
-                                                                         lastComplete.getStart()
-                                                                         );
-                prefix = getPrefix(text, previous);
-                startReplace = lastComplete.getStart();
-                endReplace = lastComplete.getEnd();
-                applyPrefixFilter = true;
-
-                lastComplete = previous;
-            }
-        } else {
-            if (wholetext.length() > 0) {
-                prefix = getPrefix(text, lastComplete);
-                startReplace = 0;
-                endReplace = (prefix == null) ? 0 : prefix.length();
-                applyPrefixFilter = false;
-            } else {
-                prefix = null;
-                startReplace = lastComplete.getEnd() - 1;
-                endReplace = lastComplete.getEnd() - 1;
-                applyPrefixFilter = true;
-            }
-        }
-        proposals.addAll(createProposals(lastComplete,
-                                         prefix,
-                                         startReplace,
-                                         endReplace,
-                                         applyPrefixFilter
-                                         ));
+        ProposalParameter parameter = ProposalParameter.create(wholetext,
+                                                               offset,
+                                                               lastComplete
+                                                               );
+        List<Proposal> proposals = new ArrayList<Proposal>(createProposals(parameter));
 
         // sort proposals using an extension (located in an external .ext file):
         Object tmpProposals = fLangUtil.invokeExtension(CONTENT_ASSIST_EXTENSIONS, "sortProposals",
@@ -149,8 +111,8 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         List<ICompletionProposal> cp = new ArrayList<ICompletionProposal>();
         for (Proposal pi : proposals) {
             if (!pi.isApplyPrefixFilter()
-                    || prefix == null
-                    || (pi.getToInsert().toLowerCase().startsWith(prefix
+                    || parameter.getPrefix() == null
+                    || (pi.getToInsert().toLowerCase().startsWith(parameter.getPrefix()
                             .toLowerCase()))) {
                 cp.add(createCompletionProposal(pi));
             }
@@ -158,19 +120,17 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         return cp.toArray(new ICompletionProposal[cp.size()]);
     }
 
-    private List<Proposal> createProposals(Node lastComplete,
-                                           String prefix,
-                                           int startReplace,
-                                           int endReplace,
-                                           boolean applyPrefixFilter
-                                           ) {
+    private List<Proposal> createProposals(ProposalParameter parameter) {
         Set<Element> followUps = NodeUtil.getPossibleFollows(fLangUtil.getXtextFile(),
-                                                             lastComplete
+                                                             parameter.getLastComplete()
                                                              );
         List<Proposal> proposals = new ArrayList<Proposal>();
         for (Element element : followUps) {
             try {
-                proposals.addAll(handleElement(element, lastComplete, prefix));
+                proposals.addAll(handleElement(element,
+                                               parameter.getLastComplete(),
+                                               parameter.getPrefix()
+                                               ));
             } catch (RuntimeException e) {
                 if (e.getMessage() == null) {
                     XtextLog.logInfo(e.getClass().getSimpleName() + " occurred",
@@ -183,9 +143,9 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         }
 
         for (Proposal proposal : proposals) {
-            proposal.setStartReplace(startReplace);
-            proposal.setEndReplace(endReplace);
-            proposal.setApplyPrefixFilter(applyPrefixFilter);
+            proposal.setStartReplace(parameter.getStartReplace());
+            proposal.setEndReplace(parameter.getEndReplace());
+            proposal.setApplyPrefixFilter(parameter.isApplyPrefixFilter());
         }
 
         return proposals;
@@ -194,21 +154,6 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
     private ICompletionProposal createCompletionProposal(Proposal p) {
         Image img = fLangUtil.getImage(p.getImage());
         return new XtextCompletionProposal(p, img);
-    }
-
-    private String getPrefix(String text, Node lastComplete) {
-        String prefix = text;
-        if (lastComplete != null && lastComplete.getEnd() > 0
-                && lastComplete.getEnd() <= text.length())
-            prefix = text.substring(lastComplete.getEnd());
-        // prefix (in almost all cases) does not end with whitespaces
-        return prefix.trim().length() == 0
-                || prefix.substring(prefix.length() - 1, prefix.length()).matches("\\s") ? null
-                : prefix.trim();
-    }
-
-    private boolean insideNode(Node node, int offset) {
-        return node.getEnd() >= offset;
     }
 
     private List<Proposal> handleElement(Element element,
