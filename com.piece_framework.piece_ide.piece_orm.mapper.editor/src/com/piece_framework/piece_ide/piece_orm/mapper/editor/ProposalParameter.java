@@ -68,6 +68,8 @@ public class ProposalParameter {
             || prefix.substring(prefix.length() - 1, prefix.length()).matches("\\s")
             ) {
             prefix = null;
+        } else {
+            prefix = prefix.trim();
         }
 
         return prefix;
