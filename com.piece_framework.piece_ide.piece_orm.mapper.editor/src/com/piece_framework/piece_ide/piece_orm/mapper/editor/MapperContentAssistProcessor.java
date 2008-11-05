@@ -84,57 +84,46 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         String text = wholetext.substring(0, offset);
         List<Proposal> proposals = new ArrayList<Proposal>();
         String prefix = null;
+        int startReplace = 0;
+        int endReplace = 0;
+        boolean applyPrefixFilter = false;
+
         if (offset > 0) {
             if (!insideNode(lastComplete, offset)) {
-                int startReplace = (prefix == null) ? offset : offset - prefix.length();
-                int endReplace = offset;
                 prefix = getPrefix(text, lastComplete);
-
-                proposals.addAll(createProposals(lastComplete,
-                                                 prefix,
-                                                 startReplace,
-                                                 endReplace,
-                                                 false
-                                                 ));
+                startReplace = (prefix == null) ? offset : offset - prefix.length();
+                endReplace = offset;
+                applyPrefixFilter = false;
             } else {
-                int startReplace = lastComplete.getStart();
-                int endReplace = lastComplete.getEnd();
-
                 NodeForContentAssist previous = new NodeForContentAssist(lastComplete.fNode,
                                                                          lastComplete.getStart()
                                                                          );
                 prefix = getPrefix(text, previous);
-                proposals.addAll(createProposals(previous,
-                                                 prefix,
-                                                 startReplace,
-                                                 endReplace,
-                                                 true)
-                                                 );
+                startReplace = lastComplete.getStart();
+                endReplace = lastComplete.getEnd();
+                applyPrefixFilter = true;
+
+                lastComplete = previous;
             }
         } else {
             if (wholetext.length() > 0) {
-                int startReplace = 0;
-                int endReplace = (prefix == null) ? 0 : prefix.length();
                 prefix = getPrefix(text, lastComplete);
-
-                proposals.addAll(createProposals(lastComplete,
-                                                 prefix,
-                                                 startReplace,
-                                                 endReplace,
-                                                 false
-                                                 ));
+                startReplace = 0;
+                endReplace = (prefix == null) ? 0 : prefix.length();
+                applyPrefixFilter = false;
             } else {
-                int startReplace = lastComplete.getEnd() - 1;
-                int endReplace = lastComplete.getEnd() - 1;
-
-                proposals.addAll(createProposals(lastComplete,
-                                                 null,
-                                                 startReplace,
-                                                 endReplace,
-                                                 true
-                                                 ));
+                prefix = null;
+                startReplace = lastComplete.getEnd() - 1;
+                endReplace = lastComplete.getEnd() - 1;
+                applyPrefixFilter = true;
             }
         }
+        proposals.addAll(createProposals(lastComplete,
+                                         prefix,
+                                         startReplace,
+                                         endReplace,
+                                         applyPrefixFilter
+                                         ));
 
         // sort proposals using an extension (located in an external .ext file):
         Object tmpProposals = fLangUtil.invokeExtension(CONTENT_ASSIST_EXTENSIONS, "sortProposals",
