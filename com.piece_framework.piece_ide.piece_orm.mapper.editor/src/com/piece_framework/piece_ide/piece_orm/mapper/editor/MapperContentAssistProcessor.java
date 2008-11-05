@@ -90,12 +90,8 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
                 int endReplace = offset;
                 prefix = getPrefix(text, lastComplete);
 
-                Set<Element> followUps = NodeUtil.getPossibleFollows(fLangUtil.getXtextFile(),
-                                                                     lastComplete
-                                                                     );
                 proposals.addAll(createProposals(lastComplete,
                                                  prefix,
-                                                 followUps,
                                                  startReplace,
                                                  endReplace,
                                                  false
@@ -108,12 +104,8 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
                                                                          lastComplete.getStart()
                                                                          );
                 prefix = getPrefix(text, previous);
-                Set<Element> followUps = NodeUtil.getPossibleFollows(fLangUtil.getXtextFile(),
-                                                                     previous
-                                                                     );
                 proposals.addAll(createProposals(previous,
                                                  prefix,
-                                                 followUps,
                                                  startReplace,
                                                  endReplace,
                                                  true)
@@ -125,12 +117,8 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
                 int endReplace = (prefix == null) ? 0 : prefix.length();
                 prefix = getPrefix(text, lastComplete);
 
-                Set<Element> followUps = NodeUtil.getPossibleFollows(fLangUtil.getXtextFile(),
-                                                                     lastComplete
-                                                                     );
                 proposals.addAll(createProposals(lastComplete,
                                                  prefix,
-                                                 followUps,
                                                  startReplace,
                                                  endReplace,
                                                  false
@@ -139,11 +127,8 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
                 int startReplace = lastComplete.getEnd() - 1;
                 int endReplace = lastComplete.getEnd() - 1;
 
-                Set<Element> followUps = NodeUtil.getPossibleFollows(fLangUtil.getXtextFile(),
-                                                                     lastComplete);
                 proposals.addAll(createProposals(lastComplete,
                                                  null,
-                                                 followUps,
                                                  startReplace,
                                                  endReplace,
                                                  true
@@ -186,11 +171,13 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
 
     private List<Proposal> createProposals(Node lastComplete,
                                            String prefix,
-                                           Set<Element> followUps,
                                            int startReplace,
                                            int endReplace,
                                            boolean applyPrefixFilter
                                            ) {
+        Set<Element> followUps = NodeUtil.getPossibleFollows(fLangUtil.getXtextFile(),
+                                                             lastComplete
+                                                             );
         List<Proposal> proposals = new ArrayList<Proposal>();
         for (Element element : followUps) {
             try {
