@@ -88,16 +88,12 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         List<Proposal> proposals = new ArrayList<Proposal>(createProposals(parameter));
         proposals = sortProposals(proposals);
 
-        List<ICompletionProposal> cp = new ArrayList<ICompletionProposal>();
-        for (Proposal pi : proposals) {
-            if (!pi.isApplyPrefixFilter()
-                    || parameter.getPrefix() == null
-                    || (pi.getToInsert().toLowerCase().startsWith(parameter.getPrefix()
-                            .toLowerCase()))) {
-                cp.add(createCompletionProposal(pi));
-            }
-        }
-        return cp.toArray(new ICompletionProposal[cp.size()]);
+        List<ICompletionProposal> completionProposals = 
+            createCompletionProposals(proposals,
+                                      parameter.getPrefix()
+                                      );
+
+        return completionProposals.toArray(new ICompletionProposal[completionProposals.size()]);
     }
 
     private List<Proposal> createProposals(ProposalParameter parameter) {
@@ -131,9 +127,23 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         return proposals;
     }
 
-    private ICompletionProposal createCompletionProposal(Proposal p) {
-        Image img = fLangUtil.getImage(p.getImage());
-        return new XtextCompletionProposal(p, img);
+    private List<ICompletionProposal> createCompletionProposals(List<Proposal> proposals,
+                                                                String prefix
+                                                                ) {
+        List<ICompletionProposal> completionProposals = new ArrayList<ICompletionProposal>();
+        for (Proposal proposal : proposals) {
+            if (!proposal.isApplyPrefixFilter()
+                || prefix == null
+                || proposal.getToInsert().toLowerCase().startsWith(prefix.toLowerCase())
+                ) {
+                ICompletionProposal completionProposal =
+                    new XtextCompletionProposal(proposal,
+                                                fLangUtil.getImage(proposal.getImage())
+                                                );
+                completionProposals.add(completionProposal);
+            }
+        }
+        return completionProposals;
     }
 
     private List<Proposal> handleElement(Element element,
