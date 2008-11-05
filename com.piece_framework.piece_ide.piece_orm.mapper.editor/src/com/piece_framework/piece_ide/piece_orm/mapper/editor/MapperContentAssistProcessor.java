@@ -86,27 +86,7 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
                                                                lastComplete
                                                                );
         List<Proposal> proposals = new ArrayList<Proposal>(createProposals(parameter));
-
-        // sort proposals using an extension (located in an external .ext file):
-        Object tmpProposals = fLangUtil.invokeExtension(CONTENT_ASSIST_EXTENSIONS, "sortProposals",
-                proposals);
-        if (tmpProposals instanceof Collection) {
-            if (tmpProposals == proposals) {
-                Collections.sort(proposals, new Comparator<Proposal>() {
-                    public int compare(Proposal o1, Proposal o2) {
-                        if (o1.isApplyPrefixFilter() != o2.isApplyPrefixFilter()) {
-                            if (o1.isApplyPrefixFilter())
-                                return -1;
-                            else
-                                return 1;
-                        }
-                        return o1.getLabel().compareTo(o2.getLabel());
-                    }
-                });
-            } else {
-                proposals = (List<Proposal>) tmpProposals;
-            }
-        }
+        proposals = sortProposals(proposals);
 
         List<ICompletionProposal> cp = new ArrayList<ICompletionProposal>();
         for (Proposal pi : proposals) {
@@ -173,6 +153,35 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
 
         if (proposals == null) {
             proposals = Collections.emptyList();
+        }
+
+        return proposals;
+    }
+
+    private List<Proposal> sortProposals(List<Proposal> proposals) {
+        Object sortedProposals = fLangUtil.invokeExtension(CONTENT_ASSIST_EXTENSIONS,
+                                                           "sortProposals",
+                                                           proposals
+                                                           );
+        if (!(sortedProposals instanceof Collections)) {
+            return proposals;
+        }
+
+        if (sortedProposals == proposals) {
+            Collections.sort(proposals, new Comparator<Proposal>() {
+                public int compare(Proposal o1, Proposal o2) {
+                    if (o1.isApplyPrefixFilter() != o2.isApplyPrefixFilter()) {
+                        if (o1.isApplyPrefixFilter()) {
+                            return -1;
+                        } else {
+                            return 1;
+                        }
+                    }
+                    return o1.getLabel().compareTo(o2.getLabel());
+                }
+            });
+        } else {
+            proposals = (List<Proposal>) sortedProposals;
         }
 
         return proposals;
