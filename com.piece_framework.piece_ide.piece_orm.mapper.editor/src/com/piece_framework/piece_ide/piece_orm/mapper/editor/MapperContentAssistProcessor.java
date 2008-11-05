@@ -184,61 +184,32 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         return cp.toArray(new ICompletionProposal[cp.size()]);
     }
 
-    private List<Proposal> createProposals(Node lastComplete, String prefix,
-            Set<Element> followUps, int startReplace, int endReplace, boolean applyPrefixFilter) {
+    private List<Proposal> createProposals(Node lastComplete,
+                                           String prefix,
+                                           Set<Element> followUps,
+                                           int startReplace,
+                                           int endReplace,
+                                           boolean applyPrefixFilter
+                                           ) {
         List<Proposal> proposals = new ArrayList<Proposal>();
-        for (Element ele : followUps) {
-            List<Proposal> tempResult = null;
-            if (ele instanceof Assignment) {
-                Assignment ass = (Assignment) ele;
-
-                try {
-                    tempResult = handleAssignment(ass, lastComplete, prefix);
-                    proposals.addAll(tempResult != null ? tempResult
-                            : Collections.EMPTY_LIST);
-                } catch (RuntimeException re) {
-                    XtextLog.logInfo(re.getMessage());
-                }
-            } else if (ele instanceof Keyword) {
-                try {
-                    tempResult = handleKeyword((Keyword) ele, lastComplete,
-                            prefix);
-                    proposals.addAll(tempResult != null ? tempResult
-                            : Collections.EMPTY_LIST);
-                } catch (RuntimeException re) {
-                    XtextLog.logInfo(re.getMessage());
-                }
-            } else if (ele instanceof EnumLiteral) {
-                try {
-                    tempResult = handleEnumLiteral((EnumLiteral) ele,
-                            lastComplete, prefix);
-                    proposals.addAll(tempResult != null ? tempResult
-                            : Collections.EMPTY_LIST);
-                } catch (RuntimeException re) {
-                    XtextLog.logInfo(re.getMessage());
-                }
-            } else {
-                try {
-                    tempResult = handleOther(ele, lastComplete, prefix);
-                    proposals.addAll(tempResult != null ? tempResult
-                            : Collections.EMPTY_LIST);
-                } catch (RuntimeException re) {
-                    String message = re.getMessage();
-                    if (message == null) {
-                        // Message can be null, so more info is needed here
-                        //TODO what about above logs and re.getMessage==null? 
-                        XtextLog.logInfo(re.getClass().getSimpleName()
-                                + " occurred", re);
-                    } else
-                        XtextLog.logInfo(re.getMessage());
+        for (Element element : followUps) {
+            try {
+                proposals.addAll(handleElement(element, lastComplete, prefix));
+            } catch (RuntimeException e) {
+                if (e.getMessage() == null) {
+                    XtextLog.logInfo(e.getClass().getSimpleName() + " occurred",
+                                     e
+                                     );
+                } else {
+                    XtextLog.logInfo(e.getMessage());
                 }
             }
         }
 
-        for (Proposal p : proposals) {
-            p.setStartReplace(startReplace);
-            p.setEndReplace(endReplace);
-            p.setApplyPrefixFilter(applyPrefixFilter);
+        for (Proposal proposal : proposals) {
+            proposal.setStartReplace(startReplace);
+            proposal.setEndReplace(endReplace);
+            proposal.setApplyPrefixFilter(applyPrefixFilter);
         }
 
         return proposals;
@@ -262,5 +233,27 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
 
     private boolean insideNode(Node node, int offset) {
         return node.getEnd() >= offset;
+    }
+
+    private List<Proposal> handleElement(Element element,
+                                         Node lastComplete,
+                                         String prefix
+                                         ) {
+        List<Proposal> proposals = null;
+        if (element instanceof Assignment) {
+            proposals = handleAssignment((Assignment) element, lastComplete, prefix);
+        } else if (element instanceof Keyword) {
+            proposals = handleKeyword((Keyword) element, lastComplete, prefix);
+        } else if (element instanceof EnumLiteral) {
+            proposals = handleEnumLiteral((EnumLiteral) element, lastComplete, prefix);
+        } else {
+            proposals = handleOther(element, lastComplete, prefix);
+        }
+
+        if (proposals == null) {
+            proposals = Collections.emptyList();
+        }
+
+        return proposals;
     }
 }
