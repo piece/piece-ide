@@ -1,14 +1,22 @@
 // $Id$
 Mapper :
-  (methods+=Method)*;
+  (mapperStatementList+=MapperStatement)*;
+
+MapperStatement :
+  Method | Association;
 
 Method :
   'method' name=ID '{'
     (methodStatementList+=MethodStatement)*
   '}';
 
+Association :
+  'association' name=ID '{'
+    (associationStatementList+=AssociationStatement)*
+  '}';
+
 MethodStatement :
-  Query | OrderBy | Association;
+  Query | OrderBy | MethodAssociation;
 
 Query :
   name='query' value=STRING;
@@ -16,10 +24,16 @@ Query :
 OrderBy :
   name='orderBy' value=STRING;
 
-Association :
-  'association {'
+MethodAssociation :
+  'association' (InnerAssociation|AssociationReference);
+
+InnerAssociation :
+  '{'
     (associationStatementList+=AssociationStatement)*
   '}';
+
+AssociationReference :
+  name=ID;
 
 AssociationStatement :
   Table | AssociationType | Property | Column | ReferencedColumn | OrderBy | LinkTable;
