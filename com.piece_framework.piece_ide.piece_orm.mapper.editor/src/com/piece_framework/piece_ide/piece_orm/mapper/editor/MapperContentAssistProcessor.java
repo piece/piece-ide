@@ -40,38 +40,14 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         }
 
         Node containerNode = getContainerNode(offset, node);
-        if (containerNode == null) {
-            return proposals;
+        if (containerNode != null) {
+            proposals = removeExistedProposal(proposals,
+                                              wholetext,
+                                              containerNode
+                                              );
         }
 
-        List<ICompletionProposal> removeProposals = new ArrayList<ICompletionProposal>();
-        for (Object childNode : containerNode.getChildren()) {
-            String nodeText = NodeUtil.getText(wholetext, (Node) childNode).trim();
-            if (nodeText.startsWith("association") || nodeText.startsWith("method")) {
-                continue;
-            }
-            for (ICompletionProposal proposal : proposals) {
-                if (nodeText.startsWith(proposal.getDisplayString())) {
-                    removeProposals.add(proposal);
-                }
-            }
-        }
-
-        List<ICompletionProposal> newProposals = new ArrayList<ICompletionProposal>();
-        for (ICompletionProposal proposal : proposals) {
-            boolean add = true;
-            for (ICompletionProposal removeProposal : removeProposals) {
-                if (proposal == removeProposal) {
-                    add = false;
-                    break;
-                }
-            }
-            if (add) {
-                newProposals.add(proposal);
-            }
-        }
-
-        return newProposals.toArray(new ICompletionProposal[0]);
+        return proposals;
     }
 
     private Node getContainerNode(int offset,
@@ -107,5 +83,39 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         boolean insideNode = node.getStart() <= offset && offset <= node.getEnd();
 
         return isContainerRule && insideNode;
+    }
+
+    private ICompletionProposal[] removeExistedProposal(ICompletionProposal[] proposals,
+                                                        String wholetext,
+                                                        Node containerNode
+                                                        ) {
+        List<ICompletionProposal> removeProposals = new ArrayList<ICompletionProposal>();
+        for (Object childNode : containerNode.getChildren()) {
+            String nodeText = NodeUtil.getText(wholetext, (Node) childNode).trim();
+            if (nodeText.startsWith("association") || nodeText.startsWith("method")) {
+                continue;
+            }
+            for (ICompletionProposal proposal : proposals) {
+                if (nodeText.startsWith(proposal.getDisplayString())) {
+                    removeProposals.add(proposal);
+                }
+            }
+        }
+
+        List<ICompletionProposal> newProposals = new ArrayList<ICompletionProposal>();
+        for (ICompletionProposal proposal : proposals) {
+            boolean add = true;
+            for (ICompletionProposal removeProposal : removeProposals) {
+                if (proposal == removeProposal) {
+                    add = false;
+                    break;
+                }
+            }
+            if (add) {
+                newProposals.add(proposal);
+            }
+        }
+
+        return newProposals.toArray(new ICompletionProposal[0]);
     }
 }
