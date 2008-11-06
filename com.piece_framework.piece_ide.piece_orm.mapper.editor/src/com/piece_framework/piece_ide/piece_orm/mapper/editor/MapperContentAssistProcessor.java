@@ -2,9 +2,8 @@
 package com.piece_framework.piece_ide.piece_orm.mapper.editor;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.openarchitectureware.xtext.LanguageUtilities;
@@ -14,6 +13,16 @@ import org.openarchitectureware.xtext.parser.model.NodeUtil;
 import org.openarchitectureware.xtext.parser.parsetree.Node;
 
 public class MapperContentAssistProcessor extends XTextModelContentAssist {
+    private static String[] containerRules = {"Mapper",
+                                              "Method",
+                                              "Association",
+                                              "InnerAssociation",
+                                              "LinkTable"
+                                              };
+    {
+        Arrays.sort(containerRules);
+    }
+
     public MapperContentAssistProcessor(LanguageUtilities langUtil,
                                         AbstractXtextEditor editor
                                         ) {
@@ -72,27 +81,31 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         if (lastComplete == null) {
             return null;
         }
-        boolean insideElement = lastComplete.getEnd() >= offset;
-        if (insideElement) {
+        boolean insideNode = lastComplete.getEnd() >= offset;
+        if (insideNode) {
             return null;
         }
 
-        Map<String, String> parentRules = new HashMap<String, String>();
-        parentRules.put("Mapper", "Mapper");
-        parentRules.put("Method", "Method");
-        parentRules.put("Association", "Association");
-        parentRules.put("InnerAssociation", "InnerAssociation");
-        parentRules.put("LinkTable", "LinkTable");
-
         Node parent = lastComplete.getParent();
-        while (parent != null
-               && (!parentRules.containsKey(parent.getModelElement().eClass().getName())
-                   || parent.getStart() > offset
-                   || offset > parent.getEnd()
-                   )) {
-            parent = parent.getParent();
+        try {
+            while (!checkContainerNode(offset, parent)) {
+                parent = parent.getParent();
+            }
+        } catch (NullPointerException e) {
+            parent = null;
         }
 
         return parent;
+    }
+
+    private boolean checkContainerNode(int offset,
+                                       Node node
+                                       ) {
+        boolean isContainerRule = Arrays.binarySearch(containerRules,
+                                                      node.getModelElement().eClass().getName()
+                                                      ) >= 0;
+        boolean insideNode = node.getStart() <= offset && offset <= node.getEnd();
+
+        return isContainerRule && insideNode;
     }
 }
