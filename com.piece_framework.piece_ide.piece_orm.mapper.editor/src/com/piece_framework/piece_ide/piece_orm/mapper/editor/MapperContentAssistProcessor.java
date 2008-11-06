@@ -30,36 +30,13 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
             return null;
         }
 
-        Node lastComplete = NodeUtil.getNodeBeforeOffset(node, offset);
-        if (lastComplete == null) {
-            return proposals;
-        }
-        boolean insideElement = lastComplete.getEnd() >= offset;
-        if (insideElement) {
-            return proposals;
-        }
-
-        Map<String, String> parentRules = new HashMap<String, String>();
-        parentRules.put("Mapper", "Mapper");
-        parentRules.put("Method", "Method");
-        parentRules.put("Association", "Association");
-        parentRules.put("InnerAssociation", "InnerAssociation");
-        parentRules.put("LinkTable", "LinkTable");
-
-        Node parent = lastComplete.getParent();
-        while (parent != null
-               && (!parentRules.containsKey(parent.getModelElement().eClass().getName())
-                   || parent.getStart() > offset
-                   || offset > parent.getEnd()
-                   )) {
-            parent = parent.getParent();
-        }
-        if (parent == null) {
+        Node containerNode = getContainerNode(offset, node);
+        if (containerNode == null) {
             return proposals;
         }
 
         List<ICompletionProposal> removeProposals = new ArrayList<ICompletionProposal>();
-        for (Object childNode : parent.getChildren()) {
+        for (Object childNode : containerNode.getChildren()) {
             String nodeText = NodeUtil.getText(wholetext, (Node) childNode).trim();
             if (nodeText.startsWith("association") || nodeText.startsWith("method")) {
                 continue;
@@ -86,5 +63,36 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         }
 
         return newProposals.toArray(new ICompletionProposal[0]);
+    }
+
+    private Node getContainerNode(int offset,
+                                  Node node
+                                  ) {
+        Node lastComplete = NodeUtil.getNodeBeforeOffset(node, offset);
+        if (lastComplete == null) {
+            return null;
+        }
+        boolean insideElement = lastComplete.getEnd() >= offset;
+        if (insideElement) {
+            return null;
+        }
+
+        Map<String, String> parentRules = new HashMap<String, String>();
+        parentRules.put("Mapper", "Mapper");
+        parentRules.put("Method", "Method");
+        parentRules.put("Association", "Association");
+        parentRules.put("InnerAssociation", "InnerAssociation");
+        parentRules.put("LinkTable", "LinkTable");
+
+        Node parent = lastComplete.getParent();
+        while (parent != null
+               && (!parentRules.containsKey(parent.getModelElement().eClass().getName())
+                   || parent.getStart() > offset
+                   || offset > parent.getEnd()
+                   )) {
+            parent = parent.getParent();
+        }
+
+        return parent;
     }
 }
