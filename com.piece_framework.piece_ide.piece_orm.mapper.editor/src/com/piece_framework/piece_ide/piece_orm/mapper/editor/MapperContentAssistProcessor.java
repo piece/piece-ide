@@ -3,12 +3,19 @@ package com.piece_framework.piece_ide.piece_orm.mapper.editor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.openarchitectureware.xtext.Assignment;
+import org.openarchitectureware.xtext.Element;
+import org.openarchitectureware.xtext.EnumLiteral;
+import org.openarchitectureware.xtext.Keyword;
 import org.openarchitectureware.xtext.LanguageUtilities;
 import org.openarchitectureware.xtext.editor.AbstractXtextEditor;
 import org.openarchitectureware.xtext.editor.contentassist.XTextModelContentAssist;
+import org.openarchitectureware.xtext.editor.contentassist.codeassist.Proposal;
 import org.openarchitectureware.xtext.parser.model.NodeUtil;
 import org.openarchitectureware.xtext.parser.parsetree.Node;
 
@@ -19,9 +26,45 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
                                               "InnerAssociation",
                                               "LinkTable"
                                               };
+    private static Map<String, Map<String, String>> proposalIcons;
+
     {
         Arrays.sort(containerRules);
+
+        proposalIcons = new HashMap<String, Map<String, String>>();
+
+        Map<String, String> mapperStatements = new HashMap<String, String>();
+        mapperStatements.put("method", "method.gif");
+        mapperStatements.put("association", "association.gif");
+
+        Map<String, String> methodStatements = new HashMap<String, String>();
+        methodStatements.put("query", "method_statement.gif");
+        methodStatements.put("orderBy", "method_statement.gif");
+        methodStatements.put("association", "association.gif");
+
+        Map<String, String> associationStatements = new HashMap<String, String>();
+        associationStatements.put("table", "association_required_statement.gif");
+        associationStatements.put("type", "association_required_statement.gif");
+        associationStatements.put("property", "association_required_statement.gif");
+        associationStatements.put("column", "association_statement.gif");
+        associationStatements.put("referencedColumn", "association_statement.gif");
+        associationStatements.put("orderBy", "association_statement.gif");
+        associationStatements.put("linkTable {", "link_table.gif");
+
+        Map<String, String> linkTableStatements = new HashMap<String, String>();
+        linkTableStatements.put("table", "link_table_required_statement.gif");
+        linkTableStatements.put("column", "link_table_statement.gif");
+        linkTableStatements.put("referencedColumn", "link_table_statement.gif");
+        linkTableStatements.put("inverseColumn", "link_table_statement.gif");
+
+        proposalIcons.put("Mapper", mapperStatements);
+        proposalIcons.put("Method", methodStatements);
+        proposalIcons.put("Association", associationStatements);
+        proposalIcons.put("InnerAssociation", associationStatements);
+        proposalIcons.put("LinkTable", linkTableStatements);
     }
+
+    private Node fContainerNode;
 
     public MapperContentAssistProcessor(LanguageUtilities langUtil,
                                         AbstractXtextEditor editor
@@ -34,19 +77,54 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
                                                           int offset,
                                                           Node node
                                                           ) {
-        ICompletionProposal[] proposals = super.internalComputeProposals(wholetext, offset, node);
-        if (proposals == null) {
-            return null;
-        }
+        fContainerNode = getContainerNode(offset, node);
 
-        Node containerNode = getContainerNode(offset, node);
-        if (containerNode != null) {
-            proposals = removeExistedProposal(proposals,
-                                              wholetext,
-                                              containerNode
-                                              );
-        }
+        ICompletionProposal[] proposals = super.internalComputeProposals(wholetext,
+                                                                         offset,
+                                                                         node
+                                                                         );
+        proposals = removeExistedProposal(proposals, wholetext);
 
+        return proposals;
+    }
+
+    @Override
+    protected List<Proposal> handleAssignment(Assignment element,
+                                              Node lastComplete,
+                                              String prefix
+                                              ) {
+        List<Proposal> proposals = super.handleAssignment(element, lastComplete, prefix);
+        setImage(proposals);
+        return proposals;
+    }
+
+    @Override
+    protected List<Proposal> handleEnumLiteral(EnumLiteral element,
+                                               Node lastComplete,
+                                               String prefix
+                                               ) {
+        List<Proposal> proposals = super.handleEnumLiteral(element, lastComplete, prefix);
+        setImage(proposals);
+        return proposals;
+    }
+
+    @Override
+    protected List<Proposal> handleKeyword(Keyword element,
+                                           Node lastComplete,
+                                           String prefix
+                                           ) {
+        List<Proposal> proposals = super.handleKeyword(element, lastComplete, prefix);
+        setImage(proposals);
+        return proposals;
+    }
+
+    @Override
+    protected List<Proposal> handleOther(Element element,
+                                         Node lastComplete,
+                                         String prefix
+                                         ) {
+        List<Proposal> proposals = super.handleOther(element, lastComplete, prefix);
+        setImage(proposals);
         return proposals;
     }
 
@@ -86,11 +164,17 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
     }
 
     private ICompletionProposal[] removeExistedProposal(ICompletionProposal[] proposals,
-                                                        String wholetext,
-                                                        Node containerNode
+                                                        String wholetext
                                                         ) {
+        if (fContainerNode == null) {
+            return proposals;
+        }
+        if (proposals == null) {
+            return null;
+        }
+
         List<ICompletionProposal> removeProposals = new ArrayList<ICompletionProposal>();
-        for (Object childNode : containerNode.getChildren()) {
+        for (Object childNode : fContainerNode.getChildren()) {
             String nodeText = NodeUtil.getText(wholetext, (Node) childNode).trim();
             if (nodeText.startsWith("association") || nodeText.startsWith("method")) {
                 continue;
@@ -117,5 +201,20 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         }
 
         return newProposals.toArray(new ICompletionProposal[0]);
+    }
+
+    private void setImage(List<Proposal> propsals) {
+        String containerRuleName = fContainerNode != null ? fContainerNode.getModelElement().eClass().getName()
+                                                          : "Mapper";
+
+        Map<String, String> icons = proposalIcons.get(containerRuleName);
+        if (icons == null) {
+            return;
+        }
+        for (Proposal proposal : propsals) {
+            if (icons.containsKey(proposal.getLabel())) {
+                proposal.setImage(icons.get(proposal.getLabel()));
+            }
+        }
     }
 }
