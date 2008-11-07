@@ -19,15 +19,6 @@
          
 		<wizard
 			category="org.openarchitectureware.xtext.wizards"
-			class="com.piece_framework.piece_ide.piece_orm.mapper.wizards.NewPiece_ORM_MapperProjectWizard"
-			icon="icons/template.gif"
-			id="com.piece_framework.piece_ide.piece_orm.mapper.wizards.NewPiece_ORM_MapperProjectWizard"
-			name="Piece_ORM_Mapper Project"
-			project="true">
-		</wizard>
-         
-		<wizard
-			category="org.openarchitectureware.xtext.wizards"
 			class="com.piece_framework.piece_ide.piece_orm.mapper.wizards.NewPiece_ORM_MapperFileWizard"
 			icon="icons/file.gif"
 			id="com.piece_framework.piece_ide.piece_orm.mapper.wizards.NewPiece_ORM_MapperFileWizard"
