@@ -26,6 +26,7 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
                                               "InnerAssociation",
                                               "LinkTable"
                                               };
+    private static String[] unnecessaryWords = {"^(.*) \\{$"};
     private static Map<String, Map<String, String>> proposalIcons;
 
     {
@@ -49,7 +50,7 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         associationStatements.put("column", "association_statement.gif");
         associationStatements.put("referencedColumn", "association_statement.gif");
         associationStatements.put("orderBy", "association_statement.gif");
-        associationStatements.put("linkTable {", "link_table.gif");
+        associationStatements.put("linkTable", "link_table.gif");
 
         Map<String, String> linkTableStatements = new HashMap<String, String>();
         linkTableStatements.put("table", "link_table_required_statement.gif");
@@ -94,6 +95,7 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
                                               String prefix
                                               ) {
         List<Proposal> proposals = super.handleAssignment(element, lastComplete, prefix);
+        cutOutUnnecessaryWords(proposals);
         setImage(proposals);
         return proposals;
     }
@@ -104,6 +106,7 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
                                                String prefix
                                                ) {
         List<Proposal> proposals = super.handleEnumLiteral(element, lastComplete, prefix);
+        cutOutUnnecessaryWords(proposals);
         setImage(proposals);
         return proposals;
     }
@@ -114,6 +117,7 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
                                            String prefix
                                            ) {
         List<Proposal> proposals = super.handleKeyword(element, lastComplete, prefix);
+        cutOutUnnecessaryWords(proposals);
         setImage(proposals);
         return proposals;
     }
@@ -124,6 +128,7 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
                                          String prefix
                                          ) {
         List<Proposal> proposals = super.handleOther(element, lastComplete, prefix);
+        cutOutUnnecessaryWords(proposals);
         setImage(proposals);
         return proposals;
     }
@@ -203,7 +208,7 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         return newProposals.toArray(new ICompletionProposal[0]);
     }
 
-    private void setImage(List<Proposal> propsals) {
+    private void setImage(List<Proposal> proposals) {
         String containerRuleName = fContainerNode != null ? fContainerNode.getModelElement().eClass().getName()
                                                           : "Mapper";
 
@@ -211,9 +216,19 @@ public class MapperContentAssistProcessor extends XTextModelContentAssist {
         if (icons == null) {
             return;
         }
-        for (Proposal proposal : propsals) {
+        for (Proposal proposal : proposals) {
             if (icons.containsKey(proposal.getLabel())) {
                 proposal.setImage(icons.get(proposal.getLabel()));
+            }
+        }
+    }
+
+    private void cutOutUnnecessaryWords(List<Proposal> proposals) {
+        for (Proposal proposal : proposals) {
+            for (String unnecessaryWord : unnecessaryWords) {
+                if (proposal.getLabel().matches(unnecessaryWord)) {
+                    proposal.setLabel(proposal.getLabel().replaceAll(unnecessaryWord, "$1"));
+                }
             }
         }
     }
