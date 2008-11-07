@@ -10,6 +10,8 @@ import org.openarchitectureware.xtext.AbstractXtextEditorPlugin;
 import org.openarchitectureware.xtext.editor.AbstractXtextEditor;
 import org.openarchitectureware.xtext.editor.XtextSourceViewerConfiguration;
 
+import com.piece_framework.piece_ide.piece_orm.mapper.editor.contentassist.MapperContentAssistProcessor;
+
 public class MapperSourceViewerConfiguration extends XtextSourceViewerConfiguration {
     private AbstractXtextEditorPlugin fPlugin;
     private AbstractXtextEditor fEditor;

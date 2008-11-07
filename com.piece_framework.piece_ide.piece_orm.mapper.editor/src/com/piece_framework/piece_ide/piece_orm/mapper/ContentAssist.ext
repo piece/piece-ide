@@ -19,13 +19,13 @@ List[Proposal] completeMethod_name(emf::EObject ctx, String prefix) :
     getProposalListForMethodName();
 
 List[Proposal] getProposalListForMethodName() :
-    JAVA com.piece_framework.piece_ide.piece_orm.mapper.editor.MethodNameContentAssist.getProposalList();
+    JAVA com.piece_framework.piece_ide.piece_orm.mapper.editor.contentassist.MethodNameContentAssist.getProposalList();
 
 List[Proposal] completeAssociationReference_name(emf::EObject ctx, String prefix) :
     getProposalListForAssociationName();
 
 List[Proposal] getProposalListForAssociationName() :
-    JAVA com.piece_framework.piece_ide.piece_orm.mapper.editor.AssociationNameContentAssist.getProposalList();
+    JAVA com.piece_framework.piece_ide.piece_orm.mapper.editor.contentassist.AssociationNameContentAssist.getProposalList();
 
 List[Proposal] sortProposals(List[Proposal] proposalsToSort):
     null;
