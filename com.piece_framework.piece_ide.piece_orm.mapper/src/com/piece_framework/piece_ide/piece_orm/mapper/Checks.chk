@@ -10,11 +10,17 @@ extension com::piece_framework::piece_ide::piece_orm::mapper::Extensions;
 context Method ERROR "Duplicate type detected: " + this.name :
     allElements().typeSelect(Method).select(e|e.name == this.name).size == 1;
 
+context Association ERROR "Duplicate type detected: " + this.name :
+    allElements().typeSelect(Association).select(e|e.name == this.name).size == 1;
+
 context Query ERROR "Duplicate type detected: " + this.name :
     eContainer.eContents.typeSelect(Query).select(e|e.name == this.name).size == 1;
 
 context OrderBy ERROR "Duplicate type detected: " + this.name :
     eContainer.eContents.typeSelect(OrderBy).select(e|e.name == this.name).size == 1;
+
+context AssociationReference ERROR "Duplicate type detected: " + this.name :
+    eContainer.eContents.typeSelect(AssociationReference).select(e|e.name == this.name).size == 1;
 
 context Table ERROR "Duplicate type detected: " + this.name :
     eContainer.eContents.typeSelect(Table).select(e|e.name == this.name).size == 1;
@@ -64,3 +70,7 @@ context InnerAssociation ERROR
 context LinkTable ERROR
     "The [ table ] statement was not found in the 'linkTable' statement. A 'linkTable' statement must contain the 'table' statement." :
     eContents.typeSelect(Table).size == 1;
+
+context AssociationReference ERROR
+    "'" + this.name + "' is undefined." :
+    allElements().typeSelect(Association).select(e|e.name == this.name).size == 1;
