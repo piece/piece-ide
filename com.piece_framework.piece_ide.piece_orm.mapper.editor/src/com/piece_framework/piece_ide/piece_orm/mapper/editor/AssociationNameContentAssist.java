@@ -9,7 +9,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
-import org.openarchitectureware.xtext.editor.contentassist.codeassist.CodeassistFactory;
 import org.openarchitectureware.xtext.editor.contentassist.codeassist.Proposal;
 import org.openarchitectureware.xtext.editor.contentassist.codeassist.impl.CodeassistFactoryImpl;
 import org.openarchitectureware.xtext.parser.parsetree.Node;
@@ -18,6 +17,20 @@ import com.piece_framework.piece_ide.piece_orm.mapper.Piece_ORM_MapperEditorPlug
 
 public class AssociationNameContentAssist {
     public static List<Proposal> getProposalList() {
+        Node root = getRootNode();
+        if (root == null) {
+            return null;
+        }
+
+        List<Proposal> proposals = new ArrayList<Proposal>();
+        for (String associationName : getAssociationNames(root)) {
+            proposals.add(createProposal(associationName));
+        }
+
+        return proposals;
+    }
+
+    private static Node getRootNode() {
         Piece_ORM_MapperEditorPlugin plugin = Piece_ORM_MapperEditorPlugin.getDefault();
         IEditorPart editor = plugin.getWorkbench()
                                    .getActiveWorkbenchWindow()
@@ -29,9 +42,11 @@ public class AssociationNameContentAssist {
         IDocument document =
             ((AbstractTextEditor) editor).getDocumentProvider().getDocument(editor.getEditorInput());
 
-        Node root = plugin.getRootNode(document.get());
-        List<Proposal> proposals = new ArrayList<Proposal>();
-        CodeassistFactory factory = CodeassistFactoryImpl.init();
+        return plugin.getRootNode(document.get());
+    }
+
+    private static List<String> getAssociationNames(Node root) {
+        List<String> associationNames = new ArrayList<String>();
         for (Object childNode : root.getChildren()) {
             EObject model = ((Node) childNode).getModelElement();
             if (model == null) {
@@ -48,17 +63,19 @@ public class AssociationNameContentAssist {
                     break;
                 }
             }
-            if (associationName == null) {
-                continue;
+            if (associationName != null) {
+                associationNames.add(associationName);
             }
-
-            Proposal proposal = factory.createProposal();
-            proposal.setLabel(associationName);
-            proposal.setToInsert(associationName);
-            proposal.setImage("association.gif");
-            proposals.add(proposal);
         }
 
-        return proposals;
+        return associationNames;
+    }
+
+    private static Proposal createProposal(String associationName) {
+        Proposal proposal = CodeassistFactoryImpl.init().createProposal();
+        proposal.setLabel(associationName);
+        proposal.setToInsert(associationName);
+        proposal.setImage("association.gif");
+        return proposal;
     }
 }
