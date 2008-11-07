@@ -21,5 +21,11 @@ List[Proposal] completeMethod_name(emf::EObject ctx, String prefix) :
 List[Proposal] getProposalListForMethodName() :
     JAVA com.piece_framework.piece_ide.piece_orm.mapper.editor.MethodNameContentAssist.getProposalList();
 
+List[Proposal] completeAssociationReference_name(emf::EObject ctx, String prefix) :
+    getProposalListForAssociationName();
+
+List[Proposal] getProposalListForAssociationName() :
+    JAVA com.piece_framework.piece_ide.piece_orm.mapper.editor.AssociationNameContentAssist.getProposalList();
+
 List[Proposal] sortProposals(List[Proposal] proposalsToSort):
     null;
