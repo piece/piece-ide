@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Piece_ORM_Mapper Editor Plug-in
+Bundle-Name: %Manifest.BundleName
 Bundle-SymbolicName: com.piece_framework.piece_ide.piece_orm.mapper.editor; singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.1.0
 Bundle-Activator: com.piece_framework.piece_ide.piece_orm.mapper.Piece_ORM_MapperEditorPlugin
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
@@ -19,4 +19,5 @@ Eclipse-LazyStart: true
 Export-Package: com.piece_framework.piece_ide.piece_orm.mapper,
  com.piece_framework.piece_ide.piece_orm.mapper.editor
 Bundle-ClassPath: .
+Bundle-Vendor: %Manifest.BundleProvider
 
