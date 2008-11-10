@@ -1,3 +1,4 @@
+// $Id$
 package com.piece_framework.piece_ide.piece_orm.mapper;
 
 import java.io.ByteArrayInputStream;
@@ -7,6 +8,14 @@ import org.openarchitectureware.xtext.LanguageUtilities;
 import org.openarchitectureware.xtext.parser.parsetree.Node;
 import org.osgi.framework.BundleContext;
 
+/**
+ * プラグインクラス.
+ * プラグインのライフサイクルとユーティリティオブジェクトを管理する。
+ *
+ * @author MATSUFUJI Hideharu
+ * @since 0.1.0
+ *
+ */
 public class Piece_ORM_MapperEditorPlugin extends AbstractXtextEditorPlugin {
    private static Piece_ORM_MapperEditorPlugin plugin;
    public static Piece_ORM_MapperEditorPlugin getDefault() {

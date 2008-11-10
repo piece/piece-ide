@@ -8,6 +8,13 @@ import org.openarchitectureware.xtext.editor.contentassist.codeassist.Codeassist
 import org.openarchitectureware.xtext.editor.contentassist.codeassist.Proposal;
 import org.openarchitectureware.xtext.editor.contentassist.codeassist.impl.CodeassistFactoryImpl;
 
+/**
+ * メソッド名補完クラス.
+ *
+ * @author MATSUFUJI Hideharu
+ * @since 0.1.0
+ *
+ */
 public class MethodNameContentAssist {
     private static List<Proposal> fProposals;
 

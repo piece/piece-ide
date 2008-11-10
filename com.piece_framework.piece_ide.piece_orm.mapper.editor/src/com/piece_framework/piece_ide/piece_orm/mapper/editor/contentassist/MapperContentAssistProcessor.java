@@ -19,6 +19,14 @@ import org.openarchitectureware.xtext.editor.contentassist.codeassist.Proposal;
 import org.openarchitectureware.xtext.parser.model.NodeUtil;
 import org.openarchitectureware.xtext.parser.parsetree.Node;
 
+/**
+ * 補完処理クラス.
+ * 既に登録されているエレメントを非表示、候補ごとにアイコンの変更を行う。
+ *
+ * @author MATSUFUJI Hideharu
+ * @since 0.1.0
+ *
+ */
 public class MapperContentAssistProcessor extends XTextModelContentAssist {
     private static String[] containerRules = {"Mapper",
                                               "Method",

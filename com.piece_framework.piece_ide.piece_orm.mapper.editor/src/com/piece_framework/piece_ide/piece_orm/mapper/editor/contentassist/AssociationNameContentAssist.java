@@ -15,6 +15,13 @@ import org.openarchitectureware.xtext.parser.parsetree.Node;
 
 import com.piece_framework.piece_ide.piece_orm.mapper.Piece_ORM_MapperEditorPlugin;
 
+/**
+ * アソシエーション名補完クラス.
+ *
+ * @author MATSUFUJI Hideharu
+ * @since 0.1.0
+ *
+ */
 public class AssociationNameContentAssist {
     public static List<Proposal> getProposalList() {
         Node root = getRootNode();

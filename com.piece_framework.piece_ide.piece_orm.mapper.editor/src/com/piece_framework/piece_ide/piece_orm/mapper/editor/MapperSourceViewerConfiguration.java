@@ -12,6 +12,13 @@ import org.openarchitectureware.xtext.editor.XtextSourceViewerConfiguration;
 
 import com.piece_framework.piece_ide.piece_orm.mapper.editor.contentassist.MapperContentAssistProcessor;
 
+/**
+ * ソースビューアーコンフィギュレーションクラス.
+ *
+ * @author MATSUFUJI Hideharu
+ * @since 0.1.0
+ *
+ */
 public class MapperSourceViewerConfiguration extends XtextSourceViewerConfiguration {
     private AbstractXtextEditorPlugin fPlugin;
     private AbstractXtextEditor fEditor;

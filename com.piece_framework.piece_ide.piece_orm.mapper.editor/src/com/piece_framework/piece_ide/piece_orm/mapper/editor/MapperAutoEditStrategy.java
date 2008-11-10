@@ -10,6 +10,13 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.TextUtilities;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 
+/**
+ * 自動編集クラス.
+ *
+ * @author MATSUFUJI Hideharu
+ * @since 0.1.0
+ *
+ */
 public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
     private IPreferenceStore fPreferenceStore;
 
