@@ -13,12 +13,7 @@ public class MethodNameContentAssist {
 
     public static List<Proposal> getProposalList() {
         if (fProposals == null) {
-            String[] labels = {"findById",
-                               "findByName",
-                               "insert",
-                               "update",
-                               "delete"
-                               };
+            String[] labels = {};
 
             fProposals = new ArrayList<Proposal>();
             CodeassistFactory factory = CodeassistFactoryImpl.init();
