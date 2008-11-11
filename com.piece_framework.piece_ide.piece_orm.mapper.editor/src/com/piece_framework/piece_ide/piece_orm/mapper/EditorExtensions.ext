@@ -7,3 +7,24 @@ extension com::piece_framework::piece_ide::piece_orm::mapper::GenEditorExtension
  * use this file to overwrite the label() and the image()
  * extension for your model elements
  */
+
+String image(emf::EObject this) :
+    switch {
+        case Mapper.isInstance(this.eContainer) && Method.isInstance(this) : "method.gif"
+        case Mapper.isInstance(this.eContainer) && Association.isInstance(this) : "association.gif"
+        case Method.isInstance(this.eContainer) && Query.isInstance(this) : "method_statement.gif"
+        case Method.isInstance(this.eContainer) && OrderBy.isInstance(this) : "method_statement.gif"
+        case Method.isInstance(this.eContainer) && MethodAssociation.isInstance(this) : "association.gif"
+        case (Association.isInstance(this.eContainer) || MethodAssociation.isInstance(this.eContainer)) && Table.isInstance(this) : "association_required_statement.gif"
+        case (Association.isInstance(this.eContainer) || MethodAssociation.isInstance(this.eContainer)) && AssociationType.isInstance(this) : "association_required_statement.gif"
+        case (Association.isInstance(this.eContainer) || MethodAssociation.isInstance(this.eContainer)) && Property.isInstance(this) : "association_required_statement.gif"
+        case (Association.isInstance(this.eContainer) || MethodAssociation.isInstance(this.eContainer)) && Column.isInstance(this) : "association_statement.gif"
+        case (Association.isInstance(this.eContainer) || MethodAssociation.isInstance(this.eContainer)) && ReferencedColumn.isInstance(this) : "association_statement.gif"
+        case (Association.isInstance(this.eContainer) || MethodAssociation.isInstance(this.eContainer)) && OrderBy.isInstance(this) : "association_statement.gif"
+        case (Association.isInstance(this.eContainer) || MethodAssociation.isInstance(this.eContainer)) && LinkTable.isInstance(this) : "link_table.gif"
+        case LinkTable.isInstance(this.eContainer) && Table.isInstance(this) : "link_table_required_statement.gif"
+        case LinkTable.isInstance(this.eContainer) && Column.isInstance(this) : "link_table_statement.gif"
+        case LinkTable.isInstance(this.eContainer) && ReferencedColumn.isInstance(this) : "link_table_statement.gif"
+        case LinkTable.isInstance(this.eContainer) && InverseColumn.isInstance(this) : "link_table_statement.gif"
+        default : "default.gif"
+    };
