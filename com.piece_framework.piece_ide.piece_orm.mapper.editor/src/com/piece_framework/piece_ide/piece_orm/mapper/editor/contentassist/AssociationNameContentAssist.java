@@ -6,9 +6,8 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.texteditor.AbstractTextEditor;
+import org.openarchitectureware.xtext.editor.AbstractXtextEditor;
 import org.openarchitectureware.xtext.editor.contentassist.codeassist.Proposal;
 import org.openarchitectureware.xtext.editor.contentassist.codeassist.impl.CodeassistFactoryImpl;
 import org.openarchitectureware.xtext.parser.parsetree.Node;
@@ -38,18 +37,16 @@ public class AssociationNameContentAssist {
     }
 
     private static Node getRootNode() {
-        Piece_ORM_MapperEditorPlugin plugin = Piece_ORM_MapperEditorPlugin.getDefault();
-        IEditorPart editor = plugin.getWorkbench()
+        IEditorPart editor = Piece_ORM_MapperEditorPlugin.getDefault()
+                                   .getWorkbench()
                                    .getActiveWorkbenchWindow()
                                    .getActivePage()
                                    .getActiveEditor();
-        if (!(editor instanceof AbstractTextEditor)) {
+        if (!(editor instanceof AbstractXtextEditor)) {
             return null;
         }
-        IDocument document =
-            ((AbstractTextEditor) editor).getDocumentProvider().getDocument(editor.getEditorInput());
 
-        return plugin.getRootNode(document.get());
+        return ((AbstractXtextEditor) editor).getRootNode();
     }
 
     private static List<String> getAssociationNames(Node root) {
