@@ -8,6 +8,15 @@ extension com::piece_framework::piece_ide::piece_orm::mapper::GenEditorExtension
  * extension for your model elements
  */
 
+String label(emf::EObject this) :
+    switch {
+        case metaType.getProperty("name") != null &&
+             String.isAssignableFrom(metaType.getProperty("name").returnType) : metaType.getProperty("name").get(this)
+        case InnerAssociation.isInstance(this) : "association (table=" + eContents.typeSelect(Table).get(0).value + ")"
+        case LinkTable.isInstance(this) : "linkTable"
+        default : ""
+    };
+
 String image(emf::EObject this) :
     switch {
         case Mapper.isInstance(this.eContainer) && Method.isInstance(this) : "method.gif"
