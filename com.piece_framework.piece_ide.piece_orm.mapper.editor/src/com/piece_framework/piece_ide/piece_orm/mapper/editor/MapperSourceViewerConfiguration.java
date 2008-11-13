@@ -36,7 +36,7 @@ public class MapperSourceViewerConfiguration extends XtextSourceViewerConfigurat
                                                      String contentType
                                                      ) {
         if (contentType.equals(IDocument.DEFAULT_CONTENT_TYPE)) {
-            return new IAutoEditStrategy[] { new MapperAutoEditStrategy(fPreferenceStore) };
+            return new IAutoEditStrategy[] { new MapperAutoEditStrategy(fPreferenceStore, fEditor) };
         }
 
         return super.getAutoEditStrategies(sourceViewer, contentType);

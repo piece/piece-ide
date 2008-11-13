@@ -1,6 +1,8 @@
 // $Id$
 package com.piece_framework.piece_ide.piece_orm.mapper.editor;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DefaultIndentLineAutoEditStrategy;
@@ -9,6 +11,9 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.TextUtilities;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
+import org.openarchitectureware.xtext.editor.AbstractXtextEditor;
+import org.openarchitectureware.xtext.impl.AssignmentImpl;
+import org.openarchitectureware.xtext.parser.parsetree.Node;
 
 /**
  * 自動編集クラス.
@@ -19,9 +24,12 @@ import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
  */
 public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
     private IPreferenceStore fPreferenceStore;
+    private AbstractXtextEditor fEditor;
 
-    public MapperAutoEditStrategy(IPreferenceStore preferenceStore) {
+    public MapperAutoEditStrategy(IPreferenceStore preferenceStore,
+                                  AbstractXtextEditor editor) {
         fPreferenceStore = preferenceStore;
+        fEditor = editor;
     }
 
     public void customizeDocumentCommand(IDocument document, DocumentCommand command) {
@@ -31,6 +39,8 @@ public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
 
         if (isLineDelimiter(document, command)) {
             smartIndentAfterNewLine(document, command);
+        } else if (isAssociationAssignmentNode()) {
+            smartAssociationName(document, command);
         } else {
             super.customizeDocumentCommand(document, command);
         }
@@ -200,5 +210,109 @@ public class MapperAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
         return document.get(line.getOffset(),
                             contentOffset - line.getOffset()
                             );
+    }
+
+    private boolean isAssociationAssignmentNode() {
+        Node currentNode = fEditor.getCurrentNode();
+        if (currentNode == null) {
+            return false;
+        }
+        if (currentNode.getParent() == null) {
+            return false;
+        }
+        if (currentNode.getParent().getModelElement() == null) {
+            return false;
+        }
+
+        return currentNode.getParent().getModelElement().eClass().getName().equals("Association")
+               && currentNode.getGrammarElement() instanceof AssignmentImpl;
+    }
+
+    private boolean isMethodNode(Node node) {
+        if (node.getModelElement() == null) {
+            return false;
+        }
+
+        return node.getModelElement().eClass().getName().equals("Method");
+    }
+
+    private boolean isAssociationReferentNode(Node node) {
+        if (node.getModelElement() == null) {
+            return false;
+        }
+
+        return node.getModelElement().eClass().getName().equals("AssociationReference");
+    }
+
+    private void smartAssociationName(IDocument document,
+                                      DocumentCommand command
+                                      ) {
+        EObject association = fEditor.getCurrentNode().getParent().getModelElement();
+        String associationName = getName(association);
+        if (associationName == null) {
+            return;
+        }
+
+        Node associationAssignmentNode = fEditor.getCurrentNode();
+        int offsetOfWord = command.offset - associationAssignmentNode.getStart();
+
+        Node rootNode = fEditor.getRootNode();
+        if (rootNode == null) {
+            return;
+        }
+
+        int targetNodeCountBeforeOffset = 0;
+        for (EObject mapperNode : fEditor.getRootNode().eContents()) {
+            if (!isMethodNode((Node) mapperNode)) {
+                continue;
+            }
+
+            for (EObject methodNode : ((Node) mapperNode).eContents()) {
+                if (!isAssociationReferentNode((Node) methodNode)) {
+                    continue;
+                }
+
+                Node associationReferenceNode = (Node) methodNode;
+                EObject associationReference = associationReferenceNode.getModelElement();
+                if (associationName.equals(getName(associationReference))) {
+                    Node targetNode = (Node) associationReferenceNode.getChildren().get(1);
+                    try {
+                        command.addCommand(targetNode.getStart() + offsetOfWord,
+                                           command.length,
+                                           command.text,
+                                           command.owner
+                                           );
+                    } catch (BadLocationException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    if (targetNode.getEnd() < command.offset) {
+                        targetNodeCountBeforeOffset++;
+                    }
+                }
+            }
+        }
+
+        if (command.getCommandCount() > 1) {
+            boolean delete = command.length > 0;
+            command.caretOffset = command.offset + (targetNodeCountBeforeOffset + 1) * command.text.length();
+            if (delete) {
+                command.caretOffset -= targetNodeCountBeforeOffset * command.length;
+            }
+            command.shiftsCaret = false;
+            command.doit = false;
+        }
+    }
+
+    private String getName(EObject eObject) {
+        for (EAttribute attribute : eObject.eClass().getEAllAttributes()) {
+            if (attribute.getName().equals("name")
+                && eObject.eGet(attribute) instanceof String
+                ) {
+                return (String) eObject.eGet(attribute);
+            }
+        }
+
+        return null;
     }
 }
