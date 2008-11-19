@@ -18,11 +18,11 @@
          point="org.eclipse.ui.newWizards">
          
 		<wizard
-			category="org.openarchitectureware.xtext.wizards"
+			category="com.piece_framework.piece_ide"
 			class="com.piece_framework.piece_ide.piece_orm.mapper.wizards.NewPiece_ORM_MapperFileWizard"
 			icon="icons/file.gif"
 			id="com.piece_framework.piece_ide.piece_orm.mapper.wizards.NewPiece_ORM_MapperFileWizard"
-			name="Piece_ORM_Mapper Editor file">
+			name="%Manifest.Wizard.Name">
 		</wizard>
 	</extension>
 </plugin>
