@@ -1,10 +1,10 @@
 // $Id$
-package com.piece_framework.piece_ide.piece_orm.mapper.editor;
+package com.piece_framework.piece_ide.piece_orm.mapper.oaw.editor;
 
 import org.openarchitectureware.xtext.AbstractXtextEditorPlugin;
 import org.openarchitectureware.xtext.editor.AbstractXtextEditor;
 
-import com.piece_framework.piece_ide.piece_orm.mapper.Piece_ORM_MapperEditorPlugin;
+import com.piece_framework.piece_ide.piece_orm.mapper.oaw.Piece_ORM_MapperEditorPlugin;
 
 /**
  * エディタークラス.

@@ -1,8 +1,8 @@
 import piece_orm_mapper;
 import codeassist;
 
-extension com::piece_framework::piece_ide::piece_orm::mapper::Extensions;
-extension com::piece_framework::piece_ide::piece_orm::mapper::GenContentAssist reexport;
+extension com::piece_framework::piece_ide::piece_orm::mapper::oaw::Extensions;
+extension com::piece_framework::piece_ide::piece_orm::mapper::oaw::GenContentAssist reexport;
 
 /*
  * There are two types of extensions one can define

@@ -1,5 +1,5 @@
 // $Id$
-package com.piece_framework.piece_ide.piece_orm.mapper.editor.contentassist;
+package com.piece_framework.piece_ide.piece_orm.mapper.oaw.editor.contentassist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.openarchitectureware.xtext.editor.contentassist.codeassist.Proposal;
 import org.openarchitectureware.xtext.editor.contentassist.codeassist.impl.CodeassistFactoryImpl;
 import org.openarchitectureware.xtext.parser.parsetree.Node;
 
-import com.piece_framework.piece_ide.piece_orm.mapper.Piece_ORM_MapperEditorPlugin;
+import com.piece_framework.piece_ide.piece_orm.mapper.oaw.Piece_ORM_MapperEditorPlugin;
 
 /**
  * アソシエーション名補完クラス.

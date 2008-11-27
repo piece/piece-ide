@@ -1,5 +1,5 @@
 // $Id$
-package com.piece_framework.piece_ide.piece_orm.mapper;
+package com.piece_framework.piece_ide.piece_orm.mapper.oaw;
 
 import org.openarchitectureware.xtext.AbstractXtextEditorPlugin;
 import org.openarchitectureware.xtext.LanguageUtilities;

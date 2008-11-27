@@ -1,8 +1,8 @@
 import piece_orm_mapper;
 import tree;
 
-extension com::piece_framework::piece_ide::piece_orm::mapper::EditorExtensions;
-extension com::piece_framework::piece_ide::piece_orm::mapper::GenOutline reexport;
+extension com::piece_framework::piece_ide::piece_orm::mapper::oaw::EditorExtensions;
+extension com::piece_framework::piece_ide::piece_orm::mapper::oaw::GenOutline reexport;
 
 /*
  * overwrite the extension

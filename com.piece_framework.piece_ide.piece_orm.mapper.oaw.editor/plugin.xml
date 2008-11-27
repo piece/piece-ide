@@ -5,11 +5,11 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="com.piece_framework.piece_ide.piece_orm.mapper.editor.Piece_ORM_MapperEditor"
+            class="com.piece_framework.piece_ide.piece_orm.mapper.oaw.editor.Piece_ORM_MapperEditor"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             extensions="mapper"
             icon="icons/file.gif"
-            id="com.piece_framework.piece_ide.piece_orm.mapper.editor.Piece_ORM_MapperEditor"
+            id="com.piece_framework.piece_ide.piece_orm.mapper.oaw.editor.Piece_ORM_MapperEditor"
             name="Piece_ORM_Mapper Editor">
       </editor>
    </extension>
@@ -19,9 +19,9 @@
          
 		<wizard
 			category="com.piece_framework.piece_ide"
-			class="com.piece_framework.piece_ide.piece_orm.mapper.wizards.NewPiece_ORM_MapperFileWizard"
+			class="com.piece_framework.piece_ide.piece_orm.mapper.oaw.wizards.NewPiece_ORM_MapperFileWizard"
 			icon="icons/file.gif"
-			id="com.piece_framework.piece_ide.piece_orm.mapper.wizards.NewPiece_ORM_MapperFileWizard"
+			id="com.piece_framework.piece_ide.piece_orm.mapper.oaw.wizards.NewPiece_ORM_MapperFileWizard"
 			name="%Manifest.Wizard.Name">
 		</wizard>
 	</extension>

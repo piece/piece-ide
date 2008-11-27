@@ -1,5 +1,5 @@
 // $Id$
-package com.piece_framework.piece_ide.piece_orm.mapper.editor.contentassist;
+package com.piece_framework.piece_ide.piece_orm.mapper.oaw.editor.contentassist;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Manifest.BundleName
 Bundle-SymbolicName: com.piece_framework.piece_ide.piece_orm.mapper.oaw.editor;singleton:=true
 Bundle-Version: 0.1.0
-Bundle-Activator: com.piece_framework.piece_ide.piece_orm.mapper.Piece_ORM_MapperEditorPlugin
+Bundle-Activator: com.piece_framework.piece_ide.piece_orm.mapper.oaw.Piece_ORM_MapperEditorPlugin
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -16,8 +16,8 @@ Require-Bundle: org.eclipse.ui,
  org.openarchitectureware.xtext.editor.base,
  com.piece_framework.piece_ide.piece_orm.mapper.oaw
 Eclipse-LazyStart: true
-Export-Package: com.piece_framework.piece_ide.piece_orm.mapper,
- com.piece_framework.piece_ide.piece_orm.mapper.editor
+Export-Package: com.piece_framework.piece_ide.piece_orm.mapper.oaw,
+ com.piece_framework.piece_ide.piece_orm.mapper.oaw.editor
 Bundle-ClassPath: .
 Bundle-Vendor: %Manifest.BundleProvider
 

@@ -1,7 +1,7 @@
 import scanning;
 import piece_orm_mapper;
 
-extension com::piece_framework::piece_ide::piece_orm::mapper::GenStyle reexport;
+extension com::piece_framework::piece_ide::piece_orm::mapper::oaw::GenStyle reexport;
 
 /*
  * Overwrite 'FontStyle fontstyle(String keyword, Object ctx)' to customize the style of keywords.

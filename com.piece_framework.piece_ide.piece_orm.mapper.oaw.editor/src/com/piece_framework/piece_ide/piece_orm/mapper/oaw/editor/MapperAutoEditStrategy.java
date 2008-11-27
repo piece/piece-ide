@@ -1,5 +1,5 @@
 // $Id$
-package com.piece_framework.piece_ide.piece_orm.mapper.editor;
+package com.piece_framework.piece_ide.piece_orm.mapper.oaw.editor;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;

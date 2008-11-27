@@ -1,5 +1,5 @@
 // $Id$
-package com.piece_framework.piece_ide.piece_orm.mapper.editor;
+package com.piece_framework.piece_ide.piece_orm.mapper.oaw.editor;
 
 import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.text.IDocument;
@@ -10,7 +10,7 @@ import org.openarchitectureware.xtext.AbstractXtextEditorPlugin;
 import org.openarchitectureware.xtext.editor.AbstractXtextEditor;
 import org.openarchitectureware.xtext.editor.XtextSourceViewerConfiguration;
 
-import com.piece_framework.piece_ide.piece_orm.mapper.editor.contentassist.MapperContentAssistProcessor;
+import com.piece_framework.piece_ide.piece_orm.mapper.oaw.editor.contentassist.MapperContentAssistProcessor;
 
 /**
  * ソースビューアーコンフィギュレーションクラス.
