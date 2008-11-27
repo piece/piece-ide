@@ -10,7 +10,7 @@
             extensions="mapper"
             icon="icons/file.gif"
             id="com.piece_framework.piece_ide.piece_orm.mapper.oaw.editor.Piece_ORM_MapperEditor"
-            name="Piece_ORM_Mapper Editor">
+            name="Piece_ORM_Mapper Editor(oAW)">
       </editor>
    </extension>
 
