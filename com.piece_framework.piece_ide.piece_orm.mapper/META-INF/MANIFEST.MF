@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Manifest.BundleName
-Bundle-SymbolicName: com.piece_framework.piece_ide.piece_orm.mapper;singleton:=true
+Bundle-SymbolicName: com.piece_framework.piece_ide.piece_orm.mapper.oaw;singleton:=true
 Bundle-Version: 0.1.0
 Require-Bundle: org.openarchitectureware.dependencies;visibility:=reexport,
  org.antlr;visibility:=reexport,
