@@ -1,7 +1,7 @@
 import piece_orm_mapper;
 
-extension com::piece_framework::piece_ide::piece_orm::mapper::Extensions;
-extension com::piece_framework::piece_ide::piece_orm::mapper::GenFormatting;
+extension com::piece_framework::piece_ide::piece_orm::mapper::oaw::Extensions;
+extension com::piece_framework::piece_ide::piece_orm::mapper::oaw::GenFormatting;
 
 /*
  * This file is intended to define the standard serialization

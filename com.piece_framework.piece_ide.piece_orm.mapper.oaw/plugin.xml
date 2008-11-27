@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.emf.ecore.extension_parser">
       <parser
-            class="com.piece_framework.piece_ide.piece_orm.mapper.resource.Piece_ORM_MapperResourceFactory"
+            class="com.piece_framework.piece_ide.piece_orm.mapper.oaw.resource.Piece_ORM_MapperResourceFactory"
             type="mapper">
       </parser>
    </extension>

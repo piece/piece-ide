@@ -1,7 +1,7 @@
 import piece_orm_mapper;
 
-extension com::piece_framework::piece_ide::piece_orm::mapper::Extensions;
-extension com::piece_framework::piece_ide::piece_orm::mapper::GenLinking reexport;
+extension com::piece_framework::piece_ide::piece_orm::mapper::oaw::Extensions;
+extension com::piece_framework::piece_ide::piece_orm::mapper::oaw::GenLinking reexport;
 
 /*
  * If you need more sophisticated linking semantic just overwrite the linking extensions here and add your own logic.

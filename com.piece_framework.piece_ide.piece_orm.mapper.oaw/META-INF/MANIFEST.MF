@@ -8,7 +8,7 @@ Require-Bundle: org.openarchitectureware.dependencies;visibility:=reexport,
  org.openarchitectureware.xtext.core.base;visibility:=reexport,
  org.openarchitectureware.xtext.generator
 Eclipse-LazyStart: true
-Export-Package: com.piece_framework.piece_ide.piece_orm.mapper,
-                com.piece_framework.piece_ide.piece_orm.mapper.parser
+Export-Package: com.piece_framework.piece_ide.piece_orm.mapper.oaw,
+                com.piece_framework.piece_ide.piece_orm.mapper.oaw.parser
 Bundle-Vendor: %Manifest.BundleProvider
 
