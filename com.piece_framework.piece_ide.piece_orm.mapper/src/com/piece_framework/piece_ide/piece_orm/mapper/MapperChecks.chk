@@ -5,3 +5,51 @@ import Mapper;
  * context Entity WARNING "Entity names should start with a capital" :
  *    name.toFirstUpper() == name;
  */
+
+context Method ERROR
+    "Cannot redeclare the method [" + this.name + "]":
+    eRootContainer.eContents.typeSelect(Method).select(e|e.name == this.name).size == 1;
+
+context Association ERROR
+    "Cannot redeclare the association [" + this.name + "]":
+    eRootContainer.eContents.typeSelect(Association).select(e|e.name == this.name).size == 1;
+
+context Query ERROR
+    "Cannot redeclare the " + this.name:
+    eContainer.eContents.typeSelect(Query).select(e|e.name == this.name).size == 1;
+
+context OrderBy ERROR
+    "Cannot redeclare the " + this.name:
+    eContainer.eContents.typeSelect(OrderBy).select(e|e.name == this.name).size == 1;
+
+context AssociationReference ERROR
+    "Cannot redeclare the association [" + this.name + "]":
+    eContainer.eContents.typeSelect(AssociationReference).select(e|e.name == this.name).size == 1;
+
+context Table ERROR
+    "Cannot redeclare the " + this.name:
+    eContainer.eContents.typeSelect(Table).select(e|e.name == this.name).size == 1;
+
+context AssociationType ERROR
+    "Cannot redeclare the " + this.name:
+    eContainer.eContents.typeSelect(AssociationType).select(e|e.name == this.name).size == 1;
+
+context Property ERROR
+    "Cannot redeclare the " + this.name:
+    eContainer.eContents.typeSelect(Property).select(e|e.name == this.name).size == 1;
+
+context Column ERROR
+    "Cannot redeclare the " + this.name:
+    eContainer.eContents.typeSelect(Column).select(e|e.name == this.name).size == 1;
+
+context ReferencedColumn ERROR
+    "Cannot redeclare the " + this.name:
+    eContainer.eContents.typeSelect(ReferencedColumn).select(e|e.name == this.name).size == 1;
+
+context LinkTable ERROR
+    "Cannot redeclare the linkTable":
+    eContainer.eContents.typeSelect(LinkTable).size == 1;
+
+context InverseColumn ERROR
+    "Cannot redeclare the " + this.name:
+    eContainer.eContents.typeSelect(InverseColumn).select(e|e.name == this.name).size == 1;
