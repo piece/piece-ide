@@ -1,9 +1,11 @@
-
+// $Id$
 /*******************************************************************************
  * generated with "/org.eclipse.xtext.xtext.ui/src/org/eclipse/xtext/xtext/ui/wizard/project/GrammarGenerator.xpt"
  *******************************************************************************/
 package com.piece_framework.piece_ide.piece_orm.mapper;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
@@ -20,34 +22,59 @@ import org.eclipse.xtext.resource.XtextResourceSet;
  * Run this class in order to generate the  Mapper grammar.
  */
 public class  MapperGrammar {
-	private Logger log = Logger.getLogger( MapperGrammar.class);
+    private Logger log = Logger.getLogger(MapperGrammar.class);
 
-	private static final String PATH = ".";
-	private static final String UI_PATH = "../com.piece_framework.piece_ide.piece_orm.mapper.ui";
+    private static final String PATH = ".";
+    private static final String UI_PATH = "../com.piece_framework.piece_ide.piece_orm.mapper.ui";
 
-	public void generate() throws IOException {
-		XtextStandaloneSetup.doSetup();
+    public void generate() throws IOException {
+        XtextStandaloneSetup.doSetup();
 
-		GeneratorFacade.cleanFolder(PATH + "/src-gen");
-		GeneratorFacade.cleanFolder(UI_PATH + "/src-gen");
+        cleanFolder(PATH + "/src-gen");
+        cleanFolder(UI_PATH + "/src-gen");
 
-		String classpathUri = "classpath:/com/piece_framework/piece_ide/piece_orm/mapper/Mapper.xtext";
-		log.info("loading " + classpathUri);
-		ResourceSet rs = new XtextResourceSet();
-		Resource resource = rs
-				.createResource(new ClassloaderClasspathUriResolver().resolve(
-						null, URI.createURI(classpathUri)));
-		resource.load(null);
-		Grammar grammarModel = (Grammar) resource.getContents().get(0);
+        String classpathUri = "classpath:/com/piece_framework/piece_ide/piece_orm/mapper/Mapper.xtext";
+        log.info("loading " + classpathUri);
+        ResourceSet rs = new XtextResourceSet();
+        Resource resource = rs
+                .createResource(new ClassloaderClasspathUriResolver().resolve(
+                        null, URI.createURI(classpathUri)));
+        resource.load(null);
+        Grammar grammarModel = (Grammar) resource.getContents().get(0);
 
-		GeneratorFacade.generate(grammarModel, PATH, UI_PATH, "mapper");
-		log.info("Done.");
-	}
+        GeneratorFacade.generate(grammarModel, PATH, UI_PATH, "mapper");
+        log.info("Done.");
+    }
 
-	public static void main(String[] args) throws IOException {
-		 MapperGrammar generator = new MapperGrammar();
-		generator.generate();
-	}
+    private void cleanFolder(String folderPath) throws FileNotFoundException {
+        File folder = new File(folderPath);
+        if (!folder.exists()) {
+            throw new FileNotFoundException(folderPath + " " + folder.getAbsolutePath());
+        }
 
+        log.info("Cleaning folder " + folderPath);
+        for (final File file : folder.listFiles()) {
+            if (isSVNFolder(file)) {
+                continue;
+            }
+
+            if (file.isDirectory()) {
+                cleanFolder(file.getAbsolutePath());
+            } else {
+                boolean result = file.delete();
+                if (!result) {
+                    log.error("Couldn't delete " + file.getAbsolutePath());
+                }
+            }
+        }
+    }
+
+    private boolean isSVNFolder(File file) {
+        return file.isDirectory() && ".svn".equals(file.getName());
+    }
+
+    public static void main(String[] args) throws IOException {
+        MapperGrammar generator = new MapperGrammar();
+        generator.generate();
+    }
 }
-
