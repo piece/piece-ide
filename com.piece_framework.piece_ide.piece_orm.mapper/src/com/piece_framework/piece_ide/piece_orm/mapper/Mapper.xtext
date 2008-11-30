@@ -1,14 +1,72 @@
+// $Id$
 language com.piece_framework.piece_ide.piece_orm.mapper.Mapper
 generate Mapper "http://www.piece_framework.com/piece_ide/piece_orm/mapper/Mapper"
 
-Model :
-	(elements+=Element+);
-	
-Element :
-	Foo | Bar;
-	
-Foo :
-	"foo" name=ID;
-	
-Bar :
-	"bar" name=ID;
+Mapper :
+  (mapperStatementList+=MapperStatement)*;
+
+MapperStatement :
+  Method | Association;
+
+Method :
+  'method' name=ID '{'
+    (methodStatementList+=MethodStatement)*
+  '}';
+
+Association :
+  'association' name=ID '{'
+    (associationStatementList+=AssociationStatement)*
+  '}';
+
+MethodStatement :
+  Query | OrderBy | MethodAssociation;
+
+Query :
+  name='query' value=STRING;
+
+OrderBy :
+  name='orderBy' value=STRING;
+
+MethodAssociation :
+  'association' (InnerAssociation|AssociationReference);
+
+InnerAssociation :
+  '{'
+    (associationStatementList+=AssociationStatement)*
+  '}';
+
+AssociationReference :
+  name=ID;
+
+AssociationStatement :
+  Table | AssociationType | Property | Column | ReferencedColumn | OrderBy | LinkTable;
+
+Table :
+  name='table' value=ID;
+
+AssociationType :
+  name='type' value=ID;
+//  name='type' value=EnumAssociationType;
+
+//Enum EnumAssociationType :
+//  ManyToMany='manyToMany' | ManyToOne='manyToOne' | OneToMany='oneToMany' | OneToOne='oneToOne';
+
+Property :
+  name='property' value=ID;
+
+Column :
+  name='column' value=ID;
+
+ReferencedColumn :
+  name='referencedColumn' value=ID;
+
+LinkTable :
+  'linkTable {'
+    (linkTableStatementList+=LinkTableStatement)*
+  '}';
+
+LinkTableStatement :
+  Table | Column | ReferencedColumn | InverseColumn;
+
+InverseColumn :
+  name='inverseColumn' value=ID;
