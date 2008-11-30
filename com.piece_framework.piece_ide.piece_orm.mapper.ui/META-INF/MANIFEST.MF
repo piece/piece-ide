@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: com.piece_framework.piece_ide.piece_orm.mapper.ui
+Bundle-Vendor: itemis AG
+Bundle-Version: 1.0.0
+Bundle-SymbolicName: com.piece_framework.piece_ide.piece_orm.mapper.ui; singleton:=true
+Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
+Bundle-ActivationPolicy: lazy
+Require-Bundle:  com.piece_framework.piece_ide.piece_orm.mapper;visibility:=reexport,
+ org.eclipse.xtext.ui.core,
+ org.eclipse.xtext.ui.common,
+ org.eclipse.xtext.log4j;bundle-version="1.2.15",
+ org.eclipse.ui.editors;bundle-version="3.4.0"
