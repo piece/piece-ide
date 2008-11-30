@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+    <extension
+         point="org.eclipse.xtend.typesystem.emf.checks">
+      
+      <metaModel
+            nsURI="http://www.piece_framework.com/piece_ide/piece_orm/mapper/Mapper">
+         <checkFile
+               path="com/piece_framework/piece_ide/piece_orm/mapper/MapperChecks.chk">
+         </checkFile>
+      </metaModel>
+      
+   </extension>
+    <extension
+       point="org.eclipse.xtext.service.ui.serviceRegistrationFactory">
+	    <serviceRegistrationFactory
+	          class="com.piece_framework.piece_ide.piece_orm.mapper.MapperRuntimeConfig"/>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            class="com.piece_framework.piece_ide.piece_orm.mapper.services.MapperResourceFactory"
+            type="mapper">
+      </parser>
+   </extension>
+</plugin>
