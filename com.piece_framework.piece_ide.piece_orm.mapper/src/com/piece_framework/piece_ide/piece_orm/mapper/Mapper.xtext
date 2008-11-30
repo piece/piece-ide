@@ -1,0 +1,14 @@
+language com.piece_framework.piece_ide.piece_orm.mapper.Mapper
+generate Mapper "http://www.piece_framework.com/piece_ide/piece_orm/mapper/Mapper"
+
+Model :
+	(elements+=Element+);
+	
+Element :
+	Foo | Bar;
+	
+Foo :
+	"foo" name=ID;
+	
+Bar :
+	"bar" name=ID;
