@@ -53,3 +53,35 @@ context LinkTable ERROR
 context InverseColumn ERROR
     "Cannot redeclare the " + this.name:
     eContainer.eContents.typeSelect(InverseColumn).select(e|e.name == this.name).size == 1;
+
+context Association ERROR
+    "The [ table ] statement was not found in the association statement. An association statement must contain the table, type, and property statements.":
+    eContents.typeSelect(Table).size == 1;
+
+context Association ERROR
+    "The [ type ] statement was not found in the association statement. An association statement must contain the table, type, and property statements.":
+    eContents.typeSelect(AssociationType).size == 1;
+
+context Association ERROR
+    "The [ property ] statement was not found in the association statement. An association statement must contain the table, type, and property statements.":
+    eContents.typeSelect(Property).size == 1;
+
+context InnerAssociation ERROR
+    "The [ table ] statement was not found in the association statement. An association statement must contain the table, type, and property statements.":
+    eContents.typeSelect(Table).size == 1;
+
+context InnerAssociation ERROR
+    "The [ type ] statement was not found in the association statement. An association statement must contain the table, type, and property statements.":
+    eContents.typeSelect(AssociationType).size == 1;
+
+context InnerAssociation ERROR
+    "The [ property ] statement was not found in the association statement. An association statement must contain the table, type, and property statements.":
+    eContents.typeSelect(Property).size == 1;
+
+context LinkTable ERROR
+    "The [ table ] statement was not found in the association statement. An association statement must contain the table, type, and property statements.":
+    eContents.typeSelect(Table).size == 1;
+
+context AssociationReference ERROR
+    "The " + this.name + " association is undefined.":
+    eRootContainer.eContents.typeSelect(Association).select(e|e.name == this.name).size == 1;
