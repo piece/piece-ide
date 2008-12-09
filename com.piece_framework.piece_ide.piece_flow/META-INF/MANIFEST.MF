@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: com.piece_framework.piece_ide.piece_flow
+Bundle-Vendor: itemis AG
+Bundle-Version: 1.0.0
+Bundle-SymbolicName: com.piece_framework.piece_ide.piece_flow; singleton:=true
+Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
+Bundle-ActivationPolicy: lazy
+Require-Bundle:  org.eclipse.xtext.log4j;bundle-version="1.2.15",
+ org.eclipse.xtext,
+ org.eclipse.xtext.generator,
+ org.antlr.gen,
+ org.eclipse.xtend,
+ org.eclipse.xtend.typesystem.emf,
+ org.eclipse.xpand,
+ org.apache.commons.logging,
+ org.eclipse.xtend.util.stdlib
+Export-Package: com.piece_framework.piece_ide.piece_flow,
+ com.piece_framework.piece_ide.piece_flow.parser,
+ com.piece_framework.piece_ide.piece_flow.parser.internal,
+ com.piece_framework.piece_ide.piece_flow.parsetree.reconstr,
+ com.piece_framework.piece_ide.piece_flow.services
