@@ -1,14 +1,23 @@
 language com.piece_framework.piece_ide.piece_flow.Flow
 generate Flow "http://www.piece_framework.com/piece_ide/piece_flow/Flow"
 
-Model :
-	(elements+=Element+);
-	
-Element :
-	Foo | Bar;
-	
-Foo :
-	"foo" name=ID;
-	
-Bar :
-	"bar" name=ID;
+Start :
+  (topStatementList+=TopStatement)*;
+
+TopStatement :
+    StartState | Initializer | Finalizer | ViewState | ActionState;
+
+StartState :
+    'startState' name=ID;
+
+Initializer :
+    'initializer' name=ID;
+
+Finalizer :
+    'finalizer' name=ID;
+
+ViewState :
+    'viewState' name=ID;
+
+ActionState :
+    'actionState' name=ID;
