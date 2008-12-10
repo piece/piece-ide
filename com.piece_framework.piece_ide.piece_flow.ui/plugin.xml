@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+	<extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.xtext.ui.core.editor.XtextEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            default="true"
+            extensions="flow"
+            id="com.piece_framework.piece_ide.piece_flow.Flow"
+            name="Flow Editor">
+      </editor>
+   </extension>
+ <extension
+       point="org.eclipse.xtext.service.ui.serviceRegistrationFactory">
+    <serviceRegistrationFactory
+          class="com.piece_framework.piece_ide.piece_flow.FlowUiConfig"/>
+ </extension>
+ <extension
+         point="org.eclipse.ui.preferencePages">
+		<page
+			class="org.eclipse.xtext.service.ui.ServiceInjectingExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.preferences.LanguageRootPreferencePage/com.piece_framework.piece_ide.piece_flow.Flow"
+			id="com.piece_framework.piece_ide.piece_flow.Flow"
+			name="Flow">
+			<keywordReference
+				id="com.piece_framework.piece_ide.piece_flow.ui.ui.keyword_Flow">
+			</keywordReference>
+		</page>
+		<page
+		    category="com.piece_framework.piece_ide.piece_flow.Flow"
+		    class="org.eclipse.xtext.service.ui.ServiceInjectingExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.preferences.EditorPreferencePage/com.piece_framework.piece_ide.piece_flow.Flow"
+		    id="com.piece_framework.piece_ide.piece_flow.Flow.editor"
+		    name="Editor">
+		    	<keywordReference 
+           			id="org.eclipse.xtext.keyword.editor">
+     			</keywordReference>
+		</page>
+      </extension>
+	<extension
+		point="org.eclipse.ui.keywords">
+		<keyword
+			id="com.piece_framework.piece_ide.piece_flow.ui.ui.keyword_Flow"
+			label="Flow">
+		</keyword>
+		<keyword
+            id="com.piece_framework.piece_ide.piece_flow.Flow.tasktags"
+            label="Task Tags">
+        </keyword>
+	</extension>
+</plugin>
