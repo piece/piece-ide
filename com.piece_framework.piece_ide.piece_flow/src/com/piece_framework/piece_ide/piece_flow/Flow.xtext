@@ -6,19 +6,55 @@ Start :
   (topStatementList+=TopStatement)*;
 
 TopStatement :
-    StartState | Initializer | Finalizer | ViewState | ActionState;
+  StartState | Initializer | Finalizer | ViewState | ActionState;
 
 StartState :
-    'startState' name=ID;
+  'startState' name=ID;
 
 Initializer :
-    'initializer' name=ID;
+  'initializer' name=ID;
 
 Finalizer :
-    'finalizer' name=ID;
+  'finalizer' name=ID;
 
 ViewState :
-    'viewState' name=ID;
+  'viewState' ('endState')+ name=ID '{'
+    (viewStatementList+=ViewStatement)*
+  '}';
+
+ViewStatement :
+  View | EntryAction | ExitAction | Activity | Event;
 
 ActionState :
-    'actionState' name=ID;
+  'actionState' name=ID '{'
+    (actionStatementList+=ActionStatement)*
+  '}';
+
+ActionStatement :
+  EntryAction | ExitAction | Activity | Event;
+
+View :
+  'view' name=ID;
+
+EntryAction :
+  'entryAction' name=ID;
+
+ExitAction :
+  'exitAction' name=ID;
+
+Activity :
+  'activity' name=ID;
+
+Event :
+  'event' name=ID '=>' nextState=ID ('{'
+    (eventStatementList+=EventStatement)*
+  '}')+;
+
+EventStatement :
+  Action | Guard;
+
+Action :
+  'action' name=ID;
+
+Guard :
+  'guard' name=ID;
