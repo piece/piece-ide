@@ -18,7 +18,7 @@ Finalizer :
   'finalizer' name=ID;
 
 ViewState :
-  'viewState' ('endState')+ name=ID '{'
+  'viewState' ('endState')? name=ID '{'
     (viewStatementList+=ViewStatement)*
   '}';
 
