@@ -9,13 +9,16 @@ TopStatement :
   StartState | Initializer | Finalizer | ViewState | ActionState;
 
 StartState :
-  'startState' name=ID;
+  'startState' state=[State];
 
 Initializer :
   'initializer' name=ID;
 
 Finalizer :
   'finalizer' name=ID;
+
+State :
+  ViewState | ActionState;
 
 ViewState :
   'viewState' ('endState')? name=ID '{'
@@ -46,7 +49,7 @@ Activity :
   'activity' name=ID;
 
 Event :
-  'event' name=ID '=>' nextState=ID ('{'
+  'event' name=ID '=>' nextState=[State] ('{'
     (eventStatementList+=EventStatement)*
   '}')?;
 
