@@ -48,7 +48,7 @@ Activity :
 Event :
   'event' name=ID '=>' nextState=ID ('{'
     (eventStatementList+=EventStatement)*
-  '}')+;
+  '}')?;
 
 EventStatement :
   Action | Guard;
