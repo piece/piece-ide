@@ -1,0 +1,7 @@
+# Tracing options for the com.piece_framework.piece_ide.flow_designer.diagram plug-in
+
+# Common issues
+com.piece_framework.piece_ide.flow_designer.diagram/debug=false
+
+# Visual IDs
+com.piece_framework.piece_ide.flow_designer.diagram/debug/visualID=false
