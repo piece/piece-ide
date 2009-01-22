@@ -17,10 +17,10 @@ import FlowDesigner.InitialState;
 import FlowDesigner.ViewState;
 
 public class FlowResourceLoadTest extends TestCase {
-    private String fTestYamlFile;
+    private File fTestYamlFile;
 
     public FlowResourceLoadTest() {
-        fTestYamlFile = System.getProperty("user.dir") + "/tmp/test.yaml";
+        fTestYamlFile = new File(System.getProperty("user.dir") + "/tmp/test.yaml");
     }
 
     @Override
@@ -59,7 +59,7 @@ public class FlowResourceLoadTest extends TestCase {
             }
         }
 
-        URI uri = URI.createFileURI(fTestYamlFile);
+        URI uri = URI.createFileURI(fTestYamlFile.getAbsolutePath());
         FlowResource resource = new FlowResource(uri);
         try {
             resource.load(null);
@@ -144,7 +144,7 @@ public class FlowResourceLoadTest extends TestCase {
             }
         }
 
-        URI uri = URI.createFileURI(fTestYamlFile);
+        URI uri = URI.createFileURI(fTestYamlFile.getAbsolutePath());
         FlowResource resource = new FlowResource(uri);
         try {
             resource.load(null);
@@ -159,9 +159,8 @@ public class FlowResourceLoadTest extends TestCase {
     }
 
     private void deleteYamlFile() {
-        File yamlFile = new File(fTestYamlFile);
-        if (yamlFile.exists()) {
-            yamlFile.delete();
+        if (fTestYamlFile.exists()) {
+            fTestYamlFile.delete();
         }
     }
 }
