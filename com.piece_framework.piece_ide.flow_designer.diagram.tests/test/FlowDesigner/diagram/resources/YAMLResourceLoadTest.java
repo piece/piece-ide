@@ -9,9 +9,15 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 
+import FlowDesigner.Event;
+import FlowDesigner.FinalState;
+import FlowDesigner.Flow;
+import FlowDesigner.InitialState;
+import FlowDesigner.ViewState;
+
 public class YAMLResourceLoadTest extends TestCase {
 
-    public void testShouldConvertYAMLIntoFlowIncludingInitialViewFinalStates() {
+    public void testShouldConvertYAMLIntoFlowIncludingInitialAndViewAndFinalState() {
         String yaml =
             "firstState: DisplayForm1\n"
             + "\n"
@@ -49,5 +55,24 @@ public class YAMLResourceLoadTest extends TestCase {
         EList<EObject> eList = resource.getContents();
         assertNotNull(eList);
         assertEquals(1, eList.size());
+        assertTrue(eList.get(0) instanceof Flow);
+
+        Flow eFlow = (Flow) eList.get(0);
+
+        InitialState initialState = eFlow.getInitialState();
+        assertNotNull(initialState);
+        FinalState finalState = eFlow.getFinalState();
+        assertNotNull(finalState);
+
+        assertEquals(1, eFlow.getStates().size());
+        assertTrue(eFlow.getStates().get(0) instanceof ViewState);
+        ViewState viewState = (ViewState) eFlow.getStates().get(0);
+        assertEquals("DisplayForm1", viewState.getName());
+        assertEquals("Form1", viewState.getView());
+
+        assertEquals(1, initialState.getEvents().size());
+        Event event = initialState.getEvents().get(0);
+        assertEquals("(FirstState)", event.getName());
+        assertEquals(viewState, event.getNextState());
     }
 }
