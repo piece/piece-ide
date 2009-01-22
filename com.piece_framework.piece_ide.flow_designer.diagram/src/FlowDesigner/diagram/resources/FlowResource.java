@@ -5,6 +5,7 @@ package FlowDesigner.diagram.resources;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,6 +58,46 @@ public class FlowResource extends ResourceImpl {
                     ActionState actionState = factory.createActionState();
                     actionState.setName((String) stateElements.get("name"));
                     eFlow.getStates().add(actionState);
+                }
+            } else {
+                ArrayList<?> states = (ArrayList<?>) flow.get(key);
+                for (HashMap<?, ?> stateElements: states.toArray(new HashMap<?, ?>[0])) {
+                    if (key.equals("viewState")) {
+                        ViewState viewState = factory.createViewState();
+                        viewState.setName((String) stateElements.get("name"));
+                        viewState.setView((String) stateElements.get("view"));
+
+                        HashMap<?, ?> entry = (HashMap<?, ?>) stateElements.get("entry");
+                        HashMap<?, ?> activity = (HashMap<?, ?>) stateElements.get("activity");
+                        HashMap<?, ?> exit = (HashMap<?, ?>) stateElements.get("exit");
+                        if (entry != null) {
+                            viewState.setEntry((String) entry.get("method"));
+                        }
+                        if (activity != null) {
+                            viewState.setActivity((String) activity.get("method"));
+                        }
+                        if (exit != null) {
+                            viewState.setExit((String) exit.get("method"));
+                        }
+                        eFlow.getStates().add(viewState);
+                    } else if (key.equals("actionState")) {
+                        ActionState actionState = factory.createActionState();
+                        actionState.setName((String) stateElements.get("name"));
+
+                        HashMap<?, ?> entry = (HashMap<?, ?>) stateElements.get("entry");
+                        HashMap<?, ?> activity = (HashMap<?, ?>) stateElements.get("activity");
+                        HashMap<?, ?> exit = (HashMap<?, ?>) stateElements.get("exit");
+                        if (entry != null) {
+                            actionState.setEntry((String) entry.get("method"));
+                        }
+                        if (activity != null) {
+                            actionState.setActivity((String) activity.get("method"));
+                        }
+                        if (exit != null) {
+                            actionState.setExit((String) exit.get("method"));
+                        }
+                        eFlow.getStates().add(actionState);
+                    }
                 }
             }
         }

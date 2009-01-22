@@ -10,10 +10,12 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 
+import FlowDesigner.ActionState;
 import FlowDesigner.Event;
 import FlowDesigner.FinalState;
 import FlowDesigner.Flow;
 import FlowDesigner.InitialState;
+import FlowDesigner.NamedState;
 import FlowDesigner.ViewState;
 
 public class FlowResourceLoadTest extends TestCase {
@@ -59,6 +61,7 @@ public class FlowResourceLoadTest extends TestCase {
 
         InitialState initialState = eFlow.getInitialState();
         assertNotNull(initialState);
+
         FinalState finalState = eFlow.getFinalState();
         assertNotNull(finalState);
 
@@ -86,13 +89,10 @@ public class FlowResourceLoadTest extends TestCase {
             + "  - name: DisplayForm1\n"
             + "    view: Form1\n"
             + "    entry:\n"
-            + "      class: ActionClass\n"
             + "      method: doEntryOnDisplayForm1\n"
             + "    activity:\n"
-            + "      class: ActionClass\n"
             + "      method: doActivityOnDisplayForm1\n"
             + "    exit:\n"
-            + "      class: ActionClass\n"
             + "      method: doExitOnDisplayForm1\n"
             + "    transition:\n"
             + "      - event: Process1FromDisplayForm1\n"
@@ -103,6 +103,12 @@ public class FlowResourceLoadTest extends TestCase {
             + "\n"
             + "actionState:\n"
             + "  - name: Process1\n"
+            + "    entry:\n"
+            + "      method: doEntryOnProcess1\n"
+            + "    activity:\n"
+            + "      method: doActivityOnProcess1\n"
+            + "    exit:\n"
+            + "      method: doExitOnProcess1\n"
             + "    transition:\n"
             + "      - event: DisplayForm2FromProcess1\n"
             + "        nextState: DisplayForm2\n"
@@ -122,6 +128,44 @@ public class FlowResourceLoadTest extends TestCase {
         assertNotNull(eList);
         assertEquals(1, eList.size());
         assertTrue(eList.get(0) instanceof Flow);
+
+        Flow eFlow = (Flow) eList.get(0);
+
+        InitialState initialState = eFlow.getInitialState();
+        assertNotNull(initialState);
+
+        FinalState finalState = eFlow.getFinalState();
+        assertNotNull(finalState);
+
+        assertEquals(3, eFlow.getStates().size());
+        ViewState displayForm1 = null;
+        ActionState process1 = null;
+        ViewState displayForm2 = null;
+        for (NamedState state: eFlow.getStates()) {
+            if (state.getName().equals("DisplayForm1")) {
+                displayForm1 = (ViewState) state;
+            } else if (state.getName().equals("Process1")) {
+                process1 = (ActionState) state;
+            } else if (state.getName().equals("DisplayForm2")) {
+                displayForm2 = (ViewState) state;
+            } else {
+                fail();
+            }
+        }
+        assertNotNull(displayForm1);
+        assertEquals("Form1", displayForm1.getView());
+        assertEquals("doEntryOnDisplayForm1", displayForm1.getEntry());
+        assertEquals("doActivityOnDisplayForm1", displayForm1.getActivity());
+        assertEquals("doExitOnDisplayForm1", displayForm1.getExit());
+        assertNotNull(process1);
+        assertEquals("doEntryOnProcess1", process1.getEntry());
+        assertEquals("doActivityOnProcess1", process1.getActivity());
+        assertEquals("doExitOnProcess1", process1.getExit());
+        assertNotNull(displayForm2);
+        assertEquals("Form2", displayForm2.getView());
+        assertNull(displayForm2.getEntry());
+        assertNull(displayForm2.getActivity());
+        assertNull(displayForm2.getExit());
     }
 
     private void generateYamlFile(String yaml) {
