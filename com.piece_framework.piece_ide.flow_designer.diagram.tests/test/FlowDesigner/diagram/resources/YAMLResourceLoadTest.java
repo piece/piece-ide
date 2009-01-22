@@ -48,5 +48,6 @@ public class YAMLResourceLoadTest extends TestCase {
 
         EList<EObject> eList = resource.getContents();
         assertNotNull(eList);
+        assertEquals(1, eList.size());
     }
 }

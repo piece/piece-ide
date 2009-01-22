@@ -7,8 +7,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
+
+import FlowDesigner.Flow;
+import FlowDesigner.impl.FlowDesignerFactoryImpl;
 
 public class YAMLResource extends ResourceImpl {
     public YAMLResource() {
@@ -21,9 +26,11 @@ public class YAMLResource extends ResourceImpl {
 
     @Override
     protected void doLoad(InputStream inputStream,
-                          Map<?, ?> options) throws IOException {
-        // TODO Auto-generated method stub
-        super.doLoad(inputStream, options);
+                          Map<?, ?> options
+                          ) throws IOException {
+        EList<EObject> eList = getContents();
+        Flow eFlow = FlowDesignerFactoryImpl.eINSTANCE.createFlow();
+        eList.add(eFlow);
     }
 
     @Override
