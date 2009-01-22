@@ -17,7 +17,7 @@
          class="org.eclipse.gmf.runtime.emf.core.resources.GMFResourceFactory">
       </parser>
       <parser
-            class="FlowDesigner.diagram.resources.YAMLResourceFactory"
+            class="FlowDesigner.diagram.resources.FlowResourceFactory"
             type="flowdesigner">
       </parser>
    </extension>

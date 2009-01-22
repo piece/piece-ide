@@ -22,12 +22,12 @@ import FlowDesigner.NamedState;
 import FlowDesigner.ViewState;
 import FlowDesigner.impl.FlowDesignerFactoryImpl;
 
-public class YAMLResource extends ResourceImpl {
-    public YAMLResource() {
+public class FlowResource extends ResourceImpl {
+    public FlowResource() {
         super();
     }
 
-    public YAMLResource(URI uri) {
+    public FlowResource(URI uri) {
         super(uri);
     }
 

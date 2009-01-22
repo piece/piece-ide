@@ -15,7 +15,7 @@ import FlowDesigner.Flow;
 import FlowDesigner.InitialState;
 import FlowDesigner.ViewState;
 
-public class YAMLResourceLoadTest extends TestCase {
+public class FlowResourceLoadTest extends TestCase {
 
     public void testShouldConvertYAMLIntoFlowIncludingInitialAndViewAndFinalState() {
         String yaml =
@@ -45,7 +45,7 @@ public class YAMLResourceLoadTest extends TestCase {
         }
 
         URI uri = URI.createFileURI(yamlPath);
-        YAMLResource resource = new YAMLResource(uri);
+        FlowResource resource = new FlowResource(uri);
         try {
             resource.load(null);
         } catch (IOException e) {
