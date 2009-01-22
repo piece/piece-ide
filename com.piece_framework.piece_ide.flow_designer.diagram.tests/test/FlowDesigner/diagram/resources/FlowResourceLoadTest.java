@@ -1,5 +1,6 @@
 package FlowDesigner.diagram.resources;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -16,6 +17,21 @@ import FlowDesigner.InitialState;
 import FlowDesigner.ViewState;
 
 public class FlowResourceLoadTest extends TestCase {
+    private String fTestYamlFile;
+
+    public FlowResourceLoadTest() {
+        fTestYamlFile = System.getProperty("user.dir") + "/tmp/test.yaml";
+    }
+
+    @Override
+    protected void setUp() throws Exception {
+        deleteYamlFile();
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        deleteYamlFile();
+    }
 
     public void testShouldConvertYAMLIntoFlowIncludingInitialAndViewAndFinalState() {
         String yaml =
@@ -24,11 +40,10 @@ public class FlowResourceLoadTest extends TestCase {
             + "lastState:\n"
             + "  name: DisplayForm1\n"
             + "  view: Form1\n";
-        String yamlPath = System.getProperty("user.dir") + "/tmp/test.yaml";
 
         FileWriter writer = null;
         try {
-            writer = new FileWriter(yamlPath);
+            writer = new FileWriter(fTestYamlFile);
             writer.write(yaml);
         } catch (IOException e) {
             fail();
@@ -44,7 +59,7 @@ public class FlowResourceLoadTest extends TestCase {
             }
         }
 
-        URI uri = URI.createFileURI(yamlPath);
+        URI uri = URI.createFileURI(fTestYamlFile);
         FlowResource resource = new FlowResource(uri);
         try {
             resource.load(null);
@@ -110,11 +125,10 @@ public class FlowResourceLoadTest extends TestCase {
             + "        nextState: DisplayForm2\n"
             + "      - event: DisplayForm1FromProcess1\n"
             + "        nextState: DisplayForm1\n";
-        String yamlPath = System.getProperty("user.dir") + "/tmp/test.yaml";
 
         FileWriter writer = null;
         try {
-            writer = new FileWriter(yamlPath);
+            writer = new FileWriter(fTestYamlFile);
             writer.write(yaml);
         } catch (IOException e) {
             fail();
@@ -130,7 +144,7 @@ public class FlowResourceLoadTest extends TestCase {
             }
         }
 
-        URI uri = URI.createFileURI(yamlPath);
+        URI uri = URI.createFileURI(fTestYamlFile);
         FlowResource resource = new FlowResource(uri);
         try {
             resource.load(null);
@@ -142,5 +156,12 @@ public class FlowResourceLoadTest extends TestCase {
         assertNotNull(eList);
         assertEquals(1, eList.size());
         assertTrue(eList.get(0) instanceof Flow);
+    }
+
+    private void deleteYamlFile() {
+        File yamlFile = new File(fTestYamlFile);
+        if (yamlFile.exists()) {
+            yamlFile.delete();
+        }
     }
 }
