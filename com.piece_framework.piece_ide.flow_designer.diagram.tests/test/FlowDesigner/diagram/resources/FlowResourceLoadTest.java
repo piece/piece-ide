@@ -41,26 +41,9 @@ public class FlowResourceLoadTest extends TestCase {
             + "  name: DisplayForm1\n"
             + "  view: Form1\n";
 
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter(fTestYamlFile);
-            writer.write(yaml);
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.flush();
-                    writer.close();
-                } catch (IOException e) {
-                    fail();
-                }
-            }
-        }
+        generateYamlFile(yaml);
 
-        URI uri = URI.createFileURI(fTestYamlFile.getAbsolutePath());
-        FlowResource resource = new FlowResource(uri);
+        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.load(null);
         } catch (IOException e) {
@@ -126,6 +109,22 @@ public class FlowResourceLoadTest extends TestCase {
             + "      - event: DisplayForm1FromProcess1\n"
             + "        nextState: DisplayForm1\n";
 
+        generateYamlFile(yaml);
+
+        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        try {
+            resource.load(null);
+        } catch (IOException e) {
+            fail();
+        }
+
+        EList<EObject> eList = resource.getContents();
+        assertNotNull(eList);
+        assertEquals(1, eList.size());
+        assertTrue(eList.get(0) instanceof Flow);
+    }
+
+    private void generateYamlFile(String yaml) {
         FileWriter writer = null;
         try {
             writer = new FileWriter(fTestYamlFile);
@@ -143,19 +142,6 @@ public class FlowResourceLoadTest extends TestCase {
                 }
             }
         }
-
-        URI uri = URI.createFileURI(fTestYamlFile.getAbsolutePath());
-        FlowResource resource = new FlowResource(uri);
-        try {
-            resource.load(null);
-        } catch (IOException e) {
-            fail();
-        }
-
-        EList<EObject> eList = resource.getContents();
-        assertNotNull(eList);
-        assertEquals(1, eList.size());
-        assertTrue(eList.get(0) instanceof Flow);
     }
 
     private void deleteYamlFile() {
