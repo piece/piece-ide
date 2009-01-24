@@ -84,6 +84,12 @@ public class FlowResourceLoadTest extends TestCase {
             + "lastState:\n"
             + "  name: DisplayForm2\n"
             + "  view: Form2\n"
+            + "  entry:\n"
+            + "    method: doEntryOnDisplayForm2\n"
+            + "  activity:\n"
+            + "    method: doActivityOnDisplayForm2\n"
+            + "  exit:\n"
+            + "    method: doExitOnDisplayForm2\n"
             + "\n"
             + "viewState:\n"
             + "  - name: DisplayForm1\n"
@@ -98,8 +104,9 @@ public class FlowResourceLoadTest extends TestCase {
             + "      - event: Process1FromDisplayForm1\n"
             + "        nextState: Process1\n"
             + "        action:\n"
-            + "          class: ActionClass\n"
             + "          method: doProcess1FromDisplayForm1\n"
+            + "        guard:\n"
+            + "          method: guardProcess1FromDisplayForm1\n"
             + "\n"
             + "actionState:\n"
             + "  - name: Process1\n"
@@ -163,9 +170,42 @@ public class FlowResourceLoadTest extends TestCase {
         assertEquals("doExitOnProcess1", process1.getExit());
         assertNotNull(displayForm2);
         assertEquals("Form2", displayForm2.getView());
-        assertNull(displayForm2.getEntry());
-        assertNull(displayForm2.getActivity());
-        assertNull(displayForm2.getExit());
+        assertEquals("doEntryOnDisplayForm2", displayForm2.getEntry());
+        assertEquals("doActivityOnDisplayForm2", displayForm2.getActivity());
+        assertEquals("doExitOnDisplayForm2", displayForm2.getExit());
+
+        assertEquals(1, initialState.getEvents().size());
+        Event displayForm1FromInitialState = initialState.getEvents().get(0);
+        assertEquals("(FirstState)", displayForm1FromInitialState.getName());
+        assertEquals(displayForm1, displayForm1FromInitialState.getNextState());
+
+        assertEquals(1, displayForm1.getEvents().size());
+        Event process1FromDisplayForm1 = displayForm1.getEvents().get(0);
+        assertEquals("Process1FromDisplayForm1", process1FromDisplayForm1.getName());
+        assertEquals("doProcess1FromDisplayForm1", process1FromDisplayForm1.getAction());
+        assertEquals("guardProcess1FromDisplayForm1", process1FromDisplayForm1.getGuard());
+        assertEquals(process1, process1FromDisplayForm1.getNextState());
+
+        assertEquals(2, process1.getEvents().size());
+        Event displayForm1FromProcess1 = null;
+        Event displayForm2FromProcess1 = null;
+        for (Event event: process1.getEvents()) {
+            if (event.getName().equals("DisplayForm1FromProcess1")) {
+                displayForm1FromProcess1 = event;
+            } else if (event.getName().equals("DisplayForm2FromProcess1")) {
+                displayForm2FromProcess1 = event;
+            } else {
+                fail();
+            }
+        }
+        assertNotNull(displayForm1FromProcess1);
+        assertNull(displayForm1FromProcess1.getAction());
+        assertNull(displayForm1FromProcess1.getGuard());
+        assertEquals(displayForm1, displayForm1FromProcess1.getNextState());
+        assertNotNull(displayForm2FromProcess1);
+        assertNull(displayForm2FromProcess1.getAction());
+        assertNull(displayForm2FromProcess1.getGuard());
+        assertEquals(displayForm2, displayForm2FromProcess1.getNextState());
     }
 
     private void generateYamlFile(String yaml) {

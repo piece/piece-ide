@@ -53,10 +53,36 @@ public class FlowResource extends ResourceImpl {
                     ViewState viewState = factory.createViewState();
                     viewState.setName((String) stateElements.get("name"));
                     viewState.setView((String) stateElements.get("view"));
+                    HashMap<?, ?> entry = (HashMap<?, ?>) stateElements.get("entry");
+                    HashMap<?, ?> activity = (HashMap<?, ?>) stateElements.get("activity");
+                    HashMap<?, ?> exit = (HashMap<?, ?>) stateElements.get("exit");
+                    if (entry != null) {
+                        viewState.setEntry((String) entry.get("method"));
+                    }
+                    if (activity != null) {
+                        viewState.setActivity((String) activity.get("method"));
+                    }
+                    if (exit != null) {
+                        viewState.setExit((String) exit.get("method"));
+                    }
+
                     eFlow.getStates().add(viewState);
                 } else {
                     ActionState actionState = factory.createActionState();
                     actionState.setName((String) stateElements.get("name"));
+                    HashMap<?, ?> entry = (HashMap<?, ?>) stateElements.get("entry");
+                    HashMap<?, ?> activity = (HashMap<?, ?>) stateElements.get("activity");
+                    HashMap<?, ?> exit = (HashMap<?, ?>) stateElements.get("exit");
+                    if (entry != null) {
+                        actionState.setEntry((String) entry.get("method"));
+                    }
+                    if (activity != null) {
+                        actionState.setActivity((String) activity.get("method"));
+                    }
+                    if (exit != null) {
+                        actionState.setExit((String) exit.get("method"));
+                    }
+
                     eFlow.getStates().add(actionState);
                 }
             } else {
