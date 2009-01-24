@@ -282,6 +282,47 @@ public class FlowResourceLoadTest extends TestCase {
                     );
     }
 
+    public void testShouldConvertYAMLIntoFlowWithoutFirstState() {
+        String yaml =
+            "lastState:\n"
+            + "  name: DisplayForm1\n"
+            + "  view: Form1\n";
+
+        generateYamlFile(yaml);
+
+        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        try {
+            resource.load(null);
+        } catch (IOException e) {
+            fail();
+        }
+
+        EList<EObject> eList = resource.getContents();
+        assertNotNull(eList);
+        assertEquals(1, eList.size());
+        assertTrue(eList.get(0) instanceof Flow);
+
+        Flow eFlow = (Flow) eList.get(0);
+
+        InitialState initialState = eFlow.getInitialState();
+        assertNotNull(initialState);
+
+        FinalState finalState = eFlow.getFinalState();
+        assertNotNull(finalState);
+
+        assertEquals(1, eFlow.getStates().size());
+        ViewState displayForm1 = (ViewState) eFlow.findStateByName("DisplayForm1");
+        assertViewState(displayForm1,
+                        "DisplayForm1",
+                        "Form1",
+                        null,
+                        null,
+                        null
+                        );
+
+        assertEquals(0, initialState.getEvents().size());
+    }
+
     private void assertViewState(ViewState state,
                                  String name,
                                  String view,

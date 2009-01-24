@@ -58,10 +58,11 @@ public class FlowResource extends ResourceImpl {
     private void createStates(Flow eFlow,
                               HashMap<?, ?> flow
                               ) {
+        eFlow.setInitialState(FlowDesignerFactoryImpl.eINSTANCE.createInitialState());
+
         for (Object key: flow.keySet()) {
             if (key.equals("firstState")) {
-                InitialState initialState = FlowDesignerFactoryImpl.eINSTANCE.createInitialState();
-                eFlow.setInitialState(initialState);
+                continue;
             } else if (key.equals("lastState")) {
                 FinalState finalState = FlowDesignerFactoryImpl.eINSTANCE.createFinalState();
                 eFlow.setFinalState(finalState);
