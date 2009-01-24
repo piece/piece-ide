@@ -67,11 +67,21 @@ public class FlowResource extends ResourceImpl {
                 FinalState finalState = FlowDesignerFactoryImpl.eINSTANCE.createFinalState();
                 eFlow.setFinalState(finalState);
 
-                HashMap<?, ?> stateAttributes = (HashMap<?, ?>) flow.get(key);
-                if (stateAttributes.containsKey("view")) {
-                    eFlow.getStates().add(createViewState(stateAttributes));
+                ArrayList<?> states = null;
+                if (flow.get(key) instanceof HashMap) {
+                    ArrayList<HashMap<?, ?>> list = new ArrayList<HashMap<?, ?>>();
+                    HashMap<?, ?> stateAttributes = (HashMap<?, ?>) flow.get(key);
+                    list.add(stateAttributes);
+                    states = list;
                 } else {
-                    eFlow.getStates().add(createActionState(stateAttributes));
+                    states = (ArrayList<?>) flow.get(key);
+                }
+                for (HashMap<?, ?> stateAttributes: states.toArray(new HashMap<?, ?>[0])) {
+                    if (stateAttributes.containsKey("view")) {
+                        eFlow.getStates().add(createViewState(stateAttributes));
+                    } else {
+                        eFlow.getStates().add(createActionState(stateAttributes));
+                    }
                 }
             } else {
                 ArrayList<?> states = (ArrayList<?>) flow.get(key);
