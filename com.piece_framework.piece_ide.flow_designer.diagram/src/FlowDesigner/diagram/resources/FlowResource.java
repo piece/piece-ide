@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.ho.yaml.Yaml;
 
@@ -116,7 +117,6 @@ public class FlowResource extends ResourceImpl {
     private ViewState createViewState(HashMap<?, ?> stateAttributes) {
         ViewState viewState = FlowDesignerFactoryImpl.eINSTANCE.createViewState();
         setStateAttributes(viewState, stateAttributes);
-        viewState.setView((String) stateAttributes.get("view"));
         return viewState;
     }
 
@@ -129,7 +129,14 @@ public class FlowResource extends ResourceImpl {
     private void setStateAttributes(NamedState state,
                                     HashMap<?, ?> stateAttributes
                                     ) {
-        state.setName((String) stateAttributes.get("name"));
+        for (EAttribute eAttribute: state.eClass().getEAllAttributes()) {
+            if (stateAttributes.get(eAttribute.getName()) instanceof String) {
+                state.eSet(eAttribute,
+                           (String) stateAttributes.get(eAttribute.getName())
+                           );
+            }
+        }
+
         HashMap<?, ?> entry = (HashMap<?, ?>) stateAttributes.get("entry");
         HashMap<?, ?> activity = (HashMap<?, ?>) stateAttributes.get("activity");
         HashMap<?, ?> exit = (HashMap<?, ?>) stateAttributes.get("exit");
