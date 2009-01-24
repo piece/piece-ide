@@ -48,81 +48,19 @@ public class FlowResource extends ResourceImpl {
                 FinalState finalState = factory.createFinalState();
                 eFlow.setFinalState(finalState);
 
-                HashMap<?, ?> stateElements = (HashMap<?, ?>) flow.get(key);
-                if (stateElements.containsKey("view")) {
-                    ViewState viewState = factory.createViewState();
-                    viewState.setName((String) stateElements.get("name"));
-                    viewState.setView((String) stateElements.get("view"));
-                    HashMap<?, ?> entry = (HashMap<?, ?>) stateElements.get("entry");
-                    HashMap<?, ?> activity = (HashMap<?, ?>) stateElements.get("activity");
-                    HashMap<?, ?> exit = (HashMap<?, ?>) stateElements.get("exit");
-                    if (entry != null) {
-                        viewState.setEntry((String) entry.get("method"));
-                    }
-                    if (activity != null) {
-                        viewState.setActivity((String) activity.get("method"));
-                    }
-                    if (exit != null) {
-                        viewState.setExit((String) exit.get("method"));
-                    }
-
-                    eFlow.getStates().add(viewState);
+                HashMap<?, ?> stateAttributes = (HashMap<?, ?>) flow.get(key);
+                if (stateAttributes.containsKey("view")) {
+                    eFlow.getStates().add(createViewState(stateAttributes));
                 } else {
-                    ActionState actionState = factory.createActionState();
-                    actionState.setName((String) stateElements.get("name"));
-                    HashMap<?, ?> entry = (HashMap<?, ?>) stateElements.get("entry");
-                    HashMap<?, ?> activity = (HashMap<?, ?>) stateElements.get("activity");
-                    HashMap<?, ?> exit = (HashMap<?, ?>) stateElements.get("exit");
-                    if (entry != null) {
-                        actionState.setEntry((String) entry.get("method"));
-                    }
-                    if (activity != null) {
-                        actionState.setActivity((String) activity.get("method"));
-                    }
-                    if (exit != null) {
-                        actionState.setExit((String) exit.get("method"));
-                    }
-
-                    eFlow.getStates().add(actionState);
+                    eFlow.getStates().add(createActionState(stateAttributes));
                 }
             } else {
                 ArrayList<?> states = (ArrayList<?>) flow.get(key);
-                for (HashMap<?, ?> stateElements: states.toArray(new HashMap<?, ?>[0])) {
+                for (HashMap<?, ?> stateAttributes: states.toArray(new HashMap<?, ?>[0])) {
                     if (key.equals("viewState")) {
-                        ViewState viewState = factory.createViewState();
-                        viewState.setName((String) stateElements.get("name"));
-                        viewState.setView((String) stateElements.get("view"));
-
-                        HashMap<?, ?> entry = (HashMap<?, ?>) stateElements.get("entry");
-                        HashMap<?, ?> activity = (HashMap<?, ?>) stateElements.get("activity");
-                        HashMap<?, ?> exit = (HashMap<?, ?>) stateElements.get("exit");
-                        if (entry != null) {
-                            viewState.setEntry((String) entry.get("method"));
-                        }
-                        if (activity != null) {
-                            viewState.setActivity((String) activity.get("method"));
-                        }
-                        if (exit != null) {
-                            viewState.setExit((String) exit.get("method"));
-                        }
-                        eFlow.getStates().add(viewState);
+                        eFlow.getStates().add(createViewState(stateAttributes));
                     } else if (key.equals("actionState")) {
-                        ActionState actionState = factory.createActionState();
-                        actionState.setName((String) stateElements.get("name"));
-
-                        HashMap<?, ?> entry = (HashMap<?, ?>) stateElements.get("entry");
-                        HashMap<?, ?> activity = (HashMap<?, ?>) stateElements.get("activity");
-                        HashMap<?, ?> exit = (HashMap<?, ?>) stateElements.get("exit");
-                        if (entry != null) {
-                            actionState.setEntry((String) entry.get("method"));
-                        }
-                        if (activity != null) {
-                            actionState.setActivity((String) activity.get("method"));
-                        }
-                        if (exit != null) {
-                            actionState.setExit((String) exit.get("method"));
-                        }
-                        eFlow.getStates().add(actionState);
+                        eFlow.getStates().add(createActionState(stateAttributes));
                     }
                 }
             }
@@ -173,5 +111,36 @@ public class FlowResource extends ResourceImpl {
                           ) throws IOException {
         // TODO Auto-generated method stub
         super.doSave(outputStream, options);
+    }
+
+    private ViewState createViewState(HashMap<?, ?> stateAttributes) {
+        ViewState viewState = FlowDesignerFactoryImpl.eINSTANCE.createViewState();
+        setStateAttributes(viewState, stateAttributes);
+        viewState.setView((String) stateAttributes.get("view"));
+        return viewState;
+    }
+
+    private ActionState createActionState(HashMap<?, ?> stateAttributes) {
+        ActionState actionState = FlowDesignerFactoryImpl.eINSTANCE.createActionState();
+        setStateAttributes(actionState, stateAttributes);
+        return actionState;
+    }
+
+    private void setStateAttributes(NamedState state,
+                                    HashMap<?, ?> stateAttributes
+                                    ) {
+        state.setName((String) stateAttributes.get("name"));
+        HashMap<?, ?> entry = (HashMap<?, ?>) stateAttributes.get("entry");
+        HashMap<?, ?> activity = (HashMap<?, ?>) stateAttributes.get("activity");
+        HashMap<?, ?> exit = (HashMap<?, ?>) stateAttributes.get("exit");
+        if (entry != null) {
+            state.setEntry((String) entry.get("method"));
+        }
+        if (activity != null) {
+            state.setActivity((String) activity.get("method"));
+        }
+        if (exit != null) {
+            state.setExit((String) exit.get("method"));
+        }
     }
 }
