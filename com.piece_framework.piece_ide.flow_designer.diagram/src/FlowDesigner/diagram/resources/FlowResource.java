@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.ho.yaml.Yaml;
 
@@ -121,15 +122,10 @@ public class FlowResource extends ResourceImpl {
                 state.eSet(eAttribute,
                            (String) stateAttributes.get(eAttribute.getName())
                            );
-            } else if (stateAttributes.get(eAttribute.getName()) instanceof HashMap) {
-                HashMap<?, ?> action = (HashMap<?, ?>) stateAttributes.get(eAttribute.getName());
-                if (action != null) {
-                    state.eSet(eAttribute,
-                               (String) action.get("method")
-                               );
-                }
             }
         }
+
+        setAction(state, stateAttributes);
     }
 
     private Event createEvent(HashMap<?, ?> eventAttributes,
@@ -139,17 +135,23 @@ public class FlowResource extends ResourceImpl {
         event.setName((String) eventAttributes.get("event"));
         event.setNextState(eFlow.findStateByName((String) eventAttributes.get("nextState")));
 
-        for (EAttribute eAttribute: event.eClass().getEAllAttributes()) {
+        setAction(event, eventAttributes);
+
+        return event;
+    }
+
+    private void setAction(EObject object,
+                           HashMap<?, ?> attributes
+                           ) {
+        for (EAttribute eAttribute: object.eClass().getEAllAttributes()) {
             if (eAttribute.getEType() == FlowDesignerPackageImpl.eINSTANCE.getAction()) {
-                HashMap<?, ?> action = (HashMap<?, ?>) eventAttributes.get(eAttribute.getName());
+                HashMap<?, ?> action = (HashMap<?, ?>) attributes.get(eAttribute.getName());
                 if (action != null) {
-                    event.eSet(eAttribute,
-                               (String) action.get("method")
-                               );
+                    object.eSet(eAttribute,
+                                (String) action.get("method")
+                                );
                 }
             }
         }
-
-        return event;
     }
 }
