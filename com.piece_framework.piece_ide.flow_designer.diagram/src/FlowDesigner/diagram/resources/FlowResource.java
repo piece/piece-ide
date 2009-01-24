@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.ho.yaml.Yaml;
@@ -19,7 +20,6 @@ import FlowDesigner.ActionState;
 import FlowDesigner.Event;
 import FlowDesigner.FinalState;
 import FlowDesigner.Flow;
-import FlowDesigner.InitialState;
 import FlowDesigner.NamedState;
 import FlowDesigner.ViewState;
 import FlowDesigner.impl.FlowDesignerFactoryImpl;
@@ -66,21 +66,20 @@ public class FlowResource extends ResourceImpl {
             } else if (key.equals("lastState")) {
                 FinalState finalState = FlowDesignerFactoryImpl.eINSTANCE.createFinalState();
                 eFlow.setFinalState(finalState);
+            }
 
-                for (HashMap<?, ?> stateAttributes: getStateList(flow, key)) {
-                    if (stateAttributes.containsKey("view")) {
-                        eFlow.getStates().add(createViewState(stateAttributes));
-                    } else {
-                        eFlow.getStates().add(createActionState(stateAttributes));
-                    }
-                }
-            } else {
-                for (HashMap<?, ?> stateAttributes: getStateList(flow, key)) {
-                    if (key.equals("viewState")) {
-                        eFlow.getStates().add(createViewState(stateAttributes));
-                    } else if (key.equals("actionState")) {
-                        eFlow.getStates().add(createActionState(stateAttributes));
-                    }
+            for (HashMap<?, ?> stateAttributes: getStateList(flow, key)) {
+                boolean isViewState = key.equals("viewState")
+                                      || (key.equals("lastState")
+                                          && stateAttributes.containsKey("view"));
+                boolean isActionState = key.equals("actionState")
+                                        || (key.equals("lastState")
+                                            && !stateAttributes.containsKey("view"));
+
+                if (isViewState) {
+                    eFlow.getStates().add(createViewState(stateAttributes));
+                } else if (isActionState) {
+                    eFlow.getStates().add(createActionState(stateAttributes));
                 }
             }
         }
