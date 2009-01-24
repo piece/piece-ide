@@ -134,20 +134,14 @@ public class FlowResource extends ResourceImpl {
                 state.eSet(eAttribute,
                            (String) stateAttributes.get(eAttribute.getName())
                            );
+            } else if (stateAttributes.get(eAttribute.getName()) instanceof HashMap) {
+                HashMap<?, ?> action = (HashMap<?, ?>) stateAttributes.get(eAttribute.getName());
+                if (action != null) {
+                    state.eSet(eAttribute,
+                               (String) action.get("method")
+                               );
+                }
             }
-        }
-
-        HashMap<?, ?> entry = (HashMap<?, ?>) stateAttributes.get("entry");
-        HashMap<?, ?> activity = (HashMap<?, ?>) stateAttributes.get("activity");
-        HashMap<?, ?> exit = (HashMap<?, ?>) stateAttributes.get("exit");
-        if (entry != null) {
-            state.setEntry((String) entry.get("method"));
-        }
-        if (activity != null) {
-            state.setActivity((String) activity.get("method"));
-        }
-        if (exit != null) {
-            state.setExit((String) exit.get("method"));
         }
     }
 }
