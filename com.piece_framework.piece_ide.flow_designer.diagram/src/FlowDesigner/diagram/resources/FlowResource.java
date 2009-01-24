@@ -19,7 +19,6 @@ import FlowDesigner.ActionState;
 import FlowDesigner.Event;
 import FlowDesigner.FinalState;
 import FlowDesigner.Flow;
-import FlowDesigner.FlowDesignerFactory;
 import FlowDesigner.InitialState;
 import FlowDesigner.NamedState;
 import FlowDesigner.ViewState;
@@ -67,16 +66,7 @@ public class FlowResource extends ResourceImpl {
                 FinalState finalState = FlowDesignerFactoryImpl.eINSTANCE.createFinalState();
                 eFlow.setFinalState(finalState);
 
-                ArrayList<?> states = null;
-                if (flow.get(key) instanceof HashMap) {
-                    ArrayList<HashMap<?, ?>> list = new ArrayList<HashMap<?, ?>>();
-                    HashMap<?, ?> stateAttributes = (HashMap<?, ?>) flow.get(key);
-                    list.add(stateAttributes);
-                    states = list;
-                } else {
-                    states = (ArrayList<?>) flow.get(key);
-                }
-                for (HashMap<?, ?> stateAttributes: states.toArray(new HashMap<?, ?>[0])) {
+                for (HashMap<?, ?> stateAttributes: getStateList(flow, key)) {
                     if (stateAttributes.containsKey("view")) {
                         eFlow.getStates().add(createViewState(stateAttributes));
                     } else {
@@ -84,8 +74,7 @@ public class FlowResource extends ResourceImpl {
                     }
                 }
             } else {
-                ArrayList<?> states = (ArrayList<?>) flow.get(key);
-                for (HashMap<?, ?> stateAttributes: states.toArray(new HashMap<?, ?>[0])) {
+                for (HashMap<?, ?> stateAttributes: getStateList(flow, key)) {
                     if (key.equals("viewState")) {
                         eFlow.getStates().add(createViewState(stateAttributes));
                     } else if (key.equals("actionState")) {
@@ -94,6 +83,21 @@ public class FlowResource extends ResourceImpl {
                 }
             }
         }
+    }
+
+    private ArrayList<HashMap<?, ?>> getStateList(HashMap<?, ?> flow, Object key) {
+        ArrayList<HashMap<?, ?>> states = null;
+        if (flow.get(key) instanceof HashMap) {
+            ArrayList<HashMap<?, ?>> list = new ArrayList<HashMap<?, ?>>();
+            HashMap<?, ?> stateAttributes = (HashMap<?, ?>) flow.get(key);
+            list.add(stateAttributes);
+            states = list;
+        } else {
+            ArrayList<HashMap<?, ?>> list = new ArrayList<HashMap<?, ?>>();
+            list.addAll((ArrayList<HashMap<?, ?>>) flow.get(key));
+            states = list;
+        }
+        return states;
     }
 
     private void createEvents(Flow eFlow, HashMap<?, ?> flow) {
