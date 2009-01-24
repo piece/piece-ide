@@ -16,6 +16,7 @@ import FlowDesigner.FinalState;
 import FlowDesigner.Flow;
 import FlowDesigner.InitialState;
 import FlowDesigner.NamedState;
+import FlowDesigner.Target;
 import FlowDesigner.ViewState;
 
 public class FlowResourceLoadTest extends TestCase {
@@ -76,9 +77,13 @@ public class FlowResourceLoadTest extends TestCase {
                         );
 
         assertEquals(1, initialState.getEvents().size());
-        Event event = initialState.getEvents().get(0);
-        assertEquals("(FirstState)", event.getName());
-        assertEquals(displayForm1, event.getNextState());
+        Event displayForm1FromInitialState = initialState.getEvents().get(0);
+        assertEvent(displayForm1FromInitialState,
+                    "(FirstState)",
+                    null,
+                    null,
+                    displayForm1
+                    );
     }
 
     public void testShouldConvertYAMLIntoFlowIncludingAllKindsOfState() {
@@ -175,15 +180,21 @@ public class FlowResourceLoadTest extends TestCase {
 
         assertEquals(1, initialState.getEvents().size());
         Event displayForm1FromInitialState = initialState.getEvents().get(0);
-        assertEquals("(FirstState)", displayForm1FromInitialState.getName());
-        assertEquals(displayForm1, displayForm1FromInitialState.getNextState());
+        assertEvent(displayForm1FromInitialState,
+                    "(FirstState)",
+                    null,
+                    null,
+                    displayForm1
+                    );
 
         assertEquals(1, displayForm1.getEvents().size());
         Event process1FromDisplayForm1 = displayForm1.getEvents().get(0);
-        assertEquals("Process1FromDisplayForm1", process1FromDisplayForm1.getName());
-        assertEquals("doProcess1FromDisplayForm1", process1FromDisplayForm1.getAction());
-        assertEquals("guardProcess1FromDisplayForm1", process1FromDisplayForm1.getGuard());
-        assertEquals(process1, process1FromDisplayForm1.getNextState());
+        assertEvent(process1FromDisplayForm1,
+                    "Process1FromDisplayForm1",
+                    "doProcess1FromDisplayForm1",
+                    "guardProcess1FromDisplayForm1",
+                    process1
+                    );
 
         assertEquals(2, process1.getEvents().size());
         Event displayForm1FromProcess1 = null;
@@ -197,14 +208,18 @@ public class FlowResourceLoadTest extends TestCase {
                 fail();
             }
         }
-        assertNotNull(displayForm1FromProcess1);
-        assertNull(displayForm1FromProcess1.getAction());
-        assertNull(displayForm1FromProcess1.getGuard());
-        assertEquals(displayForm1, displayForm1FromProcess1.getNextState());
-        assertNotNull(displayForm2FromProcess1);
-        assertNull(displayForm2FromProcess1.getAction());
-        assertNull(displayForm2FromProcess1.getGuard());
-        assertEquals(displayForm2, displayForm2FromProcess1.getNextState());
+        assertEvent(displayForm1FromProcess1,
+                    "DisplayForm1FromProcess1",
+                    null,
+                    null,
+                    displayForm1
+                    );
+        assertEvent(displayForm2FromProcess1,
+                    "DisplayForm2FromProcess1",
+                    null,
+                    null,
+                    displayForm2
+                    );
     }
 
     private void assertViewState(ViewState state,
@@ -248,6 +263,18 @@ public class FlowResourceLoadTest extends TestCase {
         assertEquals(entry, state.getEntry());
         assertEquals(activity, state.getActivity());
         assertEquals(exit, state.getExit());
+    }
+
+    private void assertEvent(Event event,
+                             String name,
+                             String action,
+                             String guard,
+                             Target nextState) {
+        assertNotNull(event);
+        assertEquals(name, event.getName());
+        assertEquals(action, event.getAction());
+        assertEquals(guard, event.getGuard());
+        assertEquals(nextState, event.getNextState());
     }
 
     private void generateYamlFile(String yaml) {
