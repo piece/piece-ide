@@ -39,16 +39,32 @@ public class FlowResource extends ResourceImpl {
     protected void doLoad(InputStream inputStream,
                           Map<?, ?> options
                           ) throws IOException {
-        FlowDesignerFactory factory = FlowDesignerFactoryImpl.eINSTANCE;
-        Flow eFlow = factory.createFlow();
-
         HashMap<?, ?> flow = Yaml.loadType(inputStream, HashMap.class);
+
+        Flow eFlow = FlowDesignerFactoryImpl.eINSTANCE.createFlow();
+        createStates(eFlow, flow);
+        createEvents(eFlow, flow);
+
+        getContents().add(eFlow);
+    }
+
+    @Override
+    protected void doSave(OutputStream outputStream,
+                          Map<?, ?> options
+                          ) throws IOException {
+        // TODO Auto-generated method stub
+        super.doSave(outputStream, options);
+    }
+
+    private void createStates(Flow eFlow,
+                              HashMap<?, ?> flow
+                              ) {
         for (Object key: flow.keySet()) {
             if (key.equals("firstState")) {
-                InitialState initialState = factory.createInitialState();
+                InitialState initialState = FlowDesignerFactoryImpl.eINSTANCE.createInitialState();
                 eFlow.setInitialState(initialState);
             } else if (key.equals("lastState")) {
-                FinalState finalState = factory.createFinalState();
+                FinalState finalState = FlowDesignerFactoryImpl.eINSTANCE.createFinalState();
                 eFlow.setFinalState(finalState);
 
                 HashMap<?, ?> stateAttributes = (HashMap<?, ?>) flow.get(key);
@@ -68,7 +84,9 @@ public class FlowResource extends ResourceImpl {
                 }
             }
         }
+    }
 
+    private void createEvents(Flow eFlow, HashMap<?, ?> flow) {
         for (Object key: flow.keySet()) {
             if (key.equals("firstState")) {
                 HashMap<String, String> eventAttributes = new HashMap<String, String>();
@@ -90,16 +108,6 @@ public class FlowResource extends ResourceImpl {
                 }
             }
         }
-
-        getContents().add(eFlow);
-    }
-
-    @Override
-    protected void doSave(OutputStream outputStream,
-                          Map<?, ?> options
-                          ) throws IOException {
-        // TODO Auto-generated method stub
-        super.doSave(outputStream, options);
     }
 
     private ViewState createViewState(HashMap<?, ?> stateAttributes) {
