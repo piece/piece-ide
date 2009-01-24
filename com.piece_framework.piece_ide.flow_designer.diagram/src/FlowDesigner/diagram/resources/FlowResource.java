@@ -112,6 +112,42 @@ public class FlowResource extends ResourceImpl {
                         eFlow.getInitialState().getEvents().add(event);
                     }
                 }
+            } else if (!key.equals("lastState")){
+                ArrayList<?> states = (ArrayList<?>) flow.get(key);
+                for (HashMap<?, ?> stateElements: states.toArray(new HashMap<?, ?>[0])) {
+                    ArrayList<?> events = (ArrayList<?>) stateElements.get("transition");
+                    if (events == null) {
+                        continue;
+                    }
+
+                    NamedState targetState = null;
+                    for (NamedState state: eFlow.getStates()) {
+                        if (state.getName().equals((String) stateElements.get("name"))) {
+                            targetState = state;
+                            break;
+                        }
+                    }
+
+                    for (HashMap<?, ?> eventElements: events.toArray(new HashMap<?, ?>[0])) {
+                        Event event = factory.createEvent();
+                        event.setName((String) eventElements.get("event"));
+                        for (NamedState state: eFlow.getStates()) {
+                            if (state.getName().equals((String) eventElements.get("nextState"))) {
+                                event.setNextState(state);
+                            }
+                        }
+                        HashMap<?, ?> action = (HashMap<?, ?>) eventElements.get("action");
+                        HashMap<?, ?> guard = (HashMap<?, ?>) eventElements.get("guard");
+                        if (action != null) {
+                            event.setAction((String) action.get("method"));
+                        }
+                        if (guard != null) {
+                            event.setGuard((String) guard.get("method"));
+                        }
+
+                        targetState.getEvents().add(event);
+                    }
+                }
             }
         }
 
