@@ -323,6 +323,80 @@ public class FlowResourceLoadTest extends TestCase {
         assertEquals(0, initialState.getEvents().size());
     }
 
+    public void testShouldConvertYAMLIntoFlowWithoutLastState() {
+        String yaml =
+            "firstState: DisplayForm1\n"
+            + "\n"
+            + "viewState:\n"
+            + "  - name: DisplayForm1\n"
+            + "    view: Form1\n"
+            + "    transition:\n"
+            + "      - event: Process1FromDisplayForm1\n"
+            + "        nextState: Process1\n"
+            + "\n"
+            + "actionState:\n"
+            + "  - name: Process1\n";
+
+        generateYamlFile(yaml);
+
+        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        try {
+            resource.load(null);
+        } catch (IOException e) {
+            fail();
+        }
+
+        EList<EObject> eList = resource.getContents();
+        assertNotNull(eList);
+        assertEquals(1, eList.size());
+        assertTrue(eList.get(0) instanceof Flow);
+
+        Flow eFlow = (Flow) eList.get(0);
+
+        InitialState initialState = eFlow.getInitialState();
+        assertNotNull(initialState);
+
+        FinalState finalState = eFlow.getFinalState();
+        assertNull(finalState);
+
+        assertEquals(2, eFlow.getStates().size());
+        ViewState displayForm1 = (ViewState) eFlow.findStateByName("DisplayForm1");
+        ActionState process1 = (ActionState) eFlow.findStateByName("Process1");
+        assertViewState(displayForm1,
+                        "DisplayForm1",
+                        "Form1",
+                        null,
+                        null,
+                        null
+                        );
+        assertActionState(process1,
+                          "Process1",
+                          null,
+                          null,
+                          null
+                          );
+
+        assertEquals(1, initialState.getEvents().size());
+        Event displayForm1FromInitialState = initialState.getEvents().get(0);
+        assertEvent(displayForm1FromInitialState,
+                    "(FirstState)",
+                    null,
+                    null,
+                    displayForm1
+                    );
+
+        assertEquals(1, displayForm1.getEvents().size());
+        Event process1FromDisplayForm1 = displayForm1.getEvents().get(0);
+        assertEvent(process1FromDisplayForm1,
+                    "Process1FromDisplayForm1",
+                    null,
+                    null,
+                    process1
+                    );
+
+        assertEquals(0, process1.getEvents().size());
+    }
+
     private void assertViewState(ViewState state,
                                  String name,
                                  String view,
