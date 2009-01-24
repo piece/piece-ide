@@ -289,4 +289,12 @@ public class FlowImpl extends EObjectImpl implements Flow {
         return super.eIsSet(featureID);
     }
 
+    public NamedState findStateByName(String name) {
+        for (NamedState state: getStates()) {
+            if (state.getName().equals(name)) {
+                return state;
+            }
+        }
+        return null;
+    }
 } //FlowImpl

@@ -130,14 +130,10 @@ public class FlowResource extends ResourceImpl {
 
         for (Object key: flow.keySet()) {
             if (key.equals("firstState")) {
-                for (NamedState state: eFlow.getStates()) {
-                    if (state.getName().equals(flow.get(key))) {
-                        Event event = factory.createEvent();
-                        event.setName("(FirstState)");
-                        event.setNextState(state);
-                        eFlow.getInitialState().getEvents().add(event);
-                    }
-                }
+                Event event = factory.createEvent();
+                event.setName("(FirstState)");
+                event.setNextState(eFlow.findStateByName((String) flow.get(key)));
+                eFlow.getInitialState().getEvents().add(event);
             } else if (!key.equals("lastState")){
                 ArrayList<?> states = (ArrayList<?>) flow.get(key);
                 for (HashMap<?, ?> stateElements: states.toArray(new HashMap<?, ?>[0])) {
@@ -146,22 +142,13 @@ public class FlowResource extends ResourceImpl {
                         continue;
                     }
 
-                    NamedState targetState = null;
-                    for (NamedState state: eFlow.getStates()) {
-                        if (state.getName().equals((String) stateElements.get("name"))) {
-                            targetState = state;
-                            break;
-                        }
-                    }
+                    NamedState state = eFlow.findStateByName((String) stateElements.get("name"));
 
                     for (HashMap<?, ?> eventElements: events.toArray(new HashMap<?, ?>[0])) {
                         Event event = factory.createEvent();
                         event.setName((String) eventElements.get("event"));
-                        for (NamedState state: eFlow.getStates()) {
-                            if (state.getName().equals((String) eventElements.get("nextState"))) {
-                                event.setNextState(state);
-                            }
-                        }
+                        event.setNextState(eFlow.findStateByName((String) eventElements.get("nextState")));
+
                         HashMap<?, ?> action = (HashMap<?, ?>) eventElements.get("action");
                         HashMap<?, ?> guard = (HashMap<?, ?>) eventElements.get("guard");
                         if (action != null) {
@@ -171,7 +158,7 @@ public class FlowResource extends ResourceImpl {
                             event.setGuard((String) guard.get("method"));
                         }
 
-                        targetState.getEvents().add(event);
+                        state.getEvents().add(event);
                     }
                 }
             }

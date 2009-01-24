@@ -145,20 +145,9 @@ public class FlowResourceLoadTest extends TestCase {
         assertNotNull(finalState);
 
         assertEquals(3, eFlow.getStates().size());
-        ViewState displayForm1 = null;
-        ActionState process1 = null;
-        ViewState displayForm2 = null;
-        for (NamedState state: eFlow.getStates()) {
-            if (state.getName().equals("DisplayForm1")) {
-                displayForm1 = (ViewState) state;
-            } else if (state.getName().equals("Process1")) {
-                process1 = (ActionState) state;
-            } else if (state.getName().equals("DisplayForm2")) {
-                displayForm2 = (ViewState) state;
-            } else {
-                fail();
-            }
-        }
+        ViewState displayForm1 = (ViewState) eFlow.findStateByName("DisplayForm1");
+        ActionState process1 = (ActionState) eFlow.findStateByName("Process1");
+        ViewState displayForm2 = (ViewState) eFlow.findStateByName("DisplayForm2");
         assertNotNull(displayForm1);
         assertEquals("Form1", displayForm1.getView());
         assertEquals("doEntryOnDisplayForm1", displayForm1.getEntry());

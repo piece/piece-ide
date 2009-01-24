@@ -97,4 +97,5 @@ public interface Flow extends EObject {
      */
     void setFinalState(FinalState value);
 
+    NamedState findStateByName(String name);
 } // Flow
