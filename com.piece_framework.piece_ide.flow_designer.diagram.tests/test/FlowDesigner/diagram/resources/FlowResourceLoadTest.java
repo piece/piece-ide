@@ -66,15 +66,19 @@ public class FlowResourceLoadTest extends TestCase {
         assertNotNull(finalState);
 
         assertEquals(1, eFlow.getStates().size());
-        assertTrue(eFlow.getStates().get(0) instanceof ViewState);
-        ViewState viewState = (ViewState) eFlow.getStates().get(0);
-        assertEquals("DisplayForm1", viewState.getName());
-        assertEquals("Form1", viewState.getView());
+        ViewState displayForm1 = (ViewState) eFlow.findStateByName("DisplayForm1");
+        assertViewState(displayForm1,
+                        "DisplayForm1",
+                        "Form1",
+                        null,
+                        null,
+                        null
+                        );
 
         assertEquals(1, initialState.getEvents().size());
         Event event = initialState.getEvents().get(0);
         assertEquals("(FirstState)", event.getName());
-        assertEquals(viewState, event.getNextState());
+        assertEquals(displayForm1, event.getNextState());
     }
 
     public void testShouldConvertYAMLIntoFlowIncludingAllKindsOfState() {
@@ -148,20 +152,26 @@ public class FlowResourceLoadTest extends TestCase {
         ViewState displayForm1 = (ViewState) eFlow.findStateByName("DisplayForm1");
         ActionState process1 = (ActionState) eFlow.findStateByName("Process1");
         ViewState displayForm2 = (ViewState) eFlow.findStateByName("DisplayForm2");
-        assertNotNull(displayForm1);
-        assertEquals("Form1", displayForm1.getView());
-        assertEquals("doEntryOnDisplayForm1", displayForm1.getEntry());
-        assertEquals("doActivityOnDisplayForm1", displayForm1.getActivity());
-        assertEquals("doExitOnDisplayForm1", displayForm1.getExit());
-        assertNotNull(process1);
-        assertEquals("doEntryOnProcess1", process1.getEntry());
-        assertEquals("doActivityOnProcess1", process1.getActivity());
-        assertEquals("doExitOnProcess1", process1.getExit());
-        assertNotNull(displayForm2);
-        assertEquals("Form2", displayForm2.getView());
-        assertEquals("doEntryOnDisplayForm2", displayForm2.getEntry());
-        assertEquals("doActivityOnDisplayForm2", displayForm2.getActivity());
-        assertEquals("doExitOnDisplayForm2", displayForm2.getExit());
+        assertViewState(displayForm1,
+                        "DisplayForm1",
+                        "Form1",
+                        "doEntryOnDisplayForm1",
+                        "doActivityOnDisplayForm1",
+                        "doExitOnDisplayForm1"
+                        );
+        assertActionState(process1,
+                          "Process1",
+                          "doEntryOnProcess1",
+                          "doActivityOnProcess1",
+                          "doExitOnProcess1"
+                          );
+        assertViewState(displayForm2,
+                        "DisplayForm2",
+                        "Form2",
+                        "doEntryOnDisplayForm2",
+                        "doActivityOnDisplayForm2",
+                        "doExitOnDisplayForm2"
+                        );
 
         assertEquals(1, initialState.getEvents().size());
         Event displayForm1FromInitialState = initialState.getEvents().get(0);
@@ -195,6 +205,49 @@ public class FlowResourceLoadTest extends TestCase {
         assertNull(displayForm2FromProcess1.getAction());
         assertNull(displayForm2FromProcess1.getGuard());
         assertEquals(displayForm2, displayForm2FromProcess1.getNextState());
+    }
+
+    private void assertViewState(ViewState state,
+                                 String name,
+                                 String view,
+                                 String entry,
+                                 String activity,
+                                 String exit
+                                 ) {
+        assertNamedState(state,
+                         name,
+                         entry,
+                         activity,
+                         exit
+                         );
+        assertEquals(view, state.getView());
+    }
+
+    private void assertActionState(ActionState state,
+                                   String name,
+                                   String entry,
+                                   String activity,
+                                   String exit
+                                   ) {
+        assertNamedState(state,
+                         name,
+                         entry,
+                         activity,
+                         exit
+                         );
+    }
+
+    private void assertNamedState(NamedState state,
+                                  String name,
+                                  String entry,
+                                  String activity,
+                                  String exit
+                                  ) {
+        assertNotNull(state);
+        assertEquals(name, state.getName());
+        assertEquals(entry, state.getEntry());
+        assertEquals(activity, state.getActivity());
+        assertEquals(exit, state.getExit());
     }
 
     private void generateYamlFile(String yaml) {
