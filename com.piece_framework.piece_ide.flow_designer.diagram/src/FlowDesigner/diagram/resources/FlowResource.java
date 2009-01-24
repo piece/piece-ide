@@ -23,6 +23,7 @@ import FlowDesigner.InitialState;
 import FlowDesigner.NamedState;
 import FlowDesigner.ViewState;
 import FlowDesigner.impl.FlowDesignerFactoryImpl;
+import FlowDesigner.impl.FlowDesignerPackageImpl;
 
 public class FlowResource extends ResourceImpl {
     public FlowResource() {
@@ -69,35 +70,21 @@ public class FlowResource extends ResourceImpl {
 
         for (Object key: flow.keySet()) {
             if (key.equals("firstState")) {
-                Event event = factory.createEvent();
-                event.setName("(FirstState)");
-                event.setNextState(eFlow.findStateByName((String) flow.get(key)));
-                eFlow.getInitialState().getEvents().add(event);
+                HashMap<String, String> eventAttributes = new HashMap<String, String>();
+                eventAttributes.put("event", "(FirstState)");
+                eventAttributes.put("nextState", (String) flow.get(key));
+                eFlow.getInitialState().getEvents().add(createEvent(eventAttributes, eFlow));
             } else if (!key.equals("lastState")){
                 ArrayList<?> states = (ArrayList<?>) flow.get(key);
-                for (HashMap<?, ?> stateElements: states.toArray(new HashMap<?, ?>[0])) {
-                    ArrayList<?> events = (ArrayList<?>) stateElements.get("transition");
+                for (HashMap<?, ?> stateAttributes: states.toArray(new HashMap<?, ?>[0])) {
+                    ArrayList<?> events = (ArrayList<?>) stateAttributes.get("transition");
                     if (events == null) {
                         continue;
                     }
 
-                    NamedState state = eFlow.findStateByName((String) stateElements.get("name"));
-
-                    for (HashMap<?, ?> eventElements: events.toArray(new HashMap<?, ?>[0])) {
-                        Event event = factory.createEvent();
-                        event.setName((String) eventElements.get("event"));
-                        event.setNextState(eFlow.findStateByName((String) eventElements.get("nextState")));
-
-                        HashMap<?, ?> action = (HashMap<?, ?>) eventElements.get("action");
-                        HashMap<?, ?> guard = (HashMap<?, ?>) eventElements.get("guard");
-                        if (action != null) {
-                            event.setAction((String) action.get("method"));
-                        }
-                        if (guard != null) {
-                            event.setGuard((String) guard.get("method"));
-                        }
-
-                        state.getEvents().add(event);
+                    NamedState state = eFlow.findStateByName((String) stateAttributes.get("name"));
+                    for (HashMap<?, ?> eventAttributes: events.toArray(new HashMap<?, ?>[0])) {
+                        state.getEvents().add(createEvent(eventAttributes, eFlow));
                     }
                 }
             }
@@ -143,5 +130,26 @@ public class FlowResource extends ResourceImpl {
                 }
             }
         }
+    }
+
+    private Event createEvent(HashMap<?, ?> eventAttributes,
+                              Flow eFlow
+                              ) {
+        Event event = FlowDesignerFactoryImpl.eINSTANCE.createEvent();
+        event.setName((String) eventAttributes.get("event"));
+        event.setNextState(eFlow.findStateByName((String) eventAttributes.get("nextState")));
+
+        for (EAttribute eAttribute: event.eClass().getEAllAttributes()) {
+            if (eAttribute.getEType() == FlowDesignerPackageImpl.eINSTANCE.getAction()) {
+                HashMap<?, ?> action = (HashMap<?, ?>) eventAttributes.get(eAttribute.getName());
+                if (action != null) {
+                    event.eSet(eAttribute,
+                               (String) action.get("method")
+                               );
+                }
+            }
+        }
+
+        return event;
     }
 }
