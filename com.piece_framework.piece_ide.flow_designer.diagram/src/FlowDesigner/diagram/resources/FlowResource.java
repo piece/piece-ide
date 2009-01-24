@@ -11,7 +11,6 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.ho.yaml.Yaml;
@@ -21,6 +20,7 @@ import FlowDesigner.Event;
 import FlowDesigner.FinalState;
 import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
+import FlowDesigner.Target;
 import FlowDesigner.ViewState;
 import FlowDesigner.impl.FlowDesignerFactoryImpl;
 import FlowDesigner.impl.FlowDesignerPackageImpl;
@@ -106,7 +106,11 @@ public class FlowResource extends ResourceImpl {
                 HashMap<String, String> eventAttributes = new HashMap<String, String>();
                 eventAttributes.put("event", "(FirstState)");
                 eventAttributes.put("nextState", (String) flow.get(key));
-                eFlow.getInitialState().getEvents().add(createEvent(eventAttributes, eFlow));
+
+                Event event = createEvent(eventAttributes, eFlow);
+                if (event != null) {
+                    eFlow.getInitialState().getEvents().add(event);
+                }
             } else if (!key.equals("lastState")){
                 ArrayList<?> states = (ArrayList<?>) flow.get(key);
                 for (HashMap<?, ?> stateAttributes: states.toArray(new HashMap<?, ?>[0])) {
@@ -117,7 +121,10 @@ public class FlowResource extends ResourceImpl {
 
                     NamedState state = eFlow.findStateByName((String) stateAttributes.get("name"));
                     for (HashMap<?, ?> eventAttributes: events.toArray(new HashMap<?, ?>[0])) {
-                        state.getEvents().add(createEvent(eventAttributes, eFlow));
+                        Event event = createEvent(eventAttributes, eFlow);
+                        if (event != null) {
+                            state.getEvents().add(event);
+                        }
                     }
                 }
             }
@@ -153,9 +160,13 @@ public class FlowResource extends ResourceImpl {
     private Event createEvent(HashMap<?, ?> eventAttributes,
                               Flow eFlow
                               ) {
+        Target nextState = (Target) eFlow.findStateByName((String) eventAttributes.get("nextState"));
+        if (nextState == null) {
+            return null;
+        }
         Event event = FlowDesignerFactoryImpl.eINSTANCE.createEvent();
         event.setName((String) eventAttributes.get("event"));
-        event.setNextState(eFlow.findStateByName((String) eventAttributes.get("nextState")));
+        event.setNextState(nextState);
 
         setAction(event, eventAttributes);
 
