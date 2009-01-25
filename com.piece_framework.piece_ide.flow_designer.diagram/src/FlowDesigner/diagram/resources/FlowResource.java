@@ -62,48 +62,50 @@ public class FlowResource extends ResourceImpl {
     private void createStates(Flow eFlow,
                               HashMap<?, ?> flow
                               ) {
-        for (Object key: flow.keySet()) {
-            if (key.equals("firstState")) {
-                continue;
-            } else if (key.equals("lastState")) {
-                FinalState finalState = FlowDesignerFactoryImpl.eINSTANCE.createFinalState();
-                eFlow.setFinalState(finalState);
-            }
+        if (flow.get("lastState") != null) {
+            FinalState finalState = FlowDesignerFactoryImpl.eINSTANCE.createFinalState();
+            eFlow.setFinalState(finalState);
 
-            for (HashMap<?, ?> stateAttributes: getStateList(flow, key)) {
-                boolean isViewState = key.equals("viewState")
-                                      || (key.equals("lastState")
-                                          && stateAttributes.containsKey("view"));
-                boolean isActionState = key.equals("actionState")
-                                        || (key.equals("lastState")
-                                            && !stateAttributes.containsKey("view"));
-
-                if (isViewState) {
+            for (HashMap<?, ?> stateAttributes: getStateList(flow, "lastState")) {
+                if (stateAttributes.containsKey("view")) {
                     eFlow.getStates().add(createViewState(stateAttributes));
-                } else if (isActionState) {
+                } else {
                     eFlow.getStates().add(createActionState(stateAttributes));
                 }
             }
         }
-
-        for (Object key: flow.keySet()) {
-            if (key.equals("initial")) {
-                HashMap<String, HashMap<?, ?>> action = new HashMap<String, HashMap<?, ?>>();
-                action.put("initialize", (HashMap<?, ?>) flow.get(key));
-                setAction(eFlow.getInitialState(),
-                          action
-                          );
-            } else if (key.equals("final")) {
-                HashMap<String, HashMap<?, ?>> action = new HashMap<String, HashMap<?, ?>>();
-                action.put("finalize", (HashMap<?, ?>) flow.get(key));
-                setAction(eFlow.getFinalState(),
-                          action
-                          );
+        if (flow.get("viewState") != null) {
+            for (HashMap<?, ?> stateAttributes: getStateList(flow, "viewState")) {
+                eFlow.getStates().add(createViewState(stateAttributes));
             }
+        }
+        if (flow.get("actionState") != null) {
+            for (HashMap<?, ?> stateAttributes: getStateList(flow, "actionState")) {
+                eFlow.getStates().add(createActionState(stateAttributes));
+            }
+        }
+
+        if (flow.get("initial") != null) {
+            HashMap<String, HashMap<?, ?>> action = new HashMap<String, HashMap<?, ?>>();
+            action.put("initialize", (HashMap<?, ?>) flow.get("initial"));
+            setAction(eFlow.getInitialState(),
+                      action
+                      );
+        }
+        if (flow.get("final") != null) {
+            HashMap<String, HashMap<?, ?>> action = new HashMap<String, HashMap<?, ?>>();
+            action.put("finalize", (HashMap<?, ?>) flow.get("final"));
+            setAction(eFlow.getFinalState(),
+                      action
+                      );
         }
     }
 
     private ArrayList<HashMap<?, ?>> getStateList(HashMap<?, ?> flow, Object key) {
+        if (flow.get(key) == null) {
+            return null;
+        }
+
         ArrayList<HashMap<?, ?>> states = null;
         if (flow.get(key) instanceof HashMap) {
             ArrayList<HashMap<?, ?>> list = new ArrayList<HashMap<?, ?>>();
@@ -119,33 +121,37 @@ public class FlowResource extends ResourceImpl {
     }
 
     private void createEvents(Flow eFlow, HashMap<?, ?> flow) {
-        for (Object key: flow.keySet()) {
-            if (key.equals("firstState")) {
-                HashMap<String, String> eventAttributes = new HashMap<String, String>();
-                eventAttributes.put("event", "(FirstState)");
-                eventAttributes.put("nextState", (String) flow.get(key));
+        if (flow.get("firstState") != null) {
+            HashMap<String, String> eventAttributes = new HashMap<String, String>();
+            eventAttributes.put("event", "(FirstState)");
+            eventAttributes.put("nextState", (String) flow.get("firstState"));
 
+            Event event = createEvent(eventAttributes, eFlow);
+            if (event != null) {
+                eFlow.getInitialState().getEvents().add(event);
+            }
+        }
+
+        ArrayList<HashMap<?, ?>> viewStates = getStateList(flow, "viewState");
+        ArrayList<HashMap<?, ?>> actionStates = getStateList(flow, "actionState");
+        ArrayList<HashMap<?, ?>> states = new ArrayList<HashMap<?, ?>>();
+        if (viewStates != null) {
+            states.addAll(viewStates);
+        }
+        if (actionStates != null) {
+            states.addAll(actionStates);
+        }
+        for (HashMap<?, ?> stateAttributes: states) {
+            ArrayList<?> events = (ArrayList<?>) stateAttributes.get("transition");
+            if (events == null) {
+                continue;
+            }
+
+            NamedState state = eFlow.findStateByName((String) stateAttributes.get("name"));
+            for (HashMap<?, ?> eventAttributes: events.toArray(new HashMap<?, ?>[0])) {
                 Event event = createEvent(eventAttributes, eFlow);
                 if (event != null) {
-                    eFlow.getInitialState().getEvents().add(event);
-                }
-            } else if (!key.equals("lastState")
-                       && (key.equals("viewState")
-                           || key.equals("actionState"))) {
-                ArrayList<?> states = (ArrayList<?>) flow.get(key);
-                for (HashMap<?, ?> stateAttributes: states.toArray(new HashMap<?, ?>[0])) {
-                    ArrayList<?> events = (ArrayList<?>) stateAttributes.get("transition");
-                    if (events == null) {
-                        continue;
-                    }
-
-                    NamedState state = eFlow.findStateByName((String) stateAttributes.get("name"));
-                    for (HashMap<?, ?> eventAttributes: events.toArray(new HashMap<?, ?>[0])) {
-                        Event event = createEvent(eventAttributes, eFlow);
-                        if (event != null) {
-                            state.getEvents().add(event);
-                        }
-                    }
+                    state.getEvents().add(event);
                 }
             }
         }
