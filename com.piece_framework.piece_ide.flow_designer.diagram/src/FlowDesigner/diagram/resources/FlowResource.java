@@ -85,6 +85,22 @@ public class FlowResource extends ResourceImpl {
                 }
             }
         }
+
+        for (Object key: flow.keySet()) {
+            if (key.equals("initial")) {
+                HashMap<String, HashMap<?, ?>> action = new HashMap<String, HashMap<?, ?>>();
+                action.put("initialize", (HashMap<?, ?>) flow.get(key));
+                setAction(eFlow.getInitialState(),
+                          action
+                          );
+            } else if (key.equals("final")) {
+                HashMap<String, HashMap<?, ?>> action = new HashMap<String, HashMap<?, ?>>();
+                action.put("finalize", (HashMap<?, ?>) flow.get(key));
+                setAction(eFlow.getFinalState(),
+                          action
+                          );
+            }
+        }
     }
 
     private ArrayList<HashMap<?, ?>> getStateList(HashMap<?, ?> flow, Object key) {

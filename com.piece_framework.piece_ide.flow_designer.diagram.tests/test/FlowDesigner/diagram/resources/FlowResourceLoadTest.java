@@ -653,6 +653,56 @@ public class FlowResourceLoadTest extends TestCase {
         assertEquals(0, displayForm2.getEvents().size());
     }
 
+    public void testShouldConvertYAMLIntoFlowIncludingInitialAndFinal() {
+        String yaml =
+            "initial:\n"
+            + "  method: InitialMethod\n"
+            + "firstState: DisplayForm1\n"
+            + "\n"
+            + "final:\n"
+            + "  method: FinalMethod\n"
+            + "lastState:\n"
+            + "  name: DisplayForm1\n"
+            + "  view: Form1\n";
+
+        generateYamlFile(yaml);
+
+        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        try {
+            resource.load(null);
+        } catch (IOException e) {
+            fail();
+        }
+
+        EList<EObject> eList = resource.getContents();
+        assertNotNull(eList);
+        assertEquals(1, eList.size());
+        assertTrue(eList.get(0) instanceof Flow);
+
+        Flow eFlow = (Flow) eList.get(0);
+
+        InitialState initialState = eFlow.getInitialState();
+        assertNotNull(initialState);
+        assertEquals("InitialMethod", initialState.getInitialize());
+
+        FinalState finalState = eFlow.getFinalState();
+        assertNotNull(finalState);
+        assertEquals("FinalMethod", finalState.getFinalize());
+
+        assertEquals(1, eFlow.getStates().size());
+        ViewState displayForm1 = (ViewState) eFlow.findStateByName("DisplayForm1");
+        assertViewState(displayForm1,
+                        "DisplayForm1",
+                        "Form1",
+                        null,
+                        null,
+                        null
+                        );
+
+        assertEquals(1, initialState.getEvents().size());
+        assertEquals(0, displayForm1.getEvents().size());
+    }
+
     private void assertViewState(ViewState state,
                                  String name,
                                  String view,
