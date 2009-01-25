@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.ho.yaml.Yaml;
+import org.ho.yaml.exception.YamlException;
 
 import FlowDesigner.ActionState;
 import FlowDesigner.Event;
@@ -38,13 +39,16 @@ public class FlowResource extends ResourceImpl {
     protected void doLoad(InputStream inputStream,
                           Map<?, ?> options
                           ) throws IOException {
-        HashMap<?, ?> flow = Yaml.loadType(inputStream, HashMap.class);
-
         Flow eFlow = FlowDesignerFactoryImpl.eINSTANCE.createFlow();
-        createStates(eFlow, flow);
-        createEvents(eFlow, flow);
-
-        getContents().add(eFlow);
+        try {
+            HashMap<?, ?> flow = Yaml.loadType(inputStream, HashMap.class);
+            createStates(eFlow, flow);
+            createEvents(eFlow, flow);
+        } catch (YamlException e) {
+            throw new IOException(e);
+        } finally {
+            getContents().add(eFlow);
+        }
     }
 
     @Override
@@ -58,8 +62,6 @@ public class FlowResource extends ResourceImpl {
     private void createStates(Flow eFlow,
                               HashMap<?, ?> flow
                               ) {
-        eFlow.setInitialState(FlowDesignerFactoryImpl.eINSTANCE.createInitialState());
-
         for (Object key: flow.keySet()) {
             if (key.equals("firstState")) {
                 continue;

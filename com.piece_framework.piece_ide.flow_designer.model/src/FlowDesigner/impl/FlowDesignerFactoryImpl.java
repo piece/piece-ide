@@ -155,10 +155,11 @@ public class FlowDesignerFactoryImpl extends EFactoryImpl implements FlowDesigne
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
+     * @generated NOT
      */
     public Flow createFlow() {
         FlowImpl flow = new FlowImpl();
+        flow.setInitialState(createInitialState());
         return flow;
     }
 

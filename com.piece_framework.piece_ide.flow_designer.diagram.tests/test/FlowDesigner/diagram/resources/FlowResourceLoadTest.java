@@ -475,6 +475,53 @@ public class FlowResourceLoadTest extends TestCase {
         assertEquals(0, displayForm2.getEvents().size());
     }
 
+    public void testShouldThrowIOExceptionIfYAMLIncludingSyntaxErrorInto() {
+        String yaml =
+            "firstState: DisplayForm1xx\n"
+            + "\n"
+            + "lastState:\n"
+            + "name: DisplayForm2\n"
+            + "view: Form2\n"
+            + "\n"
+            + "viewState:\n"
+            + "- name: DisplayForm1\n"
+            + "view: Form1\n"
+            + "transition:\n"
+            + "- event: Process1FromDisplayForm1\n"
+            + "nextState: Process1xx\n"
+            + "action:\n"
+            + "class: ActionClass\n"
+            + "method: doProcess1FromDisplayForm1\n"
+            + "\n"
+            + "actionState:\n"
+            + "- name: Process1\n"
+            + "transition:\n"
+            + "- event: DisplayForm2FromProcess1\n"
+            + "nextState: DisplayForm2xx\n"
+            + "- event: DisplayForm1FromProcess1\n"
+            + "nextState: DisplayForm1xx\n";
+
+        generateYamlFile(yaml);
+
+        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        try {
+            resource.load(null);
+            fail();
+        } catch (IOException e) {
+        }
+
+        EList<EObject> eList = resource.getContents();
+        assertNotNull(eList);
+        assertEquals(1, eList.size());
+        assertTrue(eList.get(0) instanceof Flow);
+
+        Flow eFlow = (Flow) eList.get(0);
+
+        assertNotNull(eFlow.getInitialState());
+        assertNull(eFlow.getFinalState());
+        assertEquals(0, eFlow.getStates().size());
+    }
+
     private void assertViewState(ViewState state,
                                  String name,
                                  String view,
