@@ -113,7 +113,9 @@ public class FlowResource extends ResourceImpl {
                 if (event != null) {
                     eFlow.getInitialState().getEvents().add(event);
                 }
-            } else if (!key.equals("lastState")){
+            } else if (!key.equals("lastState")
+                       && (key.equals("viewState")
+                           || key.equals("actionState"))) {
                 ArrayList<?> states = (ArrayList<?>) flow.get(key);
                 for (HashMap<?, ?> stateAttributes: states.toArray(new HashMap<?, ?>[0])) {
                     ArrayList<?> events = (ArrayList<?>) stateAttributes.get("transition");

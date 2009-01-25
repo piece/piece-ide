@@ -522,6 +522,76 @@ public class FlowResourceLoadTest extends TestCase {
         assertEquals(0, eFlow.getStates().size());
     }
 
+    public void testShouldIgnoreIncorrectKey() {
+        String yaml =
+            "firstState: DisplayForm1\n"
+            + "\n"
+            + "lastState:\n"
+            + "  name: DisplayForm2\n"
+            + "  view: Form2\n"
+            + "\n"
+            + "viewState:\n"
+            + "  - name: DisplayForm1\n"
+            + "    view: Form1\n"
+            + "    transition:\n"
+            + "      - event: Process1FromDisplayForm1\n"
+            + "        nextState: Process1\n"
+            + "        action:\n"
+            + "          method: doProcess1FromDisplayForm1\n"
+            + "\n"
+            + "actionStateXX:\n"
+            + "  - name: Process1\n"
+            + "    transition:\n"
+            + "      - event: DisplayForm2FromProcess1\n"
+            + "        nextState: DisplayForm2\n"
+            + "      - event: DisplayForm1FromProcess1\n"
+            + "        nextState: DisplayForm1\n";
+
+        generateYamlFile(yaml);
+
+        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        try {
+            resource.load(null);
+        } catch (IOException e) {
+            fail();
+        }
+
+        EList<EObject> eList = resource.getContents();
+        assertNotNull(eList);
+        assertEquals(1, eList.size());
+        assertTrue(eList.get(0) instanceof Flow);
+
+        Flow eFlow = (Flow) eList.get(0);
+
+        InitialState initialState = eFlow.getInitialState();
+        assertNotNull(initialState);
+
+        FinalState finalState = eFlow.getFinalState();
+        assertNotNull(finalState);
+
+        assertEquals(2, eFlow.getStates().size());
+        ViewState displayForm1 = (ViewState) eFlow.findStateByName("DisplayForm1");
+        ViewState displayForm2 = (ViewState) eFlow.findStateByName("DisplayForm2");
+        assertViewState(displayForm1,
+                        "DisplayForm1",
+                        "Form1",
+                        null,
+                        null,
+                        null
+                        );
+        assertViewState(displayForm2,
+                        "DisplayForm2",
+                        "Form2",
+                        null,
+                        null,
+                        null
+                        );
+
+        assertEquals(1, initialState.getEvents().size());
+        assertEquals(0, displayForm1.getEvents().size());
+        assertEquals(0, displayForm2.getEvents().size());
+    }
+
     private void assertViewState(ViewState state,
                                  String name,
                                  String view,
