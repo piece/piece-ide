@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
@@ -55,8 +56,37 @@ public class FlowResource extends ResourceImpl {
     protected void doSave(OutputStream outputStream,
                           Map<?, ?> options
                           ) throws IOException {
-        // TODO Auto-generated method stub
-        super.doSave(outputStream, options);
+        Flow eFlow = (Flow) getContents().get(0);
+
+        Map<String, String> initialStateMap = new LinkedHashMap<String, String>();
+        NamedState firstState = (NamedState) eFlow.getInitialState().getEvents().get(0).getNextState();
+        initialStateMap.put("firstState", firstState.getName());
+        String initialStateYaml = Yaml.dump(initialStateMap);
+
+        Map<String, Map<String, String>> lastStateMap = new LinkedHashMap<String, Map<String, String>>();
+        if (eFlow.getFinalState() != null) {
+            for (NamedState state: eFlow.getStates()) {
+                for (Event event: state.getEvents()) {
+                    if (event.getNextState() == eFlow.getFinalState()) {
+                        Map<String, String> lastState = new LinkedHashMap<String, String>();
+                        lastState.put("name", state.getName());
+                        if (state instanceof ViewState) {
+                            lastState.put("view", ((ViewState) state).getView());
+                        }
+
+                        lastStateMap.put("lastState", lastState);
+                    }
+                }
+            }
+        }
+        String lastStateYaml = Yaml.dump(lastStateMap);
+
+        StringBuffer yamlBuffer = new StringBuffer();
+        yamlBuffer.append(formatYaml(initialStateYaml));
+        yamlBuffer.append("\n");
+        yamlBuffer.append(formatYaml(lastStateYaml));
+
+        outputStream.write(yamlBuffer.toString().getBytes());
     }
 
     private void createStates(Flow eFlow,
@@ -220,5 +250,22 @@ public class FlowResource extends ResourceImpl {
                 }
             }
         }
+    }
+    
+    private String formatYaml(String sourceYaml) {
+        String yaml = new String(sourceYaml);
+        yaml = yaml.replace("\r\n", "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+        yaml = yaml.replace("--- !java.util.LinkedHashMap\n", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        yaml = yaml.replace("--- \n", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        yaml = yaml.replace("\"", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        yaml = yaml.replace(
+                " !java.util.LinkedHashMap", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        yaml = yaml.replaceAll("-\n *", "- "); //$NON-NLS-1$ //$NON-NLS-2$
+        yaml = yaml.replace(": \n", ":\n"); //$NON-NLS-1$ //$NON-NLS-2$
+//        if (yaml.length() > 0) {
+//            yaml = yaml.substring(0, yaml.length() - 1);
+//        }
+
+        return yaml;
     }
 }

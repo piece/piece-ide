@@ -10,6 +10,7 @@ import junit.framework.TestCase;
 import org.eclipse.emf.common.util.URI;
 
 import FlowDesigner.Event;
+import FlowDesigner.FinalState;
 import FlowDesigner.Flow;
 import FlowDesigner.FlowDesignerFactory;
 import FlowDesigner.ViewState;
@@ -25,17 +26,18 @@ public class FlowResourceSaveTest extends TestCase {
     }
 
     protected void setUp() throws Exception {
-        deleteYamlFile();
+//        deleteYamlFile();
     }
 
     protected void tearDown() throws Exception {
-        deleteYamlFile();
+//        deleteYamlFile();
     }
 
     public void testShouldConvertFlowIncludingInitialAndViewAndFinalStateIntoYAML() {
         Flow flow = fFactory.createFlow();
 
-        flow.setFinalState(fFactory.createFinalState());
+        FinalState finalState = fFactory.createFinalState();
+        flow.setFinalState(finalState);
 
         ViewState displayForm1 = fFactory.createViewState();
         displayForm1.setName("DisplayForm1");
@@ -47,10 +49,15 @@ public class FlowResourceSaveTest extends TestCase {
         initialStateToDisplayForm1.setNextState(displayForm1);
         flow.getInitialState().getEvents().add(initialStateToDisplayForm1);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        Event finalStateFromDisplayForm1 = fFactory.createEvent();
+        finalStateFromDisplayForm1.setName("FinalStateFromDisplayForm1");
+        finalStateFromDisplayForm1.setNextState(finalState);
+        displayForm1.getEvents().add(finalStateFromDisplayForm1);
 
+        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
-            resource.load(null);
+            resource.getContents().add(flow);
+            resource.save(null);
         } catch (IOException e) {
             fail();
         }
