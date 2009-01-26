@@ -35,8 +35,8 @@ public class FlowLoad {
         fFlow = fFactory.createFlow();
         try {
             HashMap<?, ?> flow = Yaml.loadType(inputStream, HashMap.class);
-            createStates(fFlow, flow);
-            createEvents(fFlow, flow);
+            createStates(flow);
+            createEvents(flow);
         } catch (YamlException e) {
             throw new IOException(e);
         }
@@ -46,12 +46,10 @@ public class FlowLoad {
         return fFlow;
     }
 
-    private void createStates(Flow eFlow,
-                              HashMap<?, ?> flow
-                              ) {
+    private void createStates(HashMap<?, ?> flow) {
         if (flow.get("lastState") != null) {
-            FinalState finalState = FlowDesignerFactoryImpl.eINSTANCE.createFinalState();
-            eFlow.setFinalState(finalState);
+            FinalState finalState = fFactory.createFinalState();
+            fFlow.setFinalState(finalState);
 
             for (HashMap<?, ?> stateAttributes : getStateList(flow, "lastState")) {
                 NamedState state = null;
@@ -61,35 +59,35 @@ public class FlowLoad {
                     state = createActionState(stateAttributes);
                 }
 
-                Event event = FlowDesignerFactoryImpl.eINSTANCE.createEvent();
+                Event event = fFactory.createEvent();
                 event.setName("FinalStateFrom" + state.getName());
                 event.setNextState(finalState);
                 state.getEvents().add(event);
 
-                eFlow.getStates().add(state);
+                fFlow.getStates().add(state);
             }
         }
         if (flow.get("viewState") != null) {
             for (HashMap<?, ?> stateAttributes : getStateList(flow, "viewState")) {
-                eFlow.getStates().add(createViewState(stateAttributes));
+                fFlow.getStates().add(createViewState(stateAttributes));
             }
         }
         if (flow.get("actionState") != null) {
             for (HashMap<?, ?> stateAttributes : getStateList(flow,
                     "actionState")) {
-                eFlow.getStates().add(createActionState(stateAttributes));
+                fFlow.getStates().add(createActionState(stateAttributes));
             }
         }
 
         if (flow.get("initial") != null) {
             HashMap<String, HashMap<?, ?>> action = new HashMap<String, HashMap<?, ?>>();
             action.put("initialize", (HashMap<?, ?>) flow.get("initial"));
-            setAction(eFlow.getInitialState(), action);
+            setAction(fFlow.getInitialState(), action);
         }
         if (flow.get("final") != null) {
             HashMap<String, HashMap<?, ?>> action = new HashMap<String, HashMap<?, ?>>();
             action.put("finalize", (HashMap<?, ?>) flow.get("final"));
-            setAction(eFlow.getFinalState(), action);
+            setAction(fFlow.getFinalState(), action);
         }
     }
 
@@ -115,15 +113,15 @@ public class FlowLoad {
         return states;
     }
 
-    private void createEvents(Flow eFlow, HashMap<?, ?> flow) {
+    private void createEvents(HashMap<?, ?> flow) {
         if (flow.get("firstState") != null) {
             HashMap<String, String> eventAttributes = new HashMap<String, String>();
             eventAttributes.put("event", "(FirstState)");
             eventAttributes.put("nextState", (String) flow.get("firstState"));
 
-            Event event = createEvent(eventAttributes, eFlow);
+            Event event = createEvent(eventAttributes);
             if (event != null) {
-                eFlow.getInitialState().getEvents().add(event);
+                fFlow.getInitialState().getEvents().add(event);
             }
         }
 
@@ -143,11 +141,11 @@ public class FlowLoad {
                 continue;
             }
 
-            NamedState state = eFlow.findStateByName((String) stateAttributes
+            NamedState state = fFlow.findStateByName((String) stateAttributes
                     .get("name"));
             for (HashMap<?, ?> eventAttributes : events
                     .toArray(new HashMap<?, ?>[0])) {
-                Event event = createEvent(eventAttributes, eFlow);
+                Event event = createEvent(eventAttributes);
                 if (event != null) {
                     state.getEvents().add(event);
                 }
@@ -156,13 +154,13 @@ public class FlowLoad {
     }
 
     private ViewState createViewState(HashMap<?, ?> stateAttributes) {
-        ViewState viewState = FlowDesignerFactoryImpl.eINSTANCE.createViewState();
+        ViewState viewState = fFactory.createViewState();
         setStateAttributes(viewState, stateAttributes);
         return viewState;
     }
 
     private ActionState createActionState(HashMap<?, ?> stateAttributes) {
-        ActionState actionState = FlowDesignerFactoryImpl.eINSTANCE.createActionState();
+        ActionState actionState = fFactory.createActionState();
         setStateAttributes(actionState, stateAttributes);
         return actionState;
     }
@@ -179,12 +177,12 @@ public class FlowLoad {
         setAction(state, stateAttributes);
     }
 
-    private Event createEvent(HashMap<?, ?> eventAttributes, Flow eFlow) {
-        Target nextState = (Target) eFlow.findStateByName((String) eventAttributes.get("nextState"));
+    private Event createEvent(HashMap<?, ?> eventAttributes) {
+        Target nextState = (Target) fFlow.findStateByName((String) eventAttributes.get("nextState"));
         if (nextState == null) {
             return null;
         }
-        Event event = FlowDesignerFactoryImpl.eINSTANCE.createEvent();
+        Event event = fFactory.createEvent();
         event.setName((String) eventAttributes.get("event"));
         event.setNextState(nextState);
 
