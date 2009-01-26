@@ -67,11 +67,19 @@ public class FlowResource extends ResourceImpl {
             eFlow.setFinalState(finalState);
 
             for (HashMap<?, ?> stateAttributes: getStateList(flow, "lastState")) {
+                NamedState state = null;
                 if (stateAttributes.containsKey("view")) {
-                    eFlow.getStates().add(createViewState(stateAttributes));
+                    state = createViewState(stateAttributes);
                 } else {
-                    eFlow.getStates().add(createActionState(stateAttributes));
+                    state = createActionState(stateAttributes);
                 }
+
+                Event event = FlowDesignerFactoryImpl.eINSTANCE.createEvent();
+                event.setName("FinalStateFrom" + state.getName());
+                event.setNextState(finalState);
+                state.getEvents().add(event);
+
+                eFlow.getStates().add(state);
             }
         }
         if (flow.get("viewState") != null) {

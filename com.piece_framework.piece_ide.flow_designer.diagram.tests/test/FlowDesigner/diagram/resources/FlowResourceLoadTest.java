@@ -84,6 +84,15 @@ public class FlowResourceLoadTest extends TestCase {
                     null,
                     displayForm1
                     );
+
+        assertEquals(1, displayForm1.getEvents().size());
+        Event finalStateFromDisplayForm1 = displayForm1.getEvents().get(0);
+        assertEvent(finalStateFromDisplayForm1,
+                    "FinalStateFromDisplayForm1",
+                    null,
+                    null,
+                    finalState
+                    );
     }
 
     public void testShouldConvertYAMLIntoFlowIncludingAllKindsOfState() {
@@ -220,6 +229,15 @@ public class FlowResourceLoadTest extends TestCase {
                     null,
                     displayForm2
                     );
+
+        assertEquals(1, displayForm2.getEvents().size());
+        Event finalStateFromDisplayForm2 = displayForm2.getEvents().get(0);
+        assertEvent(finalStateFromDisplayForm2,
+                    "FinalStateFromDisplayForm2",
+                    null,
+                    null,
+                    finalState
+                    );
     }
 
     public void testShouldConvertYAMLIntoFlowIncludingTwoLastState() {
@@ -280,6 +298,23 @@ public class FlowResourceLoadTest extends TestCase {
                     null,
                     displayForm1
                     );
+
+        assertEquals(1, displayForm1.getEvents().size());
+        Event finalStateFromDisplayForm1 = displayForm1.getEvents().get(0);
+        assertEvent(finalStateFromDisplayForm1,
+                    "FinalStateFromDisplayForm1",
+                    null,
+                    null,
+                    finalState
+                    );
+        assertEquals(1, displayForm2.getEvents().size());
+        Event finalStateFromDisplayForm2 = displayForm2.getEvents().get(0);
+        assertEvent(finalStateFromDisplayForm2,
+                    "FinalStateFromDisplayForm2",
+                    null,
+                    null,
+                    finalState
+                    );
     }
 
     public void testShouldConvertYAMLIntoFlowWithoutFirstState() {
@@ -321,6 +356,15 @@ public class FlowResourceLoadTest extends TestCase {
                         );
 
         assertEquals(0, initialState.getEvents().size());
+
+        assertEquals(1, displayForm1.getEvents().size());
+        Event finalStateFromDisplayForm1 = displayForm1.getEvents().get(0);
+        assertEvent(finalStateFromDisplayForm1,
+                    "FinalStateFromDisplayForm1",
+                    null,
+                    null,
+                    finalState
+                    );
     }
 
     public void testShouldConvertYAMLIntoFlowWithoutLastState() {
@@ -472,7 +516,7 @@ public class FlowResourceLoadTest extends TestCase {
         assertEquals(0, initialState.getEvents().size());
         assertEquals(0, displayForm1.getEvents().size());
         assertEquals(0, process1.getEvents().size());
-        assertEquals(0, displayForm2.getEvents().size());
+        assertEquals(1, displayForm2.getEvents().size());
     }
 
     public void testShouldThrowIOExceptionIfYAMLIncludingSyntaxErrorInto() {
@@ -589,7 +633,7 @@ public class FlowResourceLoadTest extends TestCase {
 
         assertEquals(1, initialState.getEvents().size());
         assertEquals(0, displayForm1.getEvents().size());
-        assertEquals(0, displayForm2.getEvents().size());
+        assertEquals(1, displayForm2.getEvents().size());
     }
 
     public void testShouldConvertYAMLIntoFlowIncludingViewStateWithoutViewElement() {
@@ -650,7 +694,7 @@ public class FlowResourceLoadTest extends TestCase {
 
         assertEquals(1, initialState.getEvents().size());
         assertEquals(1, displayForm1.getEvents().size());
-        assertEquals(0, displayForm2.getEvents().size());
+        assertEquals(1, displayForm2.getEvents().size());
     }
 
     public void testShouldConvertYAMLIntoFlowIncludingInitialAndFinal() {
@@ -700,7 +744,7 @@ public class FlowResourceLoadTest extends TestCase {
                         );
 
         assertEquals(1, initialState.getEvents().size());
-        assertEquals(0, displayForm1.getEvents().size());
+        assertEquals(1, displayForm1.getEvents().size());
     }
 
     private void assertViewState(ViewState state,
