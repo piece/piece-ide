@@ -14,17 +14,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.ho.yaml.Yaml;
 import org.ho.yaml.exception.YamlException;
 
-import FlowDesigner.ActionState;
 import FlowDesigner.Event;
 import FlowDesigner.FinalState;
 import FlowDesigner.Flow;
 import FlowDesigner.FlowDesignerFactory;
 import FlowDesigner.NamedState;
 import FlowDesigner.Target;
-import FlowDesigner.ViewState;
 import FlowDesigner.impl.FlowDesignerFactoryImpl;
 import FlowDesigner.impl.FlowDesignerPackageImpl;
-import FlowDesigner.impl.ViewStateImpl;
 
 public class FlowLoad {
     private FlowDesignerFactory fFactory;
@@ -60,7 +57,7 @@ public class FlowLoad {
 
             for (HashMap<?, ?> stateAttributes : getStateList(flow, "lastState")) {
                 String stateType = stateAttributes.containsKey("view") ?
-                                   "viewState" : "actionSatte";
+                                   "viewState" : "actionState";
 
                 NamedState state = (NamedState) fFactory.create(stateMap.get(stateType));
                 setStateAttributes(state,
