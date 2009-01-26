@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.ho.yaml.Yaml;
 import org.ho.yaml.exception.YamlException;
@@ -22,6 +24,7 @@ import FlowDesigner.Target;
 import FlowDesigner.ViewState;
 import FlowDesigner.impl.FlowDesignerFactoryImpl;
 import FlowDesigner.impl.FlowDesignerPackageImpl;
+import FlowDesigner.impl.ViewStateImpl;
 
 public class FlowLoad {
     private FlowDesignerFactory fFactory;
@@ -47,18 +50,22 @@ public class FlowLoad {
     }
 
     private void createStates(HashMap<?, ?> flow) {
+        Map<String, EClass> stateMap = new HashMap<String, EClass>();
+        stateMap.put("viewState", FlowDesignerPackageImpl.eINSTANCE.getViewState());
+        stateMap.put("actionState", FlowDesignerPackageImpl.eINSTANCE.getActionState());
+
         if (flow.get("lastState") != null) {
             FinalState finalState = fFactory.createFinalState();
             fFlow.setFinalState(finalState);
 
             for (HashMap<?, ?> stateAttributes : getStateList(flow, "lastState")) {
-                NamedState state = null;
-                if (stateAttributes.containsKey("view")) {
-                    state = createViewState(stateAttributes);
-                } else {
-                    state = createActionState(stateAttributes);
-                }
+                String stateType = stateAttributes.containsKey("view") ?
+                                   "viewState" : "actionSatte";
 
+                NamedState state = (NamedState) fFactory.create(stateMap.get(stateType));
+                setStateAttributes(state,
+                                   stateAttributes
+                                   );
                 Event event = fFactory.createEvent();
                 event.setName("FinalStateFrom" + state.getName());
                 event.setNextState(finalState);
@@ -67,15 +74,18 @@ public class FlowLoad {
                 fFlow.getStates().add(state);
             }
         }
-        if (flow.get("viewState") != null) {
-            for (HashMap<?, ?> stateAttributes : getStateList(flow, "viewState")) {
-                fFlow.getStates().add(createViewState(stateAttributes));
+
+        for (String stateType: stateMap.keySet()) {
+            if (flow.get(stateType) == null) {
+                continue;
             }
-        }
-        if (flow.get("actionState") != null) {
-            for (HashMap<?, ?> stateAttributes : getStateList(flow,
-                    "actionState")) {
-                fFlow.getStates().add(createActionState(stateAttributes));
+
+            for (HashMap<?, ?> stateAttributes : getStateList(flow, stateType)) {
+                NamedState state = (NamedState) fFactory.create(stateMap.get(stateType));
+                setStateAttributes(state,
+                                   stateAttributes
+                                   );
+                fFlow.getStates().add(state);
             }
         }
 
@@ -141,8 +151,7 @@ public class FlowLoad {
                 continue;
             }
 
-            NamedState state = fFlow.findStateByName((String) stateAttributes
-                    .get("name"));
+            NamedState state = fFlow.findStateByName((String) stateAttributes.get("name"));
             for (HashMap<?, ?> eventAttributes : events
                     .toArray(new HashMap<?, ?>[0])) {
                 Event event = createEvent(eventAttributes);
@@ -151,18 +160,6 @@ public class FlowLoad {
                 }
             }
         }
-    }
-
-    private ViewState createViewState(HashMap<?, ?> stateAttributes) {
-        ViewState viewState = fFactory.createViewState();
-        setStateAttributes(viewState, stateAttributes);
-        return viewState;
-    }
-
-    private ActionState createActionState(HashMap<?, ?> stateAttributes) {
-        ActionState actionState = fFactory.createActionState();
-        setStateAttributes(actionState, stateAttributes);
-        return actionState;
     }
 
     private void setStateAttributes(NamedState state,
