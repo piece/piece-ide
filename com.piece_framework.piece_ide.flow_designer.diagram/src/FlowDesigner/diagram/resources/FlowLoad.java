@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -26,6 +27,7 @@ import FlowDesigner.impl.FlowDesignerPackageImpl;
 public class FlowLoad {
     private FlowDesignerFactory fFactory;
     private Flow fFlow;
+    private Map<?, ?> fFlowMap;
 
     public FlowLoad() {
         fFactory = FlowDesignerFactoryImpl.eINSTANCE;
@@ -34,9 +36,9 @@ public class FlowLoad {
     public void load(InputStream inputStream) throws IOException {
         fFlow = fFactory.createFlow();
         try {
-            HashMap<?, ?> flow = Yaml.loadType(inputStream, HashMap.class);
-            createStates(flow);
-            createEvents(flow);
+            fFlowMap = Yaml.loadType(inputStream, HashMap.class);
+            createStates(fFlowMap);
+            createEvents(fFlowMap);
         } catch (YamlException e) {
             throw new IOException(e);
         }
@@ -46,7 +48,11 @@ public class FlowLoad {
         return fFlow;
     }
 
-    private void createStates(HashMap<?, ?> flow) {
+    public Map<?, ?> getFlowMap() {
+        return fFlowMap;
+    }
+
+    private void createStates(Map<?, ?> flow) {
         Map<String, EClass> stateMap = new HashMap<String, EClass>();
         stateMap.put("viewState", FlowDesignerPackageImpl.eINSTANCE.getViewState());
         stateMap.put("actionState", FlowDesignerPackageImpl.eINSTANCE.getActionState());
@@ -55,7 +61,7 @@ public class FlowLoad {
             FinalState finalState = fFactory.createFinalState();
             fFlow.setFinalState(finalState);
 
-            for (HashMap<?, ?> stateAttributes : getStateList(flow, "lastState")) {
+            for (Map<?, ?> stateAttributes : getStateList(flow, "lastState")) {
                 String stateType = stateAttributes.containsKey("view") ?
                                    "viewState" : "actionState";
 
@@ -77,7 +83,7 @@ public class FlowLoad {
                 continue;
             }
 
-            for (HashMap<?, ?> stateAttributes : getStateList(flow, stateType)) {
+            for (Map<?, ?> stateAttributes : getStateList(flow, stateType)) {
                 NamedState state = (NamedState) fFactory.create(stateMap.get(stateType));
                 setStateAttributes(state,
                                    stateAttributes
@@ -99,28 +105,28 @@ public class FlowLoad {
     }
 
     @SuppressWarnings("unchecked")
-    private ArrayList<HashMap<?, ?>> getStateList(HashMap<?, ?> flow,
-                                                  Object key
-                                                  ) {
+    private List<Map<?, ?>> getStateList(Map<?, ?> flow,
+                                         Object key
+                                         ) {
         if (flow.get(key) == null) {
             return null;
         }
 
-        ArrayList<HashMap<?, ?>> states = null;
+        ArrayList<Map<?, ?>> states = null;
         if (flow.get(key) instanceof HashMap) {
-            ArrayList<HashMap<?, ?>> list = new ArrayList<HashMap<?, ?>>();
+            ArrayList<Map<?, ?>> list = new ArrayList<Map<?, ?>>();
             HashMap<?, ?> stateAttributes = (HashMap<?, ?>) flow.get(key);
             list.add(stateAttributes);
             states = list;
         } else {
-            ArrayList<HashMap<?, ?>> list = new ArrayList<HashMap<?, ?>>();
+            ArrayList<Map<?, ?>> list = new ArrayList<Map<?, ?>>();
             list.addAll((ArrayList<HashMap<?, ?>>) flow.get(key));
             states = list;
         }
         return states;
     }
 
-    private void createEvents(HashMap<?, ?> flow) {
+    private void createEvents(Map<?, ?> flow) {
         if (flow.get("firstState") != null) {
             HashMap<String, String> eventAttributes = new HashMap<String, String>();
             eventAttributes.put("event", "(FirstState)");
@@ -132,16 +138,16 @@ public class FlowLoad {
             }
         }
 
-        ArrayList<HashMap<?, ?>> viewStates = getStateList(flow, "viewState");
-        ArrayList<HashMap<?, ?>> actionStates = getStateList(flow, "actionState");
-        ArrayList<HashMap<?, ?>> states = new ArrayList<HashMap<?, ?>>();
+        List<Map<?, ?>> viewStates = getStateList(flow, "viewState");
+        List<Map<?, ?>> actionStates = getStateList(flow, "actionState");
+        List<Map<?, ?>> states = new ArrayList<Map<?, ?>>();
         if (viewStates != null) {
             states.addAll(viewStates);
         }
         if (actionStates != null) {
             states.addAll(actionStates);
         }
-        for (HashMap<?, ?> stateAttributes : states) {
+        for (Map<?, ?> stateAttributes : states) {
             ArrayList<?> events = (ArrayList<?>) stateAttributes
                     .get("transition");
             if (events == null) {
@@ -160,7 +166,7 @@ public class FlowLoad {
     }
 
     private void setStateAttributes(NamedState state,
-                                    HashMap<?, ?> stateAttributes
+                                    Map<?, ?> stateAttributes
                                     ) {
         for (EAttribute eAttribute : state.eClass().getEAllAttributes()) {
             if (stateAttributes.get(eAttribute.getName()) instanceof String) {
@@ -185,7 +191,9 @@ public class FlowLoad {
         return event;
     }
 
-    private void setAction(EObject object, HashMap<?, ?> attributes) {
+    private void setAction(EObject object,
+                           Map<?, ?> attributes
+                           ) {
         for (EAttribute eAttribute : object.eClass().getEAllAttributes()) {
             if (eAttribute.getEType() == FlowDesignerPackageImpl.eINSTANCE.getAction()) {
                 HashMap<?, ?> action = (HashMap<?, ?>) attributes.get(eAttribute.getName());
