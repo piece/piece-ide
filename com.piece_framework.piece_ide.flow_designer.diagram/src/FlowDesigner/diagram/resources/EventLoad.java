@@ -1,3 +1,5 @@
+// $Id$
+
 package FlowDesigner.diagram.resources;
 
 import java.util.Map;
