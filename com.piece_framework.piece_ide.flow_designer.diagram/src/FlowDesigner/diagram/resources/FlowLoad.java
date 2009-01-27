@@ -77,12 +77,16 @@ class FlowLoad extends AbstractLoad {
         if (flowMap.get("initial") != null) {
             HashMap<String, HashMap<?, ?>> action = new HashMap<String, HashMap<?, ?>>();
             action.put("initialize", (HashMap<?, ?>) flowMap.get("initial"));
-            setAction(flow.getInitialState(), action);
+            
+            ActionLoad load = new ActionLoad();
+            load.load(flow.getInitialState(), action);
         }
         if (flowMap.get("final") != null) {
             HashMap<String, HashMap<?, ?>> action = new HashMap<String, HashMap<?, ?>>();
             action.put("finalize", (HashMap<?, ?>) flowMap.get("final"));
-            setAction(flow.getFinalState(), action);
+
+            ActionLoad load = new ActionLoad();
+            load.load(flow.getFinalState(), action);
         }
     }
 
@@ -158,7 +162,8 @@ class FlowLoad extends AbstractLoad {
             }
         }
 
-        setAction(state, stateAttributes);
+        ActionLoad load = new ActionLoad();
+        load.load(state, stateAttributes);
     }
 
     private Event createEvent(Flow flow,
@@ -171,22 +176,9 @@ class FlowLoad extends AbstractLoad {
         event.setName((String) eventAttributes.get("event"));
         event.setNextState(nextState);
 
-        setAction(event, eventAttributes);
+        ActionLoad load = new ActionLoad();
+        load.load(event, eventAttributes);
 
         return event;
     }
-
-    private void setAction(EObject object,
-                           Map<?, ?> attributes
-                           ) {
-        for (EAttribute eAttribute : object.eClass().getEAllAttributes()) {
-            if (eAttribute.getEType() == FlowDesignerPackageImpl.eINSTANCE.getAction()) {
-                HashMap<?, ?> action = (HashMap<?, ?>) attributes.get(eAttribute.getName());
-                if (action != null) {
-                    object.eSet(eAttribute, (String) action.get("method"));
-                }
-            }
-        }
-    }
-
 }
