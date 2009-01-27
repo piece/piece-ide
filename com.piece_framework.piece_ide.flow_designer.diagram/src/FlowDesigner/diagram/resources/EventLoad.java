@@ -14,17 +14,17 @@ import FlowDesigner.impl.FlowDesignerFactoryImpl;
 
 class EventLoad extends AbstractLoad {
     @Override
-    void load(EObject object,
-              Map<?, ?> map
+    void load(EObject eObject,
+              Map<?, ?> eventMap
               ) {
-        if (!(object instanceof Source)) {
+        if (!(eObject instanceof Source)) {
             return;
         }
 
-        Flow flow = (Flow) object.eContainer();
+        Flow flow = (Flow) eObject.eContainer();
         Target nextState = null;
-        if (map.get("nextState") != null) {
-            nextState = (Target) flow.findStateByName((String) map.get("nextState"));
+        if (eventMap.get("nextState") != null) {
+            nextState = (Target) flow.findStateByName((String) eventMap.get("nextState"));
         } else {
             nextState = flow.getFinalState();
         }
@@ -33,13 +33,13 @@ class EventLoad extends AbstractLoad {
         }
 
         Event event = FlowDesignerFactoryImpl.eINSTANCE.createEvent();
-        event.setName((String) map.get("event"));
+        event.setName((String) eventMap.get("event"));
         event.setNextState(nextState);
 
         ActionLoad load = new ActionLoad();
-        load.load(event, map);
+        load.load(event, eventMap);
 
-        ((Source) object).getEvents().add(event);
+        ((Source) eObject).getEvents().add(event);
     }
 
 }

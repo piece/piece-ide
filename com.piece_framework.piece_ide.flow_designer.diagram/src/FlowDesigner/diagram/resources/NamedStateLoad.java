@@ -14,20 +14,20 @@ import FlowDesigner.NamedState;
 abstract class NamedStateLoad extends AbstractLoad {
     @Override
     @SuppressWarnings("unchecked")
-    void load(EObject object,
-              Map<?, ?> map
+    void load(EObject eObject,
+              Map<?, ?> flowMap
               ) {
-        if (!(object instanceof Flow)) {
+        if (!(eObject instanceof Flow)) {
             return;
         }
 
-        if (map.get(getStateType()) != null) {
-            for (Map<?, ?> stateAttributes: (List<Map<?, ?>>) map.get(getStateType())) {
+        if (flowMap.get(getStateType()) != null) {
+            for (Map<?, ?> stateAttributes: (List<Map<?, ?>>) flowMap.get(getStateType())) {
                 NamedState state = createNamedState();
                 setStateAttributes(state,
                                    stateAttributes
                                    );
-                ((Flow) object).getStates().add(state);
+                ((Flow) eObject).getStates().add(state);
             }
         }
     }

@@ -11,18 +11,18 @@ import FlowDesigner.Flow;
 
 public class InitialStateLoad extends AbstractLoad {
     @Override
-    void load(EObject object,
-              Map<?, ?> map
+    void load(EObject eObject,
+              Map<?, ?> flowMap
               ) {
-        if (!(object instanceof Flow)) {
+        if (!(eObject instanceof Flow)) {
             return;
         }
-        if (map.get("initial") != null) {
+        if (flowMap.get("initial") != null) {
             Map<String, Map<?, ?>> action = new HashMap<String, Map<?, ?>>();
-            action.put("initialize", (Map<?, ?>) map.get("initial"));
+            action.put("initialize", (Map<?, ?>) flowMap.get("initial"));
 
             ActionLoad load = new ActionLoad();
-            load.load(((Flow) object).getInitialState(), action);
+            load.load(((Flow) eObject).getInitialState(), action);
         }
     }
 }

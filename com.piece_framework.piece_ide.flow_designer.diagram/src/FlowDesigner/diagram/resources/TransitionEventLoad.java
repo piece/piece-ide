@@ -15,16 +15,16 @@ import FlowDesigner.NamedState;
 public class TransitionEventLoad extends AbstractLoad {
 
     @Override
-    void load(EObject object,
-              Map<?, ?> map
+    void load(EObject eObject,
+              Map<?, ?> flowMap
               ) {
-        if (!(object instanceof Flow)) {
+        if (!(eObject instanceof Flow)) {
             return;
         }
 
-        Flow flow = (Flow) object;
-        createEventFromFirstState(flow, map);
-        createTransitionEvent(flow, map);
+        Flow flow = (Flow) eObject;
+        createEventFromFirstState(flow, flowMap);
+        createTransitionEvent(flow, flowMap);
     }
 
     private void createEventFromFirstState(Flow flow,

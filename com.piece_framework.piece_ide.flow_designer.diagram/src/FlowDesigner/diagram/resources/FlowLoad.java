@@ -11,7 +11,7 @@ import FlowDesigner.Flow;
 class FlowLoad extends AbstractLoad {
     @Override
     void load(EObject eObject,
-              Map<?, ?> map
+              Map<?, ?> flowMap
               ) {
         if (!(eObject instanceof Flow)) {
             return;
@@ -20,18 +20,18 @@ class FlowLoad extends AbstractLoad {
         Flow flow = (Flow) eObject;
 
         InitialStateLoad initialStateLoad = new InitialStateLoad();
-        initialStateLoad.load(flow, map);
+        initialStateLoad.load(flow, flowMap);
 
         FinalStateLoad finalStateLoad = new FinalStateLoad();
-        finalStateLoad.load(flow, map);
+        finalStateLoad.load(flow, flowMap);
         
         ViewStateLoad viewStateLoad = new ViewStateLoad();
-        viewStateLoad.load(flow, map);
+        viewStateLoad.load(flow, flowMap);
 
         ActionStateLoad actionStateLoad = new ActionStateLoad();
-        actionStateLoad.load(flow, map);
+        actionStateLoad.load(flow, flowMap);
 
         TransitionEventLoad transitionEventLoad = new TransitionEventLoad();
-        transitionEventLoad.load(flow, map);
+        transitionEventLoad.load(flow, flowMap);
     }
 }

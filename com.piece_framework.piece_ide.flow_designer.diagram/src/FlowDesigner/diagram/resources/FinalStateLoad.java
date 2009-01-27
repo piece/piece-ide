@@ -16,20 +16,22 @@ import FlowDesigner.impl.FlowDesignerFactoryImpl;
 
 public class FinalStateLoad extends AbstractLoad {
     @Override
-    void load(EObject object, Map<?, ?> map) {
-        if (!(object instanceof Flow)) {
+    void load(EObject eObject,
+              Map<?, ?> flowMap
+              ) {
+        if (!(eObject instanceof Flow)) {
             return;
         }
-        if (map.get("lastState") == null) {
+        if (flowMap.get("lastState") == null) {
             return;
         }
 
-        Flow flow = (Flow) object;
+        Flow flow = (Flow) eObject;
 
         FinalState finalState = FlowDesignerFactoryImpl.eINSTANCE.createFinalState();
         flow.setFinalState(finalState);
 
-        Map<String, List<Map<?, ?>>> lastStateMap = createStateTypeMap(map);
+        Map<String, List<Map<?, ?>>> lastStateMap = createStateTypeMap(flowMap);
 
         ViewStateLoad viewStateLoad = new ViewStateLoad();
         viewStateLoad.load(flow, lastStateMap);
@@ -39,9 +41,9 @@ public class FinalStateLoad extends AbstractLoad {
 
         createEventToFinalState(flow, lastStateMap);
 
-        if (map.get("final") != null) {
+        if (flowMap.get("final") != null) {
             HashMap<String, HashMap<?, ?>> action = new HashMap<String, HashMap<?, ?>>();
-            action.put("finalize", (HashMap<?, ?>) map.get("final"));
+            action.put("finalize", (HashMap<?, ?>) flowMap.get("final"));
 
             ActionLoad load = new ActionLoad();
             load.load(flow.getFinalState(), action);

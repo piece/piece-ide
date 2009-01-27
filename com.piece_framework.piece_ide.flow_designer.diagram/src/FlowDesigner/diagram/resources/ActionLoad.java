@@ -11,14 +11,14 @@ import FlowDesigner.impl.FlowDesignerPackageImpl;
 
 class ActionLoad extends AbstractLoad {
     @Override
-    void load(EObject object,
+    void load(EObject eObject,
               Map<?, ?> map
               ) {
-        for (EAttribute eAttribute : object.eClass().getEAllAttributes()) {
+        for (EAttribute eAttribute : eObject.eClass().getEAllAttributes()) {
             if (eAttribute.getEType() == FlowDesignerPackageImpl.eINSTANCE.getAction()) {
                 Map<?, ?> action = (Map<?, ?>) map.get(eAttribute.getName());
                 if (action != null) {
-                    object.eSet(eAttribute, (String) action.get("method"));
+                    eObject.eSet(eAttribute, (String) action.get("method"));
                 }
             }
         }
