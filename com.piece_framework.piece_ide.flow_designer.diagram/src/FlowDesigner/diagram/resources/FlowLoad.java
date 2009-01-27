@@ -58,19 +58,11 @@ class FlowLoad extends AbstractLoad {
             }
         }
 
-        for (String stateType: stateMap.keySet()) {
-            if (flowMap.get(stateType) == null) {
-                continue;
-            }
+        ViewStateLoad viewStateLoad = new ViewStateLoad();
+        viewStateLoad.load(flow, flowMap);
 
-            for (Map<?, ?> stateAttributes : getStateList(flowMap, stateType)) {
-                NamedState state = (NamedState) FlowDesignerFactoryImpl.eINSTANCE.create(stateMap.get(stateType));
-                setStateAttributes(state,
-                                   stateAttributes
-                                   );
-                flow.getStates().add(state);
-            }
-        }
+        ActionStateLoad actionStateLoad = new ActionStateLoad();
+        actionStateLoad.load(flow, flowMap);
 
         if (flowMap.get("initial") != null) {
             HashMap<String, HashMap<?, ?>> action = new HashMap<String, HashMap<?, ?>>();
