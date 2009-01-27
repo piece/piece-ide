@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 
 import FlowDesigner.ActionState;
@@ -15,7 +14,6 @@ import FlowDesigner.Event;
 import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
 import FlowDesigner.ViewState;
-import FlowDesigner.impl.FlowDesignerPackageImpl;
 
 public class FlowSave extends AbstractSave {
     @Override
@@ -40,7 +38,8 @@ public class FlowSave extends AbstractSave {
                         if (state instanceof ViewState) {
                             lastStateMap.put("view", ((ViewState) state).getView());
                         }
-                        setAction(lastStateMap, state);
+                        ActionSave save = new ActionSave();
+                        save.save(lastStateMap, state);
 
                         flowMap.put("lastState", lastStateMap);
                     }
@@ -67,14 +66,16 @@ public class FlowSave extends AbstractSave {
             if (state instanceof ViewState) {
                 stateMap.put("view", ((ViewState) state).getView());
             }
-            setAction(stateMap, state);
+            ActionSave save = new ActionSave();
+            save.save(stateMap, state);
 
             List<Map<String, Object>> transitionList = new ArrayList<Map<String, Object>>();
             for (Event event: state.getEvents()) {
                 Map<String, Object> eventMap = new LinkedHashMap<String, Object>();
                 eventMap.put("event", event.getName());
                 eventMap.put("nextState", ((NamedState) event.getNextState()).getName());
-                setAction(eventMap, event);
+                ActionSave actionSave = new ActionSave();
+                actionSave.save(eventMap, event);
 
                 transitionList.add(eventMap);
             }
@@ -93,31 +94,6 @@ public class FlowSave extends AbstractSave {
         }
         if (actionStateList.size() > 0) {
             flowMap.put("actionState", actionStateList);
-        }
-    }
-
-    private void setAction(Map<String, Object> map,
-                           EObject eObject
-                           ) {
-        Map<String, Object> actionMap = new LinkedHashMap<String, Object>();
-        for (EAttribute eAttribute : eObject.eClass().getEAllAttributes()) {
-            if (eAttribute.getEType() == FlowDesignerPackageImpl.eINSTANCE.getAction()) {
-                if (eObject.eGet(eAttribute) == null) {
-                    continue;
-                }
-
-                Map<String, String> methodMap = new LinkedHashMap<String, String>();
-                methodMap.put("method", (String) eObject.eGet(eAttribute));
-                actionMap.put(eAttribute.getName(),
-                              methodMap
-                              );
-            }
-        }
-
-        for (String key: new String[]{"entry", "activity", "exit", "action", "guard"}) {
-            if (actionMap.get(key) != null) {
-                map.put(key, actionMap.get(key));
-            }
         }
     }
 }
