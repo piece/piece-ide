@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,12 +14,14 @@ import java.util.Map;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.ho.yaml.Yaml;
+import org.ho.yaml.exception.YamlException;
 
 import FlowDesigner.ActionState;
 import FlowDesigner.Event;
 import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
 import FlowDesigner.ViewState;
+import FlowDesigner.impl.FlowDesignerFactoryImpl;
 
 public class FlowResource extends ResourceImpl {
     public FlowResource() {
@@ -33,13 +36,15 @@ public class FlowResource extends ResourceImpl {
     protected void doLoad(InputStream inputStream,
                           Map<?, ?> options
                           ) throws IOException {
+        Flow flow = FlowDesignerFactoryImpl.eINSTANCE.createFlow();
         FlowLoad load = new FlowLoad();
         try {
-            load.load(inputStream);
-        } catch (IOException e) {
+            Map<?, ?> flowMap = Yaml.loadType(inputStream, HashMap.class);
+            load.load(flow, flowMap);
+        } catch (YamlException e) {
             throw new IOException(e);
         } finally {
-            getContents().add(load.getFlow());
+            getContents().add(flow);
         }
     }
 

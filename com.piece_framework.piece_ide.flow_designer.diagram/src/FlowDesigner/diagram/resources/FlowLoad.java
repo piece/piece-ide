@@ -2,8 +2,6 @@
 
 package FlowDesigner.diagram.resources;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +10,6 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.ho.yaml.Yaml;
-import org.ho.yaml.exception.YamlException;
 
 import FlowDesigner.Event;
 import FlowDesigner.FinalState;
@@ -24,32 +20,23 @@ import FlowDesigner.Target;
 import FlowDesigner.impl.FlowDesignerFactoryImpl;
 import FlowDesigner.impl.FlowDesignerPackageImpl;
 
-public class FlowLoad {
+class FlowLoad extends AbstractLoad {
     private FlowDesignerFactory fFactory;
     private Flow fFlow;
     private Map<?, ?> fFlowMap;
 
-    public FlowLoad() {
+    FlowLoad() {
         fFactory = FlowDesignerFactoryImpl.eINSTANCE;
     }
 
-    public void load(InputStream inputStream) throws IOException {
-        fFlow = fFactory.createFlow();
-        try {
-            fFlowMap = Yaml.loadType(inputStream, HashMap.class);
-            createStates(fFlowMap);
-            createEvents(fFlowMap);
-        } catch (YamlException e) {
-            throw new IOException(e);
-        }
-    }
-
-    public Flow getFlow() {
-        return fFlow;
-    }
-
-    public Map<?, ?> getFlowMap() {
-        return fFlowMap;
+    @Override
+    void load(Flow flow,
+              Map<?, ?> flowMap
+              ) {
+        fFlow = flow;
+        fFlowMap = flowMap;
+        createStates(fFlowMap);
+        createEvents(fFlowMap);
     }
 
     private void createStates(Map<?, ?> flow) {
@@ -203,4 +190,5 @@ public class FlowLoad {
             }
         }
     }
+
 }
