@@ -11,11 +11,9 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
-import FlowDesigner.Event;
 import FlowDesigner.FinalState;
 import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
-import FlowDesigner.Target;
 import FlowDesigner.impl.FlowDesignerFactoryImpl;
 import FlowDesigner.impl.FlowDesignerPackageImpl;
 
@@ -51,12 +49,12 @@ class FlowLoad extends AbstractLoad {
                 setStateAttributes(state,
                                    stateAttributes
                                    );
-                Event event = FlowDesignerFactoryImpl.eINSTANCE.createEvent();
-                event.setName("FinalStateFrom" + state.getName());
-                event.setNextState(finalState);
-                state.getEvents().add(event);
-
                 flow.getStates().add(state);
+
+                Map<String, String> eventAttributes = new HashMap<String, String>();
+                eventAttributes.put("event", "FinalStateFrom" + state.getName());
+                EventLoad load = new EventLoad();
+                load.load(state, eventAttributes);
             }
         }
 
@@ -120,10 +118,8 @@ class FlowLoad extends AbstractLoad {
             eventAttributes.put("event", "(FirstState)");
             eventAttributes.put("nextState", (String) flowMap.get("firstState"));
 
-            Event event = createEvent(flow, eventAttributes);
-            if (event != null) {
-                flow.getInitialState().getEvents().add(event);
-            }
+            EventLoad load = new EventLoad();
+            load.load(flow.getInitialState(), eventAttributes);
         }
 
         List<Map<?, ?>> viewStates = getStateList(flowMap, "viewState");
@@ -143,12 +139,9 @@ class FlowLoad extends AbstractLoad {
             }
 
             NamedState state = flow.findStateByName((String) stateAttributes.get("name"));
-            for (HashMap<?, ?> eventAttributes : events
-                    .toArray(new HashMap<?, ?>[0])) {
-                Event event = createEvent(flow, eventAttributes);
-                if (event != null) {
-                    state.getEvents().add(event);
-                }
+            for (HashMap<?, ?> eventAttributes : events.toArray(new HashMap<?, ?>[0])) {
+                EventLoad load = new EventLoad();
+                load.load(state, eventAttributes);
             }
         }
     }
@@ -164,21 +157,5 @@ class FlowLoad extends AbstractLoad {
 
         ActionLoad load = new ActionLoad();
         load.load(state, stateAttributes);
-    }
-
-    private Event createEvent(Flow flow,
-                              HashMap<?, ?> eventAttributes) {
-        Target nextState = (Target) flow.findStateByName((String) eventAttributes.get("nextState"));
-        if (nextState == null) {
-            return null;
-        }
-        Event event = FlowDesignerFactoryImpl.eINSTANCE.createEvent();
-        event.setName((String) eventAttributes.get("event"));
-        event.setNextState(nextState);
-
-        ActionLoad load = new ActionLoad();
-        load.load(event, eventAttributes);
-
-        return event;
     }
 }
