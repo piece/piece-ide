@@ -7,12 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
 import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
-import FlowDesigner.impl.FlowDesignerPackageImpl;
 
 class FlowLoad extends AbstractLoad {
     @Override
@@ -30,9 +28,8 @@ class FlowLoad extends AbstractLoad {
     private void createStates(Flow flow,
                               Map<?, ?> flowMap
                               ) {
-        Map<String, EClass> stateMap = new HashMap<String, EClass>();
-        stateMap.put("viewState", FlowDesignerPackageImpl.eINSTANCE.getViewState());
-        stateMap.put("actionState", FlowDesignerPackageImpl.eINSTANCE.getActionState());
+        InitialStateLoad initialStateLoad = new InitialStateLoad();
+        initialStateLoad.load(flow, flowMap);
 
         FinalStateLoad finalStateLoad = new FinalStateLoad();
         finalStateLoad.load(flow, flowMap);
@@ -42,14 +39,6 @@ class FlowLoad extends AbstractLoad {
 
         ActionStateLoad actionStateLoad = new ActionStateLoad();
         actionStateLoad.load(flow, flowMap);
-
-        if (flowMap.get("initial") != null) {
-            HashMap<String, HashMap<?, ?>> action = new HashMap<String, HashMap<?, ?>>();
-            action.put("initialize", (HashMap<?, ?>) flowMap.get("initial"));
-            
-            ActionLoad load = new ActionLoad();
-            load.load(flow.getInitialState(), action);
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -96,8 +85,7 @@ class FlowLoad extends AbstractLoad {
             states.addAll(actionStates);
         }
         for (Map<?, ?> stateAttributes : states) {
-            ArrayList<?> events = (ArrayList<?>) stateAttributes
-                    .get("transition");
+            ArrayList<?> events = (ArrayList<?>) stateAttributes.get("transition");
             if (events == null) {
                 continue;
             }
