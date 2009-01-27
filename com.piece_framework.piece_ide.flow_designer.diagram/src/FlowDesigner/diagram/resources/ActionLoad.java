@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import FlowDesigner.impl.FlowDesignerPackageImpl;
 
-public class ActionLoad extends AbstractLoad {
+class ActionLoad extends AbstractLoad {
     @Override
     void load(EObject object,
               Map<?, ?> map

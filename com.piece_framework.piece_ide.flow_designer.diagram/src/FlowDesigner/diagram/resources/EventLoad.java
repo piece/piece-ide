@@ -10,7 +10,7 @@ import FlowDesigner.Source;
 import FlowDesigner.Target;
 import FlowDesigner.impl.FlowDesignerFactoryImpl;
 
-public class EventLoad extends AbstractLoad {
+class EventLoad extends AbstractLoad {
     @Override
     void load(EObject object,
               Map<?, ?> map
