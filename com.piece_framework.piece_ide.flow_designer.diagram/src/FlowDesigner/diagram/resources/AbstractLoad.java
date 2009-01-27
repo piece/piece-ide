@@ -4,10 +4,10 @@ package FlowDesigner.diagram.resources;
 
 import java.util.Map;
 
-import FlowDesigner.Flow;
+import org.eclipse.emf.ecore.EObject;
 
 abstract class AbstractLoad {
-    abstract void load(Flow flow,
-                       Map<?, ?> flowMap
+    abstract void load(EObject eObject,
+                       Map<?, ?> map
                        );
 }

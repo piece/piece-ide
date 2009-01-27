@@ -21,11 +21,15 @@ import FlowDesigner.impl.FlowDesignerPackageImpl;
 
 class FlowLoad extends AbstractLoad {
     @Override
-    void load(Flow flow,
-              Map<?, ?> flowMap
+    void load(EObject eObject,
+              Map<?, ?> map
               ) {
-        createStates(flow, flowMap);
-        createEvents(flow, flowMap);
+        if (!(eObject instanceof Flow)) {
+            return;
+        }
+
+        createStates((Flow) eObject, map);
+        createEvents((Flow) eObject, map);
     }
 
     private void createStates(Flow flow,
