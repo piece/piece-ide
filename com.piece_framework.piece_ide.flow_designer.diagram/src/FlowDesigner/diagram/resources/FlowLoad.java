@@ -7,14 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
-import FlowDesigner.FinalState;
 import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
-import FlowDesigner.impl.FlowDesignerFactoryImpl;
 import FlowDesigner.impl.FlowDesignerPackageImpl;
 
 class FlowLoad extends AbstractLoad {
@@ -37,27 +34,9 @@ class FlowLoad extends AbstractLoad {
         stateMap.put("viewState", FlowDesignerPackageImpl.eINSTANCE.getViewState());
         stateMap.put("actionState", FlowDesignerPackageImpl.eINSTANCE.getActionState());
 
-        if (flowMap.get("lastState") != null) {
-            FinalState finalState = FlowDesignerFactoryImpl.eINSTANCE.createFinalState();
-            flow.setFinalState(finalState);
-
-            for (Map<?, ?> stateAttributes : getStateList(flowMap, "lastState")) {
-                String stateType = stateAttributes.containsKey("view") ?
-                                   "viewState" : "actionState";
-
-                NamedState state = (NamedState) FlowDesignerFactoryImpl.eINSTANCE.create(stateMap.get(stateType));
-                setStateAttributes(state,
-                                   stateAttributes
-                                   );
-                flow.getStates().add(state);
-
-                Map<String, String> eventAttributes = new HashMap<String, String>();
-                eventAttributes.put("event", "FinalStateFrom" + state.getName());
-                EventLoad load = new EventLoad();
-                load.load(state, eventAttributes);
-            }
-        }
-
+        FinalStateLoad finalStateLoad = new FinalStateLoad();
+        finalStateLoad.load(flow, flowMap);
+        
         ViewStateLoad viewStateLoad = new ViewStateLoad();
         viewStateLoad.load(flow, flowMap);
 
@@ -70,13 +49,6 @@ class FlowLoad extends AbstractLoad {
             
             ActionLoad load = new ActionLoad();
             load.load(flow.getInitialState(), action);
-        }
-        if (flowMap.get("final") != null) {
-            HashMap<String, HashMap<?, ?>> action = new HashMap<String, HashMap<?, ?>>();
-            action.put("finalize", (HashMap<?, ?>) flowMap.get("final"));
-
-            ActionLoad load = new ActionLoad();
-            load.load(flow.getFinalState(), action);
         }
     }
 
@@ -136,18 +108,5 @@ class FlowLoad extends AbstractLoad {
                 load.load(state, eventAttributes);
             }
         }
-    }
-
-    private void setStateAttributes(NamedState state,
-                                    Map<?, ?> stateAttributes
-                                    ) {
-        for (EAttribute eAttribute : state.eClass().getEAllAttributes()) {
-            if (stateAttributes.get(eAttribute.getName()) instanceof String) {
-                state.eSet(eAttribute, (String) stateAttributes.get(eAttribute.getName()));
-            }
-        }
-
-        ActionLoad load = new ActionLoad();
-        load.load(state, stateAttributes);
     }
 }
