@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 
 import FlowDesigner.ActionState;
@@ -14,6 +15,7 @@ import FlowDesigner.Event;
 import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
 import FlowDesigner.ViewState;
+import FlowDesigner.impl.FlowDesignerPackageImpl;
 
 public class FlowSave extends AbstractSave {
     @Override
@@ -33,28 +35,14 @@ public class FlowSave extends AbstractSave {
             for (NamedState state: eFlow.getStates()) {
                 for (Event event: state.getEvents()) {
                     if (event.getNextState() == eFlow.getFinalState()) {
-                        Map<String, Object> lastState = new LinkedHashMap<String, Object>();
-                        lastState.put("name", state.getName());
+                        Map<String, Object> lastStateMap = new LinkedHashMap<String, Object>();
+                        lastStateMap.put("name", state.getName());
                         if (state instanceof ViewState) {
-                            lastState.put("view", ((ViewState) state).getView());
+                            lastStateMap.put("view", ((ViewState) state).getView());
                         }
-                        if (state.getEntry() != null) {
-                            Map<String, String> action = new LinkedHashMap<String, String>();
-                            action.put("method", state.getEntry());
-                            lastState.put("entry", action);
-                        }
-                        if (state.getActivity() != null) {
-                            Map<String, String> action = new LinkedHashMap<String, String>();
-                            action.put("method", state.getActivity());
-                            lastState.put("activity", action);
-                        }
-                        if (state.getExit() != null) {
-                            Map<String, String> action = new LinkedHashMap<String, String>();
-                            action.put("method", state.getExit());
-                            lastState.put("exit", action);
-                        }
+                        setAction(lastStateMap, state);
 
-                        flowMap.put("lastState", lastState);
+                        flowMap.put("lastState", lastStateMap);
                     }
                 }
             }
@@ -79,36 +67,14 @@ public class FlowSave extends AbstractSave {
             if (state instanceof ViewState) {
                 stateMap.put("view", ((ViewState) state).getView());
             }
-            if (state.getEntry() != null) {
-                Map<String, String> action = new LinkedHashMap<String, String>();
-                action.put("method", state.getEntry());
-                stateMap.put("entry", action);
-            }
-            if (state.getActivity() != null) {
-                Map<String, String> action = new LinkedHashMap<String, String>();
-                action.put("method", state.getActivity());
-                stateMap.put("activity", action);
-            }
-            if (state.getExit() != null) {
-                Map<String, String> action = new LinkedHashMap<String, String>();
-                action.put("method", state.getExit());
-                stateMap.put("exit", action);
-            }
+            setAction(stateMap, state);
+
             List<Map<String, Object>> transitionList = new ArrayList<Map<String, Object>>();
             for (Event event: state.getEvents()) {
                 Map<String, Object> eventMap = new LinkedHashMap<String, Object>();
                 eventMap.put("event", event.getName());
                 eventMap.put("nextState", ((NamedState) event.getNextState()).getName());
-                if (event.getAction() != null) {
-                    Map<String, String> action = new LinkedHashMap<String, String>();
-                    action.put("method", event.getAction());
-                    eventMap.put("action", action);
-                }
-                if (event.getGuard() != null) {
-                    Map<String, String> action = new LinkedHashMap<String, String>();
-                    action.put("method", event.getGuard());
-                    eventMap.put("guard", action);
-                }
+                setAction(eventMap, event);
 
                 transitionList.add(eventMap);
             }
@@ -127,6 +93,31 @@ public class FlowSave extends AbstractSave {
         }
         if (actionStateList.size() > 0) {
             flowMap.put("actionState", actionStateList);
+        }
+    }
+
+    private void setAction(Map<String, Object> map,
+                           EObject eObject
+                           ) {
+        Map<String, Object> actionMap = new LinkedHashMap<String, Object>();
+        for (EAttribute eAttribute : eObject.eClass().getEAllAttributes()) {
+            if (eAttribute.getEType() == FlowDesignerPackageImpl.eINSTANCE.getAction()) {
+                if (eObject.eGet(eAttribute) == null) {
+                    continue;
+                }
+
+                Map<String, String> methodMap = new LinkedHashMap<String, String>();
+                methodMap.put("method", (String) eObject.eGet(eAttribute));
+                actionMap.put(eAttribute.getName(),
+                              methodMap
+                              );
+            }
+        }
+
+        for (String key: new String[]{"entry", "activity", "exit", "action", "guard"}) {
+            if (actionMap.get(key) != null) {
+                map.put(key, actionMap.get(key));
+            }
         }
     }
 }
