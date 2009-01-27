@@ -13,6 +13,7 @@ import FlowDesigner.NamedState;
 
 abstract class NamedStateLoad extends AbstractLoad {
     @Override
+    @SuppressWarnings("unchecked")
     void load(EObject object,
               Map<?, ?> map
               ) {
