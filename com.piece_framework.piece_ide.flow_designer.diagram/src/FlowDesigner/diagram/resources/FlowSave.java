@@ -17,7 +17,7 @@ import FlowDesigner.ViewState;
 
 public class FlowSave extends AbstractSave {
     @Override
-    void save(Map<?, ?> map,
+    void save(Map<String, Object> map,
               EObject object
               ) {
         if (!(object instanceof Flow)) {

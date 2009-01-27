@@ -12,8 +12,7 @@ import FlowDesigner.impl.FlowDesignerPackageImpl;
 
 public class ActionSave extends AbstractSave {
     @Override
-    @SuppressWarnings("unchecked")
-    void save(Map<?, ?> map,
+    void save(Map<String, Object> map,
               EObject eObject
               ) {
         Map<String, Object> actionMap = new LinkedHashMap<String, Object>();
