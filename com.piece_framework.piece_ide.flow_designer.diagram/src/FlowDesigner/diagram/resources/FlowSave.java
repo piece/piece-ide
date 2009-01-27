@@ -17,22 +17,21 @@ import FlowDesigner.ViewState;
 
 public class FlowSave extends AbstractSave {
     @Override
-    void save(Map<String, Object> map,
-              EObject object
+    void save(Map<String, Object> flowMap,
+              EObject eObject
               ) {
-        if (!(object instanceof Flow)) {
+        if (!(eObject instanceof Flow)) {
             return;
         }
-        Flow eFlow = (Flow) object;
-        Map<String, Object> flowMap = (Map<String, Object>) map;
+        Flow flow = (Flow) eObject;
 
-        NamedState firstState = (NamedState) eFlow.getInitialState().getEvents().get(0).getNextState();
-        flowMap.put("firstState", firstState.getName());
+        InitialStateSave initialStateSave = new InitialStateSave();
+        initialStateSave.save(flowMap, flow);
 
-        if (eFlow.getFinalState() != null) {
-            for (NamedState state: eFlow.getStates()) {
+        if (flow.getFinalState() != null) {
+            for (NamedState state: flow.getStates()) {
                 for (Event event: state.getEvents()) {
-                    if (event.getNextState() == eFlow.getFinalState()) {
+                    if (event.getNextState() == flow.getFinalState()) {
                         Map<String, Object> lastStateMap = new LinkedHashMap<String, Object>();
                         lastStateMap.put("name", state.getName());
                         if (state instanceof ViewState) {
@@ -49,10 +48,10 @@ public class FlowSave extends AbstractSave {
 
         List<Map<String, Object>> viewStateList = new ArrayList<Map<String, Object>>();
         List<Map<String, Object>> actionStateList = new ArrayList<Map<String, Object>>();
-        for (NamedState state: eFlow.getStates()) {
+        for (NamedState state: flow.getStates()) {
             boolean hasFinalState = false;
             for (Event event: state.getEvents()) {
-                if (event.getNextState() == eFlow.getFinalState()) {
+                if (event.getNextState() == flow.getFinalState()) {
                     hasFinalState = true;
                     break;
                 }
