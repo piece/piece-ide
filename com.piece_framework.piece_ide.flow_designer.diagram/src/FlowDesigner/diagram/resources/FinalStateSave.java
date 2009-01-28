@@ -27,6 +27,11 @@ class FinalStateSave extends AbstractSave {
             return;
         }
 
+        if (flow.getFinalState().getFinalize() != null) {
+            ActionSave actionSave = new ActionSave();
+            actionSave.save(flowMap, flow.getFinalState());
+        }
+
         List<Map<String, Object>> stateList = new ArrayList<Map<String, Object>>();
         for (NamedState state: getStatesToFinalState(flow)) {
             Map<String, Object> stateMap = new LinkedHashMap<String, Object>();

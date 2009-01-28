@@ -308,6 +308,53 @@ public class FlowResourceSaveTest extends TestCase {
         assertYaml(yaml);
     }
 
+    public void testShouldConvertFlowIncludingInitialAndFinalIntoYAML() {
+        Flow flow = fFactory.createFlow();
+
+        flow.getInitialState().setInitialize("InitialMethod");
+
+        FinalState finalState = fFactory.createFinalState();
+        finalState.setFinalize("FinalMethod");
+        flow.setFinalState(finalState);
+
+        ViewState displayForm1 = fFactory.createViewState();
+        displayForm1.setName("DisplayForm1");
+        displayForm1.setView("Form1");
+        flow.getStates().add(displayForm1);
+
+        Event initialStateToDisplayForm1 = fFactory.createEvent();
+        initialStateToDisplayForm1.setName("(FirstState)");
+        initialStateToDisplayForm1.setNextState(displayForm1);
+        flow.getInitialState().getEvents().add(initialStateToDisplayForm1);
+
+        Event finalStateFromDisplayForm1 = fFactory.createEvent();
+        finalStateFromDisplayForm1.setName("FinalStateFromDisplayForm1");
+        finalStateFromDisplayForm1.setNextState(finalState);
+        displayForm1.getEvents().add(finalStateFromDisplayForm1);
+
+        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        try {
+            resource.getContents().add(flow);
+            resource.save(null);
+        } catch (IOException e) {
+            fail();
+        }
+
+        String yaml =
+            "initial:\n"
+            + "  method: InitialMethod\n"
+            + "\n"
+            + "firstState: DisplayForm1\n"
+            + "\n"
+            + "final:\n"
+            + "  method: FinalMethod\n"
+            + "\n"
+            + "lastState:\n"
+            + "  name: DisplayForm1\n"
+            + "  view: Form1\n";
+        assertYaml(yaml);
+    }
+
     private void assertYaml(String expectedYaml) {
         FileReader reader = null;
         BufferedReader bufferedReader = null;

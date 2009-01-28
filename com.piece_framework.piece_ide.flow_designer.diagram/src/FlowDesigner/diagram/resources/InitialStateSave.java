@@ -23,6 +23,11 @@ class InitialStateSave extends AbstractSave {
             return;
         }
 
+        if (flow.getInitialState().getInitialize() != null) {
+            ActionSave actionSave = new ActionSave();
+            actionSave.save(flowMap, flow.getInitialState());
+        }
+
         NamedState firstState = (NamedState) flow.getInitialState().getEvents().get(0).getNextState();
         flowMap.put("firstState",
                     firstState.getName()
