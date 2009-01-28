@@ -27,11 +27,17 @@ class FinalStateSave extends AbstractSave {
             return;
         }
 
+        List<Map<String, Object>> stateList = new ArrayList<Map<String, Object>>();
         for (NamedState state: getStatesToFinalState(flow)) {
-            Map<String, Object> lastStateMap = new LinkedHashMap<String, Object>();
+            Map<String, Object> stateMap = new LinkedHashMap<String, Object>();
             NamedStateSave save = new NamedStateSave();
-            save.save(lastStateMap, state);
-            flowMap.put("lastState", lastStateMap);
+            save.save(stateMap, state);
+            stateList.add(stateMap);
+        }
+        if (stateList.size() == 1) {
+            flowMap.put("lastState", stateList.get(0));
+        } else if (stateList.size() > 1) {
+            flowMap.put("lastState", stateList);
         }
     }
 

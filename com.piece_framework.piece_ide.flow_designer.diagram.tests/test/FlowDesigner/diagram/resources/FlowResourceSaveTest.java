@@ -27,11 +27,11 @@ public class FlowResourceSaveTest extends TestCase {
     }
 
     protected void setUp() throws Exception {
-//        deleteYamlFile();
+        deleteYamlFile();
     }
 
     protected void tearDown() throws Exception {
-//        deleteYamlFile();
+        deleteYamlFile();
     }
 
     public void testShouldConvertFlowIncludingInitialAndViewAndFinalStateIntoYAML() {
@@ -179,6 +179,56 @@ public class FlowResourceSaveTest extends TestCase {
             + "        nextState: DisplayForm2\n"
             + "      - event: DisplayForm1FromProcess1\n"
             + "        nextState: DisplayForm1\n";
+        assertYaml(yaml);
+    }
+
+    public void testShouldConvertFlowIncludingTwoLastStateIntoYAML() {
+        Flow flow = fFactory.createFlow();
+
+        FinalState finalState = fFactory.createFinalState();
+        flow.setFinalState(finalState);
+
+        ViewState displayForm1 = fFactory.createViewState();
+        displayForm1.setName("DisplayForm1");
+        displayForm1.setView("Form1");
+        flow.getStates().add(displayForm1);
+
+        ViewState displayForm2 = fFactory.createViewState();
+        displayForm2.setName("DisplayForm2");
+        displayForm2.setView("Form2");
+        flow.getStates().add(displayForm2);
+
+        Event initialStateToDisplayForm1 = fFactory.createEvent();
+        initialStateToDisplayForm1.setName("(FirstState)");
+        initialStateToDisplayForm1.setNextState(displayForm1);
+        flow.getInitialState().getEvents().add(initialStateToDisplayForm1);
+
+        Event finalStateFromDisplayForm1 = fFactory.createEvent();
+        finalStateFromDisplayForm1.setName("FinalStateFromDisplayForm1");
+        finalStateFromDisplayForm1.setNextState(finalState);
+        displayForm1.getEvents().add(finalStateFromDisplayForm1);
+
+        Event finalStateFromDisplayForm2 = fFactory.createEvent();
+        finalStateFromDisplayForm2.setName("FinalStateFromDisplayForm2");
+        finalStateFromDisplayForm2.setNextState(finalState);
+        displayForm2.getEvents().add(finalStateFromDisplayForm2);
+
+        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        try {
+            resource.getContents().add(flow);
+            resource.save(null);
+        } catch (IOException e) {
+            fail();
+        }
+
+        String yaml =
+            "firstState: DisplayForm1\n"
+            + "\n"
+            + "lastState:\n"
+            + "  - name: DisplayForm1\n"
+            + "    view: Form1\n"
+            + "  - name: DisplayForm2\n"
+            + "    view: Form2\n";
         assertYaml(yaml);
     }
 
