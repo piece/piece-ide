@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EObject;
 import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
 
-public class InitialStateSave extends AbstractSave {
+class InitialStateSave extends AbstractSave {
     @Override
     void save(Map<String, Object> flowMap,
               EObject eObject

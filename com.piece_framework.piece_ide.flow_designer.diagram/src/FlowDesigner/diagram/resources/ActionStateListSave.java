@@ -7,12 +7,12 @@ import FlowDesigner.NamedState;
 
 class ActionStateListSave extends NamedStateListSave {
     @Override
-    protected String getKey() {
+    String getKey() {
         return "actionState";
     }
 
     @Override
-    protected boolean equalStateType(NamedState state) {
+    boolean equalStateType(NamedState state) {
         return state instanceof ActionState;
     }
 }

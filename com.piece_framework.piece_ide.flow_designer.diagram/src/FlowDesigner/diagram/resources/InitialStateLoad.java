@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import FlowDesigner.Flow;
 
-public class InitialStateLoad extends AbstractLoad {
+class InitialStateLoad extends AbstractLoad {
     @Override
     void load(EObject eObject,
               Map<?, ?> flowMap

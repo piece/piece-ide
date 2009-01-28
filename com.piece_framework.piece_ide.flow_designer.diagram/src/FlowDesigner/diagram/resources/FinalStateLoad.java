@@ -14,7 +14,7 @@ import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
 import FlowDesigner.impl.FlowDesignerFactoryImpl;
 
-public class FinalStateLoad extends AbstractLoad {
+class FinalStateLoad extends AbstractLoad {
     @Override
     void load(EObject eObject,
               Map<?, ?> flowMap

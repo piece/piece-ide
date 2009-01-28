@@ -12,8 +12,7 @@ import org.eclipse.emf.ecore.EObject;
 import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
 
-public class TransitionEventLoad extends AbstractLoad {
-
+class TransitionEventLoad extends AbstractLoad {
     @Override
     void load(EObject eObject,
               Map<?, ?> flowMap

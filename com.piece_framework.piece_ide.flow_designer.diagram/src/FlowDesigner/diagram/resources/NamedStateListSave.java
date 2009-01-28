@@ -37,9 +37,9 @@ abstract class NamedStateListSave extends AbstractSave {
         }
     }
 
-    protected abstract String getKey();
+    abstract String getKey();
 
-    protected abstract boolean equalStateType(NamedState state);
+    abstract boolean equalStateType(NamedState state);
 
     private List<NamedState> getStates(Flow flow) {
         List<NamedState> stateList = new ArrayList<NamedState>();

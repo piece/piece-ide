@@ -13,7 +13,7 @@ import FlowDesigner.Event;
 import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
 
-public class FinalStateSave extends AbstractSave {
+class FinalStateSave extends AbstractSave {
     @Override
     void save(Map<String, Object> flowMap,
               EObject eObject

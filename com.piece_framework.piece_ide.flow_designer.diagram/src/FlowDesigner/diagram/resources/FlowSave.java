@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import FlowDesigner.Flow;
 
-public class FlowSave extends AbstractSave {
+class FlowSave extends AbstractSave {
     @Override
     void save(Map<String, Object> flowMap,
               EObject eObject
