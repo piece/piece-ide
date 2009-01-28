@@ -263,6 +263,51 @@ public class FlowResourceSaveTest extends TestCase {
         assertYaml(yaml);
     }
 
+    public void testShouldConvertYAMLIntoFlowWithoutLastState() {
+        Flow flow = fFactory.createFlow();
+
+        ViewState displayForm1 = fFactory.createViewState();
+        displayForm1.setName("DisplayForm1");
+        displayForm1.setView("Form1");
+        flow.getStates().add(displayForm1);
+
+        ActionState process1 = fFactory.createActionState();
+        process1.setName("Process1");
+        flow.getStates().add(process1);
+
+        Event initialStateToDisplayForm1 = fFactory.createEvent();
+        initialStateToDisplayForm1.setName("(FirstState)");
+        initialStateToDisplayForm1.setNextState(displayForm1);
+        flow.getInitialState().getEvents().add(initialStateToDisplayForm1);
+
+        Event process1FromDisplayForm1 = fFactory.createEvent();
+        process1FromDisplayForm1.setName("Process1FromDisplayForm1");
+        process1FromDisplayForm1.setNextState(process1);
+        displayForm1.getEvents().add(process1FromDisplayForm1);
+
+        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        try {
+            resource.getContents().add(flow);
+            resource.save(null);
+        } catch (IOException e) {
+            fail();
+        }
+
+        String yaml =
+            "firstState: DisplayForm1\n"
+            + "\n"
+            + "viewState:\n"
+            + "  - name: DisplayForm1\n"
+            + "    view: Form1\n"
+            + "    transition:\n"
+            + "      - event: Process1FromDisplayForm1\n"
+            + "        nextState: Process1\n"
+            + "\n"
+            + "actionState:\n"
+            + "  - name: Process1\n";
+        assertYaml(yaml);
+    }
+
     private void assertYaml(String expectedYaml) {
         FileReader reader = null;
         BufferedReader bufferedReader = null;
