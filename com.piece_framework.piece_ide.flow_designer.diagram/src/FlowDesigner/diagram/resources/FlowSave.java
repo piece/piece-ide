@@ -28,23 +28,8 @@ public class FlowSave extends AbstractSave {
         InitialStateSave initialStateSave = new InitialStateSave();
         initialStateSave.save(flowMap, flow);
 
-        if (flow.getFinalState() != null) {
-            for (NamedState state: flow.getStates()) {
-                for (Event event: state.getEvents()) {
-                    if (event.getNextState() == flow.getFinalState()) {
-                        Map<String, Object> lastStateMap = new LinkedHashMap<String, Object>();
-                        lastStateMap.put("name", state.getName());
-                        if (state instanceof ViewState) {
-                            lastStateMap.put("view", ((ViewState) state).getView());
-                        }
-                        ActionSave save = new ActionSave();
-                        save.save(lastStateMap, state);
-
-                        flowMap.put("lastState", lastStateMap);
-                    }
-                }
-            }
-        }
+        FinalStateSave finalStateSave = new FinalStateSave();
+        finalStateSave.save(flowMap, flow);
 
         List<Map<String, Object>> viewStateList = new ArrayList<Map<String, Object>>();
         List<Map<String, Object>> actionStateList = new ArrayList<Map<String, Object>>();
