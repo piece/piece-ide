@@ -29,8 +29,8 @@ class NamedStateSave extends AbstractSave {
         if (state instanceof ViewState) {
             stateMap.put("view", ((ViewState) state).getView());
         }
-        ActionSave save = new ActionSave();
-        save.save(stateMap, state);
+        ActionSave actionSave = new ActionSave();
+        actionSave.save(stateMap, state);
 
         List<Map<String, Object>> transitionList = new ArrayList<Map<String, Object>>();
         FinalState finalState = ((Flow) state.eContainer()).getFinalState();
@@ -40,10 +40,8 @@ class NamedStateSave extends AbstractSave {
             }
 
             Map<String, Object> eventMap = new LinkedHashMap<String, Object>();
-            eventMap.put("event", event.getName());
-            eventMap.put("nextState", ((NamedState) event.getNextState()).getName());
-            ActionSave actionSave = new ActionSave();
-            actionSave.save(eventMap, event);
+            EventSave eventSave = new EventSave();
+            eventSave.save(eventMap, event);
 
             transitionList.add(eventMap);
         }
