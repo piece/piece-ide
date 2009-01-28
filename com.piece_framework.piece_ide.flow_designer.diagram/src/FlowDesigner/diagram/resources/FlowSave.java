@@ -46,26 +46,8 @@ public class FlowSave extends AbstractSave {
             }
 
             Map<String, Object> stateMap = new LinkedHashMap<String, Object>();
-            stateMap.put("name", state.getName());
-            if (state instanceof ViewState) {
-                stateMap.put("view", ((ViewState) state).getView());
-            }
-            ActionSave save = new ActionSave();
-            save.save(stateMap, state);
-
-            List<Map<String, Object>> transitionList = new ArrayList<Map<String, Object>>();
-            for (Event event: state.getEvents()) {
-                Map<String, Object> eventMap = new LinkedHashMap<String, Object>();
-                eventMap.put("event", event.getName());
-                eventMap.put("nextState", ((NamedState) event.getNextState()).getName());
-                ActionSave actionSave = new ActionSave();
-                actionSave.save(eventMap, event);
-
-                transitionList.add(eventMap);
-            }
-            if (transitionList.size() > 0) {
-                stateMap.put("transition", transitionList);
-            }
+            NamedStateSave namedStateSave = new NamedStateSave();
+            namedStateSave.save(stateMap, state);
 
             if (state instanceof ViewState) {
                 viewStateList.add(stateMap);

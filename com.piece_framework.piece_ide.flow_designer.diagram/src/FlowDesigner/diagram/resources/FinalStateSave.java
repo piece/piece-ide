@@ -12,7 +12,6 @@ import org.eclipse.emf.ecore.EObject;
 import FlowDesigner.Event;
 import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
-import FlowDesigner.ViewState;
 
 public class FinalStateSave extends AbstractSave {
     @Override
@@ -30,13 +29,8 @@ public class FinalStateSave extends AbstractSave {
 
         for (NamedState state: getStatesToFinalState(flow)) {
             Map<String, Object> lastStateMap = new LinkedHashMap<String, Object>();
-            lastStateMap.put("name", state.getName());
-            if (state instanceof ViewState) {
-                lastStateMap.put("view", ((ViewState) state).getView());
-            }
-            ActionSave save = new ActionSave();
+            NamedStateSave save = new NamedStateSave();
             save.save(lastStateMap, state);
-
             flowMap.put("lastState", lastStateMap);
         }
     }
