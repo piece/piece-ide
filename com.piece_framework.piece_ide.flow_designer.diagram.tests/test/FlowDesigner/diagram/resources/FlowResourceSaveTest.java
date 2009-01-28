@@ -232,6 +232,37 @@ public class FlowResourceSaveTest extends TestCase {
         assertYaml(yaml);
     }
 
+    public void testShouldConvertFlowWithoutFirstStateIntoYAML() {
+        Flow flow = fFactory.createFlow();
+
+        FinalState finalState = fFactory.createFinalState();
+        flow.setFinalState(finalState);
+
+        ViewState displayForm1 = fFactory.createViewState();
+        displayForm1.setName("DisplayForm1");
+        displayForm1.setView("Form1");
+        flow.getStates().add(displayForm1);
+
+        Event finalStateFromDisplayForm1 = fFactory.createEvent();
+        finalStateFromDisplayForm1.setName("FinalStateFromDisplayForm1");
+        finalStateFromDisplayForm1.setNextState(finalState);
+        displayForm1.getEvents().add(finalStateFromDisplayForm1);
+
+        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        try {
+            resource.getContents().add(flow);
+            resource.save(null);
+        } catch (IOException e) {
+            fail();
+        }
+
+        String yaml =
+            "lastState:\n"
+            + "  name: DisplayForm1\n"
+            + "  view: Form1\n";
+        assertYaml(yaml);
+    }
+
     private void assertYaml(String expectedYaml) {
         FileReader reader = null;
         BufferedReader bufferedReader = null;

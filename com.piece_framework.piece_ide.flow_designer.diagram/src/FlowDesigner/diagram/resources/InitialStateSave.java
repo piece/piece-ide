@@ -19,6 +19,10 @@ class InitialStateSave extends AbstractSave {
         }
         Flow flow = (Flow) eObject;
 
+        if (flow.getInitialState().getEvents().size() == 0) {
+            return;
+        }
+
         NamedState firstState = (NamedState) flow.getInitialState().getEvents().get(0).getNextState();
         flowMap.put("firstState",
                     firstState.getName()
