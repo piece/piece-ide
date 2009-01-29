@@ -257,7 +257,7 @@ public class NamedStateItemProvider
      */
     @Override
     public ResourceLocator getResourceLocator() {
-        return flow_designerEditPlugin.INSTANCE;
+        return FlowDesignerEditPlugin.INSTANCE;
     }
 
 }

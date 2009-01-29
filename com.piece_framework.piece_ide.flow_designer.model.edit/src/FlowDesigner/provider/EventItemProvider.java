@@ -226,7 +226,7 @@ public class EventItemProvider
      */
     @Override
     public ResourceLocator getResourceLocator() {
-        return flow_designerEditPlugin.INSTANCE;
+        return FlowDesignerEditPlugin.INSTANCE;
     }
 
 }

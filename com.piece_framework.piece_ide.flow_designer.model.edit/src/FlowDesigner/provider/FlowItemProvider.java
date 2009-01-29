@@ -184,7 +184,7 @@ public class FlowItemProvider
      */
     @Override
     public ResourceLocator getResourceLocator() {
-        return flow_designerEditPlugin.INSTANCE;
+        return FlowDesignerEditPlugin.INSTANCE;
     }
 
 }

@@ -155,7 +155,7 @@ public class FinalStateItemProvider
      */
     @Override
     public ResourceLocator getResourceLocator() {
-        return flow_designerEditPlugin.INSTANCE;
+        return FlowDesignerEditPlugin.INSTANCE;
     }
 
 }

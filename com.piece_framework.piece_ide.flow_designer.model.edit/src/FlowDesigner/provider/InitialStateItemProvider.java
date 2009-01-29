@@ -196,7 +196,7 @@ public class InitialStateItemProvider
      */
     @Override
     public ResourceLocator getResourceLocator() {
-        return flow_designerEditPlugin.INSTANCE;
+        return FlowDesignerEditPlugin.INSTANCE;
     }
 
 }
