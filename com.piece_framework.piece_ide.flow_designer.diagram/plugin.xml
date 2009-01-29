@@ -23,7 +23,7 @@
       <editor
          id="FlowDesigner.diagram.part.FlowDesignerDiagramEditorID"
          name="%editorName"
-         icon="icons/obj16/FlowDesignerDiagramFile.gif"
+         icon="icons/FlowDesigner.gif"
          extensions="flowdesigner_diagram"
          default="true"
          class="FlowDesigner.diagram.part.FlowDesignerDiagramEditor"
@@ -46,7 +46,7 @@
       <?gmfgen generated="true"?>
   	  <wizard
   	     name="%newWizardName"
-  	     icon="icons/obj16/FlowDesignerDiagramFile.gif"
+  	     icon="icons/FlowDesigner.gif"
   	     category="org.eclipse.ui.Examples"
   	     class="FlowDesigner.diagram.part.FlowDesignerCreationWizard"
   	     id="FlowDesigner.diagram.part.FlowDesignerCreationWizardID">
@@ -400,7 +400,7 @@
             priority="normal" 
             contentProvider="FlowDesigner.diagram.navigator.FlowDesignerNavigatorContentProvider" 
             labelProvider="FlowDesigner.diagram.navigator.FlowDesignerNavigatorLabelProvider"
-            icon="icons/obj16/FlowDesignerDiagramFile.gif"
+            icon="icons/FlowDesigner.gif"
             activeByDefault="true">
          <triggerPoints>
             <or>
@@ -436,7 +436,7 @@
             priority="normal" 
             contentProvider="FlowDesigner.diagram.navigator.FlowDesignerDomainNavigatorContentProvider" 
             labelProvider="FlowDesigner.diagram.navigator.FlowDesignerDomainNavigatorLabelProvider"
-            icon="icons/obj16/FlowDesignerDiagramFile.gif"
+            icon="icons/FlowDesigner.gif"
             activeByDefault="true">
          <triggerPoints>
             <or>

@@ -10,6 +10,7 @@
       notationViewFactoryClassName="FlowViewFactory"
       canonicalEditPolicyClassName="FlowCanonicalEditPolicy"
       iconProviderPriority="Low"
+      creationWizardIconPath="icons/FlowDesigner.gif"
       validationProviderPriority="Low">
     <diagramRunTimeClass
         href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Diagram"/>
