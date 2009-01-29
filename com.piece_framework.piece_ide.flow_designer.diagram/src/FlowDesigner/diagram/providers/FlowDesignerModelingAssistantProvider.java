@@ -28,7 +28,7 @@ public class FlowDesignerModelingAssistantProvider extends
         ModelingAssistantProvider {
 
     /**
-     * @generated
+     * @generated NOT
      */
     public List getTypesForPopupBar(IAdaptable host) {
         IGraphicalEditPart editPart = (IGraphicalEditPart) host
@@ -39,8 +39,6 @@ public class FlowDesignerModelingAssistantProvider extends
                     .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.ActionState_2005);
             types
                     .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2006);
-            types
-                    .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.InitialState_2007);
             types
                     .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.FinalState_2008);
             return types;
