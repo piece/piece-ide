@@ -9,8 +9,7 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Export-Package: FlowDesigner.diagram.edit.parts,
  FlowDesigner.diagram.part,
- FlowDesigner.diagram.providers,
- FlowDesigner.diagram.resources
+ FlowDesigner.diagram.providers
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.eclipse.core.expressions,
