@@ -20,7 +20,7 @@
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="FlowDesigner.gmftool#//@palette/@tools.0/@tools.2"/>
+          href="FlowDesigner.gmftool#//@palette/@tools.0/@tools.1"/>
       <diagramNode
           href="FlowDesigner.gmfgraph#ActionState"/>
     </ownedChild>
@@ -40,7 +40,7 @@
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="FlowDesigner.gmftool#//@palette/@tools.0/@tools.3"/>
+          href="FlowDesigner.gmftool#//@palette/@tools.0/@tools.2"/>
       <diagramNode
           href="FlowDesigner.gmfgraph#ViewState"/>
     </ownedChild>
@@ -51,9 +51,6 @@
     <ownedChild>
       <domainMetaElement
           href="FlowDesigner.ecore#//InitialState"/>
-      <tool
-          xsi:type="gmftool:CreationTool"
-          href="FlowDesigner.gmftool#//@palette/@tools.0/@tools.0"/>
       <diagramNode
           href="FlowDesigner.gmfgraph#InitialState"/>
     </ownedChild>
@@ -66,7 +63,7 @@
           href="FlowDesigner.ecore#//FinalState"/>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="FlowDesigner.gmftool#//@palette/@tools.0/@tools.1"/>
+          href="FlowDesigner.gmftool#//@palette/@tools.0/@tools.0"/>
       <diagramNode
           href="FlowDesigner.gmfgraph#FinalState"/>
     </ownedChild>
@@ -86,7 +83,7 @@
         href="FlowDesigner.ecore#//Source/events"/>
     <tool
         xsi:type="gmftool:CreationTool"
-        href="FlowDesigner.gmftool#//@palette/@tools.0/@tools.4"/>
+        href="FlowDesigner.gmftool#//@palette/@tools.0/@tools.3"/>
     <diagramLink
         href="FlowDesigner.gmfgraph#Event"/>
     <linkMetaFeature

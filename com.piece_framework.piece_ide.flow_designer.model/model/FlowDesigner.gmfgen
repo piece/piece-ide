@@ -236,28 +236,27 @@
           title="flowdesigner">
         <entries
             xsi:type="gmfgen:ToolEntry"
-            title="InitialState"
-            description="Create new InitialState"
-            genNodes="//@diagram/@topLevelNodes.2"/>
-        <entries
-            xsi:type="gmfgen:ToolEntry"
             title="FinalState"
             description="Create new FinalState"
+            smallIconPath="icons/FinalState.gif"
             genNodes="//@diagram/@topLevelNodes.3"/>
         <entries
             xsi:type="gmfgen:ToolEntry"
             title="ActionState"
             description="Create new ActionState"
+            smallIconPath="icons/ActionState.gif"
             genNodes="//@diagram/@topLevelNodes.0"/>
         <entries
             xsi:type="gmfgen:ToolEntry"
             title="ViewState"
             description="Create new ViewState"
+            smallIconPath="icons/ViewState.gif"
             genNodes="//@diagram/@topLevelNodes.1"/>
         <entries
             xsi:type="gmfgen:ToolEntry"
             title="Event"
             description="Create new Event"
+            smallIconPath="icons/Event.gif"
             genLinks="//@diagram/@links.0"/>
       </groups>
     </palette>

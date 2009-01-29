@@ -30,46 +30,27 @@ public class FlowDesignerPaletteFactory {
     private PaletteContainer createFlowdesigner1Group() {
         PaletteGroup paletteContainer = new PaletteGroup(
                 FlowDesigner.diagram.part.Messages.Flowdesigner1Group_title);
-        paletteContainer.add(createInitialState1CreationTool());
-        paletteContainer.add(createFinalState2CreationTool());
-        paletteContainer.add(createActionState3CreationTool());
-        paletteContainer.add(createViewState4CreationTool());
-        paletteContainer.add(createEvent5CreationTool());
+        paletteContainer.add(createFinalState1CreationTool());
+        paletteContainer.add(createActionState2CreationTool());
+        paletteContainer.add(createViewState3CreationTool());
+        paletteContainer.add(createEvent4CreationTool());
         return paletteContainer;
     }
 
     /**
      * @generated
      */
-    private ToolEntry createInitialState1CreationTool() {
-        List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-        types
-                .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.InitialState_2007);
-        NodeToolEntry entry = new NodeToolEntry(
-                FlowDesigner.diagram.part.Messages.InitialState1CreationTool_title,
-                FlowDesigner.diagram.part.Messages.InitialState1CreationTool_desc,
-                types);
-        entry
-                .setSmallIcon(FlowDesigner.diagram.providers.FlowDesignerElementTypes
-                        .getImageDescriptor(FlowDesigner.diagram.providers.FlowDesignerElementTypes.InitialState_2007));
-        entry.setLargeIcon(entry.getSmallIcon());
-        return entry;
-    }
-
-    /**
-     * @generated
-     */
-    private ToolEntry createFinalState2CreationTool() {
+    private ToolEntry createFinalState1CreationTool() {
         List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
         types
                 .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.FinalState_2008);
         NodeToolEntry entry = new NodeToolEntry(
-                FlowDesigner.diagram.part.Messages.FinalState2CreationTool_title,
-                FlowDesigner.diagram.part.Messages.FinalState2CreationTool_desc,
+                FlowDesigner.diagram.part.Messages.FinalState1CreationTool_title,
+                FlowDesigner.diagram.part.Messages.FinalState1CreationTool_desc,
                 types);
         entry
-                .setSmallIcon(FlowDesigner.diagram.providers.FlowDesignerElementTypes
-                        .getImageDescriptor(FlowDesigner.diagram.providers.FlowDesignerElementTypes.FinalState_2008));
+                .setSmallIcon(FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
+                        .findImageDescriptor("icons/FinalState.gif")); //$NON-NLS-1$
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }
@@ -77,17 +58,17 @@ public class FlowDesignerPaletteFactory {
     /**
      * @generated
      */
-    private ToolEntry createActionState3CreationTool() {
+    private ToolEntry createActionState2CreationTool() {
         List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
         types
                 .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.ActionState_2005);
         NodeToolEntry entry = new NodeToolEntry(
-                FlowDesigner.diagram.part.Messages.ActionState3CreationTool_title,
-                FlowDesigner.diagram.part.Messages.ActionState3CreationTool_desc,
+                FlowDesigner.diagram.part.Messages.ActionState2CreationTool_title,
+                FlowDesigner.diagram.part.Messages.ActionState2CreationTool_desc,
                 types);
         entry
-                .setSmallIcon(FlowDesigner.diagram.providers.FlowDesignerElementTypes
-                        .getImageDescriptor(FlowDesigner.diagram.providers.FlowDesignerElementTypes.ActionState_2005));
+                .setSmallIcon(FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
+                        .findImageDescriptor("icons/ActionState.gif")); //$NON-NLS-1$
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }
@@ -95,17 +76,17 @@ public class FlowDesignerPaletteFactory {
     /**
      * @generated
      */
-    private ToolEntry createViewState4CreationTool() {
+    private ToolEntry createViewState3CreationTool() {
         List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
         types
                 .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2006);
         NodeToolEntry entry = new NodeToolEntry(
-                FlowDesigner.diagram.part.Messages.ViewState4CreationTool_title,
-                FlowDesigner.diagram.part.Messages.ViewState4CreationTool_desc,
+                FlowDesigner.diagram.part.Messages.ViewState3CreationTool_title,
+                FlowDesigner.diagram.part.Messages.ViewState3CreationTool_desc,
                 types);
         entry
-                .setSmallIcon(FlowDesigner.diagram.providers.FlowDesignerElementTypes
-                        .getImageDescriptor(FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2006));
+                .setSmallIcon(FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
+                        .findImageDescriptor("icons/ViewState.gif")); //$NON-NLS-1$
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }
@@ -113,17 +94,17 @@ public class FlowDesignerPaletteFactory {
     /**
      * @generated
      */
-    private ToolEntry createEvent5CreationTool() {
+    private ToolEntry createEvent4CreationTool() {
         List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
         types
                 .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4003);
         LinkToolEntry entry = new LinkToolEntry(
-                FlowDesigner.diagram.part.Messages.Event5CreationTool_title,
-                FlowDesigner.diagram.part.Messages.Event5CreationTool_desc,
+                FlowDesigner.diagram.part.Messages.Event4CreationTool_title,
+                FlowDesigner.diagram.part.Messages.Event4CreationTool_desc,
                 types);
         entry
-                .setSmallIcon(FlowDesigner.diagram.providers.FlowDesignerElementTypes
-                        .getImageDescriptor(FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4003));
+                .setSmallIcon(FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
+                        .findImageDescriptor("icons/Event.gif")); //$NON-NLS-1$
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }

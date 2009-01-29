@@ -248,52 +248,42 @@ public class Messages extends NLS {
     /**
      * @generated
      */
-    public static String InitialState1CreationTool_title;
+    public static String FinalState1CreationTool_title;
 
     /**
      * @generated
      */
-    public static String InitialState1CreationTool_desc;
+    public static String FinalState1CreationTool_desc;
 
     /**
      * @generated
      */
-    public static String FinalState2CreationTool_title;
+    public static String ActionState2CreationTool_title;
 
     /**
      * @generated
      */
-    public static String FinalState2CreationTool_desc;
+    public static String ActionState2CreationTool_desc;
 
     /**
      * @generated
      */
-    public static String ActionState3CreationTool_title;
+    public static String ViewState3CreationTool_title;
 
     /**
      * @generated
      */
-    public static String ActionState3CreationTool_desc;
+    public static String ViewState3CreationTool_desc;
 
     /**
      * @generated
      */
-    public static String ViewState4CreationTool_title;
+    public static String Event4CreationTool_title;
 
     /**
      * @generated
      */
-    public static String ViewState4CreationTool_desc;
-
-    /**
-     * @generated
-     */
-    public static String Event5CreationTool_title;
-
-    /**
-     * @generated
-     */
-    public static String Event5CreationTool_desc;
+    public static String Event4CreationTool_desc;
 
     /**
      * @generated
