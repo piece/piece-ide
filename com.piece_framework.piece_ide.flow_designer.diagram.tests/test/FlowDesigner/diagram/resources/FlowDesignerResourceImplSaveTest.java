@@ -16,12 +16,13 @@ import FlowDesigner.Flow;
 import FlowDesigner.FlowDesignerFactory;
 import FlowDesigner.ViewState;
 import FlowDesigner.impl.FlowDesignerFactoryImpl;
+import FlowDesigner.util.FlowDesignerResourceImpl;
 
-public class FlowResourceSaveTest extends TestCase {
+public class FlowDesignerResourceImplSaveTest extends TestCase {
     private File fTestYamlFile;
     private FlowDesignerFactory fFactory;
 
-    public FlowResourceSaveTest() {
+    public FlowDesignerResourceImplSaveTest() {
         fTestYamlFile = new File(System.getProperty("user.dir") + "/tmp/test.yaml");
         fFactory = FlowDesignerFactoryImpl.eINSTANCE;
     }
@@ -55,7 +56,7 @@ public class FlowResourceSaveTest extends TestCase {
         finalStateFromDisplayForm1.setNextState(finalState);
         displayForm1.getEvents().add(finalStateFromDisplayForm1);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.getContents().add(flow);
             resource.save(null);
@@ -128,7 +129,7 @@ public class FlowResourceSaveTest extends TestCase {
         finalStateFromDisplayForm2.setNextState(finalState);
         displayForm2.getEvents().add(finalStateFromDisplayForm2);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.getContents().add(flow);
             resource.save(null);
@@ -213,7 +214,7 @@ public class FlowResourceSaveTest extends TestCase {
         finalStateFromDisplayForm2.setNextState(finalState);
         displayForm2.getEvents().add(finalStateFromDisplayForm2);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.getContents().add(flow);
             resource.save(null);
@@ -248,7 +249,7 @@ public class FlowResourceSaveTest extends TestCase {
         finalStateFromDisplayForm1.setNextState(finalState);
         displayForm1.getEvents().add(finalStateFromDisplayForm1);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.getContents().add(flow);
             resource.save(null);
@@ -285,7 +286,7 @@ public class FlowResourceSaveTest extends TestCase {
         process1FromDisplayForm1.setNextState(process1);
         displayForm1.getEvents().add(process1FromDisplayForm1);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.getContents().add(flow);
             resource.save(null);
@@ -332,7 +333,7 @@ public class FlowResourceSaveTest extends TestCase {
         finalStateFromDisplayForm1.setNextState(finalState);
         displayForm1.getEvents().add(finalStateFromDisplayForm1);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.getContents().add(flow);
             resource.save(null);

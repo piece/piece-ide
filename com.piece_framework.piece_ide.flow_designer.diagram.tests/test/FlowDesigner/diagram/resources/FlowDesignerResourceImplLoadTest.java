@@ -18,11 +18,12 @@ import FlowDesigner.InitialState;
 import FlowDesigner.NamedState;
 import FlowDesigner.Target;
 import FlowDesigner.ViewState;
+import FlowDesigner.util.FlowDesignerResourceImpl;
 
-public class FlowResourceLoadTest extends TestCase {
+public class FlowDesignerResourceImplLoadTest extends TestCase {
     private File fTestYamlFile;
 
-    public FlowResourceLoadTest() {
+    public FlowDesignerResourceImplLoadTest() {
         fTestYamlFile = new File(System.getProperty("user.dir") + "/tmp/test.yaml");
     }
 
@@ -46,7 +47,7 @@ public class FlowResourceLoadTest extends TestCase {
 
         generateYamlFile(yaml);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.load(null);
         } catch (IOException e) {
@@ -142,7 +143,7 @@ public class FlowResourceLoadTest extends TestCase {
 
         generateYamlFile(yaml);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.load(null);
         } catch (IOException e) {
@@ -252,7 +253,7 @@ public class FlowResourceLoadTest extends TestCase {
 
         generateYamlFile(yaml);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.load(null);
         } catch (IOException e) {
@@ -325,7 +326,7 @@ public class FlowResourceLoadTest extends TestCase {
 
         generateYamlFile(yaml);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.load(null);
         } catch (IOException e) {
@@ -383,7 +384,7 @@ public class FlowResourceLoadTest extends TestCase {
 
         generateYamlFile(yaml);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.load(null);
         } catch (IOException e) {
@@ -468,7 +469,7 @@ public class FlowResourceLoadTest extends TestCase {
 
         generateYamlFile(yaml);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.load(null);
         } catch (IOException e) {
@@ -547,7 +548,7 @@ public class FlowResourceLoadTest extends TestCase {
 
         generateYamlFile(yaml);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.load(null);
             fail();
@@ -593,7 +594,7 @@ public class FlowResourceLoadTest extends TestCase {
 
         generateYamlFile(yaml);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.load(null);
         } catch (IOException e) {
@@ -654,7 +655,7 @@ public class FlowResourceLoadTest extends TestCase {
 
         generateYamlFile(yaml);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.load(null);
         } catch (IOException e) {
@@ -711,7 +712,7 @@ public class FlowResourceLoadTest extends TestCase {
 
         generateYamlFile(yaml);
 
-        FlowResource resource = new FlowResource(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
         try {
             resource.load(null);
         } catch (IOException e) {
