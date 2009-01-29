@@ -16,5 +16,12 @@
             class="FlowDesigner.FlowDesignerPackage"
             genModel="model/FlowDesigner.genmodel"/>
    </extension>
+   <extension
+         point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            class="FlowDesigner.util.FlowDesignerResourceFactoryImpl"
+            type="flowdesigner">
+      </parser>
+   </extension>
 
 </plugin>

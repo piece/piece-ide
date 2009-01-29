@@ -5,7 +5,8 @@
     modelPluginID="com.piece_framework.piece_ide.flow_designer.model" modelName="FlowDesigner"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false">
   <foreignModel>FlowDesigner.ecore</foreignModel>
-  <genPackages prefix="FlowDesigner" disposableProviderFactory="true" ecorePackage="FlowDesigner.ecore#/">
+  <genPackages prefix="FlowDesigner" resource="Basic" disposableProviderFactory="true"
+      ecorePackage="FlowDesigner.ecore#/">
     <genDataTypes ecoreDataType="FlowDesigner.ecore#//Action"/>
     <genClasses ecoreClass="FlowDesigner.ecore#//InitialState">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlowDesigner.ecore#//InitialState/initialize"/>
