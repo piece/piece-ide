@@ -16,10 +16,6 @@
          type="flowdesigner_diagram"
          class="org.eclipse.gmf.runtime.emf.core.resources.GMFResourceFactory">
       </parser>
-      <parser
-            class="FlowDesigner.diagram.resources.FlowResourceFactory"
-            type="flowdesigner">
-      </parser>
    </extension>
 
    <extension point="org.eclipse.ui.editors">

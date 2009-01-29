@@ -1,6 +1,9 @@
 package FlowDesigner.diagram.edit.parts;
 
 import org.eclipse.draw2d.Connection;
+import org.eclipse.draw2d.PolygonDecoration;
+import org.eclipse.draw2d.PolylineDecoration;
+import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionNodeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ITreeBranchEditPart;
@@ -95,6 +98,7 @@ public class EventEditPart extends ConnectionNodeEditPart implements
         public EventFigure() {
 
             createContents();
+            setTargetDecoration(createTargetDecoration());
         }
 
         /**
@@ -107,6 +111,15 @@ public class EventEditPart extends ConnectionNodeEditPart implements
 
             this.add(fFigureEventNameFigure);
 
+        }
+
+        /**
+         * @generated
+         */
+        private RotatableDecoration createTargetDecoration() {
+            PolygonDecoration df = new PolygonDecoration();
+            df.setFill(true);
+            return df;
         }
 
         /**

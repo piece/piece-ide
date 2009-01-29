@@ -5,6 +5,8 @@
     xmlns:gmfgraph="http://www.eclipse.org/gmf/2006/GraphicalDefinition" name="flowdesigner">
   <figures
       name="Default">
+    <figures
+        xsi:type="gmfgraph:PolygonDecoration"/>
     <descriptors
         name="InitialStateFigure">
       <actualFigure
@@ -111,7 +113,8 @@
         name="EventFigure">
       <actualFigure
           xsi:type="gmfgraph:PolylineConnection"
-          name="EventFigure">
+          name="EventFigure"
+          targetDecoration="//@figures.0/@figures.0">
         <children
             xsi:type="gmfgraph:Label"
             name="EventNameFigure"
