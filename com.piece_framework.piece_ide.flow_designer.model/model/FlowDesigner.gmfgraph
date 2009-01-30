@@ -24,35 +24,19 @@
     <descriptors
         name="ActionStateFigure">
       <actualFigure
-          xsi:type="gmfgraph:Rectangle"
-          name="ActionStateFigure">
+          xsi:type="gmfgraph:CustomFigure"
+          name="ActionStateFigure"
+          qualifiedClassName="FlowDesigner.diagram.edit.figure.ActionStateFigure">
         <layout
             xsi:type="gmfgraph:FlowLayout"/>
         <children
             xsi:type="gmfgraph:Label"
             name="ActionStateNameFigure"
             text="&lt;...>"/>
-        <children
-            xsi:type="gmfgraph:Label"
-            name="ActionStateActivityFigure"
-            text="&lt;...>"/>
-        <children
-            xsi:type="gmfgraph:Label"
-            name="ActionStateExitFigure"
-            text="&lt;...>"/>
-        <children
-            xsi:type="gmfgraph:Label"
-            name="ActionStateEntryFigure"
-            text="&lt;...>"/>
       </actualFigure>
       <accessors
+          accessor="getFigureActionStateNameFigure"
           figure="//@figures.0/@descriptors.2/@actualFigure/@children.0"/>
-      <accessors
-          figure="//@figures.0/@descriptors.2/@actualFigure/@children.1"/>
-      <accessors
-          figure="//@figures.0/@descriptors.2/@actualFigure/@children.2"/>
-      <accessors
-          figure="//@figures.0/@descriptors.2/@actualFigure/@children.3"/>
     </descriptors>
     <descriptors
         name="ViewStateFigure">
@@ -129,16 +113,13 @@
       accessor="//@figures.0/@descriptors.2/@accessors.0"/>
   <labels
       name="ActionStateActivity"
-      figure="ActionStateFigure"
-      accessor="//@figures.0/@descriptors.2/@accessors.1"/>
+      figure="ActionStateFigure"/>
   <labels
       name="ActionStateExit"
-      figure="ActionStateFigure"
-      accessor="//@figures.0/@descriptors.2/@accessors.2"/>
+      figure="ActionStateFigure"/>
   <labels
       name="ActionStateEntry"
-      figure="ActionStateFigure"
-      accessor="//@figures.0/@descriptors.2/@accessors.3"/>
+      figure="ActionStateFigure"/>
   <labels
       name="ViewStateName"
       figure="ViewStateFigure"

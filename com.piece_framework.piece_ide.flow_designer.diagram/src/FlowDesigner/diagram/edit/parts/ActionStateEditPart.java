@@ -208,27 +208,13 @@ public class ActionStateEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public class ActionStateFigure extends RectangleFigure {
+    public class ActionStateFigure extends
+            FlowDesigner.diagram.edit.figure.ActionStateFigure {
 
         /**
          * @generated
          */
         private WrappingLabel fFigureActionStateNameFigure;
-
-        /**
-         * @generated
-         */
-        private WrappingLabel fFigureActionStateActivityFigure;
-
-        /**
-         * @generated
-         */
-        private WrappingLabel fFigureActionStateExitFigure;
-
-        /**
-         * @generated
-         */
-        private WrappingLabel fFigureActionStateEntryFigure;
 
         /**
          * @generated
@@ -259,21 +245,6 @@ public class ActionStateEditPart extends ShapeNodeEditPart {
 
             this.add(fFigureActionStateNameFigure);
 
-            fFigureActionStateActivityFigure = new WrappingLabel();
-            fFigureActionStateActivityFigure.setText("<...>");
-
-            this.add(fFigureActionStateActivityFigure);
-
-            fFigureActionStateExitFigure = new WrappingLabel();
-            fFigureActionStateExitFigure.setText("<...>");
-
-            this.add(fFigureActionStateExitFigure);
-
-            fFigureActionStateEntryFigure = new WrappingLabel();
-            fFigureActionStateEntryFigure.setText("<...>");
-
-            this.add(fFigureActionStateEntryFigure);
-
         }
 
         /**
@@ -300,27 +271,6 @@ public class ActionStateEditPart extends ShapeNodeEditPart {
          */
         public WrappingLabel getFigureActionStateNameFigure() {
             return fFigureActionStateNameFigure;
-        }
-
-        /**
-         * @generated
-         */
-        public WrappingLabel getFigureActionStateActivityFigure() {
-            return fFigureActionStateActivityFigure;
-        }
-
-        /**
-         * @generated
-         */
-        public WrappingLabel getFigureActionStateExitFigure() {
-            return fFigureActionStateExitFigure;
-        }
-
-        /**
-         * @generated
-         */
-        public WrappingLabel getFigureActionStateEntryFigure() {
-            return fFigureActionStateEntryFigure;
         }
 
     }
