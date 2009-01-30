@@ -207,27 +207,13 @@ public class ViewStateEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public class ViewStateFigure extends RectangleFigure {
+    public class ViewStateFigure extends
+            FlowDesigner.diagram.edit.figure.ViewStateFigure {
 
         /**
          * @generated
          */
         private WrappingLabel fFigureViewStateNameFigure;
-
-        /**
-         * @generated
-         */
-        private WrappingLabel fFigureViewStateActivityFigure;
-
-        /**
-         * @generated
-         */
-        private WrappingLabel fFigureViewStateExitFigure;
-
-        /**
-         * @generated
-         */
-        private WrappingLabel fFigureViewStateEntryFigure;
 
         /**
          * @generated
@@ -263,23 +249,8 @@ public class ViewStateEditPart extends ShapeNodeEditPart {
 
             this.add(fFigureViewStateNameFigure);
 
-            fFigureViewStateActivityFigure = new WrappingLabel();
-            fFigureViewStateActivityFigure.setText("<...>");
-
-            this.add(fFigureViewStateActivityFigure);
-
-            fFigureViewStateExitFigure = new WrappingLabel();
-            fFigureViewStateExitFigure.setText("<...>");
-
-            this.add(fFigureViewStateExitFigure);
-
-            fFigureViewStateEntryFigure = new WrappingLabel();
-            fFigureViewStateEntryFigure.setText("<...>");
-
-            this.add(fFigureViewStateEntryFigure);
-
             fFigureViewStateViewFigure = new WrappingLabel();
-            fFigureViewStateViewFigure.setText("<...>");
+            fFigureViewStateViewFigure.setText("");
 
             this.add(fFigureViewStateViewFigure);
 
@@ -309,27 +280,6 @@ public class ViewStateEditPart extends ShapeNodeEditPart {
          */
         public WrappingLabel getFigureViewStateNameFigure() {
             return fFigureViewStateNameFigure;
-        }
-
-        /**
-         * @generated
-         */
-        public WrappingLabel getFigureViewStateActivityFigure() {
-            return fFigureViewStateActivityFigure;
-        }
-
-        /**
-         * @generated
-         */
-        public WrappingLabel getFigureViewStateExitFigure() {
-            return fFigureViewStateExitFigure;
-        }
-
-        /**
-         * @generated
-         */
-        public WrappingLabel getFigureViewStateEntryFigure() {
-            return fFigureViewStateEntryFigure;
         }
 
         /**

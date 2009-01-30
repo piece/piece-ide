@@ -41,8 +41,9 @@
     <descriptors
         name="ViewStateFigure">
       <actualFigure
-          xsi:type="gmfgraph:Rectangle"
-          name="ViewStateFigure">
+          xsi:type="gmfgraph:CustomFigure"
+          name="ViewStateFigure"
+          qualifiedClassName="FlowDesigner.diagram.edit.figure.ViewStateFigure">
         <layout
             xsi:type="gmfgraph:FlowLayout"/>
         <children
@@ -51,31 +52,15 @@
             text="&lt;...>"/>
         <children
             xsi:type="gmfgraph:Label"
-            name="ViewStateActivityFigure"
-            text="&lt;...>"/>
-        <children
-            xsi:type="gmfgraph:Label"
-            name="ViewStateExitFigure"
-            text="&lt;...>"/>
-        <children
-            xsi:type="gmfgraph:Label"
-            name="ViewStateEntryFigure"
-            text="&lt;...>"/>
-        <children
-            xsi:type="gmfgraph:Label"
             name="ViewStateViewFigure"
-            text="&lt;...>"/>
+            text=""/>
       </actualFigure>
       <accessors
+          accessor="getFigureViewStateNameFigure"
           figure="//@figures.0/@descriptors.3/@actualFigure/@children.0"/>
       <accessors
+          accessor="getFigureViewStateViewFigure"
           figure="//@figures.0/@descriptors.3/@actualFigure/@children.1"/>
-      <accessors
-          figure="//@figures.0/@descriptors.3/@actualFigure/@children.2"/>
-      <accessors
-          figure="//@figures.0/@descriptors.3/@actualFigure/@children.3"/>
-      <accessors
-          figure="//@figures.0/@descriptors.3/@actualFigure/@children.4"/>
     </descriptors>
     <descriptors
         name="EventFigure">
@@ -112,34 +97,13 @@
       figure="ActionStateFigure"
       accessor="//@figures.0/@descriptors.2/@accessors.0"/>
   <labels
-      name="ActionStateActivity"
-      figure="ActionStateFigure"/>
-  <labels
-      name="ActionStateExit"
-      figure="ActionStateFigure"/>
-  <labels
-      name="ActionStateEntry"
-      figure="ActionStateFigure"/>
-  <labels
       name="ViewStateName"
       figure="ViewStateFigure"
       accessor="//@figures.0/@descriptors.3/@accessors.0"/>
   <labels
-      name="ViewStateActivity"
-      figure="ViewStateFigure"
-      accessor="//@figures.0/@descriptors.3/@accessors.1"/>
-  <labels
-      name="ViewStateExit"
-      figure="ViewStateFigure"
-      accessor="//@figures.0/@descriptors.3/@accessors.2"/>
-  <labels
-      name="ViewStateEntry"
-      figure="ViewStateFigure"
-      accessor="//@figures.0/@descriptors.3/@accessors.3"/>
-  <labels
       name="ViewStateView"
       figure="ViewStateFigure"
-      accessor="//@figures.0/@descriptors.3/@accessors.4"/>
+      accessor="//@figures.0/@descriptors.3/@accessors.1"/>
   <labels
       name="EventName"
       figure="EventFigure"
