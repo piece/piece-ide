@@ -106,6 +106,11 @@ public class ViewStateEditPart extends ShapeNodeEditPart {
                     .setLabel(getPrimaryShape().getFigureViewStateNameFigure());
             return true;
         }
+        if (childEditPart instanceof FlowDesigner.diagram.edit.parts.WrappingLabelEditPart) {
+            ((FlowDesigner.diagram.edit.parts.WrappingLabelEditPart) childEditPart)
+                    .setLabel(getPrimaryShape().getFigureViewStateViewFigure());
+            return true;
+        }
         return false;
     }
 
@@ -250,7 +255,7 @@ public class ViewStateEditPart extends ShapeNodeEditPart {
             this.add(fFigureViewStateNameFigure);
 
             fFigureViewStateViewFigure = new WrappingLabel();
-            fFigureViewStateViewFigure.setText("");
+            fFigureViewStateViewFigure.setText("<...>");
 
             this.add(fFigureViewStateViewFigure);
 

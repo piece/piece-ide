@@ -73,6 +73,32 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
     /**
      * @generated
      */
+    private IParser viewStateView_5005Parser;
+
+    /**
+     * @generated
+     */
+    private IParser getViewStateView_5005Parser() {
+        if (viewStateView_5005Parser == null) {
+            viewStateView_5005Parser = createViewStateView_5005Parser();
+        }
+        return viewStateView_5005Parser;
+    }
+
+    /**
+     * @generated
+     */
+    protected IParser createViewStateView_5005Parser() {
+        EAttribute[] features = new EAttribute[] { FlowDesigner.FlowDesignerPackage.eINSTANCE
+                .getViewState_View(), };
+        FlowDesigner.diagram.parsers.MessageFormatParser parser = new FlowDesigner.diagram.parsers.MessageFormatParser(
+                features);
+        return parser;
+    }
+
+    /**
+     * @generated
+     */
     private IParser eventName_6002Parser;
 
     /**
@@ -105,6 +131,8 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
             return getActionStateName_5003Parser();
         case FlowDesigner.diagram.edit.parts.ViewStateNameEditPart.VISUAL_ID:
             return getViewStateName_5004Parser();
+        case FlowDesigner.diagram.edit.parts.WrappingLabelEditPart.VISUAL_ID:
+            return getViewStateView_5005Parser();
         case FlowDesigner.diagram.edit.parts.EventNameEditPart.VISUAL_ID:
             return getEventName_6002Parser();
         }

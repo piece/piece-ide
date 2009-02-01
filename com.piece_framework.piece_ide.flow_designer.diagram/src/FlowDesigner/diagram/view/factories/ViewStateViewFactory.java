@@ -64,5 +64,12 @@ public class ViewStateViewFactory extends AbstractShapeViewFactory {
                         FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
                                 .getType(FlowDesigner.diagram.edit.parts.ViewStateNameEditPart.VISUAL_ID),
                         ViewUtil.APPEND, true, getPreferencesHint());
+        getViewService()
+                .createNode(
+                        eObjectAdapter,
+                        view,
+                        FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
+                                .getType(FlowDesigner.diagram.edit.parts.WrappingLabelEditPart.VISUAL_ID),
+                        ViewUtil.APPEND, true, getPreferencesHint());
     }
 }

@@ -38,6 +38,13 @@
         <features
             href="FlowDesigner.ecore#//NamedState/name"/>
       </labelMappings>
+      <labelMappings
+          xsi:type="gmfmap:FeatureLabelMapping">
+        <diagramLabel
+            href="FlowDesigner.gmfgraph#ViewStateView"/>
+        <features
+            href="FlowDesigner.ecore#//ViewState/view"/>
+      </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
           href="FlowDesigner.gmftool#//@palette/@tools.0/@tools.2"/>

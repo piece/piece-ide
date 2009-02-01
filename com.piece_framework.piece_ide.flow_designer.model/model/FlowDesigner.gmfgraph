@@ -53,7 +53,7 @@
         <children
             xsi:type="gmfgraph:Label"
             name="ViewStateViewFigure"
-            text=""/>
+            text="&lt;...>"/>
       </actualFigure>
       <accessors
           accessor="getFigureViewStateNameFigure"
@@ -103,6 +103,7 @@
   <labels
       name="ViewStateView"
       figure="ViewStateFigure"
+      elementIcon="false"
       accessor="//@figures.0/@descriptors.3/@accessors.1"/>
   <labels
       name="EventName"

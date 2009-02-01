@@ -171,6 +171,9 @@ public class FlowDesignerVisualIDRegistry {
             if (FlowDesigner.diagram.edit.parts.ViewStateNameEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
+            if (FlowDesigner.diagram.edit.parts.WrappingLabelEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
             break;
         case FlowDesigner.diagram.edit.parts.FlowEditPart.VISUAL_ID:
             if (FlowDesigner.diagram.edit.parts.ActionStateEditPart.VISUAL_ID == nodeVisualID) {
