@@ -210,9 +210,9 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         Event displayForm1FromProcess1 = null;
         Event displayForm2FromProcess1 = null;
         for (Event event: process1.getEvents()) {
-            if (event.getName().equals("DisplayForm1FromProcess1")) {
+            if (event.getEvent().equals("DisplayForm1FromProcess1")) {
                 displayForm1FromProcess1 = event;
-            } else if (event.getName().equals("DisplayForm2FromProcess1")) {
+            } else if (event.getEvent().equals("DisplayForm2FromProcess1")) {
                 displayForm2FromProcess1 = event;
             } else {
                 fail();
@@ -797,7 +797,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
                              String guard,
                              Target nextState) {
         assertNotNull(event);
-        assertEquals(name, event.getName());
+        assertEquals(name, event.getEvent());
         assertEquals(action, event.getAction());
         assertEquals(guard, event.getGuard());
         assertEquals(nextState, event.getNextState());
