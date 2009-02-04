@@ -19,7 +19,7 @@ class EventSave extends AbstractSave {
         }
         Event event = (Event) eObject;
 
-        eventMap.put("event", event.getName());
+        eventMap.put("event", event.getEvent());
         eventMap.put("nextState", ((NamedState) event.getNextState()).getName());
         ActionSave actionSave = new ActionSave();
         actionSave.save(eventMap, event);

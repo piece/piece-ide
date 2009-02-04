@@ -248,7 +248,7 @@ public class FlowDesignerPackageImpl extends EPackageImpl implements FlowDesigne
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getEvent_Name() {
+    public EAttribute getEvent_Event() {
         return (EAttribute)eventEClass.getEStructuralFeatures().get(0);
     }
 
@@ -436,7 +436,7 @@ public class FlowDesignerPackageImpl extends EPackageImpl implements FlowDesigne
         createEAttribute(viewStateEClass, VIEW_STATE__VIEW);
 
         eventEClass = createEClass(EVENT);
-        createEAttribute(eventEClass, EVENT__NAME);
+        createEAttribute(eventEClass, EVENT__EVENT);
         createEReference(eventEClass, EVENT__NEXT_STATE);
         createEAttribute(eventEClass, EVENT__ACTION);
         createEAttribute(eventEClass, EVENT__GUARD);
@@ -509,7 +509,7 @@ public class FlowDesignerPackageImpl extends EPackageImpl implements FlowDesigne
         initEAttribute(getViewState_View(), ecorePackage.getEString(), "view", null, 0, 1, ViewState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(eventEClass, Event.class, "Event", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getEvent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getEvent_Event(), ecorePackage.getEString(), "event", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getEvent_NextState(), this.getTarget(), null, "nextState", null, 1, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getEvent_Action(), this.getAction(), "action", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getEvent_Guard(), this.getAction(), "guard", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

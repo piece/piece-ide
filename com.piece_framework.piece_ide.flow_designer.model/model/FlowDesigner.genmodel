@@ -5,8 +5,7 @@
     modelPluginID="com.piece_framework.piece_ide.flow_designer.model" modelName="FlowDesigner"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false">
   <foreignModel>FlowDesigner.ecore</foreignModel>
-  <genPackages prefix="FlowDesigner" resource="Basic" disposableProviderFactory="true"
-      ecorePackage="FlowDesigner.ecore#/">
+  <genPackages prefix="FlowDesigner" disposableProviderFactory="true" ecorePackage="FlowDesigner.ecore#/">
     <genDataTypes ecoreDataType="FlowDesigner.ecore#//Action"/>
     <genClasses ecoreClass="FlowDesigner.ecore#//InitialState">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlowDesigner.ecore#//InitialState/initialize"/>
@@ -19,7 +18,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlowDesigner.ecore#//ViewState/view"/>
     </genClasses>
     <genClasses ecoreClass="FlowDesigner.ecore#//Event">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlowDesigner.ecore#//Event/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlowDesigner.ecore#//Event/event"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference FlowDesigner.ecore#//Event/nextState"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlowDesigner.ecore#//Event/action"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlowDesigner.ecore#//Event/guard"/>

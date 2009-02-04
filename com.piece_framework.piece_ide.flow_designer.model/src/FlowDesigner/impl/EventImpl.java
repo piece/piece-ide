@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link FlowDesigner.impl.EventImpl#getName <em>Name</em>}</li>
+ *   <li>{@link FlowDesigner.impl.EventImpl#getEvent <em>Event</em>}</li>
  *   <li>{@link FlowDesigner.impl.EventImpl#getNextState <em>Next State</em>}</li>
  *   <li>{@link FlowDesigner.impl.EventImpl#getAction <em>Action</em>}</li>
  *   <li>{@link FlowDesigner.impl.EventImpl#getGuard <em>Guard</em>}</li>
@@ -36,24 +36,24 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  */
 public class EventImpl extends EObjectImpl implements Event {
     /**
-     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * The default value of the '{@link #getEvent() <em>Event</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getName()
+     * @see #getEvent()
      * @generated
      * @ordered
      */
-    protected static final String NAME_EDEFAULT = null;
+    protected static final String EVENT_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * The cached value of the '{@link #getEvent() <em>Event</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getName()
+     * @see #getEvent()
      * @generated
      * @ordered
      */
-    protected String name = NAME_EDEFAULT;
+    protected String event = EVENT_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getNextState() <em>Next State</em>}' reference.
@@ -129,8 +129,8 @@ public class EventImpl extends EObjectImpl implements Event {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getName() {
-        return name;
+    public String getEvent() {
+        return event;
     }
 
     /**
@@ -138,11 +138,11 @@ public class EventImpl extends EObjectImpl implements Event {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setName(String newName) {
-        String oldName = name;
-        name = newName;
+    public void setEvent(String newEvent) {
+        String oldEvent = event;
+        event = newEvent;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, FlowDesignerPackage.EVENT__NAME, oldName, name));
+            eNotify(new ENotificationImpl(this, Notification.SET, FlowDesignerPackage.EVENT__EVENT, oldEvent, event));
     }
 
     /**
@@ -233,8 +233,8 @@ public class EventImpl extends EObjectImpl implements Event {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case FlowDesignerPackage.EVENT__NAME:
-                return getName();
+            case FlowDesignerPackage.EVENT__EVENT:
+                return getEvent();
             case FlowDesignerPackage.EVENT__NEXT_STATE:
                 if (resolve) return getNextState();
                 return basicGetNextState();
@@ -254,8 +254,8 @@ public class EventImpl extends EObjectImpl implements Event {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case FlowDesignerPackage.EVENT__NAME:
-                setName((String)newValue);
+            case FlowDesignerPackage.EVENT__EVENT:
+                setEvent((String)newValue);
                 return;
             case FlowDesignerPackage.EVENT__NEXT_STATE:
                 setNextState((Target)newValue);
@@ -278,8 +278,8 @@ public class EventImpl extends EObjectImpl implements Event {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case FlowDesignerPackage.EVENT__NAME:
-                setName(NAME_EDEFAULT);
+            case FlowDesignerPackage.EVENT__EVENT:
+                setEvent(EVENT_EDEFAULT);
                 return;
             case FlowDesignerPackage.EVENT__NEXT_STATE:
                 setNextState((Target)null);
@@ -302,8 +302,8 @@ public class EventImpl extends EObjectImpl implements Event {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case FlowDesignerPackage.EVENT__NAME:
-                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case FlowDesignerPackage.EVENT__EVENT:
+                return EVENT_EDEFAULT == null ? event != null : !EVENT_EDEFAULT.equals(event);
             case FlowDesignerPackage.EVENT__NEXT_STATE:
                 return nextState != null;
             case FlowDesignerPackage.EVENT__ACTION:
@@ -324,8 +324,8 @@ public class EventImpl extends EObjectImpl implements Event {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (name: ");
-        result.append(name);
+        result.append(" (event: ");
+        result.append(event);
         result.append(", action: ");
         result.append(action);
         result.append(", guard: ");

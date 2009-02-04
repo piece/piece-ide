@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link FlowDesigner.Event#getName <em>Name</em>}</li>
+ *   <li>{@link FlowDesigner.Event#getEvent <em>Event</em>}</li>
  *   <li>{@link FlowDesigner.Event#getNextState <em>Next State</em>}</li>
  *   <li>{@link FlowDesigner.Event#getAction <em>Action</em>}</li>
  *   <li>{@link FlowDesigner.Event#getGuard <em>Guard</em>}</li>
@@ -29,30 +29,30 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Event extends EObject {
     /**
-     * Returns the value of the '<em><b>Name</b></em>' attribute.
+     * Returns the value of the '<em><b>Event</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
+     * If the meaning of the '<em>Event</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Name</em>' attribute.
-     * @see #setName(String)
-     * @see FlowDesigner.FlowDesignerPackage#getEvent_Name()
+     * @return the value of the '<em>Event</em>' attribute.
+     * @see #setEvent(String)
+     * @see FlowDesigner.FlowDesignerPackage#getEvent_Event()
      * @model
      * @generated
      */
-    String getName();
+    String getEvent();
 
     /**
-     * Sets the value of the '{@link FlowDesigner.Event#getName <em>Name</em>}' attribute.
+     * Sets the value of the '{@link FlowDesigner.Event#getEvent <em>Event</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Name</em>' attribute.
-     * @see #getName()
+     * @param value the new value of the '<em>Event</em>' attribute.
+     * @see #getEvent()
      * @generated
      */
-    void setName(String value);
+    void setEvent(String value);
 
     /**
      * Returns the value of the '<em><b>Next State</b></em>' reference.

@@ -33,7 +33,7 @@ class EventLoad extends AbstractLoad {
         }
 
         Event event = FlowDesignerFactoryImpl.eINSTANCE.createEvent();
-        event.setName((String) eventMap.get("event"));
+        event.setEvent((String) eventMap.get("event"));
         event.setNextState(nextState);
 
         ActionLoad load = new ActionLoad();

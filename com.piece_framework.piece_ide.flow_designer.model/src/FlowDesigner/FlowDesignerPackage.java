@@ -384,13 +384,13 @@ public interface FlowDesignerPackage extends EPackage {
     int EVENT = 4;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * The feature id for the '<em><b>Event</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int EVENT__NAME = 0;
+    int EVENT__EVENT = 0;
 
     /**
      * The feature id for the '<em><b>Next State</b></em>' reference.
@@ -569,15 +569,15 @@ public interface FlowDesignerPackage extends EPackage {
     EClass getEvent();
 
     /**
-     * Returns the meta object for the attribute '{@link FlowDesigner.Event#getName <em>Name</em>}'.
+     * Returns the meta object for the attribute '{@link FlowDesigner.Event#getEvent <em>Event</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Name</em>'.
-     * @see FlowDesigner.Event#getName()
+     * @return the meta object for the attribute '<em>Event</em>'.
+     * @see FlowDesigner.Event#getEvent()
      * @see #getEvent()
      * @generated
      */
-    EAttribute getEvent_Name();
+    EAttribute getEvent_Event();
 
     /**
      * Returns the meta object for the reference '{@link FlowDesigner.Event#getNextState <em>Next State</em>}'.
@@ -848,12 +848,12 @@ public interface FlowDesignerPackage extends EPackage {
         EClass EVENT = eINSTANCE.getEvent();
 
         /**
-         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Event</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute EVENT__NAME = eINSTANCE.getEvent_Name();
+        EAttribute EVENT__EVENT = eINSTANCE.getEvent_Event();
 
         /**
          * The meta object literal for the '<em><b>Next State</b></em>' reference feature.
