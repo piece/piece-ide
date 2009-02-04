@@ -82,9 +82,9 @@
         xsi:type="gmfmap:FeatureLabelMapping"
         viewPattern="">
       <diagramLabel
-          href="FlowDesigner.gmfgraph#EventName"/>
+          href="FlowDesigner.gmfgraph#EventEvent"/>
       <features
-          href="FlowDesigner.ecore#//Event/name"/>
+          href="FlowDesigner.ecore#//Event/event"/>
     </labelMappings>
     <containmentFeature
         href="FlowDesigner.ecore#//Source/events"/>

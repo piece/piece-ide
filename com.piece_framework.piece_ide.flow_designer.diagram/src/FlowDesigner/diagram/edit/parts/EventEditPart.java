@@ -46,7 +46,7 @@ public class EventEditPart extends ConnectionNodeEditPart implements
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof FlowDesigner.diagram.edit.parts.EventNameEditPart) {
             ((FlowDesigner.diagram.edit.parts.EventNameEditPart) childEditPart)
-                    .setLabel(getPrimaryShape().getFigureEventNameFigure());
+                    .setLabel(getPrimaryShape().getFigureEventEventFigure());
             return true;
         }
         return false;
@@ -90,7 +90,7 @@ public class EventEditPart extends ConnectionNodeEditPart implements
         /**
          * @generated
          */
-        private WrappingLabel fFigureEventNameFigure;
+        private WrappingLabel fFigureEventEventFigure;
 
         /**
          * @generated
@@ -106,10 +106,10 @@ public class EventEditPart extends ConnectionNodeEditPart implements
          */
         private void createContents() {
 
-            fFigureEventNameFigure = new WrappingLabel();
-            fFigureEventNameFigure.setText("<...>");
+            fFigureEventEventFigure = new WrappingLabel();
+            fFigureEventEventFigure.setText("<...>");
 
-            this.add(fFigureEventNameFigure);
+            this.add(fFigureEventEventFigure);
 
         }
 
@@ -125,8 +125,8 @@ public class EventEditPart extends ConnectionNodeEditPart implements
         /**
          * @generated
          */
-        public WrappingLabel getFigureEventNameFigure() {
-            return fFigureEventNameFigure;
+        public WrappingLabel getFigureEventEventFigure() {
+            return fFigureEventEventFigure;
         }
 
     }

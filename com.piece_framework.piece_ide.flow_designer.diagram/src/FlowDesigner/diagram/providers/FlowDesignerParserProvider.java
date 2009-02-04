@@ -99,24 +99,24 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
     /**
      * @generated
      */
-    private IParser eventName_6002Parser;
+    private IParser eventEvent_6002Parser;
 
     /**
      * @generated
      */
-    private IParser getEventName_6002Parser() {
-        if (eventName_6002Parser == null) {
-            eventName_6002Parser = createEventName_6002Parser();
+    private IParser getEventEvent_6002Parser() {
+        if (eventEvent_6002Parser == null) {
+            eventEvent_6002Parser = createEventEvent_6002Parser();
         }
-        return eventName_6002Parser;
+        return eventEvent_6002Parser;
     }
 
     /**
      * @generated
      */
-    protected IParser createEventName_6002Parser() {
+    protected IParser createEventEvent_6002Parser() {
         EAttribute[] features = new EAttribute[] { FlowDesigner.FlowDesignerPackage.eINSTANCE
-                .getEvent_Name(), };
+                .getEvent_Event(), };
         FlowDesigner.diagram.parsers.MessageFormatParser parser = new FlowDesigner.diagram.parsers.MessageFormatParser(
                 features);
         return parser;
@@ -134,7 +134,7 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
         case FlowDesigner.diagram.edit.parts.WrappingLabelEditPart.VISUAL_ID:
             return getViewStateView_5005Parser();
         case FlowDesigner.diagram.edit.parts.EventNameEditPart.VISUAL_ID:
-            return getEventName_6002Parser();
+            return getEventEvent_6002Parser();
         }
         return null;
     }

@@ -70,10 +70,11 @@
           targetDecoration="//@figures.0/@figures.0">
         <children
             xsi:type="gmfgraph:Label"
-            name="EventNameFigure"
+            name="EventEventFigure"
             text="&lt;...>"/>
       </actualFigure>
       <accessors
+          accessor="getFigureEventEventFigure"
           figure="//@figures.0/@descriptors.4/@actualFigure/@children.0"/>
     </descriptors>
   </figures>
@@ -106,7 +107,7 @@
       elementIcon="false"
       accessor="//@figures.0/@descriptors.3/@accessors.1"/>
   <labels
-      name="EventName"
+      name="EventEvent"
       figure="EventFigure"
       accessor="//@figures.0/@descriptors.4/@accessors.0"/>
 </gmfgraph:Canvas>
