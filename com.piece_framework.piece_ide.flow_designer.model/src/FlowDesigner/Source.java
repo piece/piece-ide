@@ -38,7 +38,7 @@ public interface Source extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Events</em>' containment reference list.
      * @see FlowDesigner.FlowDesignerPackage#getSource_Events()
-     * @model containment="true"
+     * @model containment="true" keys="event"
      * @generated
      */
     EList<Event> getEvents();

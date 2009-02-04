@@ -22,7 +22,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Source" abstract="true" interface="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="events" upperBound="-1"
-        eType="#//Event" containment="true"/>
+        eType="#//Event" containment="true" eKeys="#//Event/event"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Target" abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="NamedState" abstract="true" eSuperTypes="#//Source #//Target">
@@ -35,7 +35,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="initialState" lowerBound="1"
         eType="#//InitialState" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
-        eType="#//NamedState" containment="true"/>
+        eType="#//NamedState" containment="true" eKeys="#//NamedState/name"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="finalState" eType="#//FinalState"
         containment="true"/>
   </eClassifiers>

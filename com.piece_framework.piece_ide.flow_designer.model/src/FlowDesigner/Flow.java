@@ -66,7 +66,7 @@ public interface Flow extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>States</em>' containment reference list.
      * @see FlowDesigner.FlowDesignerPackage#getFlow_States()
-     * @model containment="true"
+     * @model containment="true" keys="name"
      * @generated
      */
     EList<NamedState> getStates();
