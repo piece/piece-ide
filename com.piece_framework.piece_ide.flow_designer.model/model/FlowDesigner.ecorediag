@@ -54,7 +54,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_1-NhMfJjEd2AlKUyyqUfyA" fontName="IPA Pゴシック" fontHeight="10" fillColor="13761016" lineColor="0"/>
     <element xmi:type="ecore:EClass" href="FlowDesigner.ecore#//ActionState"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1-NhMvJjEd2AlKUyyqUfyA" x="340" y="540"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1-NhMvJjEd2AlKUyyqUfyA" x="400" y="540"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_1-PWYPJjEd2AlKUyyqUfyA" type="1001">
     <children xmi:type="notation:Node" xmi:id="_1-RLkPJjEd2AlKUyyqUfyA" type="4001"/>
@@ -74,7 +74,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_1-PWYfJjEd2AlKUyyqUfyA" fontName="IPA Pゴシック" fontHeight="10" fillColor="13761016" lineColor="0"/>
     <element xmi:type="ecore:EClass" href="FlowDesigner.ecore#//ViewState"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1-PWYvJjEd2AlKUyyqUfyA" x="500" y="540"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1-PWYvJjEd2AlKUyyqUfyA" x="560" y="540"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_1-TAwPJjEd2AlKUyyqUfyA" type="1001">
     <children xmi:type="notation:Node" xmi:id="_1-Tn0PJjEd2AlKUyyqUfyA" type="4001"/>
@@ -184,13 +184,17 @@
       <styles xmi:type="notation:FilteringStyle" xmi:id="_1-gcJPJjEd2AlKUyyqUfyA"/>
     </children>
     <children xmi:type="notation:Node" xmi:id="_1-hDMPJjEd2AlKUyyqUfyA" type="5002">
+      <children xmi:type="notation:Node" xmi:id="_JbR00POLEd2o69REdp0o1w" type="2002">
+        <element xmi:type="ecore:EOperation" href="FlowDesigner.ecore#//Flow/findStateByName"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_JbR00fOLEd2o69REdp0o1w"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_1-hDMfJjEd2AlKUyyqUfyA"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_1-hDMvJjEd2AlKUyyqUfyA"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_1-hDM_JjEd2AlKUyyqUfyA"/>
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_1-fOA_JjEd2AlKUyyqUfyA" fontName="IPA Pゴシック" fontHeight="10" fillColor="13761016" lineColor="0"/>
     <element xmi:type="ecore:EClass" href="FlowDesigner.ecore#//Flow"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1-fOBPJjEd2AlKUyyqUfyA" x="180" y="540"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1-fOBPJjEd2AlKUyyqUfyA" x="65" y="540"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_1-i4YPJjEd2AlKUyyqUfyA" type="1004">
     <children xmi:type="notation:Node" xmi:id="_1-kGgPJjEd2AlKUyyqUfyA" type="4008"/>
@@ -221,17 +225,17 @@
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_1-pmEfJjEd2AlKUyyqUfyA" routing="Tree" lineColor="0"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_1-pmEvJjEd2AlKUyyqUfyA" fontName="IPA Pゴシック"/>
     <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1-pmE_JjEd2AlKUyyqUfyA" points="[0, 0, -77, 60]$[0, -30, -77, 30]$[78, -30, 1, 30]$[78, -60, 1, 0]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1-pmE_JjEd2AlKUyyqUfyA" points="[0, 0, 1, 60]$[0, -60, 1, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2C1igvJjEd2AlKUyyqUfyA" id="(0.5,0.0)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2C2JkPJjEd2AlKUyyqUfyA" id="(0.496,1.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2C2JkPJjEd2AlKUyyqUfyA" id="(0.336,1.0)"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_1-qNIPJjEd2AlKUyyqUfyA" type="3003" source="_1-PWYPJjEd2AlKUyyqUfyA" target="_1-bjoPJjEd2AlKUyyqUfyA">
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_1-qNIfJjEd2AlKUyyqUfyA" routing="Tree" lineColor="0"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_1-q0MPJjEd2AlKUyyqUfyA" fontName="IPA Pゴシック"/>
     <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1-q0MfJjEd2AlKUyyqUfyA" points="[1, 0, 57, 60]$[1, -30, 57, 30]$[-56, -30, 0, 30]$[-56, -60, 0, 0]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1-q0MfJjEd2AlKUyyqUfyA" points="[1, 0, 126, 60]$[1, -30, 126, 30]$[-124, -30, 1, 30]$[-124, -60, 1, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2C2JkfJjEd2AlKUyyqUfyA" id="(0.49557522,0.0)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2C2JkvJjEd2AlKUyyqUfyA" id="(0.744,1.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2C2JkvJjEd2AlKUyyqUfyA" id="(0.664,1.0)"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_1-sCUPJjEd2AlKUyyqUfyA" type="3002" source="_1-TAwPJjEd2AlKUyyqUfyA" target="_1-ZHYPJjEd2AlKUyyqUfyA">
     <children xmi:type="notation:Node" xmi:id="_1-tQcPJjEd2AlKUyyqUfyA" type="4011">
@@ -288,8 +292,8 @@
     <styles xmi:type="notation:FontStyle" xmi:id="_1-w60vJjEd2AlKUyyqUfyA" fontName="IPA Pゴシック" fontHeight="10"/>
     <element xmi:type="ecore:EReference" href="FlowDesigner.ecore#//Flow/initialState"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1-w60_JjEd2AlKUyyqUfyA" points="[0, 0, 0, 108]$[0, -108, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2C0UYPJjEd2AlKUyyqUfyA" id="(0.5,0.0)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2C0UYfJjEd2AlKUyyqUfyA" id="(0.13432837,1.0)"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2C0UYPJjEd2AlKUyyqUfyA" id="(0.7854546,0.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2C0UYfJjEd2AlKUyyqUfyA" id="(0.5,1.0)"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_1-yI8PJjEd2AlKUyyqUfyA" type="3002" source="_1-fOAvJjEd2AlKUyyqUfyA" target="_1-bjoPJjEd2AlKUyyqUfyA">
     <children xmi:type="notation:Node" xmi:id="_1-ywAPJjEd2AlKUyyqUfyA" type="4011">
@@ -301,9 +305,9 @@
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_1-yI8fJjEd2AlKUyyqUfyA" lineColor="0"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_1-yI8vJjEd2AlKUyyqUfyA" fontName="IPA Pゴシック" fontHeight="10"/>
     <element xmi:type="ecore:EReference" href="FlowDesigner.ecore#//Flow/states"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1-yI8_JjEd2AlKUyyqUfyA" points="[0, 0, -181, 60]$[182, -60, 1, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2CztUPJjEd2AlKUyyqUfyA" id="(0.75,0.0)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2CztUfJjEd2AlKUyyqUfyA" id="(0.248,1.0)"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1-yI8_JjEd2AlKUyyqUfyA" points="[1, 0, -118, 60]$[120, -60, 1, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2CztUPJjEd2AlKUyyqUfyA" id="(0.8909091,0.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2CztUfJjEd2AlKUyyqUfyA" id="(0.168,1.0)"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_1-ywBPJjEd2AlKUyyqUfyA" type="3002" source="_1-fOAvJjEd2AlKUyyqUfyA" target="_1-Kd4PJjEd2AlKUyyqUfyA">
     <children xmi:type="notation:Node" xmi:id="_1-zXE_JjEd2AlKUyyqUfyA" type="4011">
@@ -315,8 +319,8 @@
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_1-zXEPJjEd2AlKUyyqUfyA" lineColor="0"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_1-zXEfJjEd2AlKUyyqUfyA" fontName="IPA Pゴシック" fontHeight="10"/>
     <element xmi:type="ecore:EReference" href="FlowDesigner.ecore#//Flow/finalState"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1-zXEvJjEd2AlKUyyqUfyA" points="[0, 0, 111, 354]$[-111, -61, 0, 293]$[-111, -354, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2C3XsPJjEd2AlKUyyqUfyA" id="(0.25,0.0)"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1-zXEvJjEd2AlKUyyqUfyA" points="[1, 0, 0, 354]$[1, -354, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2C3XsPJjEd2AlKUyyqUfyA" id="(0.11272727,0.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2C3XsfJjEd2AlKUyyqUfyA" id="(0.512,1.0)"/>
   </edges>
 </notation:Diagram>

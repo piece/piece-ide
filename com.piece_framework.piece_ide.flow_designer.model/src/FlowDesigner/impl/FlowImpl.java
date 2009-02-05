@@ -194,6 +194,20 @@ public class FlowImpl extends EObjectImpl implements Flow {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @generated NOT
+     */
+    public NamedState findStateByName(String name) {
+        for (NamedState state : getStates()) {
+            if (state.getName().equals(name)) {
+                return state;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -287,14 +301,5 @@ public class FlowImpl extends EObjectImpl implements Flow {
                 return finalState != null;
         }
         return super.eIsSet(featureID);
-    }
-
-    public NamedState findStateByName(String name) {
-        for (NamedState state: getStates()) {
-            if (state.getName().equals(name)) {
-                return state;
-            }
-        }
-        return null;
     }
 } //FlowImpl

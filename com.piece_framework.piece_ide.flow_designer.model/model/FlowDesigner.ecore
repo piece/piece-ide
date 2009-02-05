@@ -39,6 +39,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="entry" eType="#//Action"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Flow">
+    <eOperations name="findStateByName" eType="#//NamedState">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="initialState" lowerBound="1"
         eType="#//InitialState" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"

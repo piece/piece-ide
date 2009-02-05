@@ -97,5 +97,11 @@ public interface Flow extends EObject {
      */
     void setFinalState(FinalState value);
 
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @model
+     * @generated
+     */
     NamedState findStateByName(String name);
 } // Flow
