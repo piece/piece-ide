@@ -64,35 +64,43 @@ public class EventCreateCommand extends CreateElementCommand {
         if (getSource() == null) {
             return true; // link creation is in progress; source is not defined yet
         }
-        if (getSource() instanceof InitialState) {
-            if (((InitialState) getSource()).getEvents().size() > 0) {
+
+        if (getSource() != null && getTarget() != null) {
+            boolean canBeSource = getSource().canBeSource(getTarget());
+            boolean canBeTarget = getTarget().canBeTarget(getSource());
+            if (canBeSource == false || canBeTarget == false) {
                 return false;
             }
         }
-        if (getTarget() instanceof FinalState) {
-            if (!(getSource() instanceof ViewState)) {
-                return false;
-            }
-            if (getSource().getEvents().size() > 0) {
-                return false;
-            }
-            Flow flow = (Flow) getTarget().eContainer();
-            for (NamedState state: flow.getStates()) {
-                for (Event event: state.getEvents()) {
-                    if (event.getNextState().equals(getTarget())) {
-                        return false;
-                    }
-                }
-            }
-        }
-        FinalState finalState = ((Flow) getSource().eContainer()).getFinalState();
-        if (finalState != null) {
-            for (Event event: getSource().getEvents()) {
-                if (event.getNextState().equals(finalState)) {
-                    return false;
-                }
-            }
-        }
+//        if (getSource() instanceof InitialState) {
+//            if (((InitialState) getSource()).getEvents().size() > 0) {
+//                return false;
+//            }
+//        }
+//        if (getTarget() instanceof FinalState) {
+//            if (!(getSource() instanceof ViewState)) {
+//                return false;
+//            }
+//            if (getSource().getEvents().size() > 0) {
+//                return false;
+//            }
+//            Flow flow = (Flow) getTarget().eContainer();
+//            for (NamedState state: flow.getStates()) {
+//                for (Event event: state.getEvents()) {
+//                    if (event.getNextState().equals(getTarget())) {
+//                        return false;
+//                    }
+//                }
+//            }
+//        }
+//        FinalState finalState = ((Flow) getSource().eContainer()).getFinalState();
+//        if (finalState != null) {
+//            for (Event event: getSource().getEvents()) {
+//                if (event.getNextState().equals(finalState)) {
+//                    return false;
+//                }
+//            }
+//        }
 
         // target may be null here but it's possible to check constraint
         return FlowDesigner.diagram.edit.policies.FlowDesignerBaseItemSemanticEditPolicy.LinkConstraints

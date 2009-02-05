@@ -10,6 +10,7 @@ import FlowDesigner.Event;
 import FlowDesigner.FlowDesignerPackage;
 import FlowDesigner.InitialState;
 
+import FlowDesigner.Target;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -121,6 +122,15 @@ public class InitialStateImpl extends EObjectImpl implements InitialState {
         initialize = newInitialize;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, FlowDesignerPackage.INITIAL_STATE__INITIALIZE, oldInitialize, initialize));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated NOT
+     */
+    public boolean canBeSource(Target target) {
+        return getEvents().size() == 0;
     }
 
     /**

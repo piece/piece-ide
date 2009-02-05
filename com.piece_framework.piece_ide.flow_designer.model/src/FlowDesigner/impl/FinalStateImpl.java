@@ -6,15 +6,18 @@
  */
 package FlowDesigner.impl;
 
-import FlowDesigner.FinalState;
-import FlowDesigner.FlowDesignerPackage;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
+import FlowDesigner.Event;
+import FlowDesigner.FinalState;
+import FlowDesigner.Flow;
+import FlowDesigner.FlowDesignerPackage;
+import FlowDesigner.NamedState;
+import FlowDesigner.Source;
+import FlowDesigner.ViewState;
 
 /**
  * <!-- begin-user-doc -->
@@ -88,6 +91,31 @@ public class FinalStateImpl extends EObjectImpl implements FinalState {
         finalize = newFinalize;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, FlowDesignerPackage.FINAL_STATE__FINALIZE, oldFinalize, finalize));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated NOT
+     */
+    public boolean canBeTarget(Source source) {
+        boolean sourceIsViewState = source instanceof ViewState;
+        boolean sourceHasNoEvent = source.getEvents().size() == 0;
+        boolean flowHasNoLastState = true;
+
+        Flow flow = (Flow) eContainer();
+        for (NamedState state: flow.getStates()) {
+            for (Event event: state.getEvents()) {
+                if (event.getNextState().equals(this)) {
+                    flowHasNoLastState = false;
+                    break;
+                }
+            }
+        }
+
+        return sourceIsViewState
+               && sourceHasNoEvent
+               && flowHasNoLastState;
     }
 
     /**

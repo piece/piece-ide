@@ -21,10 +21,17 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="guard" eType="#//Action"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Source" abstract="true" interface="true">
+    <eOperations name="canBeSource" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="target" eType="#//Target"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="events" upperBound="-1"
         eType="#//Event" containment="true" eKeys="#//Event/event"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Target" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Target" abstract="true" interface="true">
+    <eOperations name="canBeTarget" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="source" eType="#//Source"/>
+    </eOperations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NamedState" abstract="true" eSuperTypes="#//Source #//Target">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="activity" eType="#//Action"/>

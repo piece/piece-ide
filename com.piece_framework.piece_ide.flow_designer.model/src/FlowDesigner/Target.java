@@ -19,4 +19,12 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface Target extends EObject {
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @model
+     * @generated
+     */
+    boolean canBeTarget(Source source);
 } // Target

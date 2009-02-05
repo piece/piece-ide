@@ -6,25 +6,25 @@
  */
 package FlowDesigner.impl;
 
-import FlowDesigner.Event;
-import FlowDesigner.FlowDesignerPackage;
-import FlowDesigner.NamedState;
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import FlowDesigner.Event;
+import FlowDesigner.FinalState;
+import FlowDesigner.Flow;
+import FlowDesigner.FlowDesignerPackage;
+import FlowDesigner.NamedState;
+import FlowDesigner.Source;
+import FlowDesigner.Target;
 
 /**
  * <!-- begin-user-doc -->
@@ -247,6 +247,36 @@ public abstract class NamedStateImpl extends EObjectImpl implements NamedState {
         entry = newEntry;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, FlowDesignerPackage.NAMED_STATE__ENTRY, oldEntry, entry));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean canBeTarget(Source source) {
+        return true;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated NOT
+     */
+    public boolean canBeSource(Target target) {
+        boolean isNotLastState = true;
+
+        FinalState finalState = ((Flow) eContainer()).getFinalState();
+        if (finalState != null) {
+            for (Event event: getEvents()) {
+                if (event.getNextState().equals(finalState)) {
+                    isNotLastState = false;
+                    break;
+                }
+            }
+        }
+
+        return isNotLastState;
     }
 
     /**

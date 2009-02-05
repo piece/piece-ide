@@ -21,6 +21,7 @@ import FlowDesigner.ViewState;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -518,7 +519,13 @@ public class FlowDesignerPackageImpl extends EPackageImpl implements FlowDesigne
         initEReference(getSource_Events(), this.getEvent(), null, "events", null, 0, -1, Source.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         getSource_Events().getEKeys().add(this.getEvent_Event());
 
+        EOperation op = addEOperation(sourceEClass, ecorePackage.getEBoolean(), "canBeSource", 0, 1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getTarget(), "target", 0, 1, IS_UNIQUE, IS_ORDERED);
+
         initEClass(targetEClass, Target.class, "Target", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        op = addEOperation(targetEClass, ecorePackage.getEBoolean(), "canBeTarget", 0, 1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getSource(), "source", 0, 1, IS_UNIQUE, IS_ORDERED);
 
         initEClass(namedStateEClass, NamedState.class, "NamedState", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getNamedState_Name(), ecorePackage.getEString(), "name", null, 1, 1, NamedState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

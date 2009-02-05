@@ -43,4 +43,12 @@ public interface Source extends EObject {
      */
     EList<Event> getEvents();
 
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @model
+     * @generated
+     */
+    boolean canBeSource(Target target);
+
 } // Source
