@@ -1,6 +1,7 @@
 package FlowDesigner.diagram.providers;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
@@ -14,6 +15,7 @@ import org.eclipse.gmf.runtime.emf.ui.services.parser.ParserHintAdapter;
 import org.eclipse.gmf.runtime.notation.View;
 
 import FlowDesigner.FinalState;
+import FlowDesigner.Flow;
 import FlowDesigner.InitialState;
 
 /**
@@ -150,6 +152,34 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
         return parser;
     }
 
+    private IParser fFlowParser;
+
+    private IParser getFlowParser() {
+        if (fFlowParser == null) {
+            fFlowParser = createFlowParser();
+        }
+        return fFlowParser;
+    }
+
+    private IParser createFlowParser() {
+        EAttribute[] features = new EAttribute[] {};
+        FlowDesigner.diagram.parsers.MessageFormatParser parser = new FlowDesigner.diagram.parsers.MessageFormatParser(features) {
+            @Override
+            public String getPrintString(IAdaptable adapter, int flags) {
+                if (adapter instanceof EObjectAdapter) {
+                    EObject realObject = (EObject) ((EObjectAdapter) adapter).getRealObject();
+                    if (realObject instanceof Flow) {
+                        URI uri = realObject.eResource().getURI();
+                        String flowName = uri.lastSegment().replaceFirst("." + uri.fileExtension(), "");
+                        return flowName;
+                    }
+                }
+                return super.getPrintString(adapter, flags);
+            }
+        };
+        return parser;
+    }
+
     /**
      * @generated
      */
@@ -187,6 +217,8 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
                 || realObject instanceof FinalState
                 ) {
                 return getAnonymouseStateParser();
+            } else if (realObject instanceof Flow) {
+                return getFlowParser();
             }
         }
         return null;
