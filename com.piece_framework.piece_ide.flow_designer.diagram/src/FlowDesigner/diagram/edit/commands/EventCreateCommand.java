@@ -73,12 +73,23 @@ public class EventCreateCommand extends CreateElementCommand {
             if (!(getSource() instanceof ViewState)) {
                 return false;
             }
+            if (getSource().getEvents().size() > 0) {
+                return false;
+            }
             Flow flow = (Flow) getTarget().eContainer();
             for (NamedState state: flow.getStates()) {
                 for (Event event: state.getEvents()) {
                     if (event.getNextState().equals(getTarget())) {
                         return false;
                     }
+                }
+            }
+        }
+        FinalState finalState = ((Flow) getSource().eContainer()).getFinalState();
+        if (finalState != null) {
+            for (Event event: getSource().getEvents()) {
+                if (event.getNextState().equals(finalState)) {
+                    return false;
                 }
             }
         }
