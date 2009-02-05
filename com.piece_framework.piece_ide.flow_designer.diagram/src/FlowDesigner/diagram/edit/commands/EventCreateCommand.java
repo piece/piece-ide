@@ -72,35 +72,6 @@ public class EventCreateCommand extends CreateElementCommand {
                 return false;
             }
         }
-//        if (getSource() instanceof InitialState) {
-//            if (((InitialState) getSource()).getEvents().size() > 0) {
-//                return false;
-//            }
-//        }
-//        if (getTarget() instanceof FinalState) {
-//            if (!(getSource() instanceof ViewState)) {
-//                return false;
-//            }
-//            if (getSource().getEvents().size() > 0) {
-//                return false;
-//            }
-//            Flow flow = (Flow) getTarget().eContainer();
-//            for (NamedState state: flow.getStates()) {
-//                for (Event event: state.getEvents()) {
-//                    if (event.getNextState().equals(getTarget())) {
-//                        return false;
-//                    }
-//                }
-//            }
-//        }
-//        FinalState finalState = ((Flow) getSource().eContainer()).getFinalState();
-//        if (finalState != null) {
-//            for (Event event: getSource().getEvents()) {
-//                if (event.getNextState().equals(finalState)) {
-//                    return false;
-//                }
-//            }
-//        }
 
         // target may be null here but it's possible to check constraint
         return FlowDesigner.diagram.edit.policies.FlowDesignerBaseItemSemanticEditPolicy.LinkConstraints
