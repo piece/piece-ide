@@ -8,9 +8,13 @@ import org.eclipse.gmf.runtime.common.core.service.IOperation;
 import org.eclipse.gmf.runtime.common.ui.services.parser.GetParserOperation;
 import org.eclipse.gmf.runtime.common.ui.services.parser.IParser;
 import org.eclipse.gmf.runtime.common.ui.services.parser.IParserProvider;
+import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.emf.ui.services.parser.ParserHintAdapter;
 import org.eclipse.gmf.runtime.notation.View;
+
+import FlowDesigner.FinalState;
+import FlowDesigner.InitialState;
 
 /**
  * @generated
@@ -122,6 +126,30 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
         return parser;
     }
 
+    private IParser fAnonymouseStateParser;
+
+    private IParser getAnonymouseStateParser() {
+        if (fAnonymouseStateParser == null) {
+            fAnonymouseStateParser = createAnonymouseStateParser();
+        }
+        return fAnonymouseStateParser;
+    }
+
+    private IParser createAnonymouseStateParser() {
+        EAttribute[] features = new EAttribute[] {};
+        FlowDesigner.diagram.parsers.MessageFormatParser parser = new FlowDesigner.diagram.parsers.MessageFormatParser(features) {
+            @Override
+            public String getPrintString(IAdaptable adapter, int flags) {
+                if (adapter instanceof EObjectAdapter) {
+                    EObject realObject = (EObject) ((EObjectAdapter) adapter).getRealObject();
+                    return realObject.eClass().getName();
+                }
+                return super.getPrintString(adapter, flags);
+            }
+        };
+        return parser;
+    }
+
     /**
      * @generated
      */
@@ -152,6 +180,14 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
         if (view != null) {
             return getParser(FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
                     .getVisualID(view));
+        }
+        if (hint instanceof EObjectAdapter) {
+            EObject realObject = (EObject) ((EObjectAdapter) hint).getRealObject();
+            if (realObject instanceof InitialState
+                || realObject instanceof FinalState
+                ) {
+                return getAnonymouseStateParser();
+            }
         }
         return null;
     }
