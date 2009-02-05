@@ -188,6 +188,10 @@
         <element xmi:type="ecore:EOperation" href="FlowDesigner.ecore#//Flow/findStateByName"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_JbR00fOLEd2o69REdp0o1w"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_mMoD0POMEd2o69REdp0o1w" type="2002">
+        <element xmi:type="ecore:EOperation" href="FlowDesigner.ecore#//Flow/hasLastState"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_mMoq4POMEd2o69REdp0o1w"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_1-hDMfJjEd2AlKUyyqUfyA"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_1-hDMvJjEd2AlKUyyqUfyA"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_1-hDM_JjEd2AlKUyyqUfyA"/>

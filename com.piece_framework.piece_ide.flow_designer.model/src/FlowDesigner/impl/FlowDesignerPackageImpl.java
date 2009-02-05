@@ -542,6 +542,8 @@ public class FlowDesignerPackageImpl extends EPackageImpl implements FlowDesigne
         op = addEOperation(flowEClass, this.getNamedState(), "findStateByName", 0, 1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+        addEOperation(flowEClass, ecorePackage.getEBoolean(), "hasLastState", 0, 1, IS_UNIQUE, IS_ORDERED);
+
         // Initialize data types
         initEDataType(actionEDataType, String.class, "Action", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 

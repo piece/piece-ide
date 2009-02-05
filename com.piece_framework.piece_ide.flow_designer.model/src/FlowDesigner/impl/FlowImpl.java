@@ -6,27 +6,24 @@
  */
 package FlowDesigner.impl;
 
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
+import FlowDesigner.Event;
 import FlowDesigner.FinalState;
 import FlowDesigner.Flow;
 import FlowDesigner.FlowDesignerPackage;
 import FlowDesigner.InitialState;
 import FlowDesigner.NamedState;
-
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -203,6 +200,27 @@ public class FlowImpl extends EObjectImpl implements Flow {
             }
         }
         return null;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated NOT
+     */
+    public boolean hasLastState() {
+        if (finalState == null) {
+            return false;
+        }
+
+        for (NamedState state: states) {
+            for (Event event: state.getEvents()) {
+                if (event.getNextState().equals(finalState)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

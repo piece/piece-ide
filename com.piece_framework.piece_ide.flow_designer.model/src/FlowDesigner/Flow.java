@@ -104,4 +104,12 @@ public interface Flow extends EObject {
      * @generated
      */
     NamedState findStateByName(String name);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @model
+     * @generated
+     */
+    boolean hasLastState();
 } // Flow

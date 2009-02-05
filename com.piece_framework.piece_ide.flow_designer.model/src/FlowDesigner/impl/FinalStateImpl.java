@@ -101,17 +101,8 @@ public class FinalStateImpl extends EObjectImpl implements FinalState {
     public boolean canBeTarget(Source source) {
         boolean sourceIsViewState = source instanceof ViewState;
         boolean sourceHasNoEvent = source.getEvents().size() == 0;
-        boolean flowHasNoLastState = true;
-
         Flow flow = (Flow) eContainer();
-        for (NamedState state: flow.getStates()) {
-            for (Event event: state.getEvents()) {
-                if (event.getNextState().equals(this)) {
-                    flowHasNoLastState = false;
-                    break;
-                }
-            }
-        }
+        boolean flowHasNoLastState = flow.hasLastState() == false;
 
         return sourceIsViewState
                && sourceHasNoEvent
