@@ -6,10 +6,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.emf.type.core.ElementTypeRegistry;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -83,17 +85,21 @@ public class FlowDesignerElementTypes extends ElementInitializers {
     }
 
     /**
-     * @generated
+     * @generated NOT
      */
-    private static String getImageRegistryKey(ENamedElement element) {
-        return element.getName();
+    private static String getImageRegistryKey(EObject element) {
+        for (EAttribute eAttribute: element.eClass().getEAllAttributes()) {
+            if (eAttribute.getName().equals("name")) {
+                return (String) element.eGet(eAttribute);
+            }
+        }
+        return element.eClass().getName();
     }
 
     /**
-     * @generated
+     * @generated NOT
      */
-    private static ImageDescriptor getProvidedImageDescriptor(
-            ENamedElement element) {
+    private static ImageDescriptor getProvidedImageDescriptor(EObject element) {
         if (element instanceof EStructuralFeature) {
             EStructuralFeature feature = ((EStructuralFeature) element);
             EClass eContainingClass = feature.getEContainingClass();
@@ -119,9 +125,9 @@ public class FlowDesignerElementTypes extends ElementInitializers {
     }
 
     /**
-     * @generated
+     * @generated NOT
      */
-    public static ImageDescriptor getImageDescriptor(ENamedElement element) {
+    public static ImageDescriptor getImageDescriptor(EObject element) {
         String key = getImageRegistryKey(element);
         ImageDescriptor imageDescriptor = getImageRegistry().getDescriptor(key);
         if (imageDescriptor == null) {
@@ -135,9 +141,9 @@ public class FlowDesignerElementTypes extends ElementInitializers {
     }
 
     /**
-     * @generated
+     * @generated NOT
      */
-    public static Image getImage(ENamedElement element) {
+    public static Image getImage(EObject element) {
         String key = getImageRegistryKey(element);
         Image image = getImageRegistry().get(key);
         if (image == null) {
@@ -152,10 +158,10 @@ public class FlowDesignerElementTypes extends ElementInitializers {
     }
 
     /**
-     * @generated
+     * @generated NOT
      */
     public static ImageDescriptor getImageDescriptor(IAdaptable hint) {
-        ENamedElement element = getElement(hint);
+        EObject element = getElement(hint);
         if (element == null) {
             return null;
         }
@@ -163,10 +169,10 @@ public class FlowDesignerElementTypes extends ElementInitializers {
     }
 
     /**
-     * @generated
+     * @generated NOT
      */
     public static Image getImage(IAdaptable hint) {
-        ENamedElement element = getElement(hint);
+        EObject element = getElement(hint);
         if (element == null) {
             return null;
         }
@@ -176,10 +182,16 @@ public class FlowDesignerElementTypes extends ElementInitializers {
     /**
      * Returns 'type' of the ecore object associated with the hint.
      * 
-     * @generated
+     * @generated NOT
      */
-    public static ENamedElement getElement(IAdaptable hint) {
+    public static EObject getElement(IAdaptable hint) {
         Object type = hint.getAdapter(IElementType.class);
+        if (type == null) {
+            if (hint instanceof EObjectAdapter) {
+                EObject realObject = (EObject) ((EObjectAdapter) hint).getRealObject();
+                return realObject.eClass();
+            }
+        }
         if (elements == null) {
             elements = new IdentityHashMap();
 
@@ -204,7 +216,7 @@ public class FlowDesignerElementTypes extends ElementInitializers {
             elements.put(Event_4003, FlowDesigner.FlowDesignerPackage.eINSTANCE
                     .getEvent());
         }
-        return (ENamedElement) elements.get(type);
+        return (EObject) elements.get(type);
     }
 
     /**
