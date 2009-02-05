@@ -10,7 +10,12 @@ import org.eclipse.gmf.runtime.emf.type.core.commands.CreateElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateRelationshipRequest;
 
+import FlowDesigner.Event;
+import FlowDesigner.FinalState;
+import FlowDesigner.Flow;
 import FlowDesigner.InitialState;
+import FlowDesigner.NamedState;
+import FlowDesigner.ViewState;
 
 /**
  * @generated
@@ -62,6 +67,19 @@ public class EventCreateCommand extends CreateElementCommand {
         if (source instanceof InitialState) {
             if (((InitialState) source).getEvents().size() > 0) {
                 return false;
+            }
+        }
+        if (target instanceof FinalState) {
+            if (!(source instanceof ViewState)) {
+                return false;
+            }
+            Flow flow = (Flow) target.eContainer();
+            for (NamedState state: flow.getStates()) {
+                for (Event event: state.getEvents()) {
+                    if (event.getNextState().equals(target)) {
+                        return false;
+                    }
+                }
             }
         }
         // target may be null here but it's possible to check constraint
