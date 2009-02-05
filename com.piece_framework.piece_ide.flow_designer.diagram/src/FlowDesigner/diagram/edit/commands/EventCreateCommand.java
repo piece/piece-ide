@@ -10,6 +10,8 @@ import org.eclipse.gmf.runtime.emf.type.core.commands.CreateElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateRelationshipRequest;
 
+import FlowDesigner.InitialState;
+
 /**
  * @generated
  */
@@ -42,7 +44,7 @@ public class EventCreateCommand extends CreateElementCommand {
     }
 
     /**
-     * @generated
+     * @generated NOT
      */
     public boolean canExecute() {
         if (source == null && target == null) {
@@ -56,6 +58,11 @@ public class EventCreateCommand extends CreateElementCommand {
         }
         if (getSource() == null) {
             return true; // link creation is in progress; source is not defined yet
+        }
+        if (source instanceof InitialState) {
+            if (((InitialState) source).getEvents().size() > 0) {
+                return false;
+            }
         }
         // target may be null here but it's possible to check constraint
         return FlowDesigner.diagram.edit.policies.FlowDesignerBaseItemSemanticEditPolicy.LinkConstraints
