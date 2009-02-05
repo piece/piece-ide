@@ -64,24 +64,25 @@ public class EventCreateCommand extends CreateElementCommand {
         if (getSource() == null) {
             return true; // link creation is in progress; source is not defined yet
         }
-        if (source instanceof InitialState) {
-            if (((InitialState) source).getEvents().size() > 0) {
+        if (getSource() instanceof InitialState) {
+            if (((InitialState) getSource()).getEvents().size() > 0) {
                 return false;
             }
         }
-        if (target instanceof FinalState) {
-            if (!(source instanceof ViewState)) {
+        if (getTarget() instanceof FinalState) {
+            if (!(getSource() instanceof ViewState)) {
                 return false;
             }
-            Flow flow = (Flow) target.eContainer();
+            Flow flow = (Flow) getTarget().eContainer();
             for (NamedState state: flow.getStates()) {
                 for (Event event: state.getEvents()) {
-                    if (event.getNextState().equals(target)) {
+                    if (event.getNextState().equals(getTarget())) {
                         return false;
                     }
                 }
             }
         }
+
         // target may be null here but it's possible to check constraint
         return FlowDesigner.diagram.edit.policies.FlowDesignerBaseItemSemanticEditPolicy.LinkConstraints
                 .canCreateEvent_4003(getSource(), getTarget());
