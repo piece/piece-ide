@@ -252,7 +252,7 @@ public abstract class NamedStateImpl extends EObjectImpl implements NamedState {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
+     * @generated NOT
      */
     public boolean canBeTarget(Source source) {
         return true;
