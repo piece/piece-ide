@@ -190,7 +190,7 @@ public class FlowDesignerVisualIDRegistry {
             }
             break;
         case FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID:
-            if (FlowDesigner.diagram.edit.parts.EventNameEditPart.VISUAL_ID == nodeVisualID) {
+            if (FlowDesigner.diagram.edit.parts.EventEventEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;

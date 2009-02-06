@@ -45,7 +45,7 @@ import org.eclipse.swt.graphics.Image;
 /**
  * @generated
  */
-public class EventNameEditPart extends LabelEditPart implements
+public class EventEventEditPart extends LabelEditPart implements
         ITextAwareEditPart {
 
     /**
@@ -79,14 +79,14 @@ public class EventNameEditPart extends LabelEditPart implements
     static {
         registerSnapBackPosition(
                 FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
-                        .getType(FlowDesigner.diagram.edit.parts.EventNameEditPart.VISUAL_ID),
+                        .getType(FlowDesigner.diagram.edit.parts.EventEventEditPart.VISUAL_ID),
                 new Point(0, 40));
     }
 
     /**
      * @generated
      */
-    public EventNameEditPart(View view) {
+    public EventEventEditPart(View view) {
         super(view);
     }
 

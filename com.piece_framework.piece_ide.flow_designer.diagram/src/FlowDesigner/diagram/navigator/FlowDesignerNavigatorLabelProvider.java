@@ -265,7 +265,7 @@ public class FlowDesignerNavigatorLabelProvider extends LabelProvider implements
                 FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4003,
                 (view.getElement() != null ? view.getElement() : view),
                 FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
-                        .getType(FlowDesigner.diagram.edit.parts.EventNameEditPart.VISUAL_ID));
+                        .getType(FlowDesigner.diagram.edit.parts.EventEventEditPart.VISUAL_ID));
         IParser parser = ParserService.getInstance().getParser(hintAdapter);
 
         if (parser != null) {

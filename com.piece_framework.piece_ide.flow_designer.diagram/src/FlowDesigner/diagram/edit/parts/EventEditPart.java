@@ -44,8 +44,8 @@ public class EventEditPart extends ConnectionNodeEditPart implements
      * @generated
      */
     protected boolean addFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof FlowDesigner.diagram.edit.parts.EventNameEditPart) {
-            ((FlowDesigner.diagram.edit.parts.EventNameEditPart) childEditPart)
+        if (childEditPart instanceof FlowDesigner.diagram.edit.parts.EventEventEditPart) {
+            ((FlowDesigner.diagram.edit.parts.EventEventEditPart) childEditPart)
                     .setLabel(getPrimaryShape().getFigureEventEventFigure());
             return true;
         }

@@ -62,8 +62,8 @@ public class FlowDesignerEditPartFactory implements EditPartFactory {
             case FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID:
                 return new FlowDesigner.diagram.edit.parts.EventEditPart(view);
 
-            case FlowDesigner.diagram.edit.parts.EventNameEditPart.VISUAL_ID:
-                return new FlowDesigner.diagram.edit.parts.EventNameEditPart(
+            case FlowDesigner.diagram.edit.parts.EventEventEditPart.VISUAL_ID:
+                return new FlowDesigner.diagram.edit.parts.EventEventEditPart(
                         view);
             }
         }

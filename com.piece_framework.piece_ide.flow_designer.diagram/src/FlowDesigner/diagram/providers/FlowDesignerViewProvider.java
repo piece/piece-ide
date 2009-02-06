@@ -107,7 +107,7 @@ public class FlowDesignerViewProvider extends AbstractViewProvider {
                         return null; // wrong container
                     }
                     break;
-                case FlowDesigner.diagram.edit.parts.EventNameEditPart.VISUAL_ID:
+                case FlowDesigner.diagram.edit.parts.EventEventEditPart.VISUAL_ID:
                     if (FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID != FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
                             .getVisualID(containerView)
                             || containerView.getElement() != domainElement) {
@@ -146,8 +146,8 @@ public class FlowDesignerViewProvider extends AbstractViewProvider {
             return FlowDesigner.diagram.view.factories.InitialStateViewFactory.class;
         case FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID:
             return FlowDesigner.diagram.view.factories.FinalStateViewFactory.class;
-        case FlowDesigner.diagram.edit.parts.EventNameEditPart.VISUAL_ID:
-            return FlowDesigner.diagram.view.factories.EventNameViewFactory.class;
+        case FlowDesigner.diagram.edit.parts.EventEventEditPart.VISUAL_ID:
+            return FlowDesigner.diagram.view.factories.EventEventViewFactory.class;
         }
         return null;
     }

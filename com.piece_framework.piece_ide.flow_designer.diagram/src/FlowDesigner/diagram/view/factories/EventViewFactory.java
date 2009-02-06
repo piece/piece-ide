@@ -49,7 +49,7 @@ public class EventViewFactory extends ConnectionViewFactory {
                         eObjectAdapter,
                         view,
                         FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
-                                .getType(FlowDesigner.diagram.edit.parts.EventNameEditPart.VISUAL_ID),
+                                .getType(FlowDesigner.diagram.edit.parts.EventEventEditPart.VISUAL_ID),
                         ViewUtil.APPEND, true, getPreferencesHint());
     }
 }

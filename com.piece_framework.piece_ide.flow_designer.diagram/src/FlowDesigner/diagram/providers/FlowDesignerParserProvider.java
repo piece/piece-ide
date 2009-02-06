@@ -139,11 +139,13 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
 
     private IParser createAnonymouseStateParser() {
         EAttribute[] features = new EAttribute[] {};
-        FlowDesigner.diagram.parsers.MessageFormatParser parser = new FlowDesigner.diagram.parsers.MessageFormatParser(features) {
+        FlowDesigner.diagram.parsers.MessageFormatParser parser = new FlowDesigner.diagram.parsers.MessageFormatParser(
+                features) {
             @Override
             public String getPrintString(IAdaptable adapter, int flags) {
                 if (adapter instanceof EObjectAdapter) {
-                    EObject realObject = (EObject) ((EObjectAdapter) adapter).getRealObject();
+                    EObject realObject = (EObject) ((EObjectAdapter) adapter)
+                            .getRealObject();
                     return realObject.eClass().getName();
                 }
                 return super.getPrintString(adapter, flags);
@@ -163,14 +165,17 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
 
     private IParser createFlowParser() {
         EAttribute[] features = new EAttribute[] {};
-        FlowDesigner.diagram.parsers.MessageFormatParser parser = new FlowDesigner.diagram.parsers.MessageFormatParser(features) {
+        FlowDesigner.diagram.parsers.MessageFormatParser parser = new FlowDesigner.diagram.parsers.MessageFormatParser(
+                features) {
             @Override
             public String getPrintString(IAdaptable adapter, int flags) {
                 if (adapter instanceof EObjectAdapter) {
-                    EObject realObject = (EObject) ((EObjectAdapter) adapter).getRealObject();
+                    EObject realObject = (EObject) ((EObjectAdapter) adapter)
+                            .getRealObject();
                     if (realObject instanceof Flow) {
                         URI uri = realObject.eResource().getURI();
-                        String flowName = uri.lastSegment().replaceFirst("." + uri.fileExtension(), "");
+                        String flowName = uri.lastSegment().replaceFirst(
+                                "." + uri.fileExtension(), "");
                         return flowName;
                     }
                 }
@@ -191,7 +196,7 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
             return getViewStateName_5004Parser();
         case FlowDesigner.diagram.edit.parts.WrappingLabelEditPart.VISUAL_ID:
             return getViewStateView_5005Parser();
-        case FlowDesigner.diagram.edit.parts.EventNameEditPart.VISUAL_ID:
+        case FlowDesigner.diagram.edit.parts.EventEventEditPart.VISUAL_ID:
             return getEventEvent_6002Parser();
         }
         return null;
@@ -210,16 +215,6 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
         if (view != null) {
             return getParser(FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
                     .getVisualID(view));
-        }
-        if (hint instanceof EObjectAdapter) {
-            EObject realObject = (EObject) ((EObjectAdapter) hint).getRealObject();
-            if (realObject instanceof InitialState
-                || realObject instanceof FinalState
-                ) {
-                return getAnonymouseStateParser();
-            } else if (realObject instanceof Flow) {
-                return getFlowParser();
-            }
         }
         return null;
     }
