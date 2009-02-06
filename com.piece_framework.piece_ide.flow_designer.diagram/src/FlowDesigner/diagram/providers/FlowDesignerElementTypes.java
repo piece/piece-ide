@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
@@ -87,8 +88,37 @@ public class FlowDesignerElementTypes extends ElementInitializers {
     /**
      * @generated NOT
      */
+    private static String getImageRegistryKey(ENamedElement element) {
+        return getImageRegistryKey((EObject) element);
+    }
+
+    /**
+     * @generated NOT
+     */
+    private static ImageDescriptor getProvidedImageDescriptor(
+            ENamedElement element) {
+        return getProvidedImageDescriptor((EObject) element);
+    }
+
+    /**
+     * @generated NOT
+     */
+    public static ImageDescriptor getImageDescriptor(ENamedElement element) {
+        return getImageDescriptor((EObject) element);
+    }
+
+    /**
+     * @generated NOT
+     */
+    public static Image getImage(ENamedElement element) {
+        return getImage((EObject) element);
+    }
+
+    /**
+     * @generated NOT
+     */
     private static String getImageRegistryKey(EObject element) {
-        for (EAttribute eAttribute: element.eClass().getEAllAttributes()) {
+        for (EAttribute eAttribute : element.eClass().getEAllAttributes()) {
             if (eAttribute.getName().equals("name")) {
                 return (String) element.eGet(eAttribute);
             }
@@ -188,7 +218,8 @@ public class FlowDesignerElementTypes extends ElementInitializers {
         Object type = hint.getAdapter(IElementType.class);
         if (type == null) {
             if (hint instanceof EObjectAdapter) {
-                EObject realObject = (EObject) ((EObjectAdapter) hint).getRealObject();
+                EObject realObject = (EObject) ((EObjectAdapter) hint)
+                        .getRealObject();
                 return realObject.eClass();
             }
         }
