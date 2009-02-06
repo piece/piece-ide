@@ -25,8 +25,15 @@
     </genClasses>
     <genClasses image="false" ecoreClass="FlowDesigner.ecore#//Source">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlowDesigner.ecore#//Source/events"/>
+      <genOperations ecoreOperation="FlowDesigner.ecore#//Source/canBeSource">
+        <genParameters ecoreParameter="FlowDesigner.ecore#//Source/canBeSource/target"/>
+      </genOperations>
     </genClasses>
-    <genClasses image="false" ecoreClass="FlowDesigner.ecore#//Target"/>
+    <genClasses image="false" ecoreClass="FlowDesigner.ecore#//Target">
+      <genOperations ecoreOperation="FlowDesigner.ecore#//Target/canBeTarget">
+        <genParameters ecoreParameter="FlowDesigner.ecore#//Target/canBeTarget/source"/>
+      </genOperations>
+    </genClasses>
     <genClasses image="false" ecoreClass="FlowDesigner.ecore#//NamedState">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlowDesigner.ecore#//NamedState/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlowDesigner.ecore#//NamedState/activity"/>
@@ -37,6 +44,10 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlowDesigner.ecore#//Flow/initialState"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlowDesigner.ecore#//Flow/states"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlowDesigner.ecore#//Flow/finalState"/>
+      <genOperations ecoreOperation="FlowDesigner.ecore#//Flow/findStateByName">
+        <genParameters ecoreParameter="FlowDesigner.ecore#//Flow/findStateByName/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="FlowDesigner.ecore#//Flow/hasLastState"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

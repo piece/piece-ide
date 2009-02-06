@@ -223,9 +223,9 @@
       </modelFacet>
       <labels
           visualID="6002"
-          editPartClassName="EventNameEditPart"
-          itemSemanticEditPolicyClassName="EventNameItemSemanticEditPolicy"
-          notationViewFactoryClassName="EventNameViewFactory"
+          editPartClassName="EventEventEditPart"
+          itemSemanticEditPolicyClassName="EventEventItemSemanticEditPolicy"
+          notationViewFactoryClassName="EventEventViewFactory"
           elementIcon="true">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
