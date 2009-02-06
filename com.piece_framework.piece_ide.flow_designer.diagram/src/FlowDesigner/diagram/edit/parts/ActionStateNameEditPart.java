@@ -313,14 +313,14 @@ public class ActionStateNameEditPart extends CompartmentEditPart implements
     }
 
     /**
-     * @generated
+     * @generated NOT
      */
     protected DirectEditManager getManager() {
         if (manager == null) {
-            setManager(new TextDirectEditManager(this, TextDirectEditManager
-                    .getTextCellEditorClass(this),
-                    FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
-                            .getTextCellEditorLocator(this)));
+            DirectEditManager editManager = new TextDirectEditManager(this);
+            editManager.setLocator(FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
+                                    .getTextCellEditorLocator(this));
+            setManager(editManager);
         }
         return manager;
     }
