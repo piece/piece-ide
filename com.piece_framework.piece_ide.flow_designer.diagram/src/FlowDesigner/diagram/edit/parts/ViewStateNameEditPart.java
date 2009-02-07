@@ -317,10 +317,13 @@ public class ViewStateNameEditPart extends CompartmentEditPart implements
      */
     protected DirectEditManager getManager() {
         if (manager == null) {
-            DirectEditManager editManager = new TextDirectEditManager(this);
-            editManager.setLocator(FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
-                                    .getTextCellEditorLocator(this));
-            setManager(editManager);
+            setManager(
+                    new TextDirectEditManager(
+                            this,
+                            RequiredTextCellEditor.class,
+                            FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
+                                .getTextCellEditorLocator(this)
+                            ));
         }
         return manager;
     }
