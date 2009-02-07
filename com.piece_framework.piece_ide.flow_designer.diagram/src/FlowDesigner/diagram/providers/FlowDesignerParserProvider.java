@@ -17,6 +17,8 @@ import org.eclipse.gmf.runtime.notation.View;
 import FlowDesigner.FinalState;
 import FlowDesigner.Flow;
 import FlowDesigner.InitialState;
+import FlowDesigner.diagram.parsers.EventEventParser;
+import FlowDesigner.diagram.parsers.NamedStateNameParser;
 
 /**
  * @generated
@@ -40,14 +42,12 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
     }
 
     /**
-     * @generated
+     * @generated NOT
      */
     protected IParser createActionStateName_5003Parser() {
         EAttribute[] features = new EAttribute[] { FlowDesigner.FlowDesignerPackage.eINSTANCE
                 .getNamedState_Name(), };
-        FlowDesigner.diagram.parsers.MessageFormatParser parser = new FlowDesigner.diagram.parsers.MessageFormatParser(
-                features);
-        return parser;
+        return new NamedStateNameParser(features);
     }
 
     /**
@@ -66,14 +66,12 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
     }
 
     /**
-     * @generated
+     * @generated NOT
      */
     protected IParser createViewStateName_5004Parser() {
         EAttribute[] features = new EAttribute[] { FlowDesigner.FlowDesignerPackage.eINSTANCE
                 .getNamedState_Name(), };
-        FlowDesigner.diagram.parsers.MessageFormatParser parser = new FlowDesigner.diagram.parsers.MessageFormatParser(
-                features);
-        return parser;
+        return new NamedStateNameParser(features);
     }
 
     /**
@@ -118,14 +116,12 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
     }
 
     /**
-     * @generated
+     * @generated NOT
      */
     protected IParser createEventEvent_6002Parser() {
         EAttribute[] features = new EAttribute[] { FlowDesigner.FlowDesignerPackage.eINSTANCE
                 .getEvent_Event(), };
-        FlowDesigner.diagram.parsers.MessageFormatParser parser = new FlowDesigner.diagram.parsers.MessageFormatParser(
-                features);
-        return parser;
+        return new EventEventParser(features);
     }
 
     private IParser fAnonymouseStateParser;
