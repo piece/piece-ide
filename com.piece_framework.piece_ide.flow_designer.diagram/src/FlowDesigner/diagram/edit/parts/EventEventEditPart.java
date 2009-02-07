@@ -42,6 +42,9 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 
+import FlowDesigner.Event;
+import FlowDesigner.impl.FlowDesignerPackageImpl;
+
 /**
  * @generated
  */
@@ -312,9 +315,27 @@ public class EventEventEditPart extends LabelEditPart implements
      */
     protected DirectEditManager getManager() {
         if (manager == null) {
-            DirectEditManager editManager = new TextDirectEditManager(this);
-            editManager.setLocator(FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
-                                    .getTextCellEditorLocator(this));
+            Event event = (Event) ((View) getModel()).getElement();
+            boolean fromInitialState = event.eContainer().eClass() ==
+                                        FlowDesignerPackageImpl.eINSTANCE.getInitialState();
+            boolean toFinalState = event.getNextState().eClass() ==
+                                        FlowDesignerPackageImpl.eINSTANCE.getFinalState();
+
+            DirectEditManager editManager = null;
+            if (fromInitialState == false && toFinalState == false) {
+                editManager = new TextDirectEditManager(
+                                this,
+                                RequiredTextCellEditor.class,
+                                FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
+                                    .getTextCellEditorLocator(this)
+                                );
+            } else {
+                editManager = new TextDirectEditManager(this) {
+                    @Override
+                    public void show() {
+                    }
+                };
+            }
             setManager(editManager);
         }
         return manager;
