@@ -1,3 +1,4 @@
+// $Id$
 package FlowDesigner.diagram.edit.parts;
 
 import org.eclipse.jface.viewers.TextCellEditor;
