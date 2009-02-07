@@ -320,7 +320,7 @@ public class ActionStateNameEditPart extends CompartmentEditPart implements
             setManager(
                     new TextDirectEditManager(
                             this,
-                            RequiredTextCellEditor.class,
+                            StrictTextCellEditor.class,
                             FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
                                 .getTextCellEditorLocator(this)
                             ));

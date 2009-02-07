@@ -325,7 +325,7 @@ public class EventEventEditPart extends LabelEditPart implements
             if (fromInitialState == false && toFinalState == false) {
                 editManager = new TextDirectEditManager(
                                 this,
-                                RequiredTextCellEditor.class,
+                                StrictTextCellEditor.class,
                                 FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
                                     .getTextCellEditorLocator(this)
                                 );

@@ -6,17 +6,17 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
-public class RequiredTextCellEditor extends TextCellEditor {
-    public RequiredTextCellEditor() {
+public class StrictTextCellEditor extends TextCellEditor {
+    public StrictTextCellEditor() {
     }
 
-    public RequiredTextCellEditor(Composite parent) {
+    public StrictTextCellEditor(Composite parent) {
         super(parent);
     }
 
     @Override
     protected void handleDefaultSelection(SelectionEvent event) {
-        if (text.getText() == null || text.getText().equals("")) {
+        if (isValueValid() == false) {
             return;
         }
         super.handleDefaultSelection(event);
@@ -24,7 +24,7 @@ public class RequiredTextCellEditor extends TextCellEditor {
 
     @Override
     protected void focusLost() {
-        if (text.getText() == null || text.getText().equals("")) {
+        if (isValueValid() == false) {
             Display.getDefault().asyncExec(new Runnable() {
                 public void run() {
                     text.setFocus();
