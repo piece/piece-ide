@@ -316,19 +316,18 @@ public class EventEventEditPart extends LabelEditPart implements
     protected DirectEditManager getManager() {
         if (manager == null) {
             Event event = (Event) ((View) getModel()).getElement();
-            boolean fromInitialState = event.eContainer().eClass() ==
-                                        FlowDesignerPackageImpl.eINSTANCE.getInitialState();
-            boolean toFinalState = event.getNextState().eClass() ==
-                                        FlowDesignerPackageImpl.eINSTANCE.getFinalState();
+            boolean fromInitialState = event.eContainer().eClass() == FlowDesignerPackageImpl.eINSTANCE
+                    .getInitialState();
+            boolean toFinalState = event.getNextState().eClass() == FlowDesignerPackageImpl.eINSTANCE
+                    .getFinalState();
 
             DirectEditManager editManager = null;
             if (fromInitialState == false && toFinalState == false) {
                 editManager = new TextDirectEditManager(
-                                this,
-                                StrictTextCellEditor.class,
-                                FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
-                                    .getTextCellEditorLocator(this)
-                                );
+                        this,
+                        StrictTextCellEditor.class,
+                        FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
+                                .getTextCellEditorLocator(this));
             } else {
                 editManager = new TextDirectEditManager(this) {
                     @Override

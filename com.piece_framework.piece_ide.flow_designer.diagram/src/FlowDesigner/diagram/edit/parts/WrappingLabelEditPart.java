@@ -313,8 +313,9 @@ public class WrappingLabelEditPart extends CompartmentEditPart implements
     protected DirectEditManager getManager() {
         if (manager == null) {
             DirectEditManager editManager = new TextDirectEditManager(this);
-            editManager.setLocator(FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
-                                    .getTextCellEditorLocator(this));
+            editManager
+                    .setLocator(FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
+                            .getTextCellEditorLocator(this));
             setManager(editManager);
         }
         return manager;

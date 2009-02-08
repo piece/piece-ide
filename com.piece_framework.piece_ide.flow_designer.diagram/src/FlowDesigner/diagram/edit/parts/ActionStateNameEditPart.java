@@ -317,13 +317,10 @@ public class ActionStateNameEditPart extends CompartmentEditPart implements
      */
     protected DirectEditManager getManager() {
         if (manager == null) {
-            setManager(
-                    new TextDirectEditManager(
-                            this,
-                            StrictTextCellEditor.class,
-                            FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
-                                .getTextCellEditorLocator(this)
-                            ));
+            setManager(new TextDirectEditManager(this,
+                    StrictTextCellEditor.class,
+                    FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
+                            .getTextCellEditorLocator(this)));
         }
         return manager;
     }
