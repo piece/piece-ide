@@ -44,7 +44,7 @@ public class FinalStateItemSemanticEditPolicy
      */
     protected Command getStartCreateRelationshipCommand(
             CreateRelationshipRequest req) {
-        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4003 == req
+        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4004 == req
                 .getElementType()) {
             return null;
         }
@@ -56,7 +56,7 @@ public class FinalStateItemSemanticEditPolicy
      */
     protected Command getCompleteCreateRelationshipCommand(
             CreateRelationshipRequest req) {
-        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4003 == req
+        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4004 == req
                 .getElementType()) {
             return getGEFWrapper(new FlowDesigner.diagram.edit.commands.EventCreateCommand(
                     req, req.getSource(), req.getTarget()));

@@ -23,7 +23,7 @@
     <domainDiagramElement
         href="FlowDesigner.genmodel#//FlowDesigner/Flow"/>
     <topLevelNodes
-        visualID="2005"
+        visualID="2009"
         editPartClassName="ActionStateEditPart"
         itemSemanticEditPolicyClassName="ActionStateItemSemanticEditPolicy"
         notationViewFactoryClassName="ActionStateViewFactory"
@@ -52,7 +52,7 @@
             href="FlowDesigner.genmodel#//FlowDesigner/Flow/states"/>
       </modelFacet>
       <labels
-          visualID="5003"
+          visualID="5006"
           editPartClassName="ActionStateNameEditPart"
           itemSemanticEditPolicyClassName="ActionStateNameItemSemanticEditPolicy"
           notationViewFactoryClassName="ActionStateNameViewFactory"
@@ -71,7 +71,63 @@
       </labels>
     </topLevelNodes>
     <topLevelNodes
-        visualID="2006"
+        visualID="2010"
+        editPartClassName="FinalStateEditPart"
+        itemSemanticEditPolicyClassName="FinalStateItemSemanticEditPolicy"
+        notationViewFactoryClassName="FinalStateViewFactory"
+        canonicalEditPolicyClassName="FinalStateCanonicalEditPolicy"
+        graphicalNodeEditPolicyClassName="FinalStateGraphicalNodeEditPolicy"
+        createCommandClassName="FinalStateCreateCommand">
+      <diagramRunTimeClass
+          href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
+      <elementType
+          xsi:type="gmfgen:MetamodelType"
+          editHelperClassName="FinalStateEditHelper"/>
+      <viewmap
+          xsi:type="gmfgen:FigureViewmap"
+          figureQualifiedClassName="FlowDesigner.diagram.edit.figure.FinalStateFigure">
+        <requiredPluginIDs>org.eclipse.draw2d</requiredPluginIDs>
+        <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
+      </viewmap>
+      <modelFacet>
+        <metaClass
+            href="FlowDesigner.genmodel#//FlowDesigner/FinalState"/>
+        <containmentMetaFeature
+            href="FlowDesigner.genmodel#//FlowDesigner/Flow/finalState"/>
+        <childMetaFeature
+            href="FlowDesigner.genmodel#//FlowDesigner/Flow/finalState"/>
+      </modelFacet>
+    </topLevelNodes>
+    <topLevelNodes
+        visualID="2011"
+        editPartClassName="InitialStateEditPart"
+        itemSemanticEditPolicyClassName="InitialStateItemSemanticEditPolicy"
+        notationViewFactoryClassName="InitialStateViewFactory"
+        canonicalEditPolicyClassName="InitialStateCanonicalEditPolicy"
+        graphicalNodeEditPolicyClassName="InitialStateGraphicalNodeEditPolicy"
+        createCommandClassName="InitialStateCreateCommand">
+      <diagramRunTimeClass
+          href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
+      <elementType
+          xsi:type="gmfgen:MetamodelType"
+          editHelperClassName="InitialStateEditHelper"/>
+      <viewmap
+          xsi:type="gmfgen:FigureViewmap"
+          figureQualifiedClassName="FlowDesigner.diagram.edit.figure.InitialStateFigure">
+        <requiredPluginIDs>org.eclipse.draw2d</requiredPluginIDs>
+        <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
+      </viewmap>
+      <modelFacet>
+        <metaClass
+            href="FlowDesigner.genmodel#//FlowDesigner/InitialState"/>
+        <containmentMetaFeature
+            href="FlowDesigner.genmodel#//FlowDesigner/Flow/initialState"/>
+        <childMetaFeature
+            href="FlowDesigner.genmodel#//FlowDesigner/Flow/initialState"/>
+      </modelFacet>
+    </topLevelNodes>
+    <topLevelNodes
+        visualID="2012"
         editPartClassName="ViewStateEditPart"
         itemSemanticEditPolicyClassName="ViewStateItemSemanticEditPolicy"
         notationViewFactoryClassName="ViewStateViewFactory"
@@ -100,7 +156,7 @@
             href="FlowDesigner.genmodel#//FlowDesigner/Flow/states"/>
       </modelFacet>
       <labels
-          visualID="5004"
+          visualID="5007"
           editPartClassName="ViewStateNameEditPart"
           itemSemanticEditPolicyClassName="ViewStateNameItemSemanticEditPolicy"
           notationViewFactoryClassName="ViewStateNameViewFactory"
@@ -118,10 +174,10 @@
         </modelFacet>
       </labels>
       <labels
-          visualID="5005"
-          editPartClassName="WrappingLabelEditPart"
-          itemSemanticEditPolicyClassName="WrappingLabelItemSemanticEditPolicy"
-          notationViewFactoryClassName="WrappingLabelViewFactory">
+          visualID="5008"
+          editPartClassName="ViewStateViewEditPart"
+          itemSemanticEditPolicyClassName="ViewStateViewItemSemanticEditPolicy"
+          notationViewFactoryClassName="ViewStateViewViewFactory">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -135,64 +191,8 @@
         </modelFacet>
       </labels>
     </topLevelNodes>
-    <topLevelNodes
-        visualID="2007"
-        editPartClassName="InitialStateEditPart"
-        itemSemanticEditPolicyClassName="InitialStateItemSemanticEditPolicy"
-        notationViewFactoryClassName="InitialStateViewFactory"
-        canonicalEditPolicyClassName="InitialStateCanonicalEditPolicy"
-        graphicalNodeEditPolicyClassName="InitialStateGraphicalNodeEditPolicy"
-        createCommandClassName="InitialStateCreateCommand">
-      <diagramRunTimeClass
-          href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
-      <elementType
-          xsi:type="gmfgen:MetamodelType"
-          editHelperClassName="InitialStateEditHelper"/>
-      <viewmap
-          xsi:type="gmfgen:FigureViewmap"
-          figureQualifiedClassName="FlowDesigner.diagram.edit.figure.InitialStateFigure">
-        <requiredPluginIDs>org.eclipse.draw2d</requiredPluginIDs>
-        <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
-      </viewmap>
-      <modelFacet>
-        <metaClass
-            href="FlowDesigner.genmodel#//FlowDesigner/InitialState"/>
-        <containmentMetaFeature
-            href="FlowDesigner.genmodel#//FlowDesigner/Flow/initialState"/>
-        <childMetaFeature
-            href="FlowDesigner.genmodel#//FlowDesigner/Flow/initialState"/>
-      </modelFacet>
-    </topLevelNodes>
-    <topLevelNodes
-        visualID="2008"
-        editPartClassName="FinalStateEditPart"
-        itemSemanticEditPolicyClassName="FinalStateItemSemanticEditPolicy"
-        notationViewFactoryClassName="FinalStateViewFactory"
-        canonicalEditPolicyClassName="FinalStateCanonicalEditPolicy"
-        graphicalNodeEditPolicyClassName="FinalStateGraphicalNodeEditPolicy"
-        createCommandClassName="FinalStateCreateCommand">
-      <diagramRunTimeClass
-          href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
-      <elementType
-          xsi:type="gmfgen:MetamodelType"
-          editHelperClassName="FinalStateEditHelper"/>
-      <viewmap
-          xsi:type="gmfgen:FigureViewmap"
-          figureQualifiedClassName="FlowDesigner.diagram.edit.figure.FinalStateFigure">
-        <requiredPluginIDs>org.eclipse.draw2d</requiredPluginIDs>
-        <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
-      </viewmap>
-      <modelFacet>
-        <metaClass
-            href="FlowDesigner.genmodel#//FlowDesigner/FinalState"/>
-        <containmentMetaFeature
-            href="FlowDesigner.genmodel#//FlowDesigner/Flow/finalState"/>
-        <childMetaFeature
-            href="FlowDesigner.genmodel#//FlowDesigner/Flow/finalState"/>
-      </modelFacet>
-    </topLevelNodes>
     <links
-        visualID="4003"
+        visualID="4004"
         editPartClassName="EventEditPart"
         itemSemanticEditPolicyClassName="EventItemSemanticEditPolicy"
         notationViewFactoryClassName="EventViewFactory"
@@ -222,7 +222,7 @@
             href="FlowDesigner.genmodel#//FlowDesigner/Event/nextState"/>
       </modelFacet>
       <labels
-          visualID="6002"
+          visualID="6003"
           editPartClassName="EventEventEditPart"
           itemSemanticEditPolicyClassName="EventEventItemSemanticEditPolicy"
           notationViewFactoryClassName="EventEventViewFactory"
@@ -238,8 +238,7 @@
               y="40"/>
         </viewmap>
         <modelFacet
-            xsi:type="gmfgen:FeatureLabelModelFacet"
-            viewPattern="">
+            xsi:type="gmfgen:FeatureLabelModelFacet">
           <metaFeatures
               href="FlowDesigner.genmodel#//FlowDesigner/Event/event"/>
         </modelFacet>
@@ -253,7 +252,7 @@
             title="FinalState"
             description="Create new FinalState"
             smallIconPath="icons/FinalState.gif"
-            genNodes="//@diagram/@topLevelNodes.3"/>
+            genNodes="//@diagram/@topLevelNodes.1"/>
         <entries
             xsi:type="gmfgen:ToolEntry"
             title="ActionState"
@@ -265,7 +264,7 @@
             title="ViewState"
             description="Create new ViewState"
             smallIconPath="icons/ViewState.gif"
-            genNodes="//@diagram/@topLevelNodes.1"/>
+            genNodes="//@diagram/@topLevelNodes.3"/>
         <entries
             xsi:type="gmfgen:ToolEntry"
             title="Event"
@@ -377,24 +376,24 @@
         groupIcon="icons/outgoingLinksNavigatorGroup.gif"/>
     <childReferences
         parent="//@diagram/@links.0"
-        child="//@diagram/@topLevelNodes.1"
-        referenceType="in_source"
-        groupName="source"
-        groupIcon="icons/linkSourceNavigatorGroup.gif"/>
-    <childReferences
-        parent="//@diagram/@topLevelNodes.1"
-        child="//@diagram/@links.0"
-        referenceType="out_target"
-        groupName="outgoing links"
-        groupIcon="icons/outgoingLinksNavigatorGroup.gif"/>
-    <childReferences
-        parent="//@diagram/@links.0"
         child="//@diagram/@topLevelNodes.2"
         referenceType="in_source"
         groupName="source"
         groupIcon="icons/linkSourceNavigatorGroup.gif"/>
     <childReferences
         parent="//@diagram/@topLevelNodes.2"
+        child="//@diagram/@links.0"
+        referenceType="out_target"
+        groupName="outgoing links"
+        groupIcon="icons/outgoingLinksNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@links.0"
+        child="//@diagram/@topLevelNodes.3"
+        referenceType="in_source"
+        groupName="source"
+        groupIcon="icons/linkSourceNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@topLevelNodes.3"
         child="//@diagram/@links.0"
         referenceType="out_target"
         groupName="outgoing links"

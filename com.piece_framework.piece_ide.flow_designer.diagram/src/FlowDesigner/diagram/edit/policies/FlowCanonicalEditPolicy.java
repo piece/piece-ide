@@ -66,9 +66,9 @@ public class FlowCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
                 .getVisualID(view);
         switch (visualID) {
         case FlowDesigner.diagram.edit.parts.ActionStateEditPart.VISUAL_ID:
-        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
-        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
         case FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID:
+        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
+        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
             if (!semanticChildren.contains(view.getElement())) {
                 return true;
             }
@@ -94,10 +94,10 @@ public class FlowCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
                             .getFlow_States());
             myFeaturesToSynchronize
                     .add(FlowDesigner.FlowDesignerPackage.eINSTANCE
-                            .getFlow_InitialState());
+                            .getFlow_FinalState());
             myFeaturesToSynchronize
                     .add(FlowDesigner.FlowDesignerPackage.eINSTANCE
-                            .getFlow_FinalState());
+                            .getFlow_InitialState());
         }
         return myFeaturesToSynchronize;
     }
@@ -229,31 +229,7 @@ public class FlowCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
             if (!domain2NotationMap.containsKey(view.getElement())) {
                 result
                         .addAll(FlowDesigner.diagram.part.FlowDesignerDiagramUpdater
-                                .getActionState_2005ContainedLinks(view));
-            }
-            if (!domain2NotationMap.containsKey(view.getElement())
-                    || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-                domain2NotationMap.put(view.getElement(), view);
-            }
-            break;
-        }
-        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID: {
-            if (!domain2NotationMap.containsKey(view.getElement())) {
-                result
-                        .addAll(FlowDesigner.diagram.part.FlowDesignerDiagramUpdater
-                                .getViewState_2006ContainedLinks(view));
-            }
-            if (!domain2NotationMap.containsKey(view.getElement())
-                    || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-                domain2NotationMap.put(view.getElement(), view);
-            }
-            break;
-        }
-        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID: {
-            if (!domain2NotationMap.containsKey(view.getElement())) {
-                result
-                        .addAll(FlowDesigner.diagram.part.FlowDesignerDiagramUpdater
-                                .getInitialState_2007ContainedLinks(view));
+                                .getActionState_2009ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -265,7 +241,31 @@ public class FlowCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
             if (!domain2NotationMap.containsKey(view.getElement())) {
                 result
                         .addAll(FlowDesigner.diagram.part.FlowDesignerDiagramUpdater
-                                .getFinalState_2008ContainedLinks(view));
+                                .getFinalState_2010ContainedLinks(view));
+            }
+            if (!domain2NotationMap.containsKey(view.getElement())
+                    || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+                domain2NotationMap.put(view.getElement(), view);
+            }
+            break;
+        }
+        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID: {
+            if (!domain2NotationMap.containsKey(view.getElement())) {
+                result
+                        .addAll(FlowDesigner.diagram.part.FlowDesignerDiagramUpdater
+                                .getInitialState_2011ContainedLinks(view));
+            }
+            if (!domain2NotationMap.containsKey(view.getElement())
+                    || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+                domain2NotationMap.put(view.getElement(), view);
+            }
+            break;
+        }
+        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID: {
+            if (!domain2NotationMap.containsKey(view.getElement())) {
+                result
+                        .addAll(FlowDesigner.diagram.part.FlowDesignerDiagramUpdater
+                                .getViewState_2012ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -277,7 +277,7 @@ public class FlowCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
             if (!domain2NotationMap.containsKey(view.getElement())) {
                 result
                         .addAll(FlowDesigner.diagram.part.FlowDesignerDiagramUpdater
-                                .getEvent_4003ContainedLinks(view));
+                                .getEvent_4004ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$

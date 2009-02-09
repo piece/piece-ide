@@ -63,7 +63,7 @@ public class EventReorientCommand extends EditElementCommand {
         }
         FlowDesigner.Target target = getLink().getNextState();
         return FlowDesigner.diagram.edit.policies.FlowDesignerBaseItemSemanticEditPolicy.LinkConstraints
-                .canExistEvent_4003(getNewSource(), target);
+                .canExistEvent_4004(getNewSource(), target);
     }
 
     /**
@@ -79,7 +79,7 @@ public class EventReorientCommand extends EditElementCommand {
         FlowDesigner.Source source = (FlowDesigner.Source) getLink()
                 .eContainer();
         return FlowDesigner.diagram.edit.policies.FlowDesignerBaseItemSemanticEditPolicy.LinkConstraints
-                .canExistEvent_4003(source, getNewTarget());
+                .canExistEvent_4004(source, getNewTarget());
     }
 
     /**

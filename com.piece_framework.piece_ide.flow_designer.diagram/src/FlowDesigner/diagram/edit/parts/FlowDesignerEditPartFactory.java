@@ -39,6 +39,14 @@ public class FlowDesignerEditPartFactory implements EditPartFactory {
                 return new FlowDesigner.diagram.edit.parts.ActionStateNameEditPart(
                         view);
 
+            case FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID:
+                return new FlowDesigner.diagram.edit.parts.FinalStateEditPart(
+                        view);
+
+            case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
+                return new FlowDesigner.diagram.edit.parts.InitialStateEditPart(
+                        view);
+
             case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
                 return new FlowDesigner.diagram.edit.parts.ViewStateEditPart(
                         view);
@@ -47,16 +55,8 @@ public class FlowDesignerEditPartFactory implements EditPartFactory {
                 return new FlowDesigner.diagram.edit.parts.ViewStateNameEditPart(
                         view);
 
-            case FlowDesigner.diagram.edit.parts.WrappingLabelEditPart.VISUAL_ID:
-                return new FlowDesigner.diagram.edit.parts.WrappingLabelEditPart(
-                        view);
-
-            case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
-                return new FlowDesigner.diagram.edit.parts.InitialStateEditPart(
-                        view);
-
-            case FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID:
-                return new FlowDesigner.diagram.edit.parts.FinalStateEditPart(
+            case FlowDesigner.diagram.edit.parts.ViewStateViewEditPart.VISUAL_ID:
+                return new FlowDesigner.diagram.edit.parts.ViewStateViewEditPart(
                         view);
 
             case FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID:

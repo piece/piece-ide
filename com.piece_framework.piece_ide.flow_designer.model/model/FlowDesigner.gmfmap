@@ -27,6 +27,29 @@
   </nodes>
   <nodes>
     <containmentFeature
+        href="FlowDesigner.ecore#//Flow/finalState"/>
+    <ownedChild>
+      <domainMetaElement
+          href="FlowDesigner.ecore#//FinalState"/>
+      <tool
+          xsi:type="gmftool:CreationTool"
+          href="FlowDesigner.gmftool#//@palette/@tools.0/@tools.0"/>
+      <diagramNode
+          href="FlowDesigner.gmfgraph#FinalState"/>
+    </ownedChild>
+  </nodes>
+  <nodes>
+    <containmentFeature
+        href="FlowDesigner.ecore#//Flow/initialState"/>
+    <ownedChild>
+      <domainMetaElement
+          href="FlowDesigner.ecore#//InitialState"/>
+      <diagramNode
+          href="FlowDesigner.gmfgraph#InitialState"/>
+    </ownedChild>
+  </nodes>
+  <nodes>
+    <containmentFeature
         href="FlowDesigner.ecore#//Flow/states"/>
     <ownedChild>
       <domainMetaElement
@@ -52,35 +75,11 @@
           href="FlowDesigner.gmfgraph#ViewState"/>
     </ownedChild>
   </nodes>
-  <nodes>
-    <containmentFeature
-        href="FlowDesigner.ecore#//Flow/initialState"/>
-    <ownedChild>
-      <domainMetaElement
-          href="FlowDesigner.ecore#//InitialState"/>
-      <diagramNode
-          href="FlowDesigner.gmfgraph#InitialState"/>
-    </ownedChild>
-  </nodes>
-  <nodes>
-    <containmentFeature
-        href="FlowDesigner.ecore#//Flow/finalState"/>
-    <ownedChild>
-      <domainMetaElement
-          href="FlowDesigner.ecore#//FinalState"/>
-      <tool
-          xsi:type="gmftool:CreationTool"
-          href="FlowDesigner.gmftool#//@palette/@tools.0/@tools.0"/>
-      <diagramNode
-          href="FlowDesigner.gmfgraph#FinalState"/>
-    </ownedChild>
-  </nodes>
   <links>
     <domainMetaElement
         href="FlowDesigner.ecore#//Event"/>
     <labelMappings
-        xsi:type="gmfmap:FeatureLabelMapping"
-        viewPattern="">
+        xsi:type="gmfmap:FeatureLabelMapping">
       <diagramLabel
           href="FlowDesigner.gmfgraph#EventEvent"/>
       <features

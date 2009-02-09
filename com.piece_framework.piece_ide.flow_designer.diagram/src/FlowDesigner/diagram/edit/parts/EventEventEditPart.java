@@ -54,7 +54,7 @@ public class EventEventEditPart extends LabelEditPart implements
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 6002;
+    public static final int VISUAL_ID = 6003;
 
     /**
      * @generated
@@ -303,7 +303,7 @@ public class EventEventEditPart extends LabelEditPart implements
         if (parser == null) {
             String parserHint = ((View) getModel()).getType();
             IAdaptable hintAdapter = new FlowDesigner.diagram.providers.FlowDesignerParserProvider.HintAdapter(
-                    FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4003,
+                    FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4004,
                     getParserElement(), parserHint);
             parser = ParserService.getInstance().getParser(hintAdapter);
         }

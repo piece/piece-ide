@@ -298,42 +298,42 @@ public class Messages extends NLS {
     /**
      * @generated
      */
-    public static String NavigatorGroupName_ActionState_2005_incominglinks;
+    public static String NavigatorGroupName_ActionState_2009_incominglinks;
 
     /**
      * @generated
      */
-    public static String NavigatorGroupName_ActionState_2005_outgoinglinks;
+    public static String NavigatorGroupName_ActionState_2009_outgoinglinks;
 
     /**
      * @generated
      */
-    public static String NavigatorGroupName_ViewState_2006_incominglinks;
+    public static String NavigatorGroupName_FinalState_2010_incominglinks;
 
     /**
      * @generated
      */
-    public static String NavigatorGroupName_ViewState_2006_outgoinglinks;
+    public static String NavigatorGroupName_InitialState_2011_outgoinglinks;
 
     /**
      * @generated
      */
-    public static String NavigatorGroupName_InitialState_2007_outgoinglinks;
+    public static String NavigatorGroupName_ViewState_2012_incominglinks;
 
     /**
      * @generated
      */
-    public static String NavigatorGroupName_FinalState_2008_incominglinks;
+    public static String NavigatorGroupName_ViewState_2012_outgoinglinks;
 
     /**
      * @generated
      */
-    public static String NavigatorGroupName_Event_4003_target;
+    public static String NavigatorGroupName_Event_4004_target;
 
     /**
      * @generated
      */
-    public static String NavigatorGroupName_Event_4003_source;
+    public static String NavigatorGroupName_Event_4004_source;
 
     /**
      * @generated

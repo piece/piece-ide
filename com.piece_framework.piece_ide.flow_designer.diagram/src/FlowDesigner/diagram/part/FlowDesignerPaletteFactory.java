@@ -43,7 +43,7 @@ public class FlowDesignerPaletteFactory {
     private ToolEntry createFinalState1CreationTool() {
         List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
         types
-                .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.FinalState_2008);
+                .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.FinalState_2010);
         NodeToolEntry entry = new NodeToolEntry(
                 FlowDesigner.diagram.part.Messages.FinalState1CreationTool_title,
                 FlowDesigner.diagram.part.Messages.FinalState1CreationTool_desc,
@@ -61,7 +61,7 @@ public class FlowDesignerPaletteFactory {
     private ToolEntry createActionState2CreationTool() {
         List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
         types
-                .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.ActionState_2005);
+                .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.ActionState_2009);
         NodeToolEntry entry = new NodeToolEntry(
                 FlowDesigner.diagram.part.Messages.ActionState2CreationTool_title,
                 FlowDesigner.diagram.part.Messages.ActionState2CreationTool_desc,
@@ -79,7 +79,7 @@ public class FlowDesignerPaletteFactory {
     private ToolEntry createViewState3CreationTool() {
         List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
         types
-                .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2006);
+                .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2012);
         NodeToolEntry entry = new NodeToolEntry(
                 FlowDesigner.diagram.part.Messages.ViewState3CreationTool_title,
                 FlowDesigner.diagram.part.Messages.ViewState3CreationTool_desc,
@@ -97,7 +97,7 @@ public class FlowDesignerPaletteFactory {
     private ToolEntry createEvent4CreationTool() {
         List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
         types
-                .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4003);
+                .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4004);
         LinkToolEntry entry = new LinkToolEntry(
                 FlowDesigner.diagram.part.Messages.Event4CreationTool_title,
                 FlowDesigner.diagram.part.Messages.Event4CreationTool_desc,

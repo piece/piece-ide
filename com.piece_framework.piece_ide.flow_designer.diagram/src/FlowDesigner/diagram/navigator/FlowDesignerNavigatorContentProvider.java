@@ -220,8 +220,9 @@ public class FlowDesignerNavigatorContentProvider implements
                     FlowDesigner.diagram.edit.parts.ActionStateEditPart.VISUAL_ID);
             result.addAll(createNavigatorItems(connectedViews, parentElement,
                     false));
-            connectedViews = getChildrenByType(Collections.singleton(view),
-                    FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID);
+            connectedViews = getChildrenByType(
+                    Collections.singleton(view),
+                    FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID);
             result.addAll(createNavigatorItems(connectedViews, parentElement,
                     false));
             connectedViews = getChildrenByType(
@@ -229,9 +230,8 @@ public class FlowDesignerNavigatorContentProvider implements
                     FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID);
             result.addAll(createNavigatorItems(connectedViews, parentElement,
                     false));
-            connectedViews = getChildrenByType(
-                    Collections.singleton(view),
-                    FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID);
+            connectedViews = getChildrenByType(Collections.singleton(view),
+                    FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID);
             result.addAll(createNavigatorItems(connectedViews, parentElement,
                     false));
             connectedViews = getDiagramLinksByType(Collections.singleton(view),
@@ -248,10 +248,10 @@ public class FlowDesignerNavigatorContentProvider implements
         case FlowDesigner.diagram.edit.parts.ActionStateEditPart.VISUAL_ID: {
             Collection result = new ArrayList();
             FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup incominglinks = new FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup(
-                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_ActionState_2005_incominglinks,
+                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_ActionState_2009_incominglinks,
                     "icons/incomingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
             FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup outgoinglinks = new FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup(
-                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_ActionState_2005_outgoinglinks,
+                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_ActionState_2009_outgoinglinks,
                     "icons/outgoingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
             Collection connectedViews = getIncomingLinksByType(Collections
                     .singleton(view),
@@ -272,29 +272,18 @@ public class FlowDesignerNavigatorContentProvider implements
             return result.toArray();
         }
 
-        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID: {
+        case FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID: {
             Collection result = new ArrayList();
             FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup incominglinks = new FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup(
-                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_ViewState_2006_incominglinks,
+                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_FinalState_2010_incominglinks,
                     "icons/incomingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
-            FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup outgoinglinks = new FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup(
-                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_ViewState_2006_outgoinglinks,
-                    "icons/outgoingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
             Collection connectedViews = getIncomingLinksByType(Collections
                     .singleton(view),
                     FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID);
             incominglinks.addChildren(createNavigatorItems(connectedViews,
                     incominglinks, true));
-            connectedViews = getOutgoingLinksByType(
-                    Collections.singleton(view),
-                    FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID);
-            outgoinglinks.addChildren(createNavigatorItems(connectedViews,
-                    outgoinglinks, true));
             if (!incominglinks.isEmpty()) {
                 result.add(incominglinks);
-            }
-            if (!outgoinglinks.isEmpty()) {
-                result.add(outgoinglinks);
             }
             return result.toArray();
         }
@@ -302,7 +291,7 @@ public class FlowDesignerNavigatorContentProvider implements
         case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID: {
             Collection result = new ArrayList();
             FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup outgoinglinks = new FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup(
-                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_InitialState_2007_outgoinglinks,
+                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_InitialState_2011_outgoinglinks,
                     "icons/outgoingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
             Collection connectedViews = getOutgoingLinksByType(Collections
                     .singleton(view),
@@ -315,18 +304,29 @@ public class FlowDesignerNavigatorContentProvider implements
             return result.toArray();
         }
 
-        case FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID: {
+        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID: {
             Collection result = new ArrayList();
             FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup incominglinks = new FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup(
-                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_FinalState_2008_incominglinks,
+                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_ViewState_2012_incominglinks,
                     "icons/incomingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
+            FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup outgoinglinks = new FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup(
+                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_ViewState_2012_outgoinglinks,
+                    "icons/outgoingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
             Collection connectedViews = getIncomingLinksByType(Collections
                     .singleton(view),
                     FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID);
             incominglinks.addChildren(createNavigatorItems(connectedViews,
                     incominglinks, true));
+            connectedViews = getOutgoingLinksByType(
+                    Collections.singleton(view),
+                    FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID);
+            outgoinglinks.addChildren(createNavigatorItems(connectedViews,
+                    outgoinglinks, true));
             if (!incominglinks.isEmpty()) {
                 result.add(incominglinks);
+            }
+            if (!outgoinglinks.isEmpty()) {
+                result.add(outgoinglinks);
             }
             return result.toArray();
         }
@@ -334,18 +334,14 @@ public class FlowDesignerNavigatorContentProvider implements
         case FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID: {
             Collection result = new ArrayList();
             FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup target = new FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup(
-                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_Event_4003_target,
+                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_Event_4004_target,
                     "icons/linkTargetNavigatorGroup.gif", parentElement); //$NON-NLS-1$
             FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup source = new FlowDesigner.diagram.navigator.FlowDesignerNavigatorGroup(
-                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_Event_4003_source,
+                    FlowDesigner.diagram.part.Messages.NavigatorGroupName_Event_4004_source,
                     "icons/linkSourceNavigatorGroup.gif", parentElement); //$NON-NLS-1$
             Collection connectedViews = getLinksTargetByType(
                     Collections.singleton(view),
                     FlowDesigner.diagram.edit.parts.ActionStateEditPart.VISUAL_ID);
-            target.addChildren(createNavigatorItems(connectedViews, target,
-                    true));
-            connectedViews = getLinksTargetByType(Collections.singleton(view),
-                    FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID);
             target.addChildren(createNavigatorItems(connectedViews, target,
                     true));
             connectedViews = getLinksTargetByType(
@@ -353,18 +349,22 @@ public class FlowDesignerNavigatorContentProvider implements
                     FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID);
             target.addChildren(createNavigatorItems(connectedViews, target,
                     true));
+            connectedViews = getLinksTargetByType(Collections.singleton(view),
+                    FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID);
+            target.addChildren(createNavigatorItems(connectedViews, target,
+                    true));
             connectedViews = getLinksSourceByType(
                     Collections.singleton(view),
                     FlowDesigner.diagram.edit.parts.ActionStateEditPart.VISUAL_ID);
             source.addChildren(createNavigatorItems(connectedViews, source,
                     true));
-            connectedViews = getLinksSourceByType(Collections.singleton(view),
-                    FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID);
-            source.addChildren(createNavigatorItems(connectedViews, source,
-                    true));
             connectedViews = getLinksSourceByType(
                     Collections.singleton(view),
                     FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID);
+            source.addChildren(createNavigatorItems(connectedViews, source,
+                    true));
+            connectedViews = getLinksSourceByType(Collections.singleton(view),
+                    FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID);
             source.addChildren(createNavigatorItems(connectedViews, source,
                     true));
             if (!target.isEmpty()) {

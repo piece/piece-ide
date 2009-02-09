@@ -27,7 +27,7 @@ public class ViewStateEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 2006;
+    public static final int VISUAL_ID = 2012;
 
     /**
      * @generated
@@ -106,8 +106,8 @@ public class ViewStateEditPart extends ShapeNodeEditPart {
                     .setLabel(getPrimaryShape().getFigureViewStateNameFigure());
             return true;
         }
-        if (childEditPart instanceof FlowDesigner.diagram.edit.parts.WrappingLabelEditPart) {
-            ((FlowDesigner.diagram.edit.parts.WrappingLabelEditPart) childEditPart)
+        if (childEditPart instanceof FlowDesigner.diagram.edit.parts.ViewStateViewEditPart) {
+            ((FlowDesigner.diagram.edit.parts.ViewStateViewEditPart) childEditPart)
                     .setLabel(getPrimaryShape().getFigureViewStateViewFigure());
             return true;
         }

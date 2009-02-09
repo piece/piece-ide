@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="FlowDesigner"
-    nsURI="http://flowdesigner/1.0" nsPrefix="FlowDesigner">
+    nsURI="http://piece-framework.com/piece-ide/flowdesigner/1.0" nsPrefix="FlowDesigner">
   <eClassifiers xsi:type="ecore:EClass" name="InitialState" eSuperTypes="#//Source">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="initialize" eType="#//Action"/>
   </eClassifiers>

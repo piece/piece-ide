@@ -82,22 +82,22 @@ public class FlowDesignerNavigatorLabelProvider extends LabelProvider implements
                 .getVisualID(view)) {
         case FlowDesigner.diagram.edit.parts.FlowEditPart.VISUAL_ID:
             return getImage(
-                    "Navigator?Diagram?http://flowdesigner/1.0?Flow", FlowDesigner.diagram.providers.FlowDesignerElementTypes.Flow_1000); //$NON-NLS-1$
+                    "Navigator?Diagram?http://piece-framework.com/piece-ide/flowdesigner/1.0?Flow", FlowDesigner.diagram.providers.FlowDesignerElementTypes.Flow_1000); //$NON-NLS-1$
         case FlowDesigner.diagram.edit.parts.ActionStateEditPart.VISUAL_ID:
             return getImage(
-                    "Navigator?TopLevelNode?http://flowdesigner/1.0?ActionState", FlowDesigner.diagram.providers.FlowDesignerElementTypes.ActionState_2005); //$NON-NLS-1$
-        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
-            return getImage(
-                    "Navigator?TopLevelNode?http://flowdesigner/1.0?ViewState", FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2006); //$NON-NLS-1$
-        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
-            return getImage(
-                    "Navigator?TopLevelNode?http://flowdesigner/1.0?InitialState", FlowDesigner.diagram.providers.FlowDesignerElementTypes.InitialState_2007); //$NON-NLS-1$
+                    "Navigator?TopLevelNode?http://piece-framework.com/piece-ide/flowdesigner/1.0?ActionState", FlowDesigner.diagram.providers.FlowDesignerElementTypes.ActionState_2009); //$NON-NLS-1$
         case FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID:
             return getImage(
-                    "Navigator?TopLevelNode?http://flowdesigner/1.0?FinalState", FlowDesigner.diagram.providers.FlowDesignerElementTypes.FinalState_2008); //$NON-NLS-1$
+                    "Navigator?TopLevelNode?http://piece-framework.com/piece-ide/flowdesigner/1.0?FinalState", FlowDesigner.diagram.providers.FlowDesignerElementTypes.FinalState_2010); //$NON-NLS-1$
+        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
+            return getImage(
+                    "Navigator?TopLevelNode?http://piece-framework.com/piece-ide/flowdesigner/1.0?InitialState", FlowDesigner.diagram.providers.FlowDesignerElementTypes.InitialState_2011); //$NON-NLS-1$
+        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
+            return getImage(
+                    "Navigator?TopLevelNode?http://piece-framework.com/piece-ide/flowdesigner/1.0?ViewState", FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2012); //$NON-NLS-1$
         case FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID:
             return getImage(
-                    "Navigator?Link?http://flowdesigner/1.0?Event", FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4003); //$NON-NLS-1$
+                    "Navigator?Link?http://piece-framework.com/piece-ide/flowdesigner/1.0?Event", FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4004); //$NON-NLS-1$
         }
         return getImage("Navigator?UnknownElement", null); //$NON-NLS-1$
     }
@@ -157,15 +157,15 @@ public class FlowDesignerNavigatorLabelProvider extends LabelProvider implements
         case FlowDesigner.diagram.edit.parts.FlowEditPart.VISUAL_ID:
             return getFlow_1000Text(view);
         case FlowDesigner.diagram.edit.parts.ActionStateEditPart.VISUAL_ID:
-            return getActionState_2005Text(view);
-        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
-            return getViewState_2006Text(view);
-        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
-            return getInitialState_2007Text(view);
+            return getActionState_2009Text(view);
         case FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID:
-            return getFinalState_2008Text(view);
+            return getFinalState_2010Text(view);
+        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
+            return getInitialState_2011Text(view);
+        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
+            return getViewState_2012Text(view);
         case FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID:
-            return getEvent_4003Text(view);
+            return getEvent_4004Text(view);
         }
         return getUnknownElementText(view);
     }
@@ -180,9 +180,9 @@ public class FlowDesignerNavigatorLabelProvider extends LabelProvider implements
     /**
      * @generated
      */
-    private String getActionState_2005Text(View view) {
+    private String getActionState_2009Text(View view) {
         IAdaptable hintAdapter = new FlowDesigner.diagram.providers.FlowDesignerParserProvider.HintAdapter(
-                FlowDesigner.diagram.providers.FlowDesignerElementTypes.ActionState_2005,
+                FlowDesigner.diagram.providers.FlowDesignerElementTypes.ActionState_2009,
                 (view.getElement() != null ? view.getElement() : view),
                 FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
                         .getType(FlowDesigner.diagram.edit.parts.ActionStateNameEditPart.VISUAL_ID));
@@ -194,7 +194,7 @@ public class FlowDesignerNavigatorLabelProvider extends LabelProvider implements
         } else {
             FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
                     .getInstance().logError(
-                            "Parser was not found for label " + 5003); //$NON-NLS-1$
+                            "Parser was not found for label " + 5006); //$NON-NLS-1$
             return ""; //$NON-NLS-1$
         }
 
@@ -203,9 +203,43 @@ public class FlowDesignerNavigatorLabelProvider extends LabelProvider implements
     /**
      * @generated
      */
-    private String getViewState_2006Text(View view) {
+    private String getFinalState_2010Text(View view) {
+        FlowDesigner.FinalState domainModelElement = (FlowDesigner.FinalState) view
+                .getElement();
+        if (domainModelElement != null) {
+            return String.valueOf(domainModelElement.getFinalize());
+        } else {
+            FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
+                    .getInstance()
+                    .logError(
+                            "No domain element for view with visualID = " + 2010); //$NON-NLS-1$
+            return ""; //$NON-NLS-1$
+        }
+    }
+
+    /**
+     * @generated
+     */
+    private String getInitialState_2011Text(View view) {
+        FlowDesigner.InitialState domainModelElement = (FlowDesigner.InitialState) view
+                .getElement();
+        if (domainModelElement != null) {
+            return String.valueOf(domainModelElement.getInitialize());
+        } else {
+            FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
+                    .getInstance()
+                    .logError(
+                            "No domain element for view with visualID = " + 2011); //$NON-NLS-1$
+            return ""; //$NON-NLS-1$
+        }
+    }
+
+    /**
+     * @generated
+     */
+    private String getViewState_2012Text(View view) {
         IAdaptable hintAdapter = new FlowDesigner.diagram.providers.FlowDesignerParserProvider.HintAdapter(
-                FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2006,
+                FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2012,
                 (view.getElement() != null ? view.getElement() : view),
                 FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
                         .getType(FlowDesigner.diagram.edit.parts.ViewStateNameEditPart.VISUAL_ID));
@@ -217,7 +251,7 @@ public class FlowDesignerNavigatorLabelProvider extends LabelProvider implements
         } else {
             FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
                     .getInstance().logError(
-                            "Parser was not found for label " + 5004); //$NON-NLS-1$
+                            "Parser was not found for label " + 5007); //$NON-NLS-1$
             return ""; //$NON-NLS-1$
         }
 
@@ -226,43 +260,9 @@ public class FlowDesignerNavigatorLabelProvider extends LabelProvider implements
     /**
      * @generated
      */
-    private String getInitialState_2007Text(View view) {
-        FlowDesigner.InitialState domainModelElement = (FlowDesigner.InitialState) view
-                .getElement();
-        if (domainModelElement != null) {
-            return String.valueOf(domainModelElement.getInitialize());
-        } else {
-            FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
-                    .getInstance()
-                    .logError(
-                            "No domain element for view with visualID = " + 2007); //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-    }
-
-    /**
-     * @generated
-     */
-    private String getFinalState_2008Text(View view) {
-        FlowDesigner.FinalState domainModelElement = (FlowDesigner.FinalState) view
-                .getElement();
-        if (domainModelElement != null) {
-            return String.valueOf(domainModelElement.getFinalize());
-        } else {
-            FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
-                    .getInstance()
-                    .logError(
-                            "No domain element for view with visualID = " + 2008); //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-    }
-
-    /**
-     * @generated
-     */
-    private String getEvent_4003Text(View view) {
+    private String getEvent_4004Text(View view) {
         IAdaptable hintAdapter = new FlowDesigner.diagram.providers.FlowDesignerParserProvider.HintAdapter(
-                FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4003,
+                FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4004,
                 (view.getElement() != null ? view.getElement() : view),
                 FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
                         .getType(FlowDesigner.diagram.edit.parts.EventEventEditPart.VISUAL_ID));
@@ -274,7 +274,7 @@ public class FlowDesignerNavigatorLabelProvider extends LabelProvider implements
         } else {
             FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
                     .getInstance().logError(
-                            "Parser was not found for label " + 6002); //$NON-NLS-1$
+                            "Parser was not found for label " + 6003); //$NON-NLS-1$
             return ""; //$NON-NLS-1$
         }
 

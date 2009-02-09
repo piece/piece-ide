@@ -18,7 +18,7 @@ public class FlowItemSemanticEditPolicy
      * @generated
      */
     protected Command getCreateCommand(CreateElementRequest req) {
-        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.ActionState_2005 == req
+        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.ActionState_2009 == req
                 .getElementType()) {
             if (req.getContainmentFeature() == null) {
                 req
@@ -28,17 +28,17 @@ public class FlowItemSemanticEditPolicy
             return getGEFWrapper(new FlowDesigner.diagram.edit.commands.ActionStateCreateCommand(
                     req));
         }
-        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2006 == req
+        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.FinalState_2010 == req
                 .getElementType()) {
             if (req.getContainmentFeature() == null) {
                 req
                         .setContainmentFeature(FlowDesigner.FlowDesignerPackage.eINSTANCE
-                                .getFlow_States());
+                                .getFlow_FinalState());
             }
-            return getGEFWrapper(new FlowDesigner.diagram.edit.commands.ViewStateCreateCommand(
+            return getGEFWrapper(new FlowDesigner.diagram.edit.commands.FinalStateCreateCommand(
                     req));
         }
-        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.InitialState_2007 == req
+        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.InitialState_2011 == req
                 .getElementType()) {
             if (req.getContainmentFeature() == null) {
                 req
@@ -48,14 +48,14 @@ public class FlowItemSemanticEditPolicy
             return getGEFWrapper(new FlowDesigner.diagram.edit.commands.InitialStateCreateCommand(
                     req));
         }
-        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.FinalState_2008 == req
+        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2012 == req
                 .getElementType()) {
             if (req.getContainmentFeature() == null) {
                 req
                         .setContainmentFeature(FlowDesigner.FlowDesignerPackage.eINSTANCE
-                                .getFlow_FinalState());
+                                .getFlow_States());
             }
-            return getGEFWrapper(new FlowDesigner.diagram.edit.commands.FinalStateCreateCommand(
+            return getGEFWrapper(new FlowDesigner.diagram.edit.commands.ViewStateCreateCommand(
                     req));
         }
         return super.getCreateCommand(req);

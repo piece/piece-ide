@@ -49,13 +49,13 @@ import org.eclipse.swt.graphics.Image;
 /**
  * @generated
  */
-public class WrappingLabelEditPart extends CompartmentEditPart implements
+public class ViewStateViewEditPart extends CompartmentEditPart implements
         ITextAwareEditPart {
 
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 5005;
+    public static final int VISUAL_ID = 5008;
 
     /**
      * @generated
@@ -80,7 +80,7 @@ public class WrappingLabelEditPart extends CompartmentEditPart implements
     /**
      * @generated
      */
-    public WrappingLabelEditPart(View view) {
+    public ViewStateViewEditPart(View view) {
         super(view);
     }
 
@@ -300,7 +300,7 @@ public class WrappingLabelEditPart extends CompartmentEditPart implements
         if (parser == null) {
             String parserHint = ((View) getModel()).getType();
             IAdaptable hintAdapter = new FlowDesigner.diagram.providers.FlowDesignerParserProvider.HintAdapter(
-                    FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2006,
+                    FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2012,
                     getParserElement(), parserHint);
             parser = ParserService.getInstance().getParser(hintAdapter);
         }
@@ -308,15 +308,14 @@ public class WrappingLabelEditPart extends CompartmentEditPart implements
     }
 
     /**
-     * @generated NOT
+     * @generated
      */
     protected DirectEditManager getManager() {
         if (manager == null) {
-            DirectEditManager editManager = new TextDirectEditManager(this);
-            editManager
-                    .setLocator(FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
-                            .getTextCellEditorLocator(this));
-            setManager(editManager);
+            setManager(new TextDirectEditManager(this, TextDirectEditManager
+                    .getTextCellEditorClass(this),
+                    FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
+                            .getTextCellEditorLocator(this)));
         }
         return manager;
     }

@@ -82,9 +82,9 @@ public class FlowDesignerViewProvider extends AbstractViewProvider {
                 }
                 switch (visualID) {
                 case FlowDesigner.diagram.edit.parts.ActionStateEditPart.VISUAL_ID:
-                case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
-                case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
                 case FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID:
+                case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
+                case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
                     if (domainElement == null
                             || visualID != FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
                                     .getNodeVisualID(containerView,
@@ -100,7 +100,7 @@ public class FlowDesignerViewProvider extends AbstractViewProvider {
                     }
                     break;
                 case FlowDesigner.diagram.edit.parts.ViewStateNameEditPart.VISUAL_ID:
-                case FlowDesigner.diagram.edit.parts.WrappingLabelEditPart.VISUAL_ID:
+                case FlowDesigner.diagram.edit.parts.ViewStateViewEditPart.VISUAL_ID:
                     if (FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID != FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
                             .getVisualID(containerView)
                             || containerView.getElement() != domainElement) {
@@ -136,16 +136,16 @@ public class FlowDesignerViewProvider extends AbstractViewProvider {
             return FlowDesigner.diagram.view.factories.ActionStateViewFactory.class;
         case FlowDesigner.diagram.edit.parts.ActionStateNameEditPart.VISUAL_ID:
             return FlowDesigner.diagram.view.factories.ActionStateNameViewFactory.class;
+        case FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID:
+            return FlowDesigner.diagram.view.factories.FinalStateViewFactory.class;
+        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
+            return FlowDesigner.diagram.view.factories.InitialStateViewFactory.class;
         case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
             return FlowDesigner.diagram.view.factories.ViewStateViewFactory.class;
         case FlowDesigner.diagram.edit.parts.ViewStateNameEditPart.VISUAL_ID:
             return FlowDesigner.diagram.view.factories.ViewStateNameViewFactory.class;
-        case FlowDesigner.diagram.edit.parts.WrappingLabelEditPart.VISUAL_ID:
-            return FlowDesigner.diagram.view.factories.WrappingLabelViewFactory.class;
-        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
-            return FlowDesigner.diagram.view.factories.InitialStateViewFactory.class;
-        case FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID:
-            return FlowDesigner.diagram.view.factories.FinalStateViewFactory.class;
+        case FlowDesigner.diagram.edit.parts.ViewStateViewEditPart.VISUAL_ID:
+            return FlowDesigner.diagram.view.factories.ViewStateViewViewFactory.class;
         case FlowDesigner.diagram.edit.parts.EventEventEditPart.VISUAL_ID:
             return FlowDesigner.diagram.view.factories.EventEventViewFactory.class;
         }

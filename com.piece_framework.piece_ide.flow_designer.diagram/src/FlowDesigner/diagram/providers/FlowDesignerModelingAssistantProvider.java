@@ -36,11 +36,11 @@ public class FlowDesignerModelingAssistantProvider extends
         if (editPart instanceof FlowDesigner.diagram.edit.parts.FlowEditPart) {
             List types = new ArrayList();
             types
-                    .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.ActionState_2005);
+                    .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.ActionState_2009);
             types
-                    .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2006);
+                    .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2012);
             types
-                    .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.FinalState_2008);
+                    .add(FlowDesigner.diagram.providers.FlowDesignerElementTypes.FinalState_2010);
             return types;
         }
         return Collections.EMPTY_LIST;

@@ -55,7 +55,7 @@ public class ViewStateNameEditPart extends CompartmentEditPart implements
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 5004;
+    public static final int VISUAL_ID = 5007;
 
     /**
      * @generated
@@ -305,7 +305,7 @@ public class ViewStateNameEditPart extends CompartmentEditPart implements
         if (parser == null) {
             String parserHint = ((View) getModel()).getType();
             IAdaptable hintAdapter = new FlowDesigner.diagram.providers.FlowDesignerParserProvider.HintAdapter(
-                    FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2006,
+                    FlowDesigner.diagram.providers.FlowDesignerElementTypes.ViewState_2012,
                     getParserElement(), parserHint);
             parser = ParserService.getInstance().getParser(hintAdapter);
         }

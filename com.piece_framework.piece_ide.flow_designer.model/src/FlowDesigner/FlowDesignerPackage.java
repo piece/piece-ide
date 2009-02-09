@@ -42,7 +42,7 @@ public interface FlowDesignerPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "http://flowdesigner/1.0";
+    String eNS_URI = "http://piece-framework.com/piece-ide/flowdesigner/1.0";
 
     /**
      * The package namespace name.

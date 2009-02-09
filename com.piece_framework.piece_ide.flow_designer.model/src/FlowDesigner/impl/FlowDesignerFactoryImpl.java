@@ -32,7 +32,7 @@ public class FlowDesignerFactoryImpl extends EFactoryImpl implements FlowDesigne
      */
     public static FlowDesignerFactory init() {
         try {
-            FlowDesignerFactory theFlowDesignerFactory = (FlowDesignerFactory)EPackage.Registry.INSTANCE.getEFactory("http://flowdesigner/1.0"); 
+            FlowDesignerFactory theFlowDesignerFactory = (FlowDesignerFactory)EPackage.Registry.INSTANCE.getEFactory("http://piece-framework.com/piece-ide/flowdesigner/1.0"); 
             if (theFlowDesignerFactory != null) {
                 return theFlowDesignerFactory;
             }

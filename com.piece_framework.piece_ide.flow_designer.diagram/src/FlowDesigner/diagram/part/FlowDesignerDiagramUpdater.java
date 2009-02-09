@@ -57,21 +57,21 @@ public class FlowDesignerDiagramUpdater {
             }
         }
         {
-            FlowDesigner.InitialState childElement = modelElement
-                    .getInitialState();
+            FlowDesigner.FinalState childElement = modelElement.getFinalState();
             int visualID = FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
                     .getNodeVisualID(view, childElement);
-            if (visualID == FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID) {
+            if (visualID == FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID) {
                 result
                         .add(new FlowDesigner.diagram.part.FlowDesignerNodeDescriptor(
                                 childElement, visualID));
             }
         }
         {
-            FlowDesigner.FinalState childElement = modelElement.getFinalState();
+            FlowDesigner.InitialState childElement = modelElement
+                    .getInitialState();
             int visualID = FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
                     .getNodeVisualID(view, childElement);
-            if (visualID == FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID) {
+            if (visualID == FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID) {
                 result
                         .add(new FlowDesigner.diagram.part.FlowDesignerNodeDescriptor(
                                 childElement, visualID));
@@ -89,15 +89,15 @@ public class FlowDesignerDiagramUpdater {
         case FlowDesigner.diagram.edit.parts.FlowEditPart.VISUAL_ID:
             return getFlow_1000ContainedLinks(view);
         case FlowDesigner.diagram.edit.parts.ActionStateEditPart.VISUAL_ID:
-            return getActionState_2005ContainedLinks(view);
-        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
-            return getViewState_2006ContainedLinks(view);
-        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
-            return getInitialState_2007ContainedLinks(view);
+            return getActionState_2009ContainedLinks(view);
         case FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID:
-            return getFinalState_2008ContainedLinks(view);
+            return getFinalState_2010ContainedLinks(view);
+        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
+            return getInitialState_2011ContainedLinks(view);
+        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
+            return getViewState_2012ContainedLinks(view);
         case FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID:
-            return getEvent_4003ContainedLinks(view);
+            return getEvent_4004ContainedLinks(view);
         }
         return Collections.EMPTY_LIST;
     }
@@ -109,15 +109,15 @@ public class FlowDesignerDiagramUpdater {
         switch (FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
                 .getVisualID(view)) {
         case FlowDesigner.diagram.edit.parts.ActionStateEditPart.VISUAL_ID:
-            return getActionState_2005IncomingLinks(view);
-        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
-            return getViewState_2006IncomingLinks(view);
-        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
-            return getInitialState_2007IncomingLinks(view);
+            return getActionState_2009IncomingLinks(view);
         case FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID:
-            return getFinalState_2008IncomingLinks(view);
+            return getFinalState_2010IncomingLinks(view);
+        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
+            return getInitialState_2011IncomingLinks(view);
+        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
+            return getViewState_2012IncomingLinks(view);
         case FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID:
-            return getEvent_4003IncomingLinks(view);
+            return getEvent_4004IncomingLinks(view);
         }
         return Collections.EMPTY_LIST;
     }
@@ -129,15 +129,15 @@ public class FlowDesignerDiagramUpdater {
         switch (FlowDesigner.diagram.part.FlowDesignerVisualIDRegistry
                 .getVisualID(view)) {
         case FlowDesigner.diagram.edit.parts.ActionStateEditPart.VISUAL_ID:
-            return getActionState_2005OutgoingLinks(view);
-        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
-            return getViewState_2006OutgoingLinks(view);
-        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
-            return getInitialState_2007OutgoingLinks(view);
+            return getActionState_2009OutgoingLinks(view);
         case FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID:
-            return getFinalState_2008OutgoingLinks(view);
+            return getFinalState_2010OutgoingLinks(view);
+        case FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID:
+            return getInitialState_2011OutgoingLinks(view);
+        case FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID:
+            return getViewState_2012OutgoingLinks(view);
         case FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID:
-            return getEvent_4003OutgoingLinks(view);
+            return getEvent_4004OutgoingLinks(view);
         }
         return Collections.EMPTY_LIST;
     }
@@ -152,60 +152,60 @@ public class FlowDesignerDiagramUpdater {
     /**
      * @generated
      */
-    public static List getActionState_2005ContainedLinks(View view) {
+    public static List getActionState_2009ContainedLinks(View view) {
         FlowDesigner.ActionState modelElement = (FlowDesigner.ActionState) view
                 .getElement();
         List result = new LinkedList();
-        result.addAll(getContainedTypeModelFacetLinks_Event_4003(modelElement));
+        result.addAll(getContainedTypeModelFacetLinks_Event_4004(modelElement));
         return result;
     }
 
     /**
      * @generated
      */
-    public static List getViewState_2006ContainedLinks(View view) {
-        FlowDesigner.ViewState modelElement = (FlowDesigner.ViewState) view
-                .getElement();
-        List result = new LinkedList();
-        result.addAll(getContainedTypeModelFacetLinks_Event_4003(modelElement));
-        return result;
+    public static List getFinalState_2010ContainedLinks(View view) {
+        return Collections.EMPTY_LIST;
     }
 
     /**
      * @generated
      */
-    public static List getInitialState_2007ContainedLinks(View view) {
+    public static List getInitialState_2011ContainedLinks(View view) {
         FlowDesigner.InitialState modelElement = (FlowDesigner.InitialState) view
                 .getElement();
         List result = new LinkedList();
-        result.addAll(getContainedTypeModelFacetLinks_Event_4003(modelElement));
+        result.addAll(getContainedTypeModelFacetLinks_Event_4004(modelElement));
         return result;
     }
 
     /**
      * @generated
      */
-    public static List getFinalState_2008ContainedLinks(View view) {
+    public static List getViewState_2012ContainedLinks(View view) {
+        FlowDesigner.ViewState modelElement = (FlowDesigner.ViewState) view
+                .getElement();
+        List result = new LinkedList();
+        result.addAll(getContainedTypeModelFacetLinks_Event_4004(modelElement));
+        return result;
+    }
+
+    /**
+     * @generated
+     */
+    public static List getEvent_4004ContainedLinks(View view) {
         return Collections.EMPTY_LIST;
     }
 
     /**
      * @generated
      */
-    public static List getEvent_4003ContainedLinks(View view) {
-        return Collections.EMPTY_LIST;
-    }
-
-    /**
-     * @generated
-     */
-    public static List getActionState_2005IncomingLinks(View view) {
+    public static List getActionState_2009IncomingLinks(View view) {
         FlowDesigner.ActionState modelElement = (FlowDesigner.ActionState) view
                 .getElement();
         Map crossReferences = EcoreUtil.CrossReferencer.find(view.eResource()
                 .getResourceSet().getResources());
         List result = new LinkedList();
-        result.addAll(getIncomingTypeModelFacetLinks_Event_4003(modelElement,
+        result.addAll(getIncomingTypeModelFacetLinks_Event_4004(modelElement,
                 crossReferences));
         return result;
     }
@@ -213,34 +213,13 @@ public class FlowDesignerDiagramUpdater {
     /**
      * @generated
      */
-    public static List getViewState_2006IncomingLinks(View view) {
-        FlowDesigner.ViewState modelElement = (FlowDesigner.ViewState) view
-                .getElement();
-        Map crossReferences = EcoreUtil.CrossReferencer.find(view.eResource()
-                .getResourceSet().getResources());
-        List result = new LinkedList();
-        result.addAll(getIncomingTypeModelFacetLinks_Event_4003(modelElement,
-                crossReferences));
-        return result;
-    }
-
-    /**
-     * @generated
-     */
-    public static List getInitialState_2007IncomingLinks(View view) {
-        return Collections.EMPTY_LIST;
-    }
-
-    /**
-     * @generated
-     */
-    public static List getFinalState_2008IncomingLinks(View view) {
+    public static List getFinalState_2010IncomingLinks(View view) {
         FlowDesigner.FinalState modelElement = (FlowDesigner.FinalState) view
                 .getElement();
         Map crossReferences = EcoreUtil.CrossReferencer.find(view.eResource()
                 .getResourceSet().getResources());
         List result = new LinkedList();
-        result.addAll(getIncomingTypeModelFacetLinks_Event_4003(modelElement,
+        result.addAll(getIncomingTypeModelFacetLinks_Event_4004(modelElement,
                 crossReferences));
         return result;
     }
@@ -248,61 +227,82 @@ public class FlowDesignerDiagramUpdater {
     /**
      * @generated
      */
-    public static List getEvent_4003IncomingLinks(View view) {
+    public static List getInitialState_2011IncomingLinks(View view) {
         return Collections.EMPTY_LIST;
     }
 
     /**
      * @generated
      */
-    public static List getActionState_2005OutgoingLinks(View view) {
+    public static List getViewState_2012IncomingLinks(View view) {
+        FlowDesigner.ViewState modelElement = (FlowDesigner.ViewState) view
+                .getElement();
+        Map crossReferences = EcoreUtil.CrossReferencer.find(view.eResource()
+                .getResourceSet().getResources());
+        List result = new LinkedList();
+        result.addAll(getIncomingTypeModelFacetLinks_Event_4004(modelElement,
+                crossReferences));
+        return result;
+    }
+
+    /**
+     * @generated
+     */
+    public static List getEvent_4004IncomingLinks(View view) {
+        return Collections.EMPTY_LIST;
+    }
+
+    /**
+     * @generated
+     */
+    public static List getActionState_2009OutgoingLinks(View view) {
         FlowDesigner.ActionState modelElement = (FlowDesigner.ActionState) view
                 .getElement();
         List result = new LinkedList();
-        result.addAll(getContainedTypeModelFacetLinks_Event_4003(modelElement));
+        result.addAll(getContainedTypeModelFacetLinks_Event_4004(modelElement));
         return result;
     }
 
     /**
      * @generated
      */
-    public static List getViewState_2006OutgoingLinks(View view) {
-        FlowDesigner.ViewState modelElement = (FlowDesigner.ViewState) view
-                .getElement();
-        List result = new LinkedList();
-        result.addAll(getContainedTypeModelFacetLinks_Event_4003(modelElement));
-        return result;
+    public static List getFinalState_2010OutgoingLinks(View view) {
+        return Collections.EMPTY_LIST;
     }
 
     /**
      * @generated
      */
-    public static List getInitialState_2007OutgoingLinks(View view) {
+    public static List getInitialState_2011OutgoingLinks(View view) {
         FlowDesigner.InitialState modelElement = (FlowDesigner.InitialState) view
                 .getElement();
         List result = new LinkedList();
-        result.addAll(getContainedTypeModelFacetLinks_Event_4003(modelElement));
+        result.addAll(getContainedTypeModelFacetLinks_Event_4004(modelElement));
         return result;
     }
 
     /**
      * @generated
      */
-    public static List getFinalState_2008OutgoingLinks(View view) {
+    public static List getViewState_2012OutgoingLinks(View view) {
+        FlowDesigner.ViewState modelElement = (FlowDesigner.ViewState) view
+                .getElement();
+        List result = new LinkedList();
+        result.addAll(getContainedTypeModelFacetLinks_Event_4004(modelElement));
+        return result;
+    }
+
+    /**
+     * @generated
+     */
+    public static List getEvent_4004OutgoingLinks(View view) {
         return Collections.EMPTY_LIST;
     }
 
     /**
      * @generated
      */
-    public static List getEvent_4003OutgoingLinks(View view) {
-        return Collections.EMPTY_LIST;
-    }
-
-    /**
-     * @generated
-     */
-    private static Collection getContainedTypeModelFacetLinks_Event_4003(
+    private static Collection getContainedTypeModelFacetLinks_Event_4004(
             FlowDesigner.Source container) {
         Collection result = new LinkedList();
         for (Iterator links = container.getEvents().iterator(); links.hasNext();) {
@@ -321,7 +321,7 @@ public class FlowDesignerDiagramUpdater {
                             container,
                             dst,
                             link,
-                            FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4003,
+                            FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4004,
                             FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID));
         }
         return result;
@@ -330,7 +330,7 @@ public class FlowDesignerDiagramUpdater {
     /**
      * @generated
      */
-    private static Collection getIncomingTypeModelFacetLinks_Event_4003(
+    private static Collection getIncomingTypeModelFacetLinks_Event_4004(
             FlowDesigner.Target target, Map crossReferences) {
         Collection result = new LinkedList();
         Collection settings = (Collection) crossReferences.get(target);
@@ -357,7 +357,7 @@ public class FlowDesignerDiagramUpdater {
                             container,
                             target,
                             link,
-                            FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4003,
+                            FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4004,
                             FlowDesigner.diagram.edit.parts.EventEditPart.VISUAL_ID));
 
         }

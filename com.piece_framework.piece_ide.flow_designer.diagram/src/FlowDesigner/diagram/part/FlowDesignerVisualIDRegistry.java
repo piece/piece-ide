@@ -122,17 +122,17 @@ public class FlowDesignerVisualIDRegistry {
                     .isSuperTypeOf(domainElement.eClass())) {
                 return FlowDesigner.diagram.edit.parts.ActionStateEditPart.VISUAL_ID;
             }
-            if (FlowDesigner.FlowDesignerPackage.eINSTANCE.getViewState()
+            if (FlowDesigner.FlowDesignerPackage.eINSTANCE.getFinalState()
                     .isSuperTypeOf(domainElement.eClass())) {
-                return FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID;
+                return FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID;
             }
             if (FlowDesigner.FlowDesignerPackage.eINSTANCE.getInitialState()
                     .isSuperTypeOf(domainElement.eClass())) {
                 return FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID;
             }
-            if (FlowDesigner.FlowDesignerPackage.eINSTANCE.getFinalState()
+            if (FlowDesigner.FlowDesignerPackage.eINSTANCE.getViewState()
                     .isSuperTypeOf(domainElement.eClass())) {
-                return FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID;
+                return FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID;
             }
             break;
         }
@@ -171,7 +171,7 @@ public class FlowDesignerVisualIDRegistry {
             if (FlowDesigner.diagram.edit.parts.ViewStateNameEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            if (FlowDesigner.diagram.edit.parts.WrappingLabelEditPart.VISUAL_ID == nodeVisualID) {
+            if (FlowDesigner.diagram.edit.parts.ViewStateViewEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
@@ -179,13 +179,13 @@ public class FlowDesignerVisualIDRegistry {
             if (FlowDesigner.diagram.edit.parts.ActionStateEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            if (FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID == nodeVisualID) {
+            if (FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             if (FlowDesigner.diagram.edit.parts.InitialStateEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            if (FlowDesigner.diagram.edit.parts.FinalStateEditPart.VISUAL_ID == nodeVisualID) {
+            if (FlowDesigner.diagram.edit.parts.ViewStateEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;

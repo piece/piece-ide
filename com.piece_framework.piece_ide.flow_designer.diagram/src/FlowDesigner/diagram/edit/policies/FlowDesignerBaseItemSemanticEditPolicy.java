@@ -345,15 +345,15 @@ public class FlowDesignerBaseItemSemanticEditPolicy extends SemanticEditPolicy {
         /**
          * @generated
          */
-        public static boolean canCreateEvent_4003(FlowDesigner.Source source,
+        public static boolean canCreateEvent_4004(FlowDesigner.Source source,
                 FlowDesigner.Target target) {
-            return canExistEvent_4003(source, target);
+            return canExistEvent_4004(source, target);
         }
 
         /**
          * @generated
          */
-        public static boolean canExistEvent_4003(FlowDesigner.Source source,
+        public static boolean canExistEvent_4004(FlowDesigner.Source source,
                 FlowDesigner.Target target) {
 
             return true;

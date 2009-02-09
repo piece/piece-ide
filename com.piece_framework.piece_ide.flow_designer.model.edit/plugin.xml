@@ -12,7 +12,7 @@
 
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
-            uri="http://flowdesigner/1.0"
+            uri="http://piece-framework.com/piece-ide/flowdesigner/1.0"
             class="FlowDesigner.provider.FlowDesignerItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider

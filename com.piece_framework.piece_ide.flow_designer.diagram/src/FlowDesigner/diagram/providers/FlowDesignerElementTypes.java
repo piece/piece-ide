@@ -53,27 +53,27 @@ public class FlowDesignerElementTypes extends ElementInitializers {
     /**
      * @generated
      */
-    public static final IElementType ActionState_2005 = getElementType("com.piece_framework.piece_ide.flow_designer.diagram.ActionState_2005"); //$NON-NLS-1$
+    public static final IElementType ActionState_2009 = getElementType("com.piece_framework.piece_ide.flow_designer.diagram.ActionState_2009"); //$NON-NLS-1$
 
     /**
      * @generated
      */
-    public static final IElementType ViewState_2006 = getElementType("com.piece_framework.piece_ide.flow_designer.diagram.ViewState_2006"); //$NON-NLS-1$
+    public static final IElementType FinalState_2010 = getElementType("com.piece_framework.piece_ide.flow_designer.diagram.FinalState_2010"); //$NON-NLS-1$
 
     /**
      * @generated
      */
-    public static final IElementType InitialState_2007 = getElementType("com.piece_framework.piece_ide.flow_designer.diagram.InitialState_2007"); //$NON-NLS-1$
+    public static final IElementType InitialState_2011 = getElementType("com.piece_framework.piece_ide.flow_designer.diagram.InitialState_2011"); //$NON-NLS-1$
 
     /**
      * @generated
      */
-    public static final IElementType FinalState_2008 = getElementType("com.piece_framework.piece_ide.flow_designer.diagram.FinalState_2008"); //$NON-NLS-1$
+    public static final IElementType ViewState_2012 = getElementType("com.piece_framework.piece_ide.flow_designer.diagram.ViewState_2012"); //$NON-NLS-1$
 
     /**
      * @generated
      */
-    public static final IElementType Event_4003 = getElementType("com.piece_framework.piece_ide.flow_designer.diagram.Event_4003"); //$NON-NLS-1$
+    public static final IElementType Event_4004 = getElementType("com.piece_framework.piece_ide.flow_designer.diagram.Event_4004"); //$NON-NLS-1$
 
     /**
      * @generated
@@ -230,21 +230,21 @@ public class FlowDesignerElementTypes extends ElementInitializers {
                     .getFlow());
 
             elements
-                    .put(ActionState_2005,
+                    .put(ActionState_2009,
                             FlowDesigner.FlowDesignerPackage.eINSTANCE
                                     .getActionState());
 
-            elements.put(ViewState_2006,
+            elements.put(ViewState_2012,
                     FlowDesigner.FlowDesignerPackage.eINSTANCE.getViewState());
 
-            elements.put(InitialState_2007,
+            elements.put(InitialState_2011,
                     FlowDesigner.FlowDesignerPackage.eINSTANCE
                             .getInitialState());
 
-            elements.put(FinalState_2008,
+            elements.put(FinalState_2010,
                     FlowDesigner.FlowDesignerPackage.eINSTANCE.getFinalState());
 
-            elements.put(Event_4003, FlowDesigner.FlowDesignerPackage.eINSTANCE
+            elements.put(Event_4004, FlowDesigner.FlowDesignerPackage.eINSTANCE
                     .getEvent());
         }
         return (EObject) elements.get(type);
@@ -264,11 +264,11 @@ public class FlowDesignerElementTypes extends ElementInitializers {
         if (KNOWN_ELEMENT_TYPES == null) {
             KNOWN_ELEMENT_TYPES = new HashSet();
             KNOWN_ELEMENT_TYPES.add(Flow_1000);
-            KNOWN_ELEMENT_TYPES.add(ActionState_2005);
-            KNOWN_ELEMENT_TYPES.add(ViewState_2006);
-            KNOWN_ELEMENT_TYPES.add(InitialState_2007);
-            KNOWN_ELEMENT_TYPES.add(FinalState_2008);
-            KNOWN_ELEMENT_TYPES.add(Event_4003);
+            KNOWN_ELEMENT_TYPES.add(ActionState_2009);
+            KNOWN_ELEMENT_TYPES.add(FinalState_2010);
+            KNOWN_ELEMENT_TYPES.add(InitialState_2011);
+            KNOWN_ELEMENT_TYPES.add(ViewState_2012);
+            KNOWN_ELEMENT_TYPES.add(Event_4004);
         }
         return KNOWN_ELEMENT_TYPES.contains(elementType);
     }

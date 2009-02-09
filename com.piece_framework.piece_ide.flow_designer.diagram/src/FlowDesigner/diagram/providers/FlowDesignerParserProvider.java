@@ -29,22 +29,22 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
     /**
      * @generated
      */
-    private IParser actionStateName_5003Parser;
+    private IParser actionStateName_5006Parser;
 
     /**
      * @generated
      */
-    private IParser getActionStateName_5003Parser() {
-        if (actionStateName_5003Parser == null) {
-            actionStateName_5003Parser = createActionStateName_5003Parser();
+    private IParser getActionStateName_5006Parser() {
+        if (actionStateName_5006Parser == null) {
+            actionStateName_5006Parser = createActionStateName_5006Parser();
         }
-        return actionStateName_5003Parser;
+        return actionStateName_5006Parser;
     }
 
     /**
      * @generated NOT
      */
-    protected IParser createActionStateName_5003Parser() {
+    protected IParser createActionStateName_5006Parser() {
         EAttribute[] features = new EAttribute[] { FlowDesigner.FlowDesignerPackage.eINSTANCE
                 .getNamedState_Name(), };
         return new NamedStateNameParser(features);
@@ -53,22 +53,22 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
     /**
      * @generated
      */
-    private IParser viewStateName_5004Parser;
+    private IParser viewStateName_5007Parser;
 
     /**
      * @generated
      */
-    private IParser getViewStateName_5004Parser() {
-        if (viewStateName_5004Parser == null) {
-            viewStateName_5004Parser = createViewStateName_5004Parser();
+    private IParser getViewStateName_5007Parser() {
+        if (viewStateName_5007Parser == null) {
+            viewStateName_5007Parser = createViewStateName_5007Parser();
         }
-        return viewStateName_5004Parser;
+        return viewStateName_5007Parser;
     }
 
     /**
      * @generated NOT
      */
-    protected IParser createViewStateName_5004Parser() {
+    protected IParser createViewStateName_5007Parser() {
         EAttribute[] features = new EAttribute[] { FlowDesigner.FlowDesignerPackage.eINSTANCE
                 .getNamedState_Name(), };
         return new NamedStateNameParser(features);
@@ -77,22 +77,22 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
     /**
      * @generated
      */
-    private IParser viewStateView_5005Parser;
+    private IParser viewStateView_5008Parser;
 
     /**
      * @generated
      */
-    private IParser getViewStateView_5005Parser() {
-        if (viewStateView_5005Parser == null) {
-            viewStateView_5005Parser = createViewStateView_5005Parser();
+    private IParser getViewStateView_5008Parser() {
+        if (viewStateView_5008Parser == null) {
+            viewStateView_5008Parser = createViewStateView_5008Parser();
         }
-        return viewStateView_5005Parser;
+        return viewStateView_5008Parser;
     }
 
     /**
      * @generated
      */
-    protected IParser createViewStateView_5005Parser() {
+    protected IParser createViewStateView_5008Parser() {
         EAttribute[] features = new EAttribute[] { FlowDesigner.FlowDesignerPackage.eINSTANCE
                 .getViewState_View(), };
         FlowDesigner.diagram.parsers.MessageFormatParser parser = new FlowDesigner.diagram.parsers.MessageFormatParser(
@@ -103,22 +103,22 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
     /**
      * @generated
      */
-    private IParser eventEvent_6002Parser;
+    private IParser eventEvent_6003Parser;
 
     /**
      * @generated
      */
-    private IParser getEventEvent_6002Parser() {
-        if (eventEvent_6002Parser == null) {
-            eventEvent_6002Parser = createEventEvent_6002Parser();
+    private IParser getEventEvent_6003Parser() {
+        if (eventEvent_6003Parser == null) {
+            eventEvent_6003Parser = createEventEvent_6003Parser();
         }
-        return eventEvent_6002Parser;
+        return eventEvent_6003Parser;
     }
 
     /**
      * @generated NOT
      */
-    protected IParser createEventEvent_6002Parser() {
+    protected IParser createEventEvent_6003Parser() {
         EAttribute[] features = new EAttribute[] { FlowDesigner.FlowDesignerPackage.eINSTANCE
                 .getEvent_Event(), };
         return new EventEventParser(features);
@@ -187,13 +187,13 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
     protected IParser getParser(int visualID) {
         switch (visualID) {
         case FlowDesigner.diagram.edit.parts.ActionStateNameEditPart.VISUAL_ID:
-            return getActionStateName_5003Parser();
+            return getActionStateName_5006Parser();
         case FlowDesigner.diagram.edit.parts.ViewStateNameEditPart.VISUAL_ID:
-            return getViewStateName_5004Parser();
-        case FlowDesigner.diagram.edit.parts.WrappingLabelEditPart.VISUAL_ID:
-            return getViewStateView_5005Parser();
+            return getViewStateName_5007Parser();
+        case FlowDesigner.diagram.edit.parts.ViewStateViewEditPart.VISUAL_ID:
+            return getViewStateView_5008Parser();
         case FlowDesigner.diagram.edit.parts.EventEventEditPart.VISUAL_ID:
-            return getEventEvent_6002Parser();
+            return getEventEvent_6003Parser();
         }
         return null;
     }

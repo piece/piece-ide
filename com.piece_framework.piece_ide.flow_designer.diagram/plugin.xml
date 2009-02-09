@@ -279,7 +279,7 @@
 
    <extension point="org.eclipse.gmf.runtime.emf.type.core.elementTypes">
       <?gmfgen generated="true"?>
-      <metamodel nsURI="http://flowdesigner/1.0">
+      <metamodel nsURI="http://piece-framework.com/piece-ide/flowdesigner/1.0">
          <metamodelType
                id="com.piece_framework.piece_ide.flow_designer.diagram.Flow_1000"
                name="%metatype.name.Flow_1000"
@@ -289,54 +289,54 @@
             <param name="semanticHint" value="1000"/>
          </metamodelType>
       </metamodel>
-      <metamodel nsURI="http://flowdesigner/1.0">
+      <metamodel nsURI="http://piece-framework.com/piece-ide/flowdesigner/1.0">
          <metamodelType
-               id="com.piece_framework.piece_ide.flow_designer.diagram.ActionState_2005"
-               name="%metatype.name.ActionState_2005"
+               id="com.piece_framework.piece_ide.flow_designer.diagram.ActionState_2009"
+               name="%metatype.name.ActionState_2009"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="ActionState"
                edithelper="FlowDesigner.diagram.edit.helpers.ActionStateEditHelper">
-            <param name="semanticHint" value="2005"/>
+            <param name="semanticHint" value="2009"/>
          </metamodelType>
       </metamodel>
-      <metamodel nsURI="http://flowdesigner/1.0">
+      <metamodel nsURI="http://piece-framework.com/piece-ide/flowdesigner/1.0">
          <metamodelType
-               id="com.piece_framework.piece_ide.flow_designer.diagram.ViewState_2006"
-               name="%metatype.name.ViewState_2006"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="ViewState"
-               edithelper="FlowDesigner.diagram.edit.helpers.ViewStateEditHelper">
-            <param name="semanticHint" value="2006"/>
-         </metamodelType>
-      </metamodel>
-      <metamodel nsURI="http://flowdesigner/1.0">
-         <metamodelType
-               id="com.piece_framework.piece_ide.flow_designer.diagram.InitialState_2007"
-               name="%metatype.name.InitialState_2007"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="InitialState"
-               edithelper="FlowDesigner.diagram.edit.helpers.InitialStateEditHelper">
-            <param name="semanticHint" value="2007"/>
-         </metamodelType>
-      </metamodel>
-      <metamodel nsURI="http://flowdesigner/1.0">
-         <metamodelType
-               id="com.piece_framework.piece_ide.flow_designer.diagram.FinalState_2008"
-               name="%metatype.name.FinalState_2008"
+               id="com.piece_framework.piece_ide.flow_designer.diagram.FinalState_2010"
+               name="%metatype.name.FinalState_2010"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="FinalState"
                edithelper="FlowDesigner.diagram.edit.helpers.FinalStateEditHelper">
-            <param name="semanticHint" value="2008"/>
+            <param name="semanticHint" value="2010"/>
          </metamodelType>
       </metamodel>
-      <metamodel nsURI="http://flowdesigner/1.0">
+      <metamodel nsURI="http://piece-framework.com/piece-ide/flowdesigner/1.0">
          <metamodelType
-               id="com.piece_framework.piece_ide.flow_designer.diagram.Event_4003"
-               name="%metatype.name.Event_4003"
+               id="com.piece_framework.piece_ide.flow_designer.diagram.InitialState_2011"
+               name="%metatype.name.InitialState_2011"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="InitialState"
+               edithelper="FlowDesigner.diagram.edit.helpers.InitialStateEditHelper">
+            <param name="semanticHint" value="2011"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://piece-framework.com/piece-ide/flowdesigner/1.0">
+         <metamodelType
+               id="com.piece_framework.piece_ide.flow_designer.diagram.ViewState_2012"
+               name="%metatype.name.ViewState_2012"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="ViewState"
+               edithelper="FlowDesigner.diagram.edit.helpers.ViewStateEditHelper">
+            <param name="semanticHint" value="2012"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://piece-framework.com/piece-ide/flowdesigner/1.0">
+         <metamodelType
+               id="com.piece_framework.piece_ide.flow_designer.diagram.Event_4004"
+               name="%metatype.name.Event_4004"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="Event"
                edithelper="FlowDesigner.diagram.edit.helpers.EventEditHelper">
-            <param name="semanticHint" value="4003"/>
+            <param name="semanticHint" value="4004"/>
          </metamodelType>
       </metamodel>
    </extension>
@@ -352,11 +352,11 @@
       </clientContext> 
       <binding context="com.piece_framework.piece_ide.flow_designer.diagram.TypeContext">
          <elementType ref="com.piece_framework.piece_ide.flow_designer.diagram.Flow_1000"/>
-         <elementType ref="com.piece_framework.piece_ide.flow_designer.diagram.ActionState_2005"/>
-         <elementType ref="com.piece_framework.piece_ide.flow_designer.diagram.ViewState_2006"/>
-         <elementType ref="com.piece_framework.piece_ide.flow_designer.diagram.InitialState_2007"/>
-         <elementType ref="com.piece_framework.piece_ide.flow_designer.diagram.FinalState_2008"/>
-         <elementType ref="com.piece_framework.piece_ide.flow_designer.diagram.Event_4003"/>
+         <elementType ref="com.piece_framework.piece_ide.flow_designer.diagram.ActionState_2009"/>
+         <elementType ref="com.piece_framework.piece_ide.flow_designer.diagram.FinalState_2010"/>
+         <elementType ref="com.piece_framework.piece_ide.flow_designer.diagram.InitialState_2011"/>
+         <elementType ref="com.piece_framework.piece_ide.flow_designer.diagram.ViewState_2012"/>
+         <elementType ref="com.piece_framework.piece_ide.flow_designer.diagram.Event_4004"/>
          <advice ref="org.eclipse.gmf.runtime.diagram.core.advice.notationDepdendents"/>
       </binding>
    </extension>

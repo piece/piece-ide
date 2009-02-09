@@ -44,7 +44,7 @@ public class ViewStateItemSemanticEditPolicy
      */
     protected Command getStartCreateRelationshipCommand(
             CreateRelationshipRequest req) {
-        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4003 == req
+        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4004 == req
                 .getElementType()) {
             return getGEFWrapper(new FlowDesigner.diagram.edit.commands.EventCreateCommand(
                     req, req.getSource(), req.getTarget()));
@@ -57,7 +57,7 @@ public class ViewStateItemSemanticEditPolicy
      */
     protected Command getCompleteCreateRelationshipCommand(
             CreateRelationshipRequest req) {
-        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4003 == req
+        if (FlowDesigner.diagram.providers.FlowDesignerElementTypes.Event_4004 == req
                 .getElementType()) {
             return getGEFWrapper(new FlowDesigner.diagram.edit.commands.EventCreateCommand(
                     req, req.getSource(), req.getTarget()));

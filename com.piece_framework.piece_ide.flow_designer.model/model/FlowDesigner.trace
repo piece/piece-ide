@@ -3,33 +3,33 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:trace="http://www.eclipse.org/gmf/2006/Trace">
   <nodeTraces
-      visualID="2005"
-      queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://flowdesigner/1.0' and _eClass_.name = 'ActionState') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://flowdesigner/1.0' and _eClass_.name = 'Flow') and _containmentMF_.name = 'states')">
+      visualID="2009"
+      queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://piece-framework.com/piece-ide/flowdesigner/1.0' and _eClass_.name = 'ActionState') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://piece-framework.com/piece-ide/flowdesigner/1.0' and _eClass_.name = 'Flow') and _containmentMF_.name = 'states')">
     <nodeLabelTraces
-        visualID="5003"
+        visualID="5006"
         queryText="true"/>
   </nodeTraces>
   <nodeTraces
-      visualID="2006"
-      queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://flowdesigner/1.0' and _eClass_.name = 'ViewState') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://flowdesigner/1.0' and _eClass_.name = 'Flow') and _containmentMF_.name = 'states')">
+      visualID="2010"
+      queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://piece-framework.com/piece-ide/flowdesigner/1.0' and _eClass_.name = 'FinalState') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://piece-framework.com/piece-ide/flowdesigner/1.0' and _eClass_.name = 'Flow') and _containmentMF_.name = 'finalState')"/>
+  <nodeTraces
+      visualID="2011"
+      queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://piece-framework.com/piece-ide/flowdesigner/1.0' and _eClass_.name = 'InitialState') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://piece-framework.com/piece-ide/flowdesigner/1.0' and _eClass_.name = 'Flow') and _containmentMF_.name = 'initialState')"/>
+  <nodeTraces
+      visualID="2012"
+      queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://piece-framework.com/piece-ide/flowdesigner/1.0' and _eClass_.name = 'ViewState') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://piece-framework.com/piece-ide/flowdesigner/1.0' and _eClass_.name = 'Flow') and _containmentMF_.name = 'states')">
     <nodeLabelTraces
-        visualID="5004"
+        visualID="5007"
         queryText="true"/>
     <nodeLabelTraces
-        visualID="5005"
+        visualID="5008"
         queryText="true"/>
   </nodeTraces>
-  <nodeTraces
-      visualID="2007"
-      queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://flowdesigner/1.0' and _eClass_.name = 'InitialState') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://flowdesigner/1.0' and _eClass_.name = 'Flow') and _containmentMF_.name = 'initialState')"/>
-  <nodeTraces
-      visualID="2008"
-      queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://flowdesigner/1.0' and _eClass_.name = 'FinalState') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://flowdesigner/1.0' and _eClass_.name = 'Flow') and _containmentMF_.name = 'finalState')"/>
   <linkTraces
-      visualID="4003"
-      queryText="modelFacet.oclIsKindOf(gmfgen::TypeLinkModelFacet) and (let _eClass_:ecore::EClass = modelFacet.oclAsType(gmfgen::TypeLinkModelFacet).metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://flowdesigner/1.0' and _eClass_.name = 'Event')">
+      visualID="4004"
+      queryText="modelFacet.oclIsKindOf(gmfgen::TypeLinkModelFacet) and (let _eClass_:ecore::EClass = modelFacet.oclAsType(gmfgen::TypeLinkModelFacet).metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://piece-framework.com/piece-ide/flowdesigner/1.0' and _eClass_.name = 'Event')">
     <linkLabelTraces
-        visualID="6002"
+        visualID="6003"
         queryText="true"/>
   </linkTraces>
 </trace:TraceModel>

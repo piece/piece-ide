@@ -75,7 +75,7 @@ public class EventCreateCommand extends CreateElementCommand {
 
         // target may be null here but it's possible to check constraint
         return FlowDesigner.diagram.edit.policies.FlowDesignerBaseItemSemanticEditPolicy.LinkConstraints
-                .canCreateEvent_4003(getSource(), getTarget());
+                .canCreateEvent_4004(getSource(), getTarget());
     }
 
     /**
