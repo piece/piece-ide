@@ -20,7 +20,8 @@ public class EventEventParser extends IdentifierAttributeParser {
 
         NamedState state = (NamedState) fElement.eContainer();
         for (Event event: state.getEvents()) {
-            if (event.getEvent().equals(eventName)
+            if (event.getEvent() != null
+                && event.getEvent().equals(eventName)
                 && event != fElement
                 ) {
                 return true;

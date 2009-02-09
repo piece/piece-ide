@@ -195,7 +195,9 @@ public class FlowImpl extends EObjectImpl implements Flow {
      */
     public NamedState findStateByName(String name) {
         for (NamedState state : getStates()) {
-            if (state.getName().equals(name)) {
+            if (state.getName() != null
+                && state.getName().equals(name)
+                ) {
                 return state;
             }
         }
