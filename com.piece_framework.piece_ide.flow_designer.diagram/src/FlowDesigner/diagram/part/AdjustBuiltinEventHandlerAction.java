@@ -1,29 +1,57 @@
 // $Id$
 package FlowDesigner.diagram.part;
 
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.gmf.runtime.common.core.command.ICommand;
+import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-public class AdjustBuiltinEventHandlerAction implements IObjectActionDelegate {
+import FlowDesigner.Flow;
+import FlowDesigner.diagram.edit.commands.AdjustBuiltinEventHandlerCommand;
+import FlowDesigner.diagram.edit.parts.FlowEditPart;
 
-    public AdjustBuiltinEventHandlerAction() {
-        // TODO Auto-generated constructor stub
-    }
+public class AdjustBuiltinEventHandlerAction implements IObjectActionDelegate {
+    private FlowEditPart fFlowEditPart;
 
     public void setActivePart(IAction action, IWorkbenchPart targetPart) {
-        // TODO Auto-generated method stub
-
     }
 
     public void run(IAction action) {
-        // TODO Auto-generated method stub
-
+        Flow flow = (Flow) ((View) fFlowEditPart.getModel()).getElement();
+        ConfigureRequest request = new ConfigureRequest(flow, null);
+        AdjustBuiltinEventHandlerCommand command = new AdjustBuiltinEventHandlerCommand("Adjust Built-in Evnet Handler", flow, request);
+        try {
+            command.execute(null, null);
+        } catch (ExecutionException e) {
+            MessageDialog.openError(Display.getCurrent().getActiveShell(),
+                                    "Error",
+                                    e.getMessage()
+                                    );
+            e.printStackTrace();
+        }
     }
 
     public void selectionChanged(IAction action, ISelection selection) {
-        // TODO Auto-generated method stub
+        fFlowEditPart = null;
+        if (selection instanceof IStructuredSelection) {
+            IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+            if (structuredSelection.size() == 1
+                && structuredSelection.getFirstElement() instanceof FlowEditPart
+                ) {
+                fFlowEditPart = (FlowEditPart) structuredSelection.getFirstElement();
+            }
+        }
+        action.setEnabled(isEnabled());
+    }
 
+    private boolean isEnabled() {
+        return fFlowEditPart != null;
     }
 }

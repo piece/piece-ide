@@ -498,13 +498,6 @@
          description="%update.diagram.description"
          id="FlowDesigner.diagram.updateDiagram"
          name="%update.diagram.name"/>
-      <command
-            categoryId="org.eclipse.ui.category.edit"
-            defaultHandler="FlowDesigner.diagram.part.AdjustBuiltinEventHandlerCommand"
-            description="%adjustBuiltinEventHandler.diagram.description"
-            id="FlowDesigner.diagram.adjustBuiltinEventHandlers"
-            name="%adjustBuiltinEventHandler.diagram.name">
-      </command>
    </extension>
    
    <extension point="org.eclipse.ui.bindings">
