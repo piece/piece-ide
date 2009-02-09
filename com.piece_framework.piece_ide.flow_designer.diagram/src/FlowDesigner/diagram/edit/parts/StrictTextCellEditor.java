@@ -7,6 +7,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
 public class StrictTextCellEditor extends TextCellEditor {
+    private boolean fUseValidator;
+
     public StrictTextCellEditor() {
     }
 
@@ -33,5 +35,22 @@ public class StrictTextCellEditor extends TextCellEditor {
             return;
         }
         super.focusLost();
+    }
+
+    @Override
+    protected boolean isCorrect(Object value) {
+        fUseValidator = getValidator() != null;
+        return super.isCorrect(value);
+    }
+
+    @Override
+    public boolean isValueValid() {
+        if (fUseValidator == false
+            && getValidator() != null
+            ) {
+            setValue(text.getText());
+        }
+
+        return super.isValueValid();
     }
 }
