@@ -49,6 +49,11 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
+import FlowDesigner.Flow;
+import FlowDesigner.diagram.edit.parts.FlowEditPart;
+import FlowDesigner.impl.FlowDesignerFactoryImpl;
+import FlowDesigner.impl.FlowDesignerPackageImpl;
+
 /**
  * @generated
  */
@@ -216,6 +221,62 @@ public class FlowDesignerDiagramEditorUtil {
         setCharset(WorkspaceSynchronizer.getFile(modelResource));
         setCharset(WorkspaceSynchronizer.getFile(diagramResource));
         return diagramResource;
+    }
+
+    public static void createDiagramFromFlow(IFile flowFile,
+                                             IFile diagramFile
+                                             ) {
+        TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
+                                                    .createEditingDomain();
+        final Resource flowResource = editingDomain.createResource(flowFile.getFullPath().toString());
+        final Resource diagramResource = editingDomain.createResource(diagramFile.getFullPath().toString());
+
+        AbstractTransactionalCommand command =
+            new AbstractTransactionalCommand(editingDomain,
+                                             Messages.FlowDesignerDiagramEditorUtil_CreateDiagramCommandLabel,
+                                             Collections.EMPTY_LIST
+                                             ) {
+            protected CommandResult doExecuteWithResult(IProgressMonitor monitor,
+                                                        IAdaptable info
+                                                        ) throws ExecutionException {
+                Flow flow = null;
+                try {
+                    flowResource.load(null);
+                    flow = (Flow) flowResource.getContents().get(0);
+                } catch (IOException e) {
+                    flow = FlowDesignerFactoryImpl.eINSTANCE.createFlow();
+                }
+
+                Diagram diagram = ViewService.createDiagram(flowResource.getContents().get(0),
+                                                            FlowEditPart.MODEL_ID,
+                                                            FlowDesignerDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT
+                                                            );
+                if (diagram != null) {
+                    diagramResource.getContents().add(diagram);
+                } else {
+                    return CommandResult.newErrorCommandResult("Cannot create diagram from flow");
+                }
+                try {
+                    diagramResource.save(null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return CommandResult.newOKCommandResult();
+            }
+        };
+
+        try {
+            OperationHistoryFactory.getOperationHistory().execute(command,
+                                                                  new NullProgressMonitor(),
+                                                                  null
+                                                                  );
+        } catch (ExecutionException e) {
+            FlowDesignerDiagramEditorPlugin.getInstance().logError(
+                    "Unable to create model and diagram", e);
+        }
+        setCharset(WorkspaceSynchronizer.getFile(flowResource));
+        setCharset(WorkspaceSynchronizer.getFile(diagramResource));
     }
 
     /**
