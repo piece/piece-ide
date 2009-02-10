@@ -83,8 +83,7 @@ public class FlowDesignerNewDiagramFileWizard extends Wizard {
         myFileCreationPage.setContainerFullPath(filePath);
         myFileCreationPage
                 .setFileName(FlowDesigner.diagram.part.FlowDesignerDiagramEditorUtil
-                        .getUniqueFileName(filePath, fileName,
-                                "flowdesigner_diagram")); //$NON-NLS-1$
+                        .getUniqueFileName(filePath, fileName, "flow_diagram")); //$NON-NLS-1$
 
         diagramRootElementSelectionPage = new DiagramRootElementSelectionPage(
                 FlowDesigner.diagram.part.Messages.FlowDesignerNewDiagramFileWizard_RootSelectionPageName);

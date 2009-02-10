@@ -102,7 +102,7 @@ public class FlowDesignerCreationWizard extends Wizard implements INewWizard {
      */
     public void addPages() {
         diagramModelFilePage = new FlowDesigner.diagram.part.FlowDesignerCreationWizardPage(
-                "DiagramModelFile", getSelection(), "flowdesigner_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
+                "DiagramModelFile", getSelection(), "flow_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
         diagramModelFilePage
                 .setTitle(FlowDesigner.diagram.part.Messages.FlowDesignerCreationWizard_DiagramModelFilePageTitle);
         diagramModelFilePage
@@ -110,16 +110,16 @@ public class FlowDesignerCreationWizard extends Wizard implements INewWizard {
         addPage(diagramModelFilePage);
 
         domainModelFilePage = new FlowDesigner.diagram.part.FlowDesignerCreationWizardPage(
-                "DomainModelFile", getSelection(), "flowdesigner") { //$NON-NLS-1$ //$NON-NLS-2$
+                "DomainModelFile", getSelection(), "flow") { //$NON-NLS-1$ //$NON-NLS-2$
 
             public void setVisible(boolean visible) {
                 if (visible) {
                     String fileName = diagramModelFilePage.getFileName();
                     fileName = fileName.substring(0, fileName.length()
-                            - ".flowdesigner_diagram".length()); //$NON-NLS-1$
+                            - ".flow_diagram".length()); //$NON-NLS-1$
                     setFileName(FlowDesigner.diagram.part.FlowDesignerDiagramEditorUtil
                             .getUniqueFileName(getContainerFullPath(),
-                                    fileName, "flowdesigner")); //$NON-NLS-1$
+                                    fileName, "flow")); //$NON-NLS-1$
                 }
                 super.setVisible(visible);
             }

@@ -6,14 +6,14 @@
       <?gmfgen generated="true"?>
       <fileTypes
          type="text"
-         extension="flowdesigner_diagram">
+         extension="flow_diagram">
       </fileTypes>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
       <?gmfgen generated="true"?>
       <parser
-         type="flowdesigner_diagram"
+         type="flow_diagram"
          class="org.eclipse.gmf.runtime.emf.core.resources.GMFResourceFactory">
       </parser>
    </extension>
@@ -24,7 +24,7 @@
          id="FlowDesigner.diagram.part.FlowDesignerDiagramEditorID"
          name="%editorName"
          icon="icons/FlowDesigner.gif"
-         extensions="flowdesigner_diagram"
+         extensions="flow_diagram"
          default="true"
          class="FlowDesigner.diagram.part.FlowDesignerDiagramEditor"
          matchingStrategy="FlowDesigner.diagram.part.FlowDesignerMatchingStrategy"
@@ -80,7 +80,7 @@
       <?gmfgen generated="true"?>
       <objectContribution
             id="com.piece_framework.piece_ide.flow_designer.diagram.InitDiagram"
-            nameFilter="*.flowdesigner"
+            nameFilter="*.flow"
             objectClass="org.eclipse.core.resources.IFile">
          <action
                label="%initDiagramActionLabel"
@@ -412,7 +412,7 @@
             <or>
 	           <and>
     	          <instanceof value="org.eclipse.core.resources.IFile"/>
-        	      <test property="org.eclipse.core.resources.extension" value="flowdesigner_diagram"/>
+        	      <test property="org.eclipse.core.resources.extension" value="flow_diagram"/>
                </and>
                <instanceof value="FlowDesigner.diagram.navigator.FlowDesignerAbstractNavigatorItem"/>
             </or>
@@ -429,7 +429,7 @@
                <or>
 	              <and>
     	             <instanceof value="org.eclipse.core.resources.IFile"/>
-        	         <test property="org.eclipse.core.resources.extension" value="flowdesigner_diagram"/>
+        	         <test property="org.eclipse.core.resources.extension" value="flow_diagram"/>
                   </and>
                   <instanceof value="FlowDesigner.diagram.navigator.FlowDesignerAbstractNavigatorItem"/>
                </or>
@@ -448,7 +448,7 @@
             <or>
 	           <and>
     	          <instanceof value="org.eclipse.core.resources.IFile"/>
-        	      <test property="org.eclipse.core.resources.extension" value="flowdesigner"/>
+        	      <test property="org.eclipse.core.resources.extension" value="flow"/>
                </and>
                <and>
                   <instanceof value="org.eclipse.emf.ecore.EObject"/>

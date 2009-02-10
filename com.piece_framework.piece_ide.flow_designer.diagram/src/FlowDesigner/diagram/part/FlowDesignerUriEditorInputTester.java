@@ -17,7 +17,7 @@ public class FlowDesignerUriEditorInputTester extends PropertyTester {
             return false;
         }
         URIEditorInput editorInput = (URIEditorInput) receiver;
-        return "flowdesigner_diagram".equals(editorInput.getURI().fileExtension()); //$NON-NLS-1$
+        return "flow_diagram".equals(editorInput.getURI().fileExtension()); //$NON-NLS-1$
     }
 
 }

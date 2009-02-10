@@ -20,7 +20,7 @@
          point="org.eclipse.emf.ecore.extension_parser">
       <parser
             class="FlowDesigner.util.FlowDesignerResourceFactoryImpl"
-            type="flowdesigner">
+            type="flow">
       </parser>
    </extension>
 
