@@ -24,7 +24,7 @@
          id="FlowDesigner.diagram.part.FlowDesignerDiagramEditorID"
          name="%editorName"
          icon="icons/FlowDesigner.gif"
-         extensions="flow_diagram"
+         extensions="flow"
          default="true"
          class="FlowDesigner.diagram.part.FlowDesignerDiagramEditor"
          matchingStrategy="FlowDesigner.diagram.part.FlowDesignerMatchingStrategy"

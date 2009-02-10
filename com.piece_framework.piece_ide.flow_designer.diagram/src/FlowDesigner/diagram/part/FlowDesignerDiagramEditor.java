@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
@@ -32,7 +33,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorMatchingStrategy;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.ide.IGotoMarker;
@@ -291,4 +294,18 @@ public class FlowDesignerDiagramEditor extends DiagramDocumentEditor implements
                 provider, getDiagramGraphicalViewer());
     }
 
+    @Override
+    public void init(IEditorSite site,
+                     IEditorInput input
+                     ) throws PartInitException {
+        if (input instanceof FileEditorInput) {
+            IFile flowFile = ((FileEditorInput) input).getFile();
+            IFile diagramFile = flowFile.getProject().getFile(
+                    new Path(flowFile.getFullPath().removeFirstSegments(1).toString() + "_diagram"));
+            FileEditorInput newInput = new FileEditorInput(diagramFile);
+            super.init(site, newInput);
+        } else {
+            super.init(site, input);
+        }
+    }
 }
