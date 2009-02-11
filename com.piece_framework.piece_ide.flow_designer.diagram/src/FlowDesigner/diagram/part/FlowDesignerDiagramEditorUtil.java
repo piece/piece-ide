@@ -223,13 +223,13 @@ public class FlowDesignerDiagramEditorUtil {
         return diagramResource;
     }
 
-    public static void createDiagramFromFlow(IFile flowFile,
-                                             IFile diagramFile
-                                             ) {
+    public static void createDiagramFromModel(URI diagramURI,
+                                              URI modelURI
+                                              ) {
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
                                                     .createEditingDomain();
-        final Resource flowResource = editingDomain.createResource(flowFile.getFullPath().toString());
-        final Resource diagramResource = editingDomain.createResource(diagramFile.getFullPath().toString());
+        final Resource diagramResource = editingDomain.getResourceSet().createResource(diagramURI);
+        final Resource modelResource = editingDomain.getResourceSet().createResource(modelURI);
 
         AbstractTransactionalCommand command =
             new AbstractTransactionalCommand(editingDomain,
@@ -239,15 +239,13 @@ public class FlowDesignerDiagramEditorUtil {
             protected CommandResult doExecuteWithResult(IProgressMonitor monitor,
                                                         IAdaptable info
                                                         ) throws ExecutionException {
-                Flow flow = null;
                 try {
-                    flowResource.load(null);
-                    flow = (Flow) flowResource.getContents().get(0);
+                    modelResource.load(null);
                 } catch (IOException e) {
-                    flow = FlowDesignerFactoryImpl.eINSTANCE.createFlow();
+                    modelResource.getContents().add(FlowDesignerFactoryImpl.eINSTANCE.createFlow());
                 }
 
-                Diagram diagram = ViewService.createDiagram(flowResource.getContents().get(0),
+                Diagram diagram = ViewService.createDiagram(modelResource.getContents().get(0),
                                                             FlowEditPart.MODEL_ID,
                                                             FlowDesignerDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT
                                                             );
@@ -275,7 +273,7 @@ public class FlowDesignerDiagramEditorUtil {
             FlowDesignerDiagramEditorPlugin.getInstance().logError(
                     "Unable to create model and diagram", e);
         }
-        setCharset(WorkspaceSynchronizer.getFile(flowResource));
+        setCharset(WorkspaceSynchronizer.getFile(modelResource));
         setCharset(WorkspaceSynchronizer.getFile(diagramResource));
     }
 

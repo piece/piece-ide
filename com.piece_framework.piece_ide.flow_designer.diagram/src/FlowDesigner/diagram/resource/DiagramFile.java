@@ -1,29 +1,12 @@
 // $Id$
 package FlowDesigner.diagram.resource;
 
-import java.io.IOException;
-import java.util.Collections;
-
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.operations.OperationHistoryFactory;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
-import org.eclipse.gmf.runtime.common.core.command.CommandResult;
-import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
-import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
-import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
-import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.emf.common.util.URI;
 
-import FlowDesigner.diagram.edit.parts.FlowEditPart;
 import FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin;
 import FlowDesigner.diagram.part.FlowDesignerDiagramEditorUtil;
-import FlowDesigner.diagram.part.Messages;
 
 public class DiagramFile {
     private static final String DIAGRAM_PATH =
@@ -46,7 +29,16 @@ public class DiagramFile {
     }
 
     public void createFromFlow() {
-        FlowDesignerDiagramEditorUtil.createDiagramFromFlow(fFlowFile, fDiagramFile);
+        URI diagramURI = URI.createPlatformResourceURI(fDiagramFile.getFullPath().toString(),
+                                                       false
+                                                       );
+        URI flowURI = URI.createPlatformResourceURI(fFlowFile.getFullPath().toString(),
+                                                    false
+                                                    );
+
+        FlowDesignerDiagramEditorUtil.createDiagramFromModel(diagramURI,
+                                                             flowURI
+                                                             );
     }
 
     public IFile getFile() {
