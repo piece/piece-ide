@@ -2,7 +2,6 @@
 package FlowDesigner.diagram.resource;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -14,7 +13,6 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
@@ -35,9 +33,7 @@ public class ResourceChangeListener implements IResourceChangeListener,
         IResourceDeltaVisitor {
     private ArrayList<IResourceDelta> fAddedList;
     private ArrayList<IResourceDelta> fRemovedList;
-    private Map<IResourceDelta, Diagram> fDiagramMap;
 
-    
     /**
      * YAMLファイルの変更に対する処理をシリアライズファイルにも行う.
      *
