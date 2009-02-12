@@ -2,6 +2,8 @@
 package FlowDesigner.diagram.resource;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 
@@ -16,12 +18,7 @@ public class DiagramFile {
     private IFile fFlowFile;
 
     public DiagramFile(IFile flowFile) {
-        if (flowFile == null) {
-            throw new NullPointerException();
-        }
-        fFlowFile = flowFile;
-
-        fDiagramFile = getDiagramFile();
+        initialize(flowFile);
     }
 
     public boolean exists() {
@@ -45,10 +42,35 @@ public class DiagramFile {
         return fDiagramFile;
     }
 
+    public void moveToFlowFile(IFile newFlowFile) throws CoreException {
+        remove();
+        initialize(newFlowFile);
+        createFromFlow();
+    }
+
+    public void remove() throws CoreException {
+        fDiagramFile.delete(true,
+                            new NullProgressMonitor()
+                            );
+    }
+
     private IFile getDiagramFile() {
-        String diagramPath = DIAGRAM_PATH
-                             + fFlowFile.getFullPath().removeFirstSegments(1).toString()
-                             + DIAGRAM_EXTENSION;
-        return fFlowFile.getProject().getFile(new Path(diagramPath));
+        return fFlowFile.getProject().getFile(getDiagramPath());
+    }
+
+    private Path getDiagramPath() {
+        return new Path(DIAGRAM_PATH
+                        + fFlowFile.getFullPath().removeFirstSegments(1).toString()
+                        + DIAGRAM_EXTENSION
+                        );
+    }
+
+    private void initialize(IFile flowFile) {
+        if (flowFile == null) {
+            throw new NullPointerException();
+        }
+        fFlowFile = flowFile;
+
+        fDiagramFile = getDiagramFile();
     }
 }

@@ -3,6 +3,8 @@ package FlowDesigner.diagram.part;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -17,13 +19,16 @@ import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.IStartup;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import FlowDesigner.diagram.resource.ResourceChangeListener;
 
 /**
  * @generated
  */
-public class FlowDesignerDiagramEditorPlugin extends AbstractUIPlugin {
+public class FlowDesignerDiagramEditorPlugin extends AbstractUIPlugin implements IStartup {
 
     /**
      * @generated
@@ -244,5 +249,11 @@ public class FlowDesignerDiagramEditorPlugin extends AbstractUIPlugin {
         if (throwable != null) {
             throwable.printStackTrace();
         }
+    }
+
+    public void earlyStartup() {
+        ResourcesPlugin.getWorkspace().addResourceChangeListener(
+                new ResourceChangeListener(),
+                IResourceChangeEvent.POST_BUILD);
     }
 }

@@ -508,4 +508,10 @@
          schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
          sequence="F5"/>
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin">
+      </startup>
+   </extension>
 </plugin>
