@@ -1,0 +1,13 @@
+com.piece_framework.piece_ide.test/bin
+com.piece_framework.piece_ide.piece_flow/bin
+com.piece_framework.piece_ide.piece_orm.mapper.ui/bin
+com.piece_framework.piece_ide.flow_designer/bin
+com.piece_framework.piece_ide.piece_orm.mapper/bin
+com.piece_framework.piece_ide.flow_designer.diagram/bin
+com.piece_framework.piece_ide.piece_orm.mapper.oaw/bin
+com.piece_framework.piece_ide.flow_designer.model.edit/bin
+com.piece_framework.piece_ide.piece_flow.ui/bin
+com.piece_framework.piece_ide.piece_orm.mapper.oaw.editor/bin
+com.piece_framework.piece_ide.flow_designer.model/bin
+com.piece_framework.piece_ide.flow_designer.diagram.tests/bin
+com.piece_framework.piece_ide.wizard/bin
