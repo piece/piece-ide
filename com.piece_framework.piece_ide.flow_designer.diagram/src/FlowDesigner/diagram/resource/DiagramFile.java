@@ -6,6 +6,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.ui.PlatformUI;
 
 import FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin;
 import FlowDesigner.diagram.part.FlowDesignerDiagramEditorUtil;
@@ -43,9 +44,18 @@ public class DiagramFile {
     }
 
     public void moveToFlowFile(IFile newFlowFile) throws CoreException {
-        IFile oldDiagramFile = fDiagramFile;
+        final IFile oldDiagramFile = fDiagramFile;
         initialize(newFlowFile);
-        oldDiagramFile.copy(fDiagramFile.getFullPath(), true, new NullProgressMonitor());
+        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+            public void run() {
+                try {
+                    oldDiagramFile.copy(fDiagramFile.getFullPath(), true, new NullProgressMonitor());
+                    oldDiagramFile.delete(true, new NullProgressMonitor());
+                } catch (CoreException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void remove() throws CoreException {
