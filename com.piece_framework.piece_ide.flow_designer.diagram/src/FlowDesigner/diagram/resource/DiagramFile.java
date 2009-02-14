@@ -65,7 +65,7 @@ public class DiagramFile {
         return fDiagramFile;
     }
 
-    public void moveToFlowFile(IFile newFlowFile) throws CoreException {
+    public void moveToFlowFile(IFile newFlowFile) {
         final IFile oldDiagramFile = fDiagramFile;
         initialize(newFlowFile);
         PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
@@ -75,7 +75,10 @@ public class DiagramFile {
                                                 fDiagramFile);
                     oldDiagramFile.delete(true, new NullProgressMonitor());
                 } catch (CoreException e) {
-                    e.printStackTrace();
+                    FlowDesignerDiagramEditorPlugin.getInstance().logError(
+                            "Unable to move diagram",
+                            e
+                            );
                 }
             }
         });

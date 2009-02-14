@@ -261,26 +261,22 @@ public class FlowDesignerDiagramEditorPlugin extends AbstractUIPlugin implements
             }
 
             public void handleFileDeleted(IFile file) {
-                // TODO Auto-generated method stub
-                
+                DiagramFile diagramFile = new DiagramFile(file);
+                try {
+                    diagramFile.remove();
+                } catch (CoreException e) {
+                    e.printStackTrace();
+                }
             }
 
             public void handleFileMoved(IFile oldFile, IFile newFile) {
                 DiagramFile diagramFile = new DiagramFile(oldFile);
-                try {
-                    diagramFile.moveToFlowFile(newFile);
-                } catch (CoreException e) {
-                    e.printStackTrace();
-                }
+                diagramFile.moveToFlowFile(newFile);
             }
 
             public void handleFileRenamed(IFile oldFile, IFile newFile) {
                 DiagramFile diagramFile = new DiagramFile(oldFile);
-                try {
-                    diagramFile.moveToFlowFile(newFile);
-                } catch (CoreException e) {
-                    e.printStackTrace();
-                }
+                diagramFile.moveToFlowFile(newFile);
             }
 
             public void handleMarkerAdded(IMarker marker) {
