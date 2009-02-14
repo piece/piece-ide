@@ -43,9 +43,9 @@ public class DiagramFile {
     }
 
     public void moveToFlowFile(IFile newFlowFile) throws CoreException {
-        remove();
+        IFile oldDiagramFile = fDiagramFile;
         initialize(newFlowFile);
-        createFromFlow();
+        oldDiagramFile.copy(fDiagramFile.getFullPath(), true, new NullProgressMonitor());
     }
 
     public void remove() throws CoreException {
