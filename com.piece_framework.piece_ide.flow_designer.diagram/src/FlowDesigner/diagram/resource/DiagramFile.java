@@ -84,10 +84,21 @@ public class DiagramFile {
         });
     }
 
-    public void remove() throws CoreException {
-        fDiagramFile.delete(true,
-                            new NullProgressMonitor()
+    public void remove() {
+        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+            public void run() {
+                try {
+                    fDiagramFile.delete(true,
+                                        new NullProgressMonitor()
+                                        );
+                } catch (CoreException e) {
+                    FlowDesignerDiagramEditorPlugin.getInstance().logError(
+                            "Unable to delete diagram",
+                            e
                             );
+                }
+            }
+        });
     }
 
     private IFile getDiagramFile() {

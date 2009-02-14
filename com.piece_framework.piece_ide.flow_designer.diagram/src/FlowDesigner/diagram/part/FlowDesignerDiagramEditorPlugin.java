@@ -262,11 +262,7 @@ public class FlowDesignerDiagramEditorPlugin extends AbstractUIPlugin implements
 
             public void handleFileDeleted(IFile file) {
                 DiagramFile diagramFile = new DiagramFile(file);
-                try {
-                    diagramFile.remove();
-                } catch (CoreException e) {
-                    e.printStackTrace();
-                }
+                diagramFile.remove();
             }
 
             public void handleFileMoved(IFile oldFile, IFile newFile) {
