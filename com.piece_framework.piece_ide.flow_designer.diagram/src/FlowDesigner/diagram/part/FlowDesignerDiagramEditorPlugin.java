@@ -258,8 +258,6 @@ public class FlowDesignerDiagramEditorPlugin extends AbstractUIPlugin implements
     public void earlyStartup() {
         IFileObserver fileObserver = new IFileObserver() {
             public void handleFileChanged(IFile file) {
-                // TODO Auto-generated method stub
-                
             }
 
             public void handleFileDeleted(IFile file) {
@@ -276,9 +274,13 @@ public class FlowDesignerDiagramEditorPlugin extends AbstractUIPlugin implements
                 }
             }
 
-            public void handleFileRenamed(IFile oldFile, IFile file) {
-                // TODO Auto-generated method stub
-                
+            public void handleFileRenamed(IFile oldFile, IFile newFile) {
+                DiagramFile diagramFile = new DiagramFile(oldFile);
+                try {
+                    diagramFile.moveToFlowFile(newFile);
+                } catch (CoreException e) {
+                    e.printStackTrace();
+                }
             }
 
             public void handleMarkerAdded(IMarker marker) {
