@@ -150,26 +150,19 @@ public class DiagramFile {
                                                         IAdaptable info
                                                         ) throws ExecutionException {
                 try {
-                    XMIResource resource = new XMIResourceImpl();
-
-                    Map<Object, Object> loadOptions = new HashMap<Object, Object>();
-                    loadOptions.putAll(resource.getDefaultLoadOptions());
-                    loadOptions.put(XMIResource.OPTION_LAX_FEATURE_PROCESSING, Boolean.TRUE);
-                    loadOptions.put(XMIResource.OPTION_PROCESS_DANGLING_HREF, XMIResource.OPTION_PROCESS_DANGLING_HREF_RECORD);
-
-                    oldDiagramResource.load(loadOptions);
+                    oldDiagramResource.load(null);
                     flowResource.load(null);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    return CommandResult.newErrorCommandResult(e);
                 }
+
                 Diagram diagram = null;
                 for (EObject eObject: oldDiagramResource.getContents()) {
                     if (eObject instanceof Diagram) {
                         diagram = (Diagram) eObject;
                         diagram.setElement(flowResource.getContents().get(0));
                         for (Object object: diagram.getPersistedChildren()) {
-                            Node node = (Node) object;
-                            InternalEObject element = (InternalEObject) node.getElement();
+                            InternalEObject element = (InternalEObject) ((Node) object).getElement();
                             URI newURI = URI.createURI(element.eProxyURI().scheme() +
                                                        ":" +
                                                        flowResource.getURI().devicePath() +
@@ -184,7 +177,7 @@ public class DiagramFile {
                 try {
                     newDiagramResource.save(null);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    return CommandResult.newErrorCommandResult(e);
                 }
 
                 return CommandResult.newOKCommandResult();
