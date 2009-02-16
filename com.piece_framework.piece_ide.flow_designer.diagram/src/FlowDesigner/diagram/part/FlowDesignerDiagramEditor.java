@@ -312,6 +312,8 @@ public class FlowDesignerDiagramEditor extends DiagramDocumentEditor implements
                 setPartName(input.getName());
             } else if (FlowDesignerDiagramEditorUtil.isDiagramFile(file)) {
                 super.init(site, input);
+
+                setPartName(FlowDesignerDiagramEditorUtil.getFlowFileName(file));
             }
         } else {
             super.init(site, input);

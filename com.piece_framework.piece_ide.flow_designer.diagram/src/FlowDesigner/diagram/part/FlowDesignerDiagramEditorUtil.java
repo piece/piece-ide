@@ -362,6 +362,18 @@ public class FlowDesignerDiagramEditorUtil {
         return file.getFileExtension().equals(FLOW_EXTENSION + DIAGRAM_EXTENSION);
     }
 
+    public static String getFlowFileName(IFile diagramFile) {
+        if (diagramFile == null
+            || isDiagramFile(diagramFile) == false
+            ) {
+            return null;
+        }
+        return diagramFile.getFullPath()
+                .removeFileExtension()
+                .addFileExtension(FLOW_EXTENSION)
+                .lastSegment();
+    }
+
     /**
      * Create a new instance of domain element associated with canvas.
      * <!-- begin-user-doc -->
