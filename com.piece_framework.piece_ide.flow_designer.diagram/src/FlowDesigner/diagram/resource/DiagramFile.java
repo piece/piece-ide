@@ -64,12 +64,23 @@ public class DiagramFile {
     public void moveToFlowFile(IFile newFlowFile) {
         final IFile oldDiagramFile = fDiagramFile;
         initialize(newFlowFile);
+
+        final URI oldDiagramURI = URI.createPlatformResourceURI(oldDiagramFile.getFullPath().toString(),
+                                                                false
+                                                                );
+        final URI newDiagramURI = URI.createPlatformResourceURI(fDiagramFile.getFullPath().toString(),
+                                                                false
+                                                                );
+        final URI flowURI = URI.createPlatformResourceURI(fFlowFile.getFullPath().toString(),
+                                                          false
+                                                          );
+
         PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
             public void run() {
                 try {
-                    DiagramFile.this.replaceURI(oldDiagramFile,
-                                                fDiagramFile,
-                                                fFlowFile
+                    DiagramFile.this.replaceURI(oldDiagramURI,
+                                                newDiagramURI,
+                                                flowURI
                                                 );
                     oldDiagramFile.delete(true, new NullProgressMonitor());
                 } catch (CoreException e) {
@@ -119,27 +130,19 @@ public class DiagramFile {
         fDiagramFile = getDiagramFile();
     }
 
-    private void replaceURI(IFile oldDiagramFile,
-                            IFile newDiagramFile,
-                            IFile flowFile
+    private void replaceURI(URI oldDiagramURI,
+                            URI newDiagramURI,
+                            URI flowURI
                             ) {
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
                                                     .createEditingDomain();
-        URI oldDiagramURI = URI.createPlatformResourceURI(oldDiagramFile.getFullPath().toString(),
-                                                          false
-                                                          );
-        URI newDiagramURI = URI.createPlatformResourceURI(newDiagramFile.getFullPath().toString(),
-                                                          false
-                                                          );
-        final URI flowURI = URI.createPlatformResourceURI(flowFile.getFullPath().toString(),
-                                                          false
-                                                          );
         final Resource oldDiagramResource = editingDomain.getResourceSet()
                                                 .createResource(oldDiagramURI);
         final Resource newDiagramResource = editingDomain.getResourceSet()
                                                 .createResource(newDiagramURI);
         final Resource flowResource = editingDomain.getResourceSet()
                                                 .createResource(flowURI);
+
         AbstractTransactionalCommand command = new AbstractTransactionalCommand(
                                         editingDomain,
                                         FlowDesigner.diagram.part.Messages.FlowDesignerDiagramEditorUtil_CreateDiagramCommandLabel,
