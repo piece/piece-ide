@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
@@ -39,6 +40,7 @@ import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCo
 import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
 import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.wizard.Wizard;
@@ -49,10 +51,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
-import FlowDesigner.Flow;
 import FlowDesigner.diagram.edit.parts.FlowEditPart;
 import FlowDesigner.impl.FlowDesignerFactoryImpl;
-import FlowDesigner.impl.FlowDesignerPackageImpl;
 
 /**
  * @generated
@@ -275,6 +275,75 @@ public class FlowDesignerDiagramEditorUtil {
         }
         setCharset(WorkspaceSynchronizer.getFile(modelResource));
         setCharset(WorkspaceSynchronizer.getFile(diagramResource));
+    }
+
+    public static void replaceURI(URI oldDiagramURI,
+                                  URI newDiagramURI,
+                                  URI flowURI
+                                  ) {
+        TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
+                                                    .createEditingDomain();
+        final Resource oldDiagramResource = editingDomain.getResourceSet()
+                                                .createResource(oldDiagramURI);
+        final Resource newDiagramResource = editingDomain.getResourceSet()
+                                                .createResource(newDiagramURI);
+        final Resource flowResource = editingDomain.getResourceSet()
+                                                .createResource(flowURI);
+
+        AbstractTransactionalCommand command = new AbstractTransactionalCommand(
+                        editingDomain,
+                        FlowDesigner.diagram.part.Messages.FlowDesignerDiagramEditorUtil_CreateDiagramCommandLabel,
+                        Collections.EMPTY_LIST
+                        ) {
+            protected CommandResult doExecuteWithResult(IProgressMonitor monitor,
+                                                        IAdaptable info
+                                                        ) throws ExecutionException {
+                try {
+                    oldDiagramResource.load(null);
+                    flowResource.load(null);
+                } catch (IOException e) {
+                    return CommandResult.newErrorCommandResult(e);
+                }
+
+                Diagram diagram = null;
+                for (EObject eObject: oldDiagramResource.getContents()) {
+                    if (eObject instanceof Diagram) {
+                        diagram = (Diagram) eObject;
+                        diagram.setElement(flowResource.getContents().get(0));
+                        for (Object object: diagram.getPersistedChildren()) {
+                            InternalEObject element = (InternalEObject) ((Node) object).getElement();
+                            URI newURI = URI.createURI(element.eProxyURI().scheme() +
+                                                       ":" +
+                                                       flowResource.getURI().devicePath() +
+                                                       "#" +
+                                                       element.eProxyURI().fragment()
+                                                       );
+                            element.eSetProxyURI(newURI);
+                        }
+                    }
+                }
+
+                newDiagramResource.getContents().add(diagram);
+                try {
+                    newDiagramResource.save(null);
+                } catch (IOException e) {
+                    return CommandResult.newErrorCommandResult(e);
+                }
+
+                return CommandResult.newOKCommandResult();
+            }
+        };
+
+        try {
+            OperationHistoryFactory.getOperationHistory().execute(command,
+                    new SubProgressMonitor(new NullProgressMonitor(), 1), null);
+        } catch (ExecutionException e) {
+            FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
+                .getInstance().logError(
+                        "Unable to replace model URI", e); //$NON-NLS-1$
+        }
+        setCharset(WorkspaceSynchronizer.getFile(oldDiagramResource));
+        setCharset(WorkspaceSynchronizer.getFile(newDiagramResource));
     }
 
     /**
