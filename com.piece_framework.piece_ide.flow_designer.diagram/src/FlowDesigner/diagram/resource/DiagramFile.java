@@ -192,7 +192,7 @@ public class DiagramFile {
         } catch (ExecutionException e) {
             FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
             .getInstance().logError(
-                    "Unable to create model and diagram", e); //$NON-NLS-1$
+                    "Unable to replace model URI", e); //$NON-NLS-1$
         }
         FlowDesignerDiagramEditorUtil.setCharset(WorkspaceSynchronizer.getFile(oldDiagramResource));
         FlowDesignerDiagramEditorUtil.setCharset(WorkspaceSynchronizer.getFile(newDiagramResource));
