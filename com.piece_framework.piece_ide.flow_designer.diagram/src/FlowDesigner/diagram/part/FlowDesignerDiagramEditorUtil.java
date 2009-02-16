@@ -58,6 +58,8 @@ import FlowDesigner.impl.FlowDesignerFactoryImpl;
  * @generated
  */
 public class FlowDesignerDiagramEditorUtil {
+    public static final String DIAGRAM_EXTENSION = "_diagram";
+    private static final String FLOW_EXTENSION = "flow";
 
     /**
      * @generated
@@ -346,6 +348,20 @@ public class FlowDesignerDiagramEditorUtil {
         setCharset(WorkspaceSynchronizer.getFile(newDiagramResource));
     }
 
+    public static boolean isFlowFile(IFile file) {
+        if (file == null) {
+            return false;
+        }
+        return file.getFileExtension().equals(FLOW_EXTENSION);
+    }
+
+    public static boolean isDiagramFile(IFile file) {
+        if (file == null) {
+            return false;
+        }
+        return file.getFileExtension().equals(FLOW_EXTENSION + DIAGRAM_EXTENSION);
+    }
+
     /**
      * Create a new instance of domain element associated with canvas.
      * <!-- begin-user-doc -->
@@ -559,5 +575,4 @@ public class FlowDesignerDiagramEditorUtil {
             return element2ViewMap;
         }
     } //LazyElement2ViewMap	
-
 }

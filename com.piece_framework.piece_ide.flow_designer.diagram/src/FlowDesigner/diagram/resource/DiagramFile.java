@@ -14,7 +14,6 @@ import FlowDesigner.diagram.part.FlowDesignerDiagramEditorUtil;
 public class DiagramFile {
     private static final String DIAGRAM_PATH =
         ".settings/" + FlowDesignerDiagramEditorPlugin.ID + "/";
-    private static final String DIAGRAM_EXTENSION = "_diagram";
     private IFile fDiagramFile;
     private IFile fFlowFile;
 
@@ -99,7 +98,7 @@ public class DiagramFile {
     private Path getDiagramPath() {
         return new Path(DIAGRAM_PATH
                         + fFlowFile.getFullPath().removeFirstSegments(1).toString()
-                        + DIAGRAM_EXTENSION
+                        + FlowDesignerDiagramEditorUtil.DIAGRAM_EXTENSION
                         );
     }
 
