@@ -3,8 +3,6 @@ package FlowDesigner.diagram.resource;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.OperationHistoryFactory;
@@ -19,8 +17,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.xmi.XMIResource;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
@@ -72,7 +68,9 @@ public class DiagramFile {
             public void run() {
                 try {
                     DiagramFile.this.replaceURI(oldDiagramFile,
-                                                fDiagramFile);
+                                                fDiagramFile,
+                                                fFlowFile
+                                                );
                     oldDiagramFile.delete(true, new NullProgressMonitor());
                 } catch (CoreException e) {
                     FlowDesignerDiagramEditorPlugin.getInstance().logError(
@@ -122,7 +120,8 @@ public class DiagramFile {
     }
 
     private void replaceURI(IFile oldDiagramFile,
-                            IFile newDiagramFile
+                            IFile newDiagramFile,
+                            IFile flowFile
                             ) {
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
                                                     .createEditingDomain();
@@ -132,7 +131,7 @@ public class DiagramFile {
         URI newDiagramURI = URI.createPlatformResourceURI(newDiagramFile.getFullPath().toString(),
                                                           false
                                                           );
-        final URI flowURI = URI.createPlatformResourceURI(fFlowFile.getFullPath().toString(),
+        final URI flowURI = URI.createPlatformResourceURI(flowFile.getFullPath().toString(),
                                                           false
                                                           );
         final Resource oldDiagramResource = editingDomain.getResourceSet()
