@@ -300,15 +300,19 @@ public class FlowDesignerDiagramEditor extends DiagramDocumentEditor implements
                      IEditorInput input
                      ) throws PartInitException {
         if (input instanceof FileEditorInput) {
-            IFile flowFile = ((FileEditorInput) input).getFile();
-            DiagramFile diagramFile = new DiagramFile(flowFile);
-            if (diagramFile.exists() == false) {
-                diagramFile.createFromFlow();
-            }
-            FileEditorInput newInput = new FileEditorInput(diagramFile.getFile());
-            super.init(site, newInput);
+            IFile file = ((FileEditorInput) input).getFile();
+            if (file.getFileExtension().equals("flow")) {
+                DiagramFile diagramFile = new DiagramFile(file);
+                if (diagramFile.exists() == false) {
+                    diagramFile.createFromFlow();
+                }
+                FileEditorInput newInput = new FileEditorInput(diagramFile.getFile());
+                super.init(site, newInput);
 
-            setPartName(input.getName());
+                setPartName(input.getName());
+            } else if (file.getFileExtension().equals("flow_diagram")) {
+                super.init(site, input);
+            }
         } else {
             super.init(site, input);
         }
