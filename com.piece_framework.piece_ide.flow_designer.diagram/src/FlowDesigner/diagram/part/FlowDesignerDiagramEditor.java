@@ -10,7 +10,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.ui.URIEditorInput;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gef.palette.PaletteRoot;
@@ -308,6 +307,8 @@ public class FlowDesignerDiagramEditor extends DiagramDocumentEditor implements
             }
             FileEditorInput newInput = new FileEditorInput(diagramFile.getFile());
             super.init(site, newInput);
+
+            setPartName(input.getName());
         } else {
             super.init(site, input);
         }
