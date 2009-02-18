@@ -41,8 +41,10 @@ import org.eclipse.swt.accessibility.AccessibleEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 
 import FlowDesigner.Event;
+import FlowDesigner.NamedState;
 import FlowDesigner.impl.FlowDesignerPackageImpl;
 
 /**
@@ -329,9 +331,24 @@ public class EventEventEditPart extends LabelEditPart implements
                         FlowDesigner.diagram.edit.parts.FlowDesignerEditPartFactory
                                 .getTextCellEditorLocator(this));
             } else {
+                final StringBuilder eventName = new StringBuilder();
+                if (fromInitialState) {
+                    eventName.append("(FirstState)");
+                } else if (toFinalState) {
+                    eventName.append("FinalStateFrom" + ((NamedState) event.eContainer()).getName());
+                }
+
                 editManager = new TextDirectEditManager(this) {
                     @Override
                     public void show() {
+                        super.show();
+                        getCellEditor().deactivate();
+                        getCellEditor().setValue(eventName.toString());
+                        Display.getCurrent().asyncExec(new Runnable() {
+                            public void run() {
+                                commit();
+                            }
+                        });
                     }
                 };
             }
