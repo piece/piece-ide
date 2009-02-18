@@ -306,7 +306,10 @@
           kind="Pathmaps"/>
     </preferencePages>
   </diagram>
-  <plugin/>
+  <plugin
+      name="Piece_IDE FlowDesigner"
+      provider="Piece Project"
+      version="0.4.0"/>
   <editor/>
   <navigator>
     <childReferences
