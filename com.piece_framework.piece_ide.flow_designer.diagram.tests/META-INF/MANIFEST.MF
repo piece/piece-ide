@@ -11,7 +11,6 @@ Export-Package: FlowDesigner.diagram.resources
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources;bundle-version="3.4.1",
  com.piece_framework.piece_ide.flow_designer.model;visibility:=reexport,
- com.piece_framework.piece_ide.flow_designer.diagram;bundle-version="1.0.0",
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.junit;visibility:=reexport
 Bundle-ActivationPolicy: lazy
