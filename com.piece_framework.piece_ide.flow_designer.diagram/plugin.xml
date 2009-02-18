@@ -511,7 +511,7 @@
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin">
+            class="FlowDesigner.diagram.part.FlowDesignerDiagramStartup">
       </startup>
    </extension>
 </plugin>

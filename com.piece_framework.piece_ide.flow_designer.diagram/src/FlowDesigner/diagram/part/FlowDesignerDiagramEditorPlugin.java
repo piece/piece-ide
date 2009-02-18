@@ -2,10 +2,7 @@ package FlowDesigner.diagram.part;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -17,21 +14,16 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
-import org.eclipse.gmf.runtime.common.ui.resources.FileChangeManager;
-import org.eclipse.gmf.runtime.common.ui.resources.IFileObserver;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.IStartup;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
-
-import FlowDesigner.diagram.resource.DiagramFile;
 
 /**
  * @generated
  */
-public class FlowDesignerDiagramEditorPlugin extends AbstractUIPlugin implements IStartup {
+public class FlowDesignerDiagramEditorPlugin extends AbstractUIPlugin {
 
     /**
      * @generated
@@ -252,38 +244,5 @@ public class FlowDesignerDiagramEditorPlugin extends AbstractUIPlugin implements
         if (throwable != null) {
             throwable.printStackTrace();
         }
-    }
-
-    public void earlyStartup() {
-        IFileObserver fileObserver = new IFileObserver() {
-            public void handleFileChanged(IFile file) {
-            }
-
-            public void handleFileDeleted(IFile file) {
-                DiagramFile diagramFile = new DiagramFile(file);
-                diagramFile.remove();
-            }
-
-            public void handleFileMoved(IFile oldFile, IFile newFile) {
-                DiagramFile diagramFile = new DiagramFile(oldFile);
-                diagramFile.moveToFlowFile(newFile);
-            }
-
-            public void handleFileRenamed(IFile oldFile, IFile newFile) {
-                DiagramFile diagramFile = new DiagramFile(oldFile);
-                diagramFile.moveToFlowFile(newFile);
-            }
-
-            public void handleMarkerAdded(IMarker marker) {
-            }
-
-            public void handleMarkerChanged(IMarker marker) {
-            }
-
-            public void handleMarkerDeleted(IMarker marker, Map attributes) {
-            }
-        };
-        FileChangeManager.getInstance().addFileObserver(fileObserver,
-                new String[] { FlowDesignerDiagramEditorUtil.FLOW_EXTENSION });
     }
 }
