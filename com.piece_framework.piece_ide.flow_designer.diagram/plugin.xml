@@ -47,7 +47,7 @@
   	  <wizard
   	     name="%newWizardName"
   	     icon="icons/FlowDesigner.gif"
-  	     category="org.eclipse.ui.Examples"
+  	     category="com.piece_framework.piece_ide"
   	     class="FlowDesigner.diagram.part.FlowDesignerCreationWizard"
   	     id="FlowDesigner.diagram.part.FlowDesignerCreationWizardID">
   	  	 <description>%newWizardDesc</description>  
