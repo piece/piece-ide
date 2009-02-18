@@ -59,7 +59,7 @@ import FlowDesigner.impl.FlowDesignerFactoryImpl;
  */
 public class FlowDesignerDiagramEditorUtil {
     public static final String DIAGRAM_EXTENSION = "_diagram"; //$NON-NLS-1$
-    private static final String FLOW_EXTENSION = "flow"; //$NON-NLS-1$
+    public static final String FLOW_EXTENSION = "flow"; //$NON-NLS-1$
 
     /**
      * @generated

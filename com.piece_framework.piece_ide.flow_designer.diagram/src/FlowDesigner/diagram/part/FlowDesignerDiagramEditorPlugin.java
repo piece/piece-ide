@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -284,6 +283,8 @@ public class FlowDesignerDiagramEditorPlugin extends AbstractUIPlugin implements
             public void handleMarkerDeleted(IMarker marker, Map attributes) {
             }
         };
-        FileChangeManager.getInstance().addFileObserver(fileObserver, new String[]{"flow"});
+        FileChangeManager.getInstance().addFileObserver(fileObserver,
+                                                        new String[]{FlowDesignerDiagramEditorUtil.FLOW_EXTENSION
+                                                        });
     }
 }
