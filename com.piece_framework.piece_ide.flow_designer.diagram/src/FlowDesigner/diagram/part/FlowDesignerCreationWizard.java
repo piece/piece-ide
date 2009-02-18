@@ -2,8 +2,11 @@ package FlowDesigner.diagram.part;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -13,6 +16,8 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
+
+import FlowDesigner.diagram.resource.DiagramFile;
 
 /**
  * @generated
@@ -98,32 +103,11 @@ public class FlowDesignerCreationWizard extends Wizard implements INewWizard {
     }
 
     /**
-     * @generated
+     * @generated NOT
      */
     public void addPages() {
-        diagramModelFilePage = new FlowDesigner.diagram.part.FlowDesignerCreationWizardPage(
-                "DiagramModelFile", getSelection(), "flow_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
-        diagramModelFilePage
-                .setTitle(FlowDesigner.diagram.part.Messages.FlowDesignerCreationWizard_DiagramModelFilePageTitle);
-        diagramModelFilePage
-                .setDescription(FlowDesigner.diagram.part.Messages.FlowDesignerCreationWizard_DiagramModelFilePageDescription);
-        addPage(diagramModelFilePage);
-
         domainModelFilePage = new FlowDesigner.diagram.part.FlowDesignerCreationWizardPage(
-                "DomainModelFile", getSelection(), "flow") { //$NON-NLS-1$ //$NON-NLS-2$
-
-            public void setVisible(boolean visible) {
-                if (visible) {
-                    String fileName = diagramModelFilePage.getFileName();
-                    fileName = fileName.substring(0, fileName.length()
-                            - ".flow_diagram".length()); //$NON-NLS-1$
-                    setFileName(FlowDesigner.diagram.part.FlowDesignerDiagramEditorUtil
-                            .getUniqueFileName(getContainerFullPath(),
-                                    fileName, "flow")); //$NON-NLS-1$
-                }
-                super.setVisible(visible);
-            }
-        };
+                "DomainModelFile", getSelection(), "flow"); //$NON-NLS-1$ //$NON-NLS-2$
         domainModelFilePage
                 .setTitle(FlowDesigner.diagram.part.Messages.FlowDesignerCreationWizard_DomainModelFilePageTitle);
         domainModelFilePage
@@ -132,15 +116,21 @@ public class FlowDesignerCreationWizard extends Wizard implements INewWizard {
     }
 
     /**
-     * @generated
+     * @generated NOT
      */
     public boolean performFinish() {
         IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
 
             protected void execute(IProgressMonitor monitor)
                     throws CoreException, InterruptedException {
+                IFile flowFile = ResourcesPlugin.getWorkspace().getRoot().getFile(domainModelFilePage.getFilePath());
+                DiagramFile diagramFile = new DiagramFile(flowFile);
+                URI diagramURI = URI.createPlatformResourceURI(diagramFile.getFile().getFullPath().toString(),
+                                                               false
+                                                               );
+
                 diagram = FlowDesigner.diagram.part.FlowDesignerDiagramEditorUtil
-                        .createDiagram(diagramModelFilePage.getURI(),
+                        .createDiagram(diagramURI,
                                 domainModelFilePage.getURI(), monitor);
                 if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
                     try {
