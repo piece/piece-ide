@@ -59,6 +59,7 @@ import FlowDesigner.impl.FlowDesignerFactoryImpl;
  */
 public class FlowDesignerDiagramEditorUtil {
     public static final String DIAGRAM_EXTENSION = "_diagram"; //$NON-NLS-1$
+
     public static final String FLOW_EXTENSION = "flow"; //$NON-NLS-1$
 
     /**
@@ -225,32 +226,33 @@ public class FlowDesignerDiagramEditorUtil {
         return diagramResource;
     }
 
-    public static void createDiagramFromModel(URI diagramURI,
-                                              URI modelURI
-                                              ) {
+    public static void createDiagramFromModel(URI diagramURI, URI modelURI) {
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
-                                                    .createEditingDomain();
-        final Resource diagramResource = editingDomain.getResourceSet().createResource(diagramURI);
-        final Resource modelResource = editingDomain.getResourceSet().createResource(modelURI);
+                .createEditingDomain();
+        final Resource diagramResource = editingDomain.getResourceSet()
+                .createResource(diagramURI);
+        final Resource modelResource = editingDomain.getResourceSet()
+                .createResource(modelURI);
 
-        AbstractTransactionalCommand command =
-            new AbstractTransactionalCommand(editingDomain,
-                                             Messages.FlowDesignerDiagramEditorUtil_CreateDiagramCommandLabel,
-                                             Collections.EMPTY_LIST
-                                             ) {
-            protected CommandResult doExecuteWithResult(IProgressMonitor monitor,
-                                                        IAdaptable info
-                                                        ) throws ExecutionException {
+        AbstractTransactionalCommand command = new AbstractTransactionalCommand(
+                editingDomain,
+                Messages.FlowDesignerDiagramEditorUtil_CreateDiagramCommandLabel,
+                Collections.EMPTY_LIST) {
+            protected CommandResult doExecuteWithResult(
+                    IProgressMonitor monitor, IAdaptable info)
+                    throws ExecutionException {
                 try {
                     modelResource.load(null);
                 } catch (IOException e) {
-                    modelResource.getContents().add(FlowDesignerFactoryImpl.eINSTANCE.createFlow());
+                    modelResource.getContents().add(
+                            FlowDesignerFactoryImpl.eINSTANCE.createFlow());
                 }
 
-                Diagram diagram = ViewService.createDiagram(modelResource.getContents().get(0),
-                                                            FlowEditPart.MODEL_ID,
-                                                            FlowDesignerDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT
-                                                            );
+                Diagram diagram = ViewService
+                        .createDiagram(
+                                modelResource.getContents().get(0),
+                                FlowEditPart.MODEL_ID,
+                                FlowDesignerDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
                 if (diagram != null) {
                     diagramResource.getContents().add(diagram);
                 } else {
@@ -271,9 +273,7 @@ public class FlowDesignerDiagramEditorUtil {
 
         try {
             OperationHistoryFactory.getOperationHistory().execute(command,
-                                                                  new NullProgressMonitor(),
-                                                                  null
-                                                                  );
+                    new NullProgressMonitor(), null);
         } catch (ExecutionException e) {
             FlowDesignerDiagramEditorPlugin.getInstance().logError(
                     "Unable to create diagram from flow", e); //$NON-NLS-1$
@@ -282,27 +282,24 @@ public class FlowDesignerDiagramEditorUtil {
         setCharset(WorkspaceSynchronizer.getFile(diagramResource));
     }
 
-    public static void replaceURI(URI oldDiagramURI,
-                                  URI newDiagramURI,
-                                  URI flowURI
-                                  ) {
+    public static void replaceURI(URI oldDiagramURI, URI newDiagramURI,
+            URI flowURI) {
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
-                                                    .createEditingDomain();
+                .createEditingDomain();
         final Resource oldDiagramResource = editingDomain.getResourceSet()
-                                                .createResource(oldDiagramURI);
+                .createResource(oldDiagramURI);
         final Resource newDiagramResource = editingDomain.getResourceSet()
-                                                .createResource(newDiagramURI);
+                .createResource(newDiagramURI);
         final Resource flowResource = editingDomain.getResourceSet()
-                                                .createResource(flowURI);
+                .createResource(flowURI);
 
         AbstractTransactionalCommand command = new AbstractTransactionalCommand(
-                        editingDomain,
-                        FlowDesigner.diagram.part.Messages.FlowDesignerDiagramEditorUtil_CreateDiagramCommandLabel,
-                        Collections.EMPTY_LIST
-                        ) {
-            protected CommandResult doExecuteWithResult(IProgressMonitor monitor,
-                                                        IAdaptable info
-                                                        ) throws ExecutionException {
+                editingDomain,
+                FlowDesigner.diagram.part.Messages.FlowDesignerDiagramEditorUtil_CreateDiagramCommandLabel,
+                Collections.EMPTY_LIST) {
+            protected CommandResult doExecuteWithResult(
+                    IProgressMonitor monitor, IAdaptable info)
+                    throws ExecutionException {
                 try {
                     oldDiagramResource.load(null);
                     flowResource.load(null);
@@ -311,18 +308,18 @@ public class FlowDesignerDiagramEditorUtil {
                 }
 
                 Diagram diagram = null;
-                for (EObject eObject: oldDiagramResource.getContents()) {
+                for (EObject eObject : oldDiagramResource.getContents()) {
                     if (eObject instanceof Diagram) {
                         diagram = (Diagram) eObject;
                         diagram.setElement(flowResource.getContents().get(0));
-                        for (Object object: diagram.getPersistedChildren()) {
-                            InternalEObject element = (InternalEObject) ((Node) object).getElement();
-                            URI newURI = URI.createURI(element.eProxyURI().scheme() +
-                                                       ":" + //$NON-NLS-1$
-                                                       flowResource.getURI().devicePath() +
-                                                       "#" + //$NON-NLS-1$
-                                                       element.eProxyURI().fragment()
-                                                       );
+                        for (Object object : diagram.getPersistedChildren()) {
+                            InternalEObject element = (InternalEObject) ((Node) object)
+                                    .getElement();
+                            URI newURI = URI.createURI(element.eProxyURI()
+                                    .scheme()
+                                    + ":" + //$NON-NLS-1$
+                                    flowResource.getURI().devicePath() + "#" + //$NON-NLS-1$
+                                    element.eProxyURI().fragment());
                             element.eSetProxyURI(newURI);
                         }
                     }
@@ -344,8 +341,7 @@ public class FlowDesignerDiagramEditorUtil {
                     new SubProgressMonitor(new NullProgressMonitor(), 1), null);
         } catch (ExecutionException e) {
             FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
-                .getInstance().logError(
-                        "Unable to replace model URI", e); //$NON-NLS-1$
+                    .getInstance().logError("Unable to replace model URI", e); //$NON-NLS-1$
         }
         setCharset(WorkspaceSynchronizer.getFile(oldDiagramResource));
         setCharset(WorkspaceSynchronizer.getFile(newDiagramResource));
@@ -362,19 +358,16 @@ public class FlowDesignerDiagramEditorUtil {
         if (file == null) {
             return false;
         }
-        return file.getFileExtension().equals(FLOW_EXTENSION + DIAGRAM_EXTENSION);
+        return file.getFileExtension().equals(
+                FLOW_EXTENSION + DIAGRAM_EXTENSION);
     }
 
     public static String getFlowFileName(IFile diagramFile) {
-        if (diagramFile == null
-            || isDiagramFile(diagramFile) == false
-            ) {
+        if (diagramFile == null || isDiagramFile(diagramFile) == false) {
             return null;
         }
-        return diagramFile.getFullPath()
-                .removeFileExtension()
-                .addFileExtension(FLOW_EXTENSION)
-                .lastSegment();
+        return diagramFile.getFullPath().removeFileExtension()
+                .addFileExtension(FLOW_EXTENSION).lastSegment();
     }
 
     /**

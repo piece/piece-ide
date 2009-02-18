@@ -123,11 +123,11 @@ public class FlowDesignerCreationWizard extends Wizard implements INewWizard {
 
             protected void execute(IProgressMonitor monitor)
                     throws CoreException, InterruptedException {
-                IFile flowFile = ResourcesPlugin.getWorkspace().getRoot().getFile(domainModelFilePage.getFilePath());
+                IFile flowFile = ResourcesPlugin.getWorkspace().getRoot()
+                        .getFile(domainModelFilePage.getFilePath());
                 DiagramFile diagramFile = new DiagramFile(flowFile);
-                URI diagramURI = URI.createPlatformResourceURI(diagramFile.getFile().getFullPath().toString(),
-                                                               false
-                                                               );
+                URI diagramURI = URI.createPlatformResourceURI(diagramFile
+                        .getFile().getFullPath().toString(), false);
 
                 diagram = FlowDesigner.diagram.part.FlowDesignerDiagramEditorUtil
                         .createDiagram(diagramURI,

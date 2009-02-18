@@ -284,7 +284,6 @@ public class FlowDesignerDiagramEditorPlugin extends AbstractUIPlugin implements
             }
         };
         FileChangeManager.getInstance().addFileObserver(fileObserver,
-                                                        new String[]{FlowDesignerDiagramEditorUtil.FLOW_EXTENSION
-                                                        });
+                new String[] { FlowDesignerDiagramEditorUtil.FLOW_EXTENSION });
     }
 }

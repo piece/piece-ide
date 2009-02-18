@@ -296,9 +296,8 @@ public class FlowDesignerDiagramEditor extends DiagramDocumentEditor implements
     }
 
     @Override
-    public void init(IEditorSite site,
-                     IEditorInput input
-                     ) throws PartInitException {
+    public void init(IEditorSite site, IEditorInput input)
+            throws PartInitException {
         if (input instanceof FileEditorInput) {
             IFile file = ((FileEditorInput) input).getFile();
             if (FlowDesignerDiagramEditorUtil.isFlowFile(file)) {
@@ -306,7 +305,8 @@ public class FlowDesignerDiagramEditor extends DiagramDocumentEditor implements
                 if (diagramFile.exists() == false) {
                     diagramFile.createFromFlow();
                 }
-                FileEditorInput newInput = new FileEditorInput(diagramFile.getFile());
+                FileEditorInput newInput = new FileEditorInput(diagramFile
+                        .getFile());
                 super.init(site, newInput);
 
                 setPartName(input.getName());

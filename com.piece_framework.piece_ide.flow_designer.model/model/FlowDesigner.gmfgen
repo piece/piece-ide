@@ -12,6 +12,7 @@
       canonicalEditPolicyClassName="FlowCanonicalEditPolicy"
       iconProviderPriority="Low"
       creationWizardIconPath="icons/FlowDesigner.gif"
+      creationWizardCategoryID="com.piece_framework.piece_ide"
       validationProviderPriority="Low">
     <diagramRunTimeClass
         href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Diagram"/>
