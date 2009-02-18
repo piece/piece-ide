@@ -254,12 +254,15 @@ public class FlowDesignerDiagramEditorUtil {
                 if (diagram != null) {
                     diagramResource.getContents().add(diagram);
                 } else {
-                    return CommandResult.newErrorCommandResult("Cannot create diagram from flow");
+                    FlowDesignerDiagramEditorPlugin.getInstance().logError(
+                            "Unable to create diagram from flow"); //$NON-NLS-1$
+                    return CommandResult.newOKCommandResult();
                 }
                 try {
                     diagramResource.save(null);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    FlowDesignerDiagramEditorPlugin.getInstance().logError(
+                            "Unable to create diagram from flow", e); //$NON-NLS-1$
                 }
 
                 return CommandResult.newOKCommandResult();
@@ -273,7 +276,7 @@ public class FlowDesignerDiagramEditorUtil {
                                                                   );
         } catch (ExecutionException e) {
             FlowDesignerDiagramEditorPlugin.getInstance().logError(
-                    "Unable to create model and diagram", e);
+                    "Unable to create diagram from flow", e);
         }
         setCharset(WorkspaceSynchronizer.getFile(modelResource));
         setCharset(WorkspaceSynchronizer.getFile(diagramResource));
