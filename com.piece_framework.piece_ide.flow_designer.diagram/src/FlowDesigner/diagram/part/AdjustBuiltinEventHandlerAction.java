@@ -2,7 +2,6 @@
 package FlowDesigner.diagram.part;
 
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.gmf.runtime.common.core.command.ICommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.IAction;
@@ -26,12 +25,12 @@ public class AdjustBuiltinEventHandlerAction implements IObjectActionDelegate {
     public void run(IAction action) {
         Flow flow = (Flow) ((View) fFlowEditPart.getModel()).getElement();
         ConfigureRequest request = new ConfigureRequest(flow, null);
-        AdjustBuiltinEventHandlerCommand command = new AdjustBuiltinEventHandlerCommand("Adjust Built-in Evnet Handler", flow, request);
+        AdjustBuiltinEventHandlerCommand command = new AdjustBuiltinEventHandlerCommand(Messages.AdjustBuiltinEventHandlerAction_CommandLabel, flow, request);
         try {
             command.execute(null, null);
         } catch (ExecutionException e) {
             MessageDialog.openError(Display.getCurrent().getActiveShell(),
-                                    "Error",
+                                    Messages.MessageDialog_ErrorTitle,
                                     e.getMessage()
                                     );
             e.printStackTrace();

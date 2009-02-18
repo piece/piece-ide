@@ -355,6 +355,10 @@ public class Messages extends NLS {
      */
     public static String AbstractParser_UnknownLiteralMessage;
 
+    public static String AdjustBuiltinEventHandlerAction_CommandLabel;
+
+    public static String MessageDialog_ErrorTitle;
+
     /**
      * @generated
      */
@@ -369,6 +373,10 @@ public class Messages extends NLS {
      * @generated
      */
     public static String FlowDesignerModelingAssistantProviderMessage;
+
+    public static String IdentifierAttributeParser_ExistsMessage;
+
+    public static String IdentifierAttributeParser_RequiredMessage;
 
     //TODO: put accessor fields manually	
 }

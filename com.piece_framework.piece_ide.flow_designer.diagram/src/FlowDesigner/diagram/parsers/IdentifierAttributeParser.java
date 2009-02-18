@@ -3,6 +3,9 @@ package FlowDesigner.diagram.parsers;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.osgi.util.NLS;
+
+import FlowDesigner.diagram.part.Messages;
 
 public abstract class IdentifierAttributeParser extends MessageFormatParser {
     protected EObject fElement;
@@ -20,10 +23,14 @@ public abstract class IdentifierAttributeParser extends MessageFormatParser {
     @Override
     protected Object getValidNewValue(EAttribute feature, Object value) {
         if (value == null || value.equals("")) { //$NON-NLS-1$
-            return new InvalidValue(feature.getName() + " is required.");
+            return new InvalidValue(NLS.bind(Messages.IdentifierAttributeParser_RequiredMessage,
+                                             feature.getName()
+                                             ));
         }
         if (existsElement((String) value)) {
-            return new InvalidValue(value + " already exists.");
+            return new InvalidValue(NLS.bind(Messages.IdentifierAttributeParser_ExistsMessage,
+                                    value
+                                    ));
         }
         return super.getValidNewValue(feature, value);
     }
