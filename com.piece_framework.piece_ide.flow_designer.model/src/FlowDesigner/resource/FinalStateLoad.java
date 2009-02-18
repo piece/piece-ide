@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 
+import FlowDesigner.Event;
 import FlowDesigner.FinalState;
 import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
@@ -88,7 +89,7 @@ class FinalStateLoad extends AbstractLoad {
             for (Map<?, ?> stateAttributes: lastStateMap.get(stateType)) {
                 NamedState state = flow.findStateByName((String) stateAttributes.get("name"));
                 Map<String, String> eventAttributes = new HashMap<String, String>();
-                eventAttributes.put("event", "FinalStateFrom" + state.getName());
+                eventAttributes.put("event", Event.LASTSTATE_EVENT_PREFIX + state.getName());
                 EventLoad load = new EventLoad();
                 load.load(state, eventAttributes);
             }

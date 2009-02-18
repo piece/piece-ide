@@ -80,7 +80,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         assertEquals(1, initialState.getEvents().size());
         Event displayForm1FromInitialState = initialState.getEvents().get(0);
         assertEvent(displayForm1FromInitialState,
-                    "(FirstState)",
+                    Event.FIRSTSTATE_EVENT,
                     null,
                     null,
                     displayForm1
@@ -89,7 +89,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         assertEquals(1, displayForm1.getEvents().size());
         Event finalStateFromDisplayForm1 = displayForm1.getEvents().get(0);
         assertEvent(finalStateFromDisplayForm1,
-                    "FinalStateFromDisplayForm1",
+                    Event.LASTSTATE_EVENT_PREFIX + "DisplayForm1",
                     null,
                     null,
                     finalState
@@ -191,7 +191,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         assertEquals(1, initialState.getEvents().size());
         Event displayForm1FromInitialState = initialState.getEvents().get(0);
         assertEvent(displayForm1FromInitialState,
-                    "(FirstState)",
+                    Event.FIRSTSTATE_EVENT,
                     null,
                     null,
                     displayForm1
@@ -234,7 +234,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         assertEquals(1, displayForm2.getEvents().size());
         Event finalStateFromDisplayForm2 = displayForm2.getEvents().get(0);
         assertEvent(finalStateFromDisplayForm2,
-                    "FinalStateFromDisplayForm2",
+                    Event.LASTSTATE_EVENT_PREFIX + "DisplayForm2",
                     null,
                     null,
                     finalState
@@ -294,7 +294,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         assertEquals(1, initialState.getEvents().size());
         Event displayForm1FromInitialState = initialState.getEvents().get(0);
         assertEvent(displayForm1FromInitialState,
-                    "(FirstState)",
+                    Event.FIRSTSTATE_EVENT,
                     null,
                     null,
                     displayForm1
@@ -303,7 +303,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         assertEquals(1, displayForm1.getEvents().size());
         Event finalStateFromDisplayForm1 = displayForm1.getEvents().get(0);
         assertEvent(finalStateFromDisplayForm1,
-                    "FinalStateFromDisplayForm1",
+                    Event.LASTSTATE_EVENT_PREFIX + "DisplayForm1",
                     null,
                     null,
                     finalState
@@ -311,7 +311,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         assertEquals(1, displayForm2.getEvents().size());
         Event finalStateFromDisplayForm2 = displayForm2.getEvents().get(0);
         assertEvent(finalStateFromDisplayForm2,
-                    "FinalStateFromDisplayForm2",
+                    Event.LASTSTATE_EVENT_PREFIX + "DisplayForm2",
                     null,
                     null,
                     finalState
@@ -361,7 +361,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         assertEquals(1, displayForm1.getEvents().size());
         Event finalStateFromDisplayForm1 = displayForm1.getEvents().get(0);
         assertEvent(finalStateFromDisplayForm1,
-                    "FinalStateFromDisplayForm1",
+                    Event.LASTSTATE_EVENT_PREFIX + "DisplayForm1",
                     null,
                     null,
                     finalState
@@ -424,7 +424,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         assertEquals(1, initialState.getEvents().size());
         Event displayForm1FromInitialState = initialState.getEvents().get(0);
         assertEvent(displayForm1FromInitialState,
-                    "(FirstState)",
+                    Event.FIRSTSTATE_EVENT,
                     null,
                     null,
                     displayForm1

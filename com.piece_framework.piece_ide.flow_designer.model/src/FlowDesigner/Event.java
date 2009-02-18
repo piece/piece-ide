@@ -28,6 +28,9 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface Event extends EObject {
+    public static final String FIRSTSTATE_EVENT = "(FirstState)";
+    public static final String LASTSTATE_EVENT_PREFIX = "FinalStateFrom";
+
     /**
      * Returns the value of the '<em><b>Event</b></em>' attribute.
      * <!-- begin-user-doc -->

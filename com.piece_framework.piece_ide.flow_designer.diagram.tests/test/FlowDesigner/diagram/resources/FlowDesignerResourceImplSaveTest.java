@@ -47,12 +47,12 @@ public class FlowDesignerResourceImplSaveTest extends TestCase {
         flow.getStates().add(displayForm1);
 
         Event initialStateToDisplayForm1 = fFactory.createEvent();
-        initialStateToDisplayForm1.setEvent("(FirstState)");
+        initialStateToDisplayForm1.setEvent(Event.FIRSTSTATE_EVENT);
         initialStateToDisplayForm1.setNextState(displayForm1);
         flow.getInitialState().getEvents().add(initialStateToDisplayForm1);
 
         Event finalStateFromDisplayForm1 = fFactory.createEvent();
-        finalStateFromDisplayForm1.setEvent("FinalStateFromDisplayForm1");
+        finalStateFromDisplayForm1.setEvent(Event.LASTSTATE_EVENT_PREFIX + "DisplayForm1");
         finalStateFromDisplayForm1.setNextState(finalState);
         displayForm1.getEvents().add(finalStateFromDisplayForm1);
 
@@ -103,7 +103,7 @@ public class FlowDesignerResourceImplSaveTest extends TestCase {
         flow.getStates().add(displayForm2);
 
         Event initialStateToDisplayForm1 = fFactory.createEvent();
-        initialStateToDisplayForm1.setEvent("(FirstState)");
+        initialStateToDisplayForm1.setEvent(Event.FIRSTSTATE_EVENT);
         initialStateToDisplayForm1.setNextState(displayForm1);
         flow.getInitialState().getEvents().add(initialStateToDisplayForm1);
 
@@ -125,7 +125,7 @@ public class FlowDesignerResourceImplSaveTest extends TestCase {
         process1.getEvents().add(displayForm1FromProcess1);
 
         Event finalStateFromDisplayForm2 = fFactory.createEvent();
-        finalStateFromDisplayForm2.setEvent("FinalStateFromDisplayForm2");
+        finalStateFromDisplayForm2.setEvent(Event.LASTSTATE_EVENT_PREFIX + "DisplayForm2");
         finalStateFromDisplayForm2.setNextState(finalState);
         displayForm2.getEvents().add(finalStateFromDisplayForm2);
 
@@ -200,17 +200,17 @@ public class FlowDesignerResourceImplSaveTest extends TestCase {
         flow.getStates().add(displayForm2);
 
         Event initialStateToDisplayForm1 = fFactory.createEvent();
-        initialStateToDisplayForm1.setEvent("(FirstState)");
+        initialStateToDisplayForm1.setEvent(Event.FIRSTSTATE_EVENT);
         initialStateToDisplayForm1.setNextState(displayForm1);
         flow.getInitialState().getEvents().add(initialStateToDisplayForm1);
 
         Event finalStateFromDisplayForm1 = fFactory.createEvent();
-        finalStateFromDisplayForm1.setEvent("FinalStateFromDisplayForm1");
+        finalStateFromDisplayForm1.setEvent(Event.LASTSTATE_EVENT_PREFIX + "DisplayForm1");
         finalStateFromDisplayForm1.setNextState(finalState);
         displayForm1.getEvents().add(finalStateFromDisplayForm1);
 
         Event finalStateFromDisplayForm2 = fFactory.createEvent();
-        finalStateFromDisplayForm2.setEvent("FinalStateFromDisplayForm2");
+        finalStateFromDisplayForm2.setEvent(Event.LASTSTATE_EVENT_PREFIX + "DisplayForm2");
         finalStateFromDisplayForm2.setNextState(finalState);
         displayForm2.getEvents().add(finalStateFromDisplayForm2);
 
@@ -245,7 +245,7 @@ public class FlowDesignerResourceImplSaveTest extends TestCase {
         flow.getStates().add(displayForm1);
 
         Event finalStateFromDisplayForm1 = fFactory.createEvent();
-        finalStateFromDisplayForm1.setEvent("FinalStateFromDisplayForm1");
+        finalStateFromDisplayForm1.setEvent(Event.LASTSTATE_EVENT_PREFIX + "DisplayForm1");
         finalStateFromDisplayForm1.setNextState(finalState);
         displayForm1.getEvents().add(finalStateFromDisplayForm1);
 
@@ -277,7 +277,7 @@ public class FlowDesignerResourceImplSaveTest extends TestCase {
         flow.getStates().add(process1);
 
         Event initialStateToDisplayForm1 = fFactory.createEvent();
-        initialStateToDisplayForm1.setEvent("(FirstState)");
+        initialStateToDisplayForm1.setEvent(Event.FIRSTSTATE_EVENT);
         initialStateToDisplayForm1.setNextState(displayForm1);
         flow.getInitialState().getEvents().add(initialStateToDisplayForm1);
 
@@ -324,12 +324,12 @@ public class FlowDesignerResourceImplSaveTest extends TestCase {
         flow.getStates().add(displayForm1);
 
         Event initialStateToDisplayForm1 = fFactory.createEvent();
-        initialStateToDisplayForm1.setEvent("(FirstState)");
+        initialStateToDisplayForm1.setEvent(Event.FIRSTSTATE_EVENT);
         initialStateToDisplayForm1.setNextState(displayForm1);
         flow.getInitialState().getEvents().add(initialStateToDisplayForm1);
 
         Event finalStateFromDisplayForm1 = fFactory.createEvent();
-        finalStateFromDisplayForm1.setEvent("FinalStateFromDisplayForm1");
+        finalStateFromDisplayForm1.setEvent(Event.LASTSTATE_EVENT_PREFIX + "DisplayForm1");
         finalStateFromDisplayForm1.setNextState(finalState);
         displayForm1.getEvents().add(finalStateFromDisplayForm1);
 

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 
+import FlowDesigner.Event;
 import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
 
@@ -34,7 +35,7 @@ class TransitionEventLoad extends AbstractLoad {
         }
 
         Map<String, String> eventAttributes = new HashMap<String, String>();
-        eventAttributes.put("event", "(FirstState)");
+        eventAttributes.put("event", Event.FIRSTSTATE_EVENT);
         eventAttributes.put("nextState", (String) flowMap.get("firstState"));
 
         EventLoad load = new EventLoad();
