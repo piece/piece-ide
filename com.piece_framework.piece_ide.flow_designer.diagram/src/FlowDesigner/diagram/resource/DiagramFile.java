@@ -76,7 +76,7 @@ public class DiagramFile {
                     oldDiagramFile.delete(true, new NullProgressMonitor());
                 } catch (CoreException e) {
                     FlowDesignerDiagramEditorPlugin.getInstance().logError(
-                            "Unable to move diagram",
+                            "Unable to move diagram", //$NON-NLS-1$
                             e
                             );
                 }
@@ -93,7 +93,7 @@ public class DiagramFile {
                                         );
                 } catch (CoreException e) {
                     FlowDesignerDiagramEditorPlugin.getInstance().logError(
-                            "Unable to delete diagram",
+                            "Unable to delete diagram", //$NON-NLS-1$
                             e
                             );
                 }
