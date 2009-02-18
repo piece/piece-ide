@@ -276,7 +276,7 @@ public class FlowDesignerDiagramEditorUtil {
                                                                   );
         } catch (ExecutionException e) {
             FlowDesignerDiagramEditorPlugin.getInstance().logError(
-                    "Unable to create diagram from flow", e);
+                    "Unable to create diagram from flow", e); //$NON-NLS-1$
         }
         setCharset(WorkspaceSynchronizer.getFile(modelResource));
         setCharset(WorkspaceSynchronizer.getFile(diagramResource));
