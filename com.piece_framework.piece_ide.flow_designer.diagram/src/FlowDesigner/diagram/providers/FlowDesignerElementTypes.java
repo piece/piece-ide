@@ -119,7 +119,7 @@ public class FlowDesignerElementTypes extends ElementInitializers {
      */
     private static String getImageRegistryKey(EObject element) {
         for (EAttribute eAttribute : element.eClass().getEAllAttributes()) {
-            if (eAttribute.getName().equals("name")) {
+            if (eAttribute.getName().equals("name")) { //$NON-NLS-1$
                 return (String) element.eGet(eAttribute);
             }
         }

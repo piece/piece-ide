@@ -171,7 +171,7 @@ public class FlowDesignerParserProvider extends AbstractProvider implements
                     if (realObject instanceof Flow) {
                         URI uri = realObject.eResource().getURI();
                         String flowName = uri.lastSegment().replaceFirst(
-                                "." + uri.fileExtension(), "");
+                                "." + uri.fileExtension(), ""); //$NON-NLS-1$ //$NON-NLS-2$
                         return flowName;
                     }
                 }

@@ -58,8 +58,8 @@ import FlowDesigner.impl.FlowDesignerFactoryImpl;
  * @generated
  */
 public class FlowDesignerDiagramEditorUtil {
-    public static final String DIAGRAM_EXTENSION = "_diagram";
-    private static final String FLOW_EXTENSION = "flow";
+    public static final String DIAGRAM_EXTENSION = "_diagram"; //$NON-NLS-1$
+    private static final String FLOW_EXTENSION = "flow"; //$NON-NLS-1$
 
     /**
      * @generated
@@ -315,9 +315,9 @@ public class FlowDesignerDiagramEditorUtil {
                         for (Object object: diagram.getPersistedChildren()) {
                             InternalEObject element = (InternalEObject) ((Node) object).getElement();
                             URI newURI = URI.createURI(element.eProxyURI().scheme() +
-                                                       ":" +
+                                                       ":" + //$NON-NLS-1$
                                                        flowResource.getURI().devicePath() +
-                                                       "#" +
+                                                       "#" + //$NON-NLS-1$
                                                        element.eProxyURI().fragment()
                                                        );
                             element.eSetProxyURI(newURI);

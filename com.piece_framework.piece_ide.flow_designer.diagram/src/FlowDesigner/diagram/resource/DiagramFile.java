@@ -20,7 +20,7 @@ import FlowDesigner.diagram.part.FlowDesignerDiagramEditorUtil;
 
 public class DiagramFile {
     private static final String DIAGRAM_PATH =
-        ".settings/" + FlowDesignerDiagramEditorPlugin.ID + "/";
+        ".settings/" + FlowDesignerDiagramEditorPlugin.ID + "/"; //$NON-NLS-1$ //$NON-NLS-2$
     private IFile fDiagramFile;
     private IFile fFlowFile;
 

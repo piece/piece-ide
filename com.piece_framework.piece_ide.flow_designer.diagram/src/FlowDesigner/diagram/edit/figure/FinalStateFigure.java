@@ -8,6 +8,6 @@ public class FinalStateFigure extends SpecialStateFigure {
     @Override
     Image getFigureImage() {
         return FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
-                .getBundledImageDescriptor("icons/FinalStateLarge.gif").createImage();
+                .getBundledImageDescriptor("icons/FinalStateLarge.gif").createImage(); //$NON-NLS-1$
     }
 }

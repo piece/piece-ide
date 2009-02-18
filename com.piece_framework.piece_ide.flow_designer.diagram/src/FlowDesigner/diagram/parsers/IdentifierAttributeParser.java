@@ -19,7 +19,7 @@ public abstract class IdentifierAttributeParser extends MessageFormatParser {
 
     @Override
     protected Object getValidNewValue(EAttribute feature, Object value) {
-        if (value == null || value.equals("")) {
+        if (value == null || value.equals("")) { //$NON-NLS-1$
             return new InvalidValue(feature.getName() + " is required.");
         }
         if (existsElement((String) value)) {

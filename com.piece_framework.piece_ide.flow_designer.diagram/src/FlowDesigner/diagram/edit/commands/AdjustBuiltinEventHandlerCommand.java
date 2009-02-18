@@ -27,13 +27,13 @@ public class AdjustBuiltinEventHandlerCommand extends EditElementCommand {
         Flow flow = (Flow) getElementToEdit();
         for (NamedState state: flow.getStates()) {
             if (state.getEntry() != null) {
-                state.setEntry("doEntryOn" + state.getName());
+                state.setEntry("doEntryOn" + state.getName()); //$NON-NLS-1$
             }
             if (state.getActivity() != null) {
-                state.setActivity("doActivtyOn" + state.getName());
+                state.setActivity("doActivtyOn" + state.getName()); //$NON-NLS-1$
             }
             if (state.getExit() != null) {
-                state.setExit("doExitOn" + state.getName());
+                state.setExit("doExitOn" + state.getName()); //$NON-NLS-1$
             }
         }
 
