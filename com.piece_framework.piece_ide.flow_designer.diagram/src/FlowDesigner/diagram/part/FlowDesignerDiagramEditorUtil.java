@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -40,8 +41,6 @@ import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCo
 import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
 import org.eclipse.gmf.runtime.notation.Diagram;
-import org.eclipse.gmf.runtime.notation.Edge;
-import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.wizard.Wizard;
@@ -313,25 +312,10 @@ public class FlowDesignerDiagramEditorUtil {
                     if (eObject instanceof Diagram) {
                         diagram = (Diagram) eObject;
                         diagram.setElement(flowResource.getContents().get(0));
-                        for (Object object: diagram.getPersistedChildren()) {
-                            InternalEObject element = (InternalEObject) ((Node) object)
-                                    .getElement();
-                            URI newURI = URI.createURI(element.eProxyURI()
-                                    .scheme()
-                                    + ":" + //$NON-NLS-1$
-                                    flowResource.getURI().devicePath() + "#" + //$NON-NLS-1$
-                                    element.eProxyURI().fragment());
-                            element.eSetProxyURI(newURI);
-                        }
-                        for (Object edge: diagram.getPersistedEdges()) {
-                            InternalEObject element = (InternalEObject) ((Edge) edge).getElement();
-                            URI newURI = URI.createURI(element.eProxyURI()
-                                    .scheme()
-                                    + ":" + //$NON-NLS-1$
-                                    flowResource.getURI().devicePath() + "#" + //$NON-NLS-1$
-                                    element.eProxyURI().fragment());
-                            element.eSetProxyURI(newURI);
-                        }
+
+                        String devicePath = flowResource.getURI().devicePath();
+                        replaceElementProxyURI(diagram.getPersistedChildren(), devicePath);
+                        replaceElementProxyURI(diagram.getPersistedEdges(), devicePath);
                     }
                 }
 
@@ -344,6 +328,19 @@ public class FlowDesignerDiagramEditorUtil {
 
                 return CommandResult.newOKCommandResult();
             }
+
+            private void replaceElementProxyURI(EList<?> views,
+                    String devicePath) {
+                for (Object view: views) {
+                    InternalEObject element = (InternalEObject) ((View) view).getElement();
+                    URI newURI = URI.createURI(element.eProxyURI()
+                            .scheme()
+                            + ":" + //$NON-NLS-1$
+                            devicePath + "#" + //$NON-NLS-1$
+                            element.eProxyURI().fragment());
+                    element.eSetProxyURI(newURI);
+                }
+            }
         };
 
         try {
@@ -353,7 +350,6 @@ public class FlowDesignerDiagramEditorUtil {
             FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin
                     .getInstance().logError("Unable to replace model URI", e); //$NON-NLS-1$
         }
-        setCharset(WorkspaceSynchronizer.getFile(oldDiagramResource));
         setCharset(WorkspaceSynchronizer.getFile(newDiagramResource));
     }
 
