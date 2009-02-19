@@ -40,6 +40,7 @@ import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCo
 import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
 import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -308,13 +309,22 @@ public class FlowDesignerDiagramEditorUtil {
                 }
 
                 Diagram diagram = null;
-                for (EObject eObject : oldDiagramResource.getContents()) {
+                for (EObject eObject: oldDiagramResource.getContents()) {
                     if (eObject instanceof Diagram) {
                         diagram = (Diagram) eObject;
                         diagram.setElement(flowResource.getContents().get(0));
-                        for (Object object : diagram.getPersistedChildren()) {
+                        for (Object object: diagram.getPersistedChildren()) {
                             InternalEObject element = (InternalEObject) ((Node) object)
                                     .getElement();
+                            URI newURI = URI.createURI(element.eProxyURI()
+                                    .scheme()
+                                    + ":" + //$NON-NLS-1$
+                                    flowResource.getURI().devicePath() + "#" + //$NON-NLS-1$
+                                    element.eProxyURI().fragment());
+                            element.eSetProxyURI(newURI);
+                        }
+                        for (Object edge: diagram.getPersistedEdges()) {
+                            InternalEObject element = (InternalEObject) ((Edge) edge).getElement();
                             URI newURI = URI.createURI(element.eProxyURI()
                                     .scheme()
                                     + ":" + //$NON-NLS-1$
