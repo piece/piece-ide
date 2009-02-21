@@ -308,14 +308,16 @@ public class FlowDesignerDiagramEditorUtil {
                 }
 
                 Diagram diagram = null;
-                for (EObject eObject: oldDiagramResource.getContents()) {
+                for (EObject eObject : oldDiagramResource.getContents()) {
                     if (eObject instanceof Diagram) {
                         diagram = (Diagram) eObject;
                         diagram.setElement(flowResource.getContents().get(0));
 
                         String devicePath = flowResource.getURI().devicePath();
-                        replaceElementProxyURI(diagram.getPersistedChildren(), devicePath);
-                        replaceElementProxyURI(diagram.getPersistedEdges(), devicePath);
+                        replaceElementProxyURI(diagram.getPersistedChildren(),
+                                devicePath);
+                        replaceElementProxyURI(diagram.getPersistedEdges(),
+                                devicePath);
                     }
                 }
 
@@ -331,10 +333,10 @@ public class FlowDesignerDiagramEditorUtil {
 
             private void replaceElementProxyURI(EList<?> views,
                     String devicePath) {
-                for (Object view: views) {
-                    InternalEObject element = (InternalEObject) ((View) view).getElement();
-                    URI newURI = URI.createURI(element.eProxyURI()
-                            .scheme()
+                for (Object view : views) {
+                    InternalEObject element = (InternalEObject) ((View) view)
+                            .getElement();
+                    URI newURI = URI.createURI(element.eProxyURI().scheme()
                             + ":" + //$NON-NLS-1$
                             devicePath + "#" + //$NON-NLS-1$
                             element.eProxyURI().fragment());

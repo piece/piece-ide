@@ -307,7 +307,7 @@
     </preferencePages>
   </diagram>
   <plugin
-      name="Piece_IDE FlowDesigner"
+      name="Piece_IDE Flow Designer"
       provider="Piece Project"
       version="0.4.0"/>
   <editor/>

@@ -335,7 +335,8 @@ public class EventEventEditPart extends LabelEditPart implements
                 if (fromInitialState) {
                     eventName.append(Event.FIRSTSTATE_EVENT);
                 } else if (toFinalState) {
-                    eventName.append(Event.LASTSTATE_EVENT_PREFIX + ((NamedState) event.eContainer()).getName());
+                    eventName.append(Event.LASTSTATE_EVENT_PREFIX
+                            + ((NamedState) event.eContainer()).getName());
                 }
 
                 editManager = new TextDirectEditManager(this) {
