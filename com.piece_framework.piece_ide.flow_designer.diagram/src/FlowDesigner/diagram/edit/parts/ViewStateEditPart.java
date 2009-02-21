@@ -1,8 +1,11 @@
 package FlowDesigner.diagram.edit.parts;
 
+import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.FlowLayout;
+import org.eclipse.draw2d.GridLayout;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.RectangleFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
@@ -245,7 +248,7 @@ public class ViewStateEditPart extends ShapeNodeEditPart {
         }
 
         /**
-         * @generated
+         * @generated NOT
          */
         private void createContents() {
 
@@ -254,11 +257,27 @@ public class ViewStateEditPart extends ShapeNodeEditPart {
 
             this.add(fFigureViewStateNameFigure);
 
+            Figure viewContainer = new Figure();
+
+            GridLayout layout = new GridLayout();
+            layout.horizontalSpacing = 5;
+            layout.verticalSpacing = 0;
+            layout.marginHeight = 0;
+            layout.marginWidth = 5;
+            layout.numColumns = 2;
+            viewContainer.setLayoutManager(layout);
+
+            Label viewLabelFigure = new Label("View:");
+            viewLabelFigure.setFont(this.getFont());
+            viewLabelFigure.setForegroundColor(ColorConstants.blue);
+            viewContainer.add(viewLabelFigure);
+
             fFigureViewStateViewFigure = new WrappingLabel();
             fFigureViewStateViewFigure.setText("<...>");
 
-            this.add(fFigureViewStateViewFigure);
+            viewContainer.add(fFigureViewStateViewFigure);
 
+            this.add(viewContainer);
         }
 
         /**
