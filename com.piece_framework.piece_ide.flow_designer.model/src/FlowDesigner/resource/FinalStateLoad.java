@@ -89,7 +89,7 @@ class FinalStateLoad extends AbstractLoad {
             for (Map<?, ?> stateAttributes: lastStateMap.get(stateType)) {
                 NamedState state = flow.findStateByName((String) stateAttributes.get("name"));
                 Map<String, String> eventAttributes = new HashMap<String, String>();
-                eventAttributes.put("event", Event.LASTSTATE_EVENT_PREFIX + state.getName());
+                eventAttributes.put("event", Event.LASTSTATE_EVENT);
                 EventLoad load = new EventLoad();
                 load.load(state, eventAttributes);
             }

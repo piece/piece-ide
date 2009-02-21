@@ -89,7 +89,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         assertEquals(1, displayForm1.getEvents().size());
         Event finalStateFromDisplayForm1 = displayForm1.getEvents().get(0);
         assertEvent(finalStateFromDisplayForm1,
-                    Event.LASTSTATE_EVENT_PREFIX + "DisplayForm1",
+                    Event.LASTSTATE_EVENT,
                     null,
                     null,
                     finalState
@@ -234,7 +234,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         assertEquals(1, displayForm2.getEvents().size());
         Event finalStateFromDisplayForm2 = displayForm2.getEvents().get(0);
         assertEvent(finalStateFromDisplayForm2,
-                    Event.LASTSTATE_EVENT_PREFIX + "DisplayForm2",
+                    Event.LASTSTATE_EVENT,
                     null,
                     null,
                     finalState
@@ -303,7 +303,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         assertEquals(1, displayForm1.getEvents().size());
         Event finalStateFromDisplayForm1 = displayForm1.getEvents().get(0);
         assertEvent(finalStateFromDisplayForm1,
-                    Event.LASTSTATE_EVENT_PREFIX + "DisplayForm1",
+                    Event.LASTSTATE_EVENT,
                     null,
                     null,
                     finalState
@@ -311,7 +311,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         assertEquals(1, displayForm2.getEvents().size());
         Event finalStateFromDisplayForm2 = displayForm2.getEvents().get(0);
         assertEvent(finalStateFromDisplayForm2,
-                    Event.LASTSTATE_EVENT_PREFIX + "DisplayForm2",
+                    Event.LASTSTATE_EVENT,
                     null,
                     null,
                     finalState
@@ -361,7 +361,7 @@ public class FlowDesignerResourceImplLoadTest extends TestCase {
         assertEquals(1, displayForm1.getEvents().size());
         Event finalStateFromDisplayForm1 = displayForm1.getEvents().get(0);
         assertEvent(finalStateFromDisplayForm1,
-                    Event.LASTSTATE_EVENT_PREFIX + "DisplayForm1",
+                    Event.LASTSTATE_EVENT,
                     null,
                     null,
                     finalState
