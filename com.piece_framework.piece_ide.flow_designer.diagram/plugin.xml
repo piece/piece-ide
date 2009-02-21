@@ -61,7 +61,7 @@
             id="com.piece_framework.piece_ide.flow_designer.diagram.AdjustBuiltinEventHandler"
             objectClass="FlowDesigner.diagram.edit.parts.FlowEditPart">
          <action
-               class="FlowDesigner.diagram.part.AdjustBuiltinEventHandlerAction"
+               class="FlowDesigner.diagram.part.AdjustActivityEventHandlerAction"
                id="com.piece_framework.piece_ide.flow_designer.diagram.AdjustBuiltinEventHandlerAction"
                label="%adjustBuiltinEventHandlerLabel"
                menubarPath="additions">

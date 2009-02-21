@@ -12,8 +12,8 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.IEditCommandRequest;
 import FlowDesigner.Flow;
 import FlowDesigner.NamedState;
 
-public class AdjustBuiltinEventHandlerCommand extends EditElementCommand {
-    public AdjustBuiltinEventHandlerCommand(String label,
+public class AdjustActivityEventHandlerCommand extends EditElementCommand {
+    public AdjustActivityEventHandlerCommand(String label,
                                             EObject elementToEdit,
                                             IEditCommandRequest request
                                             ) {

@@ -13,10 +13,10 @@ import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
 import FlowDesigner.Flow;
-import FlowDesigner.diagram.edit.commands.AdjustBuiltinEventHandlerCommand;
+import FlowDesigner.diagram.edit.commands.AdjustActivityEventHandlerCommand;
 import FlowDesigner.diagram.edit.parts.FlowEditPart;
 
-public class AdjustBuiltinEventHandlerAction implements IObjectActionDelegate {
+public class AdjustActivityEventHandlerAction implements IObjectActionDelegate {
     private FlowEditPart fFlowEditPart;
 
     public void setActivePart(IAction action, IWorkbenchPart targetPart) {
@@ -25,7 +25,7 @@ public class AdjustBuiltinEventHandlerAction implements IObjectActionDelegate {
     public void run(IAction action) {
         Flow flow = (Flow) ((View) fFlowEditPart.getModel()).getElement();
         ConfigureRequest request = new ConfigureRequest(flow, null);
-        AdjustBuiltinEventHandlerCommand command = new AdjustBuiltinEventHandlerCommand(Messages.AdjustBuiltinEventHandlerAction_CommandLabel, flow, request);
+        AdjustActivityEventHandlerCommand command = new AdjustActivityEventHandlerCommand(Messages.AdjustBuiltinEventHandlerAction_CommandLabel, flow, request);
         try {
             command.execute(null, null);
         } catch (ExecutionException e) {
