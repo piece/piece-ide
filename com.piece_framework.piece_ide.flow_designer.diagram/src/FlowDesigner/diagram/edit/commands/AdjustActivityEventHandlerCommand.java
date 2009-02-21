@@ -26,14 +26,10 @@ public class AdjustActivityEventHandlerCommand extends EditElementCommand {
                                                 ) throws ExecutionException {
         Flow flow = (Flow) getElementToEdit();
         for (NamedState state: flow.getStates()) {
-            if (state.getEntry() != null) {
-                state.setEntry("doEntryOn" + state.getName()); //$NON-NLS-1$
-            }
-            if (state.getActivity() != null) {
-                state.setActivity("doActivtyOn" + state.getName()); //$NON-NLS-1$
-            }
-            if (state.getExit() != null) {
-                state.setExit("doExitOn" + state.getName()); //$NON-NLS-1$
+            if (state.getActivity() != null
+                && state.getActivity().startsWith("on")
+                ) {
+                state.setActivity("on" + state.getName()); //$NON-NLS-1$
             }
         }
 
