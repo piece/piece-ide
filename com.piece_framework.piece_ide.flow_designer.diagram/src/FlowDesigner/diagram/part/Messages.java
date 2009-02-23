@@ -378,5 +378,7 @@ public class Messages extends NLS {
 
     public static String IdentifierAttributeParser_RequiredMessage;
 
+    public static String RefactorPropertyPage_UpdateActivityEventHandler;
+
     //TODO: put accessor fields manually	
 }

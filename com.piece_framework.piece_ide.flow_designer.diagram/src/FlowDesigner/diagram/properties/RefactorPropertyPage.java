@@ -12,19 +12,21 @@ import org.eclipse.ui.IWorkbenchPropertyPage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin;
+import FlowDesigner.diagram.part.Messages;
 
 public class RefactorPropertyPage extends FieldEditorPreferencePage implements IWorkbenchPropertyPage {
-    private BooleanFieldEditor fAutoUpdateActivityEventHandler;
+    private static final String UPDATE_ACTIVITY_EVENT_HANDLER = "updateActivityEventHandler"; //$NON-NLS-1$
+    private BooleanFieldEditor fUpdateActivityEventHandler;
     private IProject fProject;
 
     @Override
     protected void createFieldEditors() {
-        fAutoUpdateActivityEventHandler =
-            new BooleanFieldEditor("autoUpdateActivityEventHandler",
-                                   "Activityイベントハンドラをステート名に合わせてを自動的に変更する",
+        fUpdateActivityEventHandler =
+            new BooleanFieldEditor(UPDATE_ACTIVITY_EVENT_HANDLER,
+                                   Messages.RefactorPropertyPage_UpdateActivityEventHandler,
                                    getFieldEditorParent()
                                    );
-        addField(fAutoUpdateActivityEventHandler);
+        addField(fUpdateActivityEventHandler);
     }
 
     @Override
@@ -37,8 +39,8 @@ public class RefactorPropertyPage extends FieldEditorPreferencePage implements I
         store.setValue(getClass().getName(),
                        System.currentTimeMillis()
                        );
-        store.setValue("autoUpdateActivityEventHandler",
-                       fAutoUpdateActivityEventHandler.getBooleanValue()
+        store.setValue(UPDATE_ACTIVITY_EVENT_HANDLER,
+                       fUpdateActivityEventHandler.getBooleanValue()
                        );
         try {
             store.save();
@@ -63,7 +65,7 @@ public class RefactorPropertyPage extends FieldEditorPreferencePage implements I
                 new ScopedPreferenceStore(new ProjectScope(fProject),
                                           FlowDesignerDiagramEditorPlugin.ID
                                           );
-            store.setDefault("autoUpdateActivityEventHandler",
+            store.setDefault(UPDATE_ACTIVITY_EVENT_HANDLER,
                              false
                              );
             setPreferenceStore(store);
