@@ -513,5 +513,12 @@
             name="%property.page.title.com.piece_framework.piece_ide.flow_designer.diagram.general"
             objectClass="org.eclipse.core.resources.IProject">
       </page>
+      <page
+            category="com.piece_framework.piece_ide.flow_designer.diagram.general"
+            class="FlowDesigner.diagram.properties.RefactorPropertyPage"
+            id="com.piece_framework.piece_ide.flow_designer.diagram.refactor"
+            name="%property.page.title.com.piece_framework.piece_ide.flow_designer.diagram.refactor"
+            objectClass="org.eclipse.core.resources.IProject">
+      </page>
    </extension>
 </plugin>
