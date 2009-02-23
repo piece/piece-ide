@@ -498,4 +498,20 @@
             class="FlowDesigner.diagram.part.FlowDesignerDiagramStartup">
       </startup>
    </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="FlowDesigner.diagram.properties.GeneralPropertyPage"
+            id="com.piece_framework.piece_ide.general"
+            name="%property.page.title.com.piece_framework.piece_ide.general"
+            objectClass="org.eclipse.core.resources.IProject">
+      </page>
+      <page
+            category="com.piece_framework.piece_ide.general"
+            class="FlowDesigner.diagram.properties.DiagramGeneralPropertyPage"
+            id="com.piece_framework.piece_ide.flow_designer.diagram.general"
+            name="%property.page.title.com.piece_framework.piece_ide.flow_designer.diagram.general"
+            objectClass="org.eclipse.core.resources.IProject">
+      </page>
+   </extension>
 </plugin>
