@@ -118,9 +118,15 @@
    <extension point="org.eclipse.ui.preferencePages">
       <?gmfgen generated="true"?>
       <page
+            class="FlowDesigner.diagram.preferences.GeneralPreferencePage"
+            id="com.piece_framework.piece_ide.general"
+            name="%preference.page.title.com.piece_framework.piece_ide.general">
+      </page>
+      <page
+            category="com.piece_framework.piece_ide.general"
+            class="FlowDesigner.diagram.preferences.DiagramGeneralPreferencePage"
             id="com.piece_framework.piece_ide.flow_designer2.diagram.general"
-            name="%preference.page.title.com.piece_framework.piece_ide.flow_designer2.diagram.general"
-            class="FlowDesigner.diagram.preferences.DiagramGeneralPreferencePage">
+            name="%preference.page.title.com.piece_framework.piece_ide.flow_designer2.diagram.general">
       </page>
       <page
             id="com.piece_framework.piece_ide.flow_designer2.diagram.appearance"
