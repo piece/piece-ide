@@ -1,20 +1,21 @@
 // $Id$
 package FlowDesigner.diagram.part;
 
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
+import org.eclipse.gmf.runtime.diagram.ui.commands.ICommandProxy;
+import org.eclipse.gmf.runtime.emf.commands.core.command.CompositeTransactionalCommand;
+import org.eclipse.gmf.runtime.emf.type.core.commands.SetValueCommand;
+import org.eclipse.gmf.runtime.emf.type.core.requests.SetRequest;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
 import FlowDesigner.Flow;
-import FlowDesigner.diagram.edit.commands.AdjustActivityEventHandlerCommand;
+import FlowDesigner.NamedState;
 import FlowDesigner.diagram.edit.parts.FlowEditPart;
+import FlowDesigner.impl.FlowDesignerPackageImpl;
 
 public class AdjustActivityEventHandlerAction implements IObjectActionDelegate {
     private FlowEditPart fFlowEditPart;
@@ -24,17 +25,23 @@ public class AdjustActivityEventHandlerAction implements IObjectActionDelegate {
 
     public void run(IAction action) {
         Flow flow = (Flow) ((View) fFlowEditPart.getModel()).getElement();
-        ConfigureRequest request = new ConfigureRequest(flow, null);
-        AdjustActivityEventHandlerCommand command = new AdjustActivityEventHandlerCommand(Messages.AdjustBuiltinEventHandlerAction_CommandLabel, flow, request);
-        try {
-            command.execute(null, null);
-        } catch (ExecutionException e) {
-            MessageDialog.openError(Display.getCurrent().getActiveShell(),
-                                    Messages.MessageDialog_ErrorTitle,
-                                    e.getMessage()
-                                    );
-            e.printStackTrace();
+        CompositeTransactionalCommand transactionCommand =
+            new CompositeTransactionalCommand(fFlowEditPart.getEditingDomain(),
+                                              Messages.AdjustBuiltinEventHandlerAction_CommandLabel
+                                              );
+        for (NamedState state: flow.getStates()) {
+            if (state.getActivity() != null
+                && state.getActivity().startsWith("on") //$NON-NLS-1$
+                ) {
+                SetRequest request = new SetRequest(state,
+                                                    FlowDesignerPackageImpl.eINSTANCE.getNamedState_Activity(),
+                                                    "on" + state.getName() //$NON-NLS-1$
+                                                    );
+                transactionCommand.add(new SetValueCommand(request));
+            }
         }
+        fFlowEditPart.getViewer().getEditDomain()
+            .getCommandStack().execute(new ICommandProxy(transactionCommand));
     }
 
     public void selectionChanged(IAction action, ISelection selection) {
