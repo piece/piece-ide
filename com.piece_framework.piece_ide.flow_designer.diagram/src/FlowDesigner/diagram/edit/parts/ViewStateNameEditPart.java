@@ -30,6 +30,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ITextAwareEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.LabelDirectEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.l10n.DiagramColorRegistry;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditDomain;
 import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
 import org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
@@ -45,6 +46,8 @@ import org.eclipse.swt.accessibility.AccessibleEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
+
+import FlowDesigner.diagram.part.FlowDesignerDiagramEditor;
 
 /**
  * @generated
@@ -582,4 +585,18 @@ public class ViewStateNameEditPart extends CompartmentEditPart implements
         return null;
     }
 
+    @Override
+    public Command getCommand(Request request) {
+        Command command = super.getCommand(request);
+        getFlowDesigner().getRefactoringObject()
+            .addSetValueCommandForActivity(this,
+                                           request,
+                                           command
+                                           );
+        return command;
+    }
+
+    private FlowDesignerDiagramEditor getFlowDesigner() {
+        return (FlowDesignerDiagramEditor) ((DiagramEditDomain) getEditDomain()).getDiagramEditorPart();
+    }
 }
