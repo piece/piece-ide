@@ -20,6 +20,7 @@ import FlowDesigner.NamedState;
 import FlowDesigner.impl.FlowDesignerPackageImpl;
 
 public class Refactoring {
+    public static final String UPDATE_ACTIVITY_EVENT_HANDLER = "updateActivityEventHandler"; //$NON-NLS-1$
     private IPersistentPreferenceStore fStore;
 
     public Refactoring(IFile file) {
@@ -36,7 +37,7 @@ public class Refactoring {
                                               Request request,
                                               Command addedCommand
                                               ) {
-        if (fStore.getBoolean("updateActivityEventHandler") == false) {
+        if (fStore.getBoolean(UPDATE_ACTIVITY_EVENT_HANDLER) == false) {
             return;
         }
 
@@ -52,14 +53,16 @@ public class Refactoring {
         CompositeTransactionalCommand realAddedCommand = (CompositeTransactionalCommand) proxy.getICommand();
 
         if (request == null
-            || (request instanceof DirectEditRequest) == false) {
+            || (request instanceof DirectEditRequest) == false
+            ) {
             return;
         }
         DirectEditRequest directEditRequest = (DirectEditRequest) request;
 
         if (editPart == null
             || (editPart.getModel() instanceof View) == false
-            || (((Node) editPart.getModel()).getElement() instanceof NamedState) == false) {
+            || (((Node) editPart.getModel()).getElement() instanceof NamedState) == false
+            ) {
             return;
         }
         NamedState state = (NamedState) ((Node) editPart.getModel()).getElement();

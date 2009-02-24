@@ -13,16 +13,16 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import FlowDesigner.diagram.part.FlowDesignerDiagramEditorPlugin;
 import FlowDesigner.diagram.part.Messages;
+import FlowDesigner.diagram.part.Refactoring;
 
 public class RefactorPropertyPage extends FieldEditorPreferencePage implements IWorkbenchPropertyPage {
-    private static final String UPDATE_ACTIVITY_EVENT_HANDLER = "updateActivityEventHandler"; //$NON-NLS-1$
     private BooleanFieldEditor fUpdateActivityEventHandler;
     private IProject fProject;
 
     @Override
     protected void createFieldEditors() {
         fUpdateActivityEventHandler =
-            new BooleanFieldEditor(UPDATE_ACTIVITY_EVENT_HANDLER,
+            new BooleanFieldEditor(Refactoring.UPDATE_ACTIVITY_EVENT_HANDLER,
                                    Messages.RefactorPropertyPage_UpdateActivityEventHandler,
                                    getFieldEditorParent()
                                    );
@@ -39,7 +39,7 @@ public class RefactorPropertyPage extends FieldEditorPreferencePage implements I
         store.setValue(getClass().getName(),
                        System.currentTimeMillis()
                        );
-        store.setValue(UPDATE_ACTIVITY_EVENT_HANDLER,
+        store.setValue(Refactoring.UPDATE_ACTIVITY_EVENT_HANDLER,
                        fUpdateActivityEventHandler.getBooleanValue()
                        );
         try {
@@ -65,7 +65,7 @@ public class RefactorPropertyPage extends FieldEditorPreferencePage implements I
                 new ScopedPreferenceStore(new ProjectScope(fProject),
                                           FlowDesignerDiagramEditorPlugin.ID
                                           );
-            store.setDefault(UPDATE_ACTIVITY_EVENT_HANDLER,
+            store.setDefault(Refactoring.UPDATE_ACTIVITY_EVENT_HANDLER,
                              false
                              );
             setPreferenceStore(store);
