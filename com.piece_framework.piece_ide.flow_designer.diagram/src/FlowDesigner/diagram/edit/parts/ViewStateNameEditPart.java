@@ -31,6 +31,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.ITextAwareEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.LabelDirectEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.l10n.DiagramColorRegistry;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditDomain;
+import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
 import org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
@@ -47,7 +48,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 
-import FlowDesigner.diagram.part.FlowDesignerDiagramEditor;
+import FlowDesigner.diagram.part.Refactoring;
 
 /**
  * @generated
@@ -588,15 +589,15 @@ public class ViewStateNameEditPart extends CompartmentEditPart implements
     @Override
     public Command getCommand(Request request) {
         Command command = super.getCommand(request);
-        getFlowDesigner().getRefactoringObject()
-            .addSetValueCommandForActivity(this,
-                                           request,
-                                           command
-                                           );
+        getRefactoringObject().addSetValueCommandForActivity(this,
+                                                             request,
+                                                             command
+                                                             );
         return command;
     }
 
-    private FlowDesignerDiagramEditor getFlowDesigner() {
-        return (FlowDesignerDiagramEditor) ((DiagramEditDomain) getEditDomain()).getDiagramEditorPart();
+    private Refactoring getRefactoringObject() {
+        IDiagramWorkbenchPart editor = ((DiagramEditDomain) getEditDomain()).getDiagramEditorPart();
+        return (Refactoring) editor.getAdapter(Refactoring.class);
     }
 }

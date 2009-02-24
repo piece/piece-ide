@@ -110,6 +110,8 @@ public class FlowDesignerDiagramEditor extends DiagramDocumentEditor implements
                     return new String[] { ProjectExplorer.VIEW_ID };
                 }
             };
+        } else if (type == Refactoring.class) {
+            return fRefactoring;
         }
         return super.getAdapter(type);
     }
@@ -321,9 +323,5 @@ public class FlowDesignerDiagramEditor extends DiagramDocumentEditor implements
         } else {
             super.init(site, input);
         }
-    }
-
-    public Refactoring getRefactoringObject() {
-        return fRefactoring;
     }
 }
