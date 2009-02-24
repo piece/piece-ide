@@ -25,13 +25,6 @@
    </url>
 
    <plugin
-         id="com.piece_framework.piece_ide.flow_designer"
-         download-size="0"
-         install-size="0"
-         version="0.4.0"
-         unpack="false"/>
-
-   <plugin
          id="com.piece_framework.piece_ide.wizard"
          download-size="0"
          install-size="0"
@@ -46,17 +39,24 @@
          unpack="false"/>
 
    <plugin
-         id="com.piece_framework.piece_ide.piece_orm.mapper"
+         id="com.piece_framework.piece_ide.flow_designer.diagram"
          download-size="0"
          install-size="0"
-         version="0.1.0"
+         version="0.4.0"
          unpack="false"/>
 
    <plugin
-         id="com.piece_framework.piece_ide.piece_orm.mapper.editor"
+         id="com.piece_framework.piece_ide.flow_designer.model"
          download-size="0"
          install-size="0"
-         version="0.1.0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.piece_framework.piece_ide.flow_designer.model.edit"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
          unpack="false"/>
 
 </feature>
