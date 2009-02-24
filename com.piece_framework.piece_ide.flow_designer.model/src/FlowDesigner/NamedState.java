@@ -27,6 +27,8 @@ package FlowDesigner;
  * @generated
  */
 public interface NamedState extends Source, Target {
+    public static final String ACTIVITY_PREFIX = "on";
+
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->

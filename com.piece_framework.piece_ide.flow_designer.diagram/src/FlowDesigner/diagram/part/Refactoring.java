@@ -68,12 +68,13 @@ public class Refactoring {
         NamedState state = (NamedState) ((Node) editPart.getModel()).getElement();
 
         if (state.getActivity() == null
-            || state.getActivity().startsWith("on") == false
+            || state.getActivity().startsWith(NamedState.ACTIVITY_PREFIX) == false
             ) {
             return;
         }
 
-        String activity = "on" + (String) directEditRequest.getCellEditor().getValue();
+        String activity = NamedState.ACTIVITY_PREFIX
+                          + (String) directEditRequest.getCellEditor().getValue();
         SetValueCommand setCommand = new SetValueCommand(new SetRequest(state,
                                                                         FlowDesignerPackageImpl.eINSTANCE.getNamedState_Activity(),
                                                                         activity

@@ -31,11 +31,11 @@ public class AdjustActivityEventHandlerAction implements IObjectActionDelegate {
                                               );
         for (NamedState state: flow.getStates()) {
             if (state.getActivity() != null
-                && state.getActivity().startsWith("on") //$NON-NLS-1$
+                && state.getActivity().startsWith(NamedState.ACTIVITY_PREFIX)
                 ) {
                 SetRequest request = new SetRequest(state,
                                                     FlowDesignerPackageImpl.eINSTANCE.getNamedState_Activity(),
-                                                    "on" + state.getName() //$NON-NLS-1$
+                                                    NamedState.ACTIVITY_PREFIX + state.getName()
                                                     );
                 transactionCommand.add(new SetValueCommand(request));
             }
