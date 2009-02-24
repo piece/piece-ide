@@ -1,74 +1,27 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?artifactRepository class='org.eclipse.equinox.internal.p2.artifact.repository.simple.SimpleArtifactRepository' version='1.0.0'?>
-<repository name='Piece_IDE Update Site' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1.0.0'>
+<repository name='file:/home/matsu/GITWORK/piece-ide/com.piece_framework.piece_ide_site/ - artifacts' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1.0.0'>
   <properties size='2'>
     <property name='p2.compressed' value='false'/>
-    <property name='p2.timestamp' value='1226301938343'/>
+    <property name='p2.timestamp' value='1235388044373'/>
   </properties>
   <mappings size='3'>
     <rule filter='(&amp; (classifier=osgi.bundle))' output='${repoUrl}/plugins/${id}_${version}.jar'/>
     <rule filter='(&amp; (classifier=binary))' output='${repoUrl}/binary/${id}_${version}'/>
     <rule filter='(&amp; (classifier=org.eclipse.update.feature))' output='${repoUrl}/features/${id}_${version}.jar'/>
   </mappings>
-  <artifacts size='16'>
-    <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide' version='0.4.0'>
+  <artifacts size='6'>
+    <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide.flow_designer.diagram' version='0.4.0'>
       <properties size='3'>
-        <property name='artifact.size' value='3775'/>
-        <property name='download.size' value='3775'/>
-        <property name='download.contentType' value='application/zip'/>
-      </properties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide' version='0.3.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='3778'/>
-        <property name='download.size' value='3778'/>
-        <property name='download.contentType' value='application/zip'/>
-      </properties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide.flow_designer' version='0.3.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='292247'/>
-        <property name='download.size' value='292247'/>
+        <property name='artifact.size' value='348809'/>
+        <property name='download.size' value='348809'/>
         <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
     <artifact classifier='org.eclipse.update.feature' id='com.piece_framework.piece_ide_feature' version='0.4.0'>
       <properties size='2'>
-        <property name='artifact.size' value='36546'/>
-        <property name='download.size' value='36546'/>
-      </properties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide.flow_designer' version='0.4.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='293516'/>
-        <property name='download.size' value='293516'/>
-        <property name='download.contentType' value='application/zip'/>
-      </properties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='com.piece_framework.piece_ide_feature' version='0.2.1'>
-      <properties size='2'>
-        <property name='artifact.size' value='36470'/>
-        <property name='download.size' value='36470'/>
-      </properties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='com.piece_framework.piece_ide_feature' version='0.2.0'>
-      <properties size='2'>
-        <property name='artifact.size' value='36157'/>
-        <property name='download.size' value='36157'/>
-      </properties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide' version='0.3.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='3776'/>
-        <property name='download.size' value='3776'/>
-        <property name='download.contentType' value='application/zip'/>
-      </properties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide.piece_orm.mapper.editor' version='0.1.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='61998'/>
-        <property name='download.size' value='61998'/>
-        <property name='download.contentType' value='application/zip'/>
+        <property name='artifact.size' value='36373'/>
+        <property name='download.size' value='36373'/>
       </properties>
     </artifact>
     <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide.wizard' version='0.2.1'>
@@ -78,44 +31,25 @@
         <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide.piece_orm.mapper' version='0.1.0'>
+    <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide.flow_designer.model.edit' version='0.4.0'>
       <properties size='3'>
-        <property name='artifact.size' value='78980'/>
-        <property name='download.size' value='78980'/>
+        <property name='artifact.size' value='27479'/>
+        <property name='download.size' value='27479'/>
         <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide.wizard' version='0.2.0'>
+    <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide' version='0.4.0'>
       <properties size='3'>
-        <property name='artifact.size' value='144412'/>
-        <property name='download.size' value='144412'/>
+        <property name='artifact.size' value='3588'/>
+        <property name='download.size' value='3588'/>
         <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide.flow_designer' version='0.2.0'>
+    <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide.flow_designer.model' version='0.4.0'>
       <properties size='3'>
-        <property name='artifact.size' value='181155'/>
-        <property name='download.size' value='181155'/>
+        <property name='artifact.size' value='117736'/>
+        <property name='download.size' value='117736'/>
         <property name='download.contentType' value='application/zip'/>
-      </properties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='com.piece_framework.piece_ide' version='0.2.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='3776'/>
-        <property name='download.size' value='3776'/>
-        <property name='download.contentType' value='application/zip'/>
-      </properties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='com.piece_framework.piece_ide_feature' version='0.3.0'>
-      <properties size='2'>
-        <property name='artifact.size' value='36522'/>
-        <property name='download.size' value='36522'/>
-      </properties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='com.piece_framework.piece_ide_feature' version='0.3.0'>
-      <properties size='2'>
-        <property name='artifact.size' value='36520'/>
-        <property name='download.size' value='36520'/>
       </properties>
     </artifact>
   </artifacts>
