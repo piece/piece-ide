@@ -3,6 +3,7 @@ package FlowDesigner.diagram.part;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -24,6 +25,7 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -42,6 +44,7 @@ import org.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.part.ShowInContext;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import FlowDesigner.diagram.resource.DiagramFile;
 
@@ -50,6 +53,7 @@ import FlowDesigner.diagram.resource.DiagramFile;
  */
 public class FlowDesignerDiagramEditor extends DiagramDocumentEditor implements
         IGotoMarker {
+    private IPersistentPreferenceStore fStore;
 
     /**
      * @generated
@@ -315,8 +319,16 @@ public class FlowDesignerDiagramEditor extends DiagramDocumentEditor implements
 
                 setPartName(FlowDesignerDiagramEditorUtil.getFlowFileName(file));
             }
+
+            fStore = new ScopedPreferenceStore(new ProjectScope(file.getProject()),
+                                               FlowDesignerDiagramEditorPlugin.ID
+                                               );
         } else {
             super.init(site, input);
         }
+    }
+
+    public boolean isUpdateActivityEventHandler() {
+        return fStore.getBoolean("updateActivityEventHandler");
     }
 }
