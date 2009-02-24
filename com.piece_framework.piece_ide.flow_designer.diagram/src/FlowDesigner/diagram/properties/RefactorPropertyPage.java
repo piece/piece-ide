@@ -59,8 +59,8 @@ public class RefactorPropertyPage extends FieldEditorPreferencePage implements I
     }
 
     public void setElement(IAdaptable element) {
-        if (element instanceof IProject) {
-            fProject = (IProject) element;
+        if (element.getAdapter(IProject.class) != null) {
+            fProject = (IProject) element.getAdapter(IProject.class);
             ScopedPreferenceStore store =
                 new ScopedPreferenceStore(new ProjectScope(fProject),
                                           FlowDesignerDiagramEditorPlugin.ID

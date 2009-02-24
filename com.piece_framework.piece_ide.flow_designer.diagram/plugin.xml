@@ -503,22 +503,34 @@
       <page
             class="FlowDesigner.diagram.properties.GeneralPropertyPage"
             id="com.piece_framework.piece_ide.general"
-            name="%property.page.title.com.piece_framework.piece_ide.general"
-            objectClass="org.eclipse.core.resources.IProject">
+            name="%property.page.title.com.piece_framework.piece_ide.general">
+         <enabledWhen>
+            <adapt
+                  type="org.eclipse.core.resources.IProject">
+            </adapt>
+         </enabledWhen>
       </page>
       <page
             category="com.piece_framework.piece_ide.general"
             class="FlowDesigner.diagram.properties.DiagramGeneralPropertyPage"
             id="com.piece_framework.piece_ide.flow_designer.diagram.general"
-            name="%property.page.title.com.piece_framework.piece_ide.flow_designer.diagram.general"
-            objectClass="org.eclipse.core.resources.IProject">
+            name="%property.page.title.com.piece_framework.piece_ide.flow_designer.diagram.general">
+         <enabledWhen>
+            <adapt
+                  type="org.eclipse.core.resources.IProject">
+            </adapt>
+         </enabledWhen>
       </page>
       <page
             category="com.piece_framework.piece_ide.flow_designer.diagram.general"
             class="FlowDesigner.diagram.properties.RefactorPropertyPage"
             id="com.piece_framework.piece_ide.flow_designer.diagram.refactor"
-            name="%property.page.title.com.piece_framework.piece_ide.flow_designer.diagram.refactor"
-            objectClass="org.eclipse.core.resources.IProject">
+            name="%property.page.title.com.piece_framework.piece_ide.flow_designer.diagram.refactor">
+         <enabledWhen>
+            <adapt
+                  type="org.eclipse.core.resources.IProject">
+            </adapt>
+         </enabledWhen>
       </page>
    </extension>
 </plugin>
