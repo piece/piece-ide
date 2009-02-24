@@ -16,7 +16,6 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
-import org.eclipse.gef.commands.ForwardUndoCompoundCommand;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.handles.NonResizableHandleKit;
 import org.eclipse.gef.requests.DirectEditRequest;
@@ -26,7 +25,6 @@ import org.eclipse.gmf.runtime.common.ui.services.parser.IParserEditStatus;
 import org.eclipse.gmf.runtime.common.ui.services.parser.ParserEditStatus;
 import org.eclipse.gmf.runtime.common.ui.services.parser.ParserOptions;
 import org.eclipse.gmf.runtime.common.ui.services.parser.ParserService;
-import org.eclipse.gmf.runtime.diagram.ui.commands.ICommandProxy;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.CompartmentEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ITextAwareEditPart;
@@ -36,13 +34,9 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditDomain;
 import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
 import org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
-import org.eclipse.gmf.runtime.emf.commands.core.command.CompositeTransactionalCommand;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
-import org.eclipse.gmf.runtime.emf.type.core.commands.SetValueCommand;
-import org.eclipse.gmf.runtime.emf.type.core.requests.SetRequest;
 import org.eclipse.gmf.runtime.emf.ui.services.parser.ISemanticParser;
 import org.eclipse.gmf.runtime.notation.FontStyle;
-import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
@@ -53,9 +47,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 
-import FlowDesigner.NamedState;
 import FlowDesigner.diagram.part.FlowDesignerDiagramEditor;
-import FlowDesigner.impl.FlowDesignerPackageImpl;
 
 /**
  * @generated
@@ -596,30 +588,15 @@ public class ActionStateNameEditPart extends CompartmentEditPart implements
     @Override
     public Command getCommand(Request request) {
         Command command = super.getCommand(request);
-        if (command != null
-            && command instanceof ICommandProxy
-            && request instanceof DirectEditRequest
-            ) {
-            if (canUpdateActivityEventHandler()) {
-                String newStateName = (String) ((DirectEditRequest) request).getCellEditor().getValue();
-                SetRequest setRequest = new SetRequest(((Node) getModel()).getElement(),
-                                                       FlowDesignerPackageImpl.eINSTANCE.getNamedState_Activity(),
-                                                       "on" + newStateName
-                                                       );
-
-                CompositeTransactionalCommand realCommand = (CompositeTransactionalCommand) ((ICommandProxy) command).getICommand();
-                realCommand.add(new SetValueCommand(setRequest));
-            }
-        }
+        getFlowDesigner().getRefactoringObject()
+            .addSetValueCommandForActivity(this,
+                                           request,
+                                           command
+                                           );
         return command;
     }
 
-    private boolean canUpdateActivityEventHandler() {
-        FlowDesignerDiagramEditor editor = (FlowDesignerDiagramEditor) ((DiagramEditDomain) getEditDomain()).getDiagramEditorPart();
-        NamedState state = (NamedState) ((View) getModel()).getElement();
-
-        return editor.isUpdateActivityEventHandler()
-               && state.getActivity() != null
-               && state.getActivity().startsWith("on");
+    private FlowDesignerDiagramEditor getFlowDesigner() {
+        return (FlowDesignerDiagramEditor) ((DiagramEditDomain) getEditDomain()).getDiagramEditorPart();
     }
 }
