@@ -52,7 +52,7 @@ public class FlowDesignerResourceImpl extends ResourceImpl {
             Map<?, ?> flowMap = Yaml.loadType(inputStream, HashMap.class);
             load.load(flow, flowMap);
         } catch (YamlException e) {
-            throw new IOException(e);
+            throw new IOException(e.getMessage());
         } finally {
             getContents().add(flow);
         }
