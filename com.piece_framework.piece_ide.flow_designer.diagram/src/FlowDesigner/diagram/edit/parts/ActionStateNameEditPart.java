@@ -589,15 +589,14 @@ public class ActionStateNameEditPart extends CompartmentEditPart implements
     @Override
     public Command getCommand(Request request) {
         Command command = super.getCommand(request);
-        getRefactoringObject().addSetValueCommandForActivity(this,
-                                                             request,
-                                                             command
-                                                             );
+        getRefactoringObject().addSetValueCommandForActivity(this, request,
+                command);
         return command;
     }
 
     private Refactoring getRefactoringObject() {
-        IDiagramWorkbenchPart editor = ((DiagramEditDomain) getEditDomain()).getDiagramEditorPart();
+        IDiagramWorkbenchPart editor = ((DiagramEditDomain) getEditDomain())
+                .getDiagramEditorPart();
         return (Refactoring) editor.getAdapter(Refactoring.class);
     }
 }
