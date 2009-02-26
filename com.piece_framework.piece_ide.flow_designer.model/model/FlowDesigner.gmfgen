@@ -309,7 +309,8 @@
   <plugin
       name="Piece_IDE Flow Designer"
       provider="Piece Project"
-      version="0.4.0"/>
+      version="0.4.0"
+      printingEnabled="true"/>
   <editor/>
   <navigator>
     <childReferences

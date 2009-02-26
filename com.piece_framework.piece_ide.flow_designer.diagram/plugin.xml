@@ -86,6 +86,16 @@
          </ViewId>
       </GlobalActionHandlerProvider>
       <GlobalActionHandlerProvider
+         class="org.eclipse.gmf.runtime.diagram.ui.printing.render.providers.DiagramWithPrintGlobalActionHandlerProvider"
+         id="FlowDesignerPresentationPrint">
+         <Priority name="Lowest"/>
+         <ViewId id="FlowDesigner.diagram.part.FlowDesignerDiagramEditorID">
+            <ElementType class="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+               <GlobalActionId actionId="print"/>
+            </ElementType>
+         </ViewId>
+      </GlobalActionHandlerProvider>
+      <GlobalActionHandlerProvider
          class="org.eclipse.gmf.runtime.diagram.ui.providers.ide.providers.DiagramIDEGlobalActionHandlerProvider"
          id="FlowDesignerPresentationIDE">
          <Priority name="Lowest"/>
@@ -533,4 +543,14 @@
          </enabledWhen>
       </page>
    </extension>
+<extension point="org.eclipse.gmf.runtime.common.ui.services.action.contributionItemProviders">
+      <?gmfgen generated="true"?>
+      <contributionItemProvider class="FlowDesigner.diagram.providers.FlowDesignerContributionItemProvider">
+         <Priority name="Low"/>
+         <partContribution id="FlowDesigner.diagram.part.FlowDesignerDiagramEditorID">
+            <partAction menubarPath="/file/print" id="printPreviewAction"/>
+         </partContribution>
+      </contributionItemProvider>
+   </extension>
+
 </plugin>
