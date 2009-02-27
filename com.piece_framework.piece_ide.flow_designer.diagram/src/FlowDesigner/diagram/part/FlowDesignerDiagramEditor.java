@@ -101,7 +101,7 @@ public class FlowDesignerDiagramEditor extends DiagramDocumentEditor implements
     }
 
     /**
-     * @generated
+     * @generated NOT
      */
     public Object getAdapter(Class type) {
         if (type == IShowInTargetList.class) {
