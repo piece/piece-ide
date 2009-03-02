@@ -3,7 +3,7 @@
 <feature
       id="com.piece_framework.piece_ide_feature"
       label="%Feature.BundleName"
-      version="0.4.1"
+      version="0.4.2"
       provider-name="%Feature.BundleProvider"
       plugin="com.piece_framework.piece_ide"
       image="piece_ide_120.jpg">
@@ -35,28 +35,28 @@
          id="com.piece_framework.piece_ide"
          download-size="0"
          install-size="0"
-         version="0.4.1"
+         version="0.4.2"
          unpack="false"/>
 
    <plugin
          id="com.piece_framework.piece_ide.flow_designer.diagram"
          download-size="0"
          install-size="0"
-         version="0.4.1"
+         version="0.4.2"
          unpack="false"/>
 
    <plugin
          id="com.piece_framework.piece_ide.flow_designer.model"
          download-size="0"
          install-size="0"
-         version="0.4.1"
+         version="0.4.2"
          unpack="false"/>
 
    <plugin
          id="com.piece_framework.piece_ide.flow_designer.model.edit"
          download-size="0"
          install-size="0"
-         version="0.4.1"
+         version="0.4.2"
          unpack="false"/>
 
 </feature>
