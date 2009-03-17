@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: com.piece_framework.piece_ide.flow_designer.model.edit;singleton:=true
-Bundle-Version: 0.4.2
+Bundle-Version: 0.4.3
 Bundle-ClassPath: .
 Bundle-Activator: FlowDesigner.provider.FlowDesignerEditPlugin$Implementation
 Bundle-Vendor: %providerName
