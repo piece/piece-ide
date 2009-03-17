@@ -19,7 +19,8 @@ class ActionSave extends AbstractSave {
         Map<String, Object> actionMap = new LinkedHashMap<String, Object>();
         for (EAttribute eAttribute : eObject.eClass().getEAllAttributes()) {
             if (eAttribute.getEType() == FlowDesignerPackageImpl.eINSTANCE.getAction()) {
-                if (eObject.eGet(eAttribute) == null) {
+                if (eObject.eGet(eAttribute) == null
+                    || ((String) eObject.eGet(eAttribute)).equals("")) {
                     continue;
                 }
 

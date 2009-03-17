@@ -356,6 +356,94 @@ public class FlowDesignerResourceImplSaveTest extends TestCase {
         assertYaml(yaml);
     }
 
+    public void testShouldNotSaveEmptyAttributes() {
+        Flow flow = fFactory.createFlow();
+
+        FinalState finalState = fFactory.createFinalState();
+        flow.setFinalState(finalState);
+
+        ViewState displayForm1 = fFactory.createViewState();
+        displayForm1.setName("DisplayForm1");
+        displayForm1.setView("");
+        displayForm1.setEntry("");
+        displayForm1.setActivity("");
+        displayForm1.setExit("");
+        flow.getStates().add(displayForm1);
+
+        ActionState process1 = fFactory.createActionState();
+        process1.setName("Process1");
+        process1.setEntry("");
+        process1.setActivity("");
+        process1.setExit("");
+        flow.getStates().add(process1);
+
+        ViewState displayForm2 = fFactory.createViewState();
+        displayForm2.setName("DisplayForm2");
+        displayForm2.setView("");
+        displayForm2.setEntry("");
+        displayForm2.setActivity("");
+        displayForm2.setExit("");
+        flow.getStates().add(displayForm2);
+
+        Event initialStateToDisplayForm1 = fFactory.createEvent();
+        initialStateToDisplayForm1.setEvent(Event.FIRSTSTATE_EVENT);
+        initialStateToDisplayForm1.setNextState(displayForm1);
+        flow.getInitialState().getEvents().add(initialStateToDisplayForm1);
+
+        Event process1FromDisplayForm1 = fFactory.createEvent();
+        process1FromDisplayForm1.setEvent("Process1FromDisplayForm1");
+        process1FromDisplayForm1.setNextState(process1);
+        process1FromDisplayForm1.setAction("");
+        process1FromDisplayForm1.setGuard("");
+        displayForm1.getEvents().add(process1FromDisplayForm1);
+
+        Event displayForm2FromProcess1 = fFactory.createEvent();
+        displayForm2FromProcess1.setEvent("DisplayForm2FromProcess1");
+        displayForm2FromProcess1.setNextState(displayForm2);
+        process1.getEvents().add(displayForm2FromProcess1);
+
+        Event displayForm1FromProcess1 = fFactory.createEvent();
+        displayForm1FromProcess1.setEvent("DisplayForm1FromProcess1");
+        displayForm1FromProcess1.setNextState(displayForm1);
+        process1.getEvents().add(displayForm1FromProcess1);
+
+        Event finalStateFromDisplayForm2 = fFactory.createEvent();
+        finalStateFromDisplayForm2.setEvent(Event.LASTSTATE_EVENT);
+        finalStateFromDisplayForm2.setNextState(finalState);
+        displayForm2.getEvents().add(finalStateFromDisplayForm2);
+
+        FlowDesignerResourceImpl resource = new FlowDesignerResourceImpl(URI.createFileURI(fTestYamlFile.getAbsolutePath()));
+        try {
+            resource.getContents().add(flow);
+            resource.save(null);
+        } catch (IOException e) {
+            fail();
+        }
+
+        String yaml =
+            "firstState: DisplayForm1\n"
+            + "\n"
+            + "lastState:\n"
+            + "  name: DisplayForm2\n"
+            + "  view:\n"
+            + "\n"
+            + "viewState:\n"
+            + "  - name: DisplayForm1\n"
+            + "    view:\n"
+            + "    transition:\n"
+            + "      - event: Process1FromDisplayForm1\n"
+            + "        nextState: Process1\n"
+            + "\n"
+            + "actionState:\n"
+            + "  - name: Process1\n"
+            + "    transition:\n"
+            + "      - event: DisplayForm2FromProcess1\n"
+            + "        nextState: DisplayForm2\n"
+            + "      - event: DisplayForm1FromProcess1\n"
+            + "        nextState: DisplayForm1\n";
+        assertYaml(yaml);
+    }
+
     private void assertYaml(String expectedYaml) {
         FileReader reader = null;
         BufferedReader bufferedReader = null;
